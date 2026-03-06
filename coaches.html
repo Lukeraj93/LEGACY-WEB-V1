@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legacy+ | Coaches</title>
+    <meta
+      name="description"
+      content="Coaches dashboard and management commission tracking for Legacy+."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header reveal">
+      <a href="./index.html" class="brand" aria-label="Legacy+ Home">
+        <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" class="brand-logo-img" />
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./legacy-plus.html">Legacy+</a>
+        <a class="active" href="./coaches.html">Coaches</a>
+        <a href="./facilities.html">Facilities</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./account.html">My Account</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="btn btn-ghost login-trigger" data-role="coach">Coach Login</button>
+        <button type="button" class="btn btn-primary login-trigger" data-role="client">Client Login</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero reveal">
+        <p class="kicker">Coaches Workspace</p>
+        <h1>Centralized coaching visibility, scheduling, and performance control.</h1>
+        <p>
+          Coaches use Legacy+ as a daily command center to manage clients, packages, schedules, points,
+          notes, and commission outcomes in one structured workflow.
+        </p>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-head">
+          <p class="kicker">Coaches Dashboard</p>
+          <h2>Everything coaches need to run operations efficiently.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="card">
+            <h3>Client Profiles & Coach Notes</h3>
+            <p>Detailed profile data, fitness goals, progress history, and private notes.</p>
+          </article>
+          <article class="card">
+            <h3>Client Packages</h3>
+            <p>Active/past packages, session counts, validity period, and usage status.</p>
+          </article>
+          <article class="card">
+            <h3>Calendar View</h3>
+            <p>Daily and weekly schedule visibility for sessions and class load balancing.</p>
+          </article>
+          <article class="card">
+            <h3>Client Points Tracking</h3>
+            <p>Track points from sessions, milestones, and rewards workflows.</p>
+          </article>
+          <article class="card">
+            <h3>Commission Overview</h3>
+            <p>See commissions by period, client, and package with transparent breakdowns.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-head">
+          <p class="kicker">Management Dashboard & Commission Tracking</p>
+          <h2>Owner-level oversight of revenue, coaches, clients, and payouts.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="card">
+            <h3>Manage Coaches</h3>
+            <p>Create coach accounts, assign permissions, set commission structure, monitor performance.</p>
+          </article>
+          <article class="card">
+            <h3>Manage Clients</h3>
+            <p>Centralized client database with package history, engagement, and assigned coaches.</p>
+          </article>
+          <article class="card">
+            <h3>Lead Funnel</h3>
+            <p>Track leads from inquiry to conversion with source and follow-up visibility.</p>
+          </article>
+          <article class="card">
+            <h3>Commission Tracking & Payout - v1</h3>
+            <p>Semi-automated rules with manual review and manager approval before payout.</p>
+          </article>
+          <article class="card">
+            <h3>Commission Tracking & Payout - v2</h3>
+            <p>Fully automated calculations and scheduled payouts with real-time tracking.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-head">
+          <p class="kicker">Role Portals</p>
+          <h2>Sign in to dedicated coach and client workspaces.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="card">
+            <h3>Coach Portal</h3>
+            <p>Use the protected coach portal for operations and client management.</p>
+            <a href="./coach-portal.html" class="text-link">Open Coach Portal</a>
+          </article>
+          <article class="card">
+            <h3>Client Portal</h3>
+            <p>Clients can monitor progress, schedules, points, and badges.</p>
+            <a href="./client-portal.html" class="text-link">Open Client Portal</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer reveal">
+      <p>Legacy+ • Coaches</p>
+      <p>Coaching Operations • Management Oversight • Commission Tracking</p>
+    </footer>
+
+    <div class="modal" id="login-modal" aria-hidden="true" role="dialog" aria-labelledby="login-title">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel" role="document">
+        <button type="button" class="close-modal" aria-label="Close login" data-close-modal>&times;</button>
+        <p class="kicker">Portal Access</p>
+        <h3 id="login-title">Client Login</h3>
+        <div class="role-tabs" role="tablist" aria-label="Choose account type">
+          <button type="button" role="tab" aria-selected="true" class="role-tab active" data-role="client">Client</button>
+          <button type="button" role="tab" aria-selected="false" class="role-tab" data-role="coach">Coach</button>
+        </div>
+        <form class="login-form" id="login-form">
+          <label>Email<input type="email" name="loginEmail" placeholder="name@legacycoaching.com" required /></label>
+          <label>Password<input type="password" name="loginPassword" placeholder="Enter password" required /></label>
+          <label id="coach-code-field" class="hidden">Coach Access Code<input type="text" name="coachCode" placeholder="COACH-XXXX" /></label>
+          <p class="form-feedback hidden" id="login-feedback" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" id="login-submit">Login as Client</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js"></script>
+    <script src="./auth-client.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

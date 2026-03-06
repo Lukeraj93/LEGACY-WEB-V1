@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legacy+ | Facilities</title>
+    <meta name="description" content="Legacy+ facilities and gallery overview." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header reveal">
+      <a href="./index.html" class="brand" aria-label="Legacy+ Home">
+        <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" class="brand-logo-img" />
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./legacy-plus.html">Legacy+</a>
+        <a href="./coaches.html">Coaches</a>
+        <a class="active" href="./facilities.html">Facilities</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./account.html">My Account</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="btn btn-ghost login-trigger" data-role="coach">Coach Login</button>
+        <button type="button" class="btn btn-primary login-trigger" data-role="client">Client Login</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero reveal">
+        <p class="kicker">Facilities</p>
+        <h1>Performance-ready spaces for classes and personal coaching.</h1>
+        <p>
+          Facility pages showcase your environment, class zones, equipment lanes, and visual gallery so visitors
+          understand the training experience before signing up.
+        </p>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-head">
+          <p class="kicker">Facility Zones</p>
+          <h2>Purpose-built spaces for structured progression.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="card">
+            <h3>Strength Zone</h3>
+            <p>Racks, platforms, and free-weight lanes for progressive overload blocks.</p>
+          </article>
+          <article class="card">
+            <h3>Conditioning Lane</h3>
+            <p>Engine work setup for classes, intervals, and metabolic sessions.</p>
+          </article>
+          <article class="card">
+            <h3>PT Studio</h3>
+            <p>Private or small-group coaching space with direct coach supervision.</p>
+          </article>
+          <article class="card">
+            <h3>Mobility Area</h3>
+            <p>Recovery-focused section supporting longevity and movement quality.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-head">
+          <p class="kicker">Gallery</p>
+          <h2>Visual showcase modules for post-launch content.</h2>
+        </div>
+        <div class="packages-grid">
+          <article class="card"><h3>Class Gallery</h3><p>Highlight signature class moments and member engagement.</p></article>
+          <article class="card"><h3>Transformation Stories</h3><p>Showcase before/after progress journeys with context.</p></article>
+          <article class="card"><h3>Coach Highlights</h3><p>Introduce your coaching team through visual profile blocks.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer reveal">
+      <p>Legacy+ • Facilities</p>
+      <p>Facility Overview • Gallery</p>
+    </footer>
+
+    <div class="modal" id="login-modal" aria-hidden="true" role="dialog" aria-labelledby="login-title">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel" role="document">
+        <button type="button" class="close-modal" aria-label="Close login" data-close-modal>&times;</button>
+        <p class="kicker">Portal Access</p>
+        <h3 id="login-title">Client Login</h3>
+        <div class="role-tabs" role="tablist" aria-label="Choose account type">
+          <button type="button" role="tab" aria-selected="true" class="role-tab active" data-role="client">Client</button>
+          <button type="button" role="tab" aria-selected="false" class="role-tab" data-role="coach">Coach</button>
+        </div>
+        <form class="login-form" id="login-form">
+          <label>Email<input type="email" name="loginEmail" placeholder="name@legacycoaching.com" required /></label>
+          <label>Password<input type="password" name="loginPassword" placeholder="Enter password" required /></label>
+          <label id="coach-code-field" class="hidden">Coach Access Code<input type="text" name="coachCode" placeholder="COACH-XXXX" /></label>
+          <p class="form-feedback hidden" id="login-feedback" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" id="login-submit">Login as Client</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js"></script>
+    <script src="./auth-client.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

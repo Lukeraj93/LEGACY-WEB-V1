@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Dashboard | LEGACY+ Coaching</title>
+    <meta
+      name="description"
+      content="Client dashboard for LEGACY+ with profile avatar, milestones, session booking, session calendar, purchase history, and coach notes."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <header class="dashboard-topbar reveal">
+        <a class="dashboard-brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
+        <div class="dashboard-topbar-actions">
+          <a class="btn btn-ghost" href="./index.html">Back to Website</a>
+          <a class="btn btn-secondary" href="./coach-dashboard.html">Coach Login</a>
+        </div>
+      </header>
+
+      <main class="dashboard-main">
+        <section class="page-hero reveal">
+          <span class="kicker">Client Dashboard</span>
+          <h1>Your Coaching Progress Hub</h1>
+          <p>
+            Track your milestones, book upcoming sessions, view your schedule, and review coach feedback in one place.
+          </p>
+          <div class="stats-grid">
+            <article class="stat">
+              <h3>18 Sessions Completed</h3>
+              <p>Consistent training streak over the last 7 weeks.</p>
+            </article>
+            <article class="stat">
+              <h3>3 Milestone Badges</h3>
+              <p>Strength, consistency, and movement milestones unlocked.</p>
+            </article>
+            <article class="stat">
+              <h3>2 Upcoming Bookings</h3>
+              <p>Next scheduled sessions are ready in your calendar.</p>
+            </article>
+            <article class="stat">
+              <h3>RM 5,760 Total Purchases</h3>
+              <p>Package purchases and add-ons to date.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal split">
+          <article class="card dashboard-avatar-card">
+            <span class="kicker">Avatar Profile</span>
+            <div class="dashboard-avatar" aria-label="Client avatar">SL</div>
+            <h2>Sarah Lim</h2>
+            <p>Primary Goal: Build strength, improve mobility, and sustain fat loss progression.</p>
+            <div class="chips">
+              <span class="chip">Plan: Performance 12</span>
+              <span class="chip">Coach: Luke</span>
+              <span class="chip">Status: Active</span>
+            </div>
+          </article>
+          <article class="card">
+            <span class="kicker">Milestone Badges</span>
+            <h2>Achievements</h2>
+            <div class="dashboard-badge-grid">
+              <article class="dashboard-badge">
+                <strong>Consistency 4-Week</strong>
+                <p>Completed all planned sessions for four consecutive weeks.</p>
+              </article>
+              <article class="dashboard-badge">
+                <strong>Strength Level-Up</strong>
+                <p>Increased key lower body lift by 20%.</p>
+              </article>
+              <article class="dashboard-badge">
+                <strong>Mobility Milestone</strong>
+                <p>Improved movement quality score in reassessment.</p>
+              </article>
+            </div>
+          </article>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Book Sessions</span>
+          <h2>Request Your Next Training Slot</h2>
+          <form class="contact-form" id="client-booking-form">
+            <div class="input-row">
+              <label>
+                Session Type
+                <select name="service" required>
+                  <option value="">Select one</option>
+                  <option value="1:1 Strength Session">1:1 Strength Session</option>
+                  <option value="Mobility Session">Mobility Session</option>
+                  <option value="Progress Review">Progress Review</option>
+                </select>
+              </label>
+              <label>
+                Preferred Date
+                <input type="date" name="sessionDate" required />
+              </label>
+            </div>
+            <div class="input-row">
+              <label>
+                Preferred Time
+                <input type="time" name="sessionTime" required />
+              </label>
+              <label>
+                Notes
+                <input type="text" name="sessionNote" placeholder="Any training focus for this session" />
+              </label>
+            </div>
+            <button class="btn btn-primary" type="submit">Request Session</button>
+          </form>
+          <p class="dashboard-feedback" id="client-booking-feedback">Your coach will confirm bookings and update your calendar.</p>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Session Calendar</span>
+          <h2>Upcoming Sessions</h2>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Session</th>
+                  <th>Coach</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>March 6, 2026</td>
+                  <td>8:00 AM</td>
+                  <td>1:1 Strength Session</td>
+                  <td>Luke</td>
+                  <td>Confirmed</td>
+                </tr>
+                <tr>
+                  <td>March 9, 2026</td>
+                  <td>7:30 AM</td>
+                  <td>Mobility Session</td>
+                  <td>Luke</td>
+                  <td>Confirmed</td>
+                </tr>
+                <tr>
+                  <td>March 13, 2026</td>
+                  <td>8:00 AM</td>
+                  <td>Progress Review</td>
+                  <td>Luke</td>
+                  <td>Pending</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Purchase History</span>
+          <h2>Packages and Transactions</h2>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Package</th>
+                  <th>Amount</th>
+                  <th>Sessions</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>February 2, 2026</td>
+                  <td>Performance Plan - 12 Sessions</td>
+                  <td>RM 2,380</td>
+                  <td>8/12 used</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>December 14, 2025</td>
+                  <td>Starter Precision - 8 Sessions</td>
+                  <td>RM 1,780</td>
+                  <td>8/8 used</td>
+                  <td>Completed</td>
+                </tr>
+                <tr>
+                  <td>October 18, 2025</td>
+                  <td>Assessment + Programming</td>
+                  <td>RM 1,600</td>
+                  <td>One-time</td>
+                  <td>Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Coach Notes</span>
+          <h2>Latest Guidance from Your Coach</h2>
+          <div class="dashboard-note-log">
+            <article class="dashboard-note">
+              <p><strong>March 3, 2026:</strong> Great progression on tempo squat. Keep rest intervals strict this week.</p>
+              <small>Coach Luke</small>
+            </article>
+            <article class="dashboard-note">
+              <p><strong>February 27, 2026:</strong> Mobility quality improved. Add thoracic opener before upper-body sessions.</p>
+              <small>Coach Luke</small>
+            </article>
+            <article class="dashboard-note">
+              <p><strong>February 20, 2026:</strong> Nutrition adherence strong. Continue protein target and hydration routine.</p>
+              <small>Coach Luke</small>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>LEGACY+ Coaching | Client Dashboard</p>
+        <p>&copy; <span data-year></span> LEGACY+ Coaching. Personalized member view.</p>
+      </footer>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard | LEGACY+ Coaching</title>
+    <meta
+      name="description"
+      content="Admin dashboard for LEGACY+ owners and managers to oversee coaches, clients, revenue, lead funnel, and commission payout systems."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-admin-emails="admin@legacycoaching.com.my">
+    <div class="dashboard-shell">
+      <header class="dashboard-topbar reveal">
+        <a class="dashboard-brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
+        <div class="dashboard-topbar-actions">
+          <a class="btn btn-ghost" href="./coach-dashboard.html">Coach Dashboard</a>
+          <button class="btn btn-secondary" id="admin-sign-out" type="button">Exit Admin</button>
+        </div>
+      </header>
+
+      <section class="admin-lock is-hidden" id="admin-lock">
+        <span class="kicker">Access Restricted</span>
+        <h2>Admin Dashboard Locked</h2>
+        <p>
+          This dashboard is available only to approved admin emails. Return to the coach dashboard and use the
+          admin access form.
+        </p>
+        <div class="section-actions">
+          <a class="btn btn-primary" href="./coach-dashboard.html">Back to Coach Dashboard</a>
+        </div>
+      </section>
+
+      <main class="dashboard-main is-hidden" id="admin-shell">
+        <section class="page-hero reveal">
+          <span class="kicker">Admin Control Panel</span>
+          <h1>Owner and Manager Oversight Dashboard</h1>
+          <p>
+            Logged in as admin: <strong id="admin-email-display">admin</strong>. This workspace centralizes coach,
+            client, revenue, and sales visibility in one interface.
+          </p>
+          <div class="stats-grid">
+            <article class="stat">
+              <h3>18 Coaches</h3>
+              <p>Active coaches monitored with role and commission settings.</p>
+            </article>
+            <article class="stat">
+              <h3>286 Clients</h3>
+              <p>Centralized active and historical client records.</p>
+            </article>
+            <article class="stat">
+              <h3>RM 412,000</h3>
+              <p>Monthly revenue tracked by package and source channel.</p>
+            </article>
+            <article class="stat">
+              <h3>62% Lead Conversion</h3>
+              <p>Lead-to-client conversion for current quarter.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Manage Coaches</span>
+          <h2>Roles, Permissions, and Commission Structures</h2>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Coach</th>
+                  <th>Role</th>
+                  <th>Commission Model</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Luke</td>
+                  <td>Head Coach</td>
+                  <td>Tiered 10-14%</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>Amelia K.</td>
+                  <td>Senior Coach</td>
+                  <td>Flat 11%</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>Daniel R.</td>
+                  <td>Coach</td>
+                  <td>Flat 9%</td>
+                  <td>Onboarding</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Manage Clients</span>
+          <h2>Centralized Client Database</h2>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Assigned Coach</th>
+                  <th>Package History</th>
+                  <th>Engagement Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sarah Lim</td>
+                  <td>Luke</td>
+                  <td>3 active / 1 completed</td>
+                  <td>Highly Engaged</td>
+                </tr>
+                <tr>
+                  <td>Alicia Tan</td>
+                  <td>Amelia K.</td>
+                  <td>2 active / 0 completed</td>
+                  <td>On Progress Plan</td>
+                </tr>
+                <tr>
+                  <td>Rahman Iskandar</td>
+                  <td>Luke</td>
+                  <td>1 active / 2 completed</td>
+                  <td>Needs Re-engagement</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Lead Funnel</span>
+          <h2>Track Inquiry to Conversion</h2>
+          <div class="funnel-grid">
+            <article class="funnel-column">
+              <h3>New Leads</h3>
+              <ul>
+                <li>12 inbound WhatsApp leads this week</li>
+                <li>5 web form submissions pending contact</li>
+                <li>Primary sources: Search, referrals, Instagram</li>
+              </ul>
+            </article>
+            <article class="funnel-column">
+              <h3>Follow-Up Stage</h3>
+              <ul>
+                <li>9 consultation calls scheduled</li>
+                <li>4 proposals pending decision</li>
+                <li>Average response time: 3.2 hours</li>
+              </ul>
+            </article>
+            <article class="funnel-column">
+              <h3>Converted Clients</h3>
+              <ul>
+                <li>7 conversions in current week</li>
+                <li>Average package value: RM 2,740</li>
+                <li>Quarter conversion trend: +8%</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Commission Tracking &amp; Payout - v1</span>
+          <h2>Semi-Automated Workflow (Manual Review Required)</h2>
+          <p class="section-copy">
+            Commissions are calculated against predefined rules, then manually reviewed and approved by an admin
+            before payout processing.
+          </p>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Coach</th>
+                  <th>Calculated Commission</th>
+                  <th>Review Status</th>
+                  <th>Payout Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Luke</td>
+                  <td>RM 18,640</td>
+                  <td>Reviewed</td>
+                  <td>Approve for payout</td>
+                </tr>
+                <tr>
+                  <td>Amelia K.</td>
+                  <td>RM 9,480</td>
+                  <td>Pending Review</td>
+                  <td>Awaiting admin check</td>
+                </tr>
+                <tr>
+                  <td>Daniel R.</td>
+                  <td>RM 4,120</td>
+                  <td>Reviewed</td>
+                  <td>Approve for payout</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Commission Tracking &amp; Payout - v2</span>
+          <h2>Fully Automated End-to-End Processing</h2>
+          <p class="section-copy">
+            Automated rules calculate commissions in real time and process scheduled payouts with transparent logs,
+            payout status, and exception alerts.
+          </p>
+          <div class="card-grid">
+            <article class="card">
+              <h3>Real-Time Calculation</h3>
+              <p>Package and session events update commission values instantly.</p>
+            </article>
+            <article class="card">
+              <h3>Scheduled Payout Runs</h3>
+              <p>Weekly or monthly payout cycles with automatic execution and receipt logs.</p>
+            </article>
+            <article class="card">
+              <h3>Audit and Exception Tracking</h3>
+              <p>Every payout action is logged with traceable admin override controls.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>LEGACY+ Coaching | Admin Dashboard</p>
+        <p>&copy; <span data-year></span> LEGACY+ Coaching. Confidential admin view.</p>
+      </footer>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coach Portal | Legacy Coaching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./portal.css" />
+  </head>
+  <body data-portal-role="coach">
+    <div class="portal-wrap" id="portal-shell">
+      <header class="portal-header">
+        <a class="portal-brand" href="./index.html" aria-label="Legacy Coaching home">
+          <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" />
+        </a>
+        <div class="portal-actions">
+          <a href="./index.html" class="btn btn-outline">Home</a>
+          <button id="sign-out" class="btn btn-solid" type="button">Sign Out</button>
+        </div>
+      </header>
+
+      <main class="portal-main">
+        <section class="panel hero-panel">
+          <h1>Coach <span>Command</span> Hub</h1>
+          <p>
+            Manage client cohorts, track progression streaks, and assign weekly missions from one role-based
+            portal.
+          </p>
+          <div class="kpi-grid">
+            <article class="kpi">
+              <p class="kpi-value">28</p>
+              <p class="kpi-label">Active Clients</p>
+            </article>
+            <article class="kpi">
+              <p class="kpi-value">91%</p>
+              <p class="kpi-label">Quest Completion</p>
+            </article>
+            <article class="kpi">
+              <p class="kpi-value">11</p>
+              <p class="kpi-label">Programs Live</p>
+            </article>
+          </div>
+        </section>
+
+        <aside class="panel side-panel">
+          <h2>Authenticated Session</h2>
+          <div class="chip-row">
+            <span class="chip">Role: <strong id="user-role">Coach</strong></span>
+            <span class="chip" id="user-email">Loading...</span>
+          </div>
+          <ul class="info-list">
+            <li>Review at-risk clients by attendance streak drop.</li>
+            <li>Approve level-up badge unlocks.</li>
+            <li>Publish next-week challenge map.</li>
+          </ul>
+        </aside>
+      </main>
+
+      <p class="portal-footer">Legacy Coaching Coach Portal</p>
+    </div>
+
+    <div class="portal-wrap">
+      <p id="portal-error" class="portal-error hidden"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js"></script>
+    <script src="./auth-client.js"></script>
+    <script src="./portal.js"></script>
+  </body>
+</html>

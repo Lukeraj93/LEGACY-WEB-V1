@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin-dashboard.html
+Disallow: /coach-dashboard.html
+Disallow: /client-dashboard.html
+
+Sitemap: https://www.legacycoaching.com.my/sitemap.xml

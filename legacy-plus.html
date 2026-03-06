@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legacy+ | Integration Modules</title>
+    <meta
+      name="description"
+      content="Legacy+ modules for packages, signups, live timetable, leaderboard, and client dashboard."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header reveal">
+      <a href="./index.html" class="brand" aria-label="Legacy+ Home">
+        <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" class="brand-logo-img" />
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a class="active" href="./legacy-plus.html">Legacy+</a>
+        <a href="./coaches.html">Coaches</a>
+        <a href="./facilities.html">Facilities</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./account.html">My Account</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="btn btn-ghost login-trigger" data-role="coach">Coach Login</button>
+        <button type="button" class="btn btn-primary login-trigger" data-role="client">Client Login</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero reveal">
+        <p class="kicker">Legacy+ Modules</p>
+        <h1>Packages, timetable, leaderboard, and client dashboard.</h1>
+        <p>
+          This page groups the app-connected member-facing modules so users can browse offers, view live
+          schedules, monitor rankings, and access account performance data.
+        </p>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-head">
+          <p class="kicker">Packages / Sign Ups</p>
+          <h2>List and allow members to sign up for packages.</h2>
+        </div>
+        <div class="packages-grid">
+          <article class="card package-card">
+            <h3>Group Class Access</h3>
+            <p class="price">RM299 / month</p>
+            <ul>
+              <li>Unlimited group classes</li>
+              <li>Leaderboard participation</li>
+              <li>Basic points rewards</li>
+            </ul>
+            <button class="btn btn-secondary" type="button">Sign Up</button>
+          </article>
+          <article class="card package-card featured">
+            <h3>Personal Coaching</h3>
+            <p class="price">RM699 / month</p>
+            <ul>
+              <li>8 PT sessions monthly</li>
+              <li>Priority scheduling</li>
+              <li>Advanced progress tracking</li>
+            </ul>
+            <button class="btn btn-primary" type="button">Sign Up</button>
+          </article>
+          <article class="card package-card">
+            <h3>Hybrid Pro</h3>
+            <p class="price">RM999 / month</p>
+            <ul>
+              <li>Group + PT combined</li>
+              <li>Coach accountability check-ins</li>
+              <li>Premium badge pathways</li>
+            </ul>
+            <button class="btn btn-secondary" type="button">Sign Up</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-head">
+          <p class="kicker">Timetable</p>
+          <h2>Live timetable of group classes and PT availability.</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="timetable-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Group Class</th>
+                <th>Coach</th>
+                <th>PT Availability</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>6:30 AM</td><td>Strength Foundations</td><td>Coach Aiman</td><td><span class="badge">2 Slots</span></td></tr>
+              <tr><td>12:30 PM</td><td>Mobility + Core</td><td>Coach Sara</td><td><span class="badge">1 Slot</span></td></tr>
+              <tr><td>6:00 PM</td><td>Conditioning Circuit</td><td>Coach Daniel</td><td><span class="badge full">Full</span></td></tr>
+              <tr><td>8:00 PM</td><td>Hypertrophy Lab</td><td>Coach Hani</td><td><span class="badge">3 Slots</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-head">
+          <p class="kicker">Leaderboard</p>
+          <h2>Public leaderboard members can track and share.</h2>
+        </div>
+        <div class="leaderboard">
+          <article class="leader-row">
+            <span class="rank">1</span>
+            <div><h3>Faris K.</h3><p>4,280 pts • 14 badges</p></div>
+            <button class="btn btn-secondary" type="button">Share</button>
+          </article>
+          <article class="leader-row">
+            <span class="rank">2</span>
+            <div><h3>Nadia R.</h3><p>4,120 pts • 13 badges</p></div>
+            <button class="btn btn-secondary" type="button">Share</button>
+          </article>
+          <article class="leader-row">
+            <span class="rank">3</span>
+            <div><h3>Jason T.</h3><p>3,980 pts • 12 badges</p></div>
+            <button class="btn btn-secondary" type="button">Share</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section panel reveal">
+        <div class="section-head">
+          <p class="kicker">Client Account / Dashboard</p>
+          <h2>Access purchases, schedule, points, and badges.</h2>
+        </div>
+        <div class="account-grid">
+          <article class="card"><h3>Purchases</h3><p>Active and past packages with usage status.</p></article>
+          <article class="card"><h3>Schedule</h3><p>Upcoming classes, PT sessions, and bookings.</p></article>
+          <article class="card"><h3>Points Earned</h3><p>Progress points from sessions and milestones.</p></article>
+          <article class="card"><h3>Badges</h3><p>Track earned achievement badges over time.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer reveal">
+      <p>Legacy+ • Integration Modules</p>
+      <p>Packages • Timetable • Leaderboard • Dashboard</p>
+    </footer>
+
+    <div class="modal" id="login-modal" aria-hidden="true" role="dialog" aria-labelledby="login-title">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel" role="document">
+        <button type="button" class="close-modal" aria-label="Close login" data-close-modal>&times;</button>
+        <p class="kicker">Portal Access</p>
+        <h3 id="login-title">Client Login</h3>
+        <div class="role-tabs" role="tablist" aria-label="Choose account type">
+          <button type="button" role="tab" aria-selected="true" class="role-tab active" data-role="client">Client</button>
+          <button type="button" role="tab" aria-selected="false" class="role-tab" data-role="coach">Coach</button>
+        </div>
+        <form class="login-form" id="login-form">
+          <label>Email<input type="email" name="loginEmail" placeholder="name@legacycoaching.com" required /></label>
+          <label>Password<input type="password" name="loginPassword" placeholder="Enter password" required /></label>
+          <label id="coach-code-field" class="hidden">Coach Access Code<input type="text" name="coachCode" placeholder="COACH-XXXX" /></label>
+          <p class="form-feedback hidden" id="login-feedback" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" id="login-submit">Login as Client</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js"></script>
+    <script src="./auth-client.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

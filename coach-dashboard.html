@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Dashboard | LEGACY+ Coaching</title>
+    <meta
+      name="description"
+      content="Coach dashboard for LEGACY+ with client profiles, coach notes, package tracking, calendar view, points tracking, and commission overview."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="dashboard-shell">
+      <header class="dashboard-topbar reveal">
+        <a class="dashboard-brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
+        <div class="dashboard-topbar-actions">
+          <a class="btn btn-ghost" href="./index.html">Back to Website</a>
+          <a class="btn btn-secondary" href="./client-dashboard.html">Client Dashboard</a>
+        </div>
+      </header>
+
+      <main class="dashboard-main">
+        <section class="page-hero reveal">
+          <span class="kicker">Coach Dashboard</span>
+          <h1>Centralized Workspace for Client Coaching Operations</h1>
+          <p>
+            A centralized workspace that gives coaches full visibility and control over clients, schedules, and
+            performance to support efficient coaching and clear progress tracking.
+          </p>
+          <div class="stats-grid">
+            <article class="stat">
+              <h3>42 Active Clients</h3>
+              <p>Clients currently under private or hybrid coaching plans.</p>
+            </article>
+            <article class="stat">
+              <h3>86 Upcoming Sessions</h3>
+              <p>Confirmed sessions across the next 14 days.</p>
+            </article>
+            <article class="stat">
+              <h3>RM 18,640 Monthly Commission</h3>
+              <p>Projected commission based on package usage this month.</p>
+            </article>
+            <article class="stat">
+              <h3>1,240 Client Points Issued</h3>
+              <p>Total points distributed for milestones and consistency rewards.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Admin Access</span>
+          <h2>Admin Control Panel (Email Protected)</h2>
+          <p class="section-copy">
+            Enter an approved admin email to open the separate admin-only dashboard.
+          </p>
+          <form class="contact-form" id="admin-gate-form" data-admin-emails="admin@legacycoaching.com.my">
+            <div class="input-row">
+              <label>
+                Admin Email
+                <input type="email" name="adminEmail" placeholder="admin@legacycoaching.com.my" required />
+              </label>
+              <label>
+                Access Action
+                <input type="text" value="Approved admin email only" disabled />
+              </label>
+            </div>
+            <div class="section-actions">
+                <button class="btn btn-primary" type="submit">Open Admin Dashboard</button>
+            </div>
+          </form>
+          <p class="dashboard-feedback" id="admin-gate-feedback">Only listed admin emails can access the admin dashboard.</p>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Client Profiles &amp; Coach Notes</span>
+          <h2>Personalized Client Oversight</h2>
+          <div class="split">
+            <article class="card">
+              <h3>Client Profiles</h3>
+              <ul class="dashboard-list">
+                <li><strong>Sarah Lim</strong> | Goal: Fat loss + strength | Status: On track (Week 8)</li>
+                <li><strong>Daniel Wong</strong> | Goal: Muscle gain | Status: Deload week</li>
+                <li><strong>Alicia Tan</strong> | Goal: Postnatal recovery | Status: Phase 2 progression</li>
+                <li><strong>Rahman Iskandar</strong> | Goal: Senior mobility | Status: Balance markers improving</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Private Coach Notes</h3>
+              <form class="contact-form" id="coach-note-form">
+                <label>
+                  Client
+                  <select name="client" required>
+                    <option value="">Select client</option>
+                    <option value="Sarah Lim">Sarah Lim</option>
+                    <option value="Daniel Wong">Daniel Wong</option>
+                    <option value="Alicia Tan">Alicia Tan</option>
+                    <option value="Rahman Iskandar">Rahman Iskandar</option>
+                  </select>
+                </label>
+                <label>
+                  Coach Note
+                  <textarea name="note" placeholder="Add follow-up action, movement cue, or risk note" required></textarea>
+                </label>
+                <button class="btn btn-secondary" type="submit">Save Note</button>
+              </form>
+              <p class="dashboard-feedback" id="coach-note-feedback">Notes are private and tied to each client profile.</p>
+              <div class="dashboard-note-log" id="coach-note-log">
+                <article class="dashboard-note">
+                  <p><strong>Sarah Lim</strong>: Progress squat depth with tempo control next session.</p>
+                  <small>Saved March 4, 2026 10:30 AM</small>
+                </article>
+                <article class="dashboard-note">
+                  <p><strong>Alicia Tan</strong>: Continue breathing + core bracing sequence before loaded sets.</p>
+                  <small>Saved March 3, 2026 4:15 PM</small>
+                </article>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Client Packages</span>
+          <h2>Session Counts, Validity, and Usage Status</h2>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Package</th>
+                  <th>Sessions</th>
+                  <th>Validity</th>
+                  <th>Usage Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sarah Lim</td>
+                  <td>Performance Plan</td>
+                  <td>8 / 12 used</td>
+                  <td>Mar 1 - Apr 30</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>Daniel Wong</td>
+                  <td>Executive Elite</td>
+                  <td>11 / 16 used</td>
+                  <td>Feb 20 - Apr 20</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>Alicia Tan</td>
+                  <td>Postnatal Journey</td>
+                  <td>6 / 10 used</td>
+                  <td>Mar 1 - May 1</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>Rahman Iskandar</td>
+                  <td>Longevity Essential</td>
+                  <td>10 / 10 used</td>
+                  <td>Jan 10 - Mar 10</td>
+                  <td>Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Calendar View</span>
+          <h2>Daily and Weekly Scheduling</h2>
+          <div class="card-grid">
+            <article class="card">
+              <h3>Monday</h3>
+              <ul class="dashboard-list">
+                <li>8:00 AM - Sarah Lim (1:1 Strength)</li>
+                <li>12:30 PM - Corporate Workshop Prep</li>
+                <li>6:30 PM - Daniel Wong (Hypertrophy)</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Tuesday</h3>
+              <ul class="dashboard-list">
+                <li>9:00 AM - Alicia Tan (Postnatal)</li>
+                <li>11:00 AM - Rahman Iskandar (Mobility)</li>
+                <li>7:00 PM - Expat Group Screening</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Wednesday</h3>
+              <ul class="dashboard-list">
+                <li>7:30 AM - Sarah Lim (Conditioning)</li>
+                <li>2:00 PM - Program Reviews</li>
+                <li>5:30 PM - Daniel Wong (Upper Body)</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Client Points Tracking</span>
+          <h2>Engagement and Loyalty Monitoring</h2>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Current Points</th>
+                  <th>Points This Week</th>
+                  <th>Milestone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sarah Lim</td>
+                  <td>420</td>
+                  <td>+40</td>
+                  <td>Consistency Badge Unlocked</td>
+                </tr>
+                <tr>
+                  <td>Daniel Wong</td>
+                  <td>390</td>
+                  <td>+25</td>
+                  <td>Strength Milestone Pending</td>
+                </tr>
+                <tr>
+                  <td>Alicia Tan</td>
+                  <td>310</td>
+                  <td>+50</td>
+                  <td>Postnatal Phase 2 Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section dashboard-section reveal">
+          <span class="kicker">Commission Overview</span>
+          <h2>Transparent Commission Breakdown</h2>
+          <div class="stats-grid">
+            <article class="stat">
+              <h3>RM 4,120</h3>
+              <p>Commission this week</p>
+            </article>
+            <article class="stat">
+              <h3>RM 18,640</h3>
+              <p>Commission this month</p>
+            </article>
+            <article class="stat">
+              <h3>RM 52,310</h3>
+              <p>Quarter-to-date earnings</p>
+            </article>
+            <article class="stat">
+              <h3>11%</h3>
+              <p>Average commission rate</p>
+            </article>
+          </div>
+          <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Client</th>
+                  <th>Package</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mar Week 1</td>
+                  <td>Sarah Lim</td>
+                  <td>Performance Plan</td>
+                  <td>RM 620</td>
+                </tr>
+                <tr>
+                  <td>Mar Week 1</td>
+                  <td>Daniel Wong</td>
+                  <td>Executive Elite</td>
+                  <td>RM 980</td>
+                </tr>
+                <tr>
+                  <td>Mar Week 1</td>
+                  <td>Alicia Tan</td>
+                  <td>Postnatal Journey</td>
+                  <td>RM 540</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>LEGACY+ Coaching | Coach Dashboard</p>
+        <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal workspace view.</p>
+      </footer>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
