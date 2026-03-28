@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Team | LEGACY+ CRM</title>
+    <meta name="description" content="LEGACY+ CRM team, coach management, and client assignment for super admin." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260328workflow1" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="clients">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Loading your admin workspace navigation...</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="./admin-dashboard.html">Home</a>
+          <a class="is-current" href="./admin-clients.html">TEAM</a>
+          <a href="./admin-leads.html">Leads</a>
+          <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Team Operations and Client Assignment</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Loading your live admin dashboard data...</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Admin focus: coach setup and review first, then client assignment, then reward approvals.</p>
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" data-crm-tone="warning">
+            <h2>Coach Roles, Presets, and KPI Review</h2>
+            <div class="split split--focus-left">
+              <article class="card" data-crm-tone="alert">
+                <h3>Assign Position, Tier, and Review Status</h3>
+                <form class="contact-form" id="admin-coach-management-form">
+                  <label>
+                    Coach
+                    <select id="admin-coach-select" name="coachId" required>
+                      <option value="">Select coach</option>
+                    </select>
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Position preset
+                      <select id="admin-coach-position" name="positionCode">
+                        <option value="">Select position</option>
+                      </select>
+                    </label>
+                    <label>
+                      Tier preset
+                      <select id="admin-coach-tier" name="commissionTier">
+                        <option value="">Select tier</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-ghost" id="admin-coach-apply-presets" type="button">Apply Presets</button>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Base commission rate (%)
+                      <input id="admin-coach-rate" name="commissionRate" type="number" min="0" max="100" step="0.1" />
+                    </label>
+                    <label>
+                      Commission cap (%)
+                      <input id="admin-coach-cap" name="commissionCap" type="number" min="0" max="100" step="0.1" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Hours minimum
+                      <input id="admin-coach-hours-min" name="hoursMinimum" type="number" min="0" step="1" />
+                    </label>
+                    <label>
+                      Hours target
+                      <input id="admin-coach-hours-target" name="hoursTarget" type="number" min="0" step="1" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Hours completed this cycle
+                      <input id="admin-coach-hours-completed" name="hoursCompleted" type="number" min="0" step="1" />
+                    </label>
+                    <label>
+                      Next quarterly review
+                      <input id="admin-coach-review-due" name="reviewDueAt" type="date" />
+                    </label>
+                  </div>
+                  <label>
+                    Bonus / uplift notes
+                    <textarea id="admin-coach-bonus-notes" name="bonusNotes" rows="3" placeholder="Example: 81-100 hrs: +4%; 100+ hrs: +8%"></textarea>
+                  </label>
+                  <div class="crm-checkbox-stack">
+                    <label class="crm-checkbox">
+                      <input id="admin-coach-assessment-complete" name="assessmentComplete" type="checkbox" />
+                      <span>Assessment completed</span>
+                    </label>
+                    <label class="crm-checkbox">
+                      <input id="admin-coach-promotion-ready" name="promotionReady" type="checkbox" />
+                      <span>Mark coach promotion-ready</span>
+                    </label>
+                  </div>
+                  <div class="crm-kpi-grid" id="admin-coach-kpi-list">
+                    <p>Select a coach or apply a tier preset to load KPI checkpoints.</p>
+                  </div>
+                  <label>
+                    Admin notes
+                    <textarea id="admin-coach-notes" name="notes" rows="4" placeholder="Internal notes for compensation, pathway, or review decisions."></textarea>
+                  </label>
+                  <div class="section-actions">
+                    <button class="btn btn-secondary" type="submit">Save Coach Settings</button>
+                    <button class="btn btn-ghost" id="admin-coach-complete-review" type="button">Complete Review + Set Next Quarter</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="admin-coach-management-feedback">
+                  Select a coach to assign presets, review KPI progress, and manually adjust commission structure.
+                </p>
+              </article>
+              <article class="card" data-crm-tone="info">
+                <h3>Current Coach Setup</h3>
+                <div class="crm-selector-summary" id="admin-coach-selection-summary">
+                  <p>Choose a coach to review their current position, KPI progress, and commission setup.</p>
+                </div>
+              </article>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Coach</th>
+                    <th>Position</th>
+                    <th>Tier</th>
+                    <th>Base Rate</th>
+                    <th>KPI Status</th>
+                    <th>Next Review</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-coach-rows">
+                  <tr>
+                    <td colspan="7">No coach records yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-ghost" id="admin-toggle-comp-plan-reference" type="button">View Full Preset Data</button>
+            </div>
+            <div class="dashboard-table-wrap" id="admin-comp-plan-reference" hidden>
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Tier</th>
+                    <th>Base Commission</th>
+                    <th>Cap</th>
+                    <th>Hours</th>
+                    <th>Promotion Gate</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-tier-preset-rows">
+                  <tr>
+                    <td colspan="5">Full preset data is loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="info">
+            <h2>Authentication Code Control</h2>
+            <div class="split split--focus-left">
+              <article class="card" data-crm-tone="warning">
+                <h3>Generate Coach Authentication Code</h3>
+                <form class="contact-form" id="admin-coach-code-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Coach email
+                      <input type="email" name="recipientEmail" placeholder="coach@legacycoaching.com.my" required />
+                    </label>
+                    <label>
+                      Coach full name
+                      <input type="text" name="recipientName" placeholder="Coach full name" />
+                    </label>
+                  </div>
+                  <label>
+                    Admin note
+                    <input type="text" name="notes" placeholder="Optional note for the coach record" />
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Generate Coach Code</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-coach-code-feedback">
+                  Coach authentication codes can only be generated from the admin team workspace.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="info">
+                <h3>Generate Client Authentication Code</h3>
+                <form class="contact-form" id="admin-client-code-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Client email
+                      <input type="email" name="recipientEmail" placeholder="client@example.com" required />
+                    </label>
+                    <label>
+                      Client full name
+                      <input type="text" name="recipientName" placeholder="Client full name" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Assign coach
+                      <select name="assignedCoachId" id="admin-client-code-coach">
+                        <option value="">No coach assigned yet</option>
+                      </select>
+                    </label>
+                    <label>
+                      Admin note
+                      <input type="text" name="notes" placeholder="Optional note for onboarding or assignment" />
+                    </label>
+                  </div>
+                  <button class="btn btn-secondary" type="submit">Generate Client Code</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-client-code-feedback">
+                  Client codes can be generated here or from the coach client workspace.
+                </p>
+              </article>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Code</th>
+                    <th>Status</th>
+                    <th>Expires</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-auth-code-rows">
+                  <tr>
+                    <td colspan="6">No authentication codes generated yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="info">
+            <h2>Team Roster and Coach Assignment</h2>
+            <div class="split split--focus-right">
+              <article class="card" data-crm-tone="info">
+                <h3>Assign Coach to Client</h3>
+                <form class="contact-form" id="admin-assignment-form">
+                  <label>
+                    Coach
+                    <select name="coachId" id="admin-assignment-coach" required>
+                      <option value="">Select coach</option>
+                    </select>
+                  </label>
+                  <label>
+                    Client
+                    <select name="clientId" id="admin-assignment-client" required>
+                      <option value="">Select client</option>
+                    </select>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Create Assignment</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-assignment-feedback">Assignments control coach/client access across the app.</p>
+              </article>
+              <article class="card" data-crm-tone="info">
+                <h3>Current Client Roster</h3>
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Client</th>
+                        <th>Assigned Coach</th>
+                        <th>Package History</th>
+                        <th>Engagement Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-client-rows">
+                      <tr>
+                        <td colspan="4">No client records yet.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="warning">
+            <h2>Coach-Issued Rewards Pending Super Admin Review</h2>
+            <p class="section-copy">
+              Approving a reward request updates the client's live XP or gym coin totals. Planner-generated items now show their source module and Codex action so you can review them without guessing where they came from.
+            </p>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Requested By</th>
+                    <th>Source</th>
+                    <th>Reward</th>
+                    <th>Reason</th>
+                    <th>Review Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-reward-rows">
+                  <tr>
+                    <td colspan="7">No reward approvals pending.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Team</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260327qa2"></script>
+    <script src="./auth-client.js?v=20260327qa2"></script>
+    <script src="./dashboard-auth.js"></script>
+    <script src="./account-shell.js?v=20260328admin1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./assets/legacy-codex-bundle.js?v=20260324a"></script>
+    <script src="./admin-dashboard.js?v=20260328qa1"></script>
+  </body>
+</html>
