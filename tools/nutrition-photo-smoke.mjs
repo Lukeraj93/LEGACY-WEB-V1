@@ -231,11 +231,43 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
 });
 
 async function signIn(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error || !data?.session?.access_token || !data?.user?.id) {
-    throw new Error(error?.message || `Unable to sign in as ${email}.`);
+  const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+      Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const text = await response.text();
+  let payload = {};
+  try {
+    payload = text ? JSON.parse(text) : {};
+  } catch (_) {
+    payload = { raw: text };
   }
-  return data;
+
+  if (!response.ok || !payload?.access_token || !payload?.user?.id) {
+    throw new Error(
+      payload?.error_description
+        || payload?.msg
+        || payload?.error
+        || `Unable to sign in as ${email}.`
+    );
+  }
+
+  return {
+    session: {
+      access_token: payload.access_token,
+      refresh_token: payload.refresh_token || "",
+      token_type: payload.token_type || "bearer",
+      expires_in: payload.expires_in || 0,
+      expires_at: payload.expires_at || null,
+    },
+    user: payload.user,
+  };
 }
 
 async function api(path, { token = "", method = "GET", body } = {}) {
