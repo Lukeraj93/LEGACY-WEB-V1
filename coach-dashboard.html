@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Coach Dashboard | LEGACY+ Coaching</title>
-    <meta
-      name="description"
-      content="Coach dashboard for LEGACY+ with client profiles, coach notes, package tracking, calendar view, points tracking, and commission overview."
-    />
+    <title>Coach Home | LEGACY+ Coach</title>
+    <meta name="description" content="Private coach home for roster visibility, schedule management, and commission tracking." />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,295 +12,352 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
   </head>
-  <body>
-    <div class="dashboard-shell">
-      <header class="dashboard-topbar reveal">
-        <a class="dashboard-brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
-        <div class="dashboard-topbar-actions">
-          <a class="btn btn-ghost" href="./index.html">Back to Website</a>
-          <a class="btn btn-secondary" href="./client-dashboard.html">Client Dashboard</a>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="home">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, programming, schedule, and payouts.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a class="is-current" href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
         </div>
-      </header>
+      </aside>
 
-      <main class="dashboard-main">
-        <section class="page-hero reveal">
-          <span class="kicker">Coach Dashboard</span>
-          <h1>Centralized Workspace for Client Coaching Operations</h1>
-          <p>
-            A centralized workspace that gives coaches full visibility and control over clients, schedules, and
-            performance to support efficient coaching and clear progress tracking.
-          </p>
-          <div class="stats-grid">
-            <article class="stat">
-              <h3>42 Active Clients</h3>
-              <p>Clients currently under private or hybrid coaching plans.</p>
-            </article>
-            <article class="stat">
-              <h3>86 Upcoming Sessions</h3>
-              <p>Confirmed sessions across the next 14 days.</p>
-            </article>
-            <article class="stat">
-              <h3>RM 18,640 Monthly Commission</h3>
-              <p>Projected commission based on package usage this month.</p>
-            </article>
-            <article class="stat">
-              <h3>1,240 Client Points Issued</h3>
-              <p>Total points distributed for milestones and consistency rewards.</p>
-            </article>
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Coach Home</span>
+            <h1>Centralized Coaching Operations</h1>
+            <p class="dashboard-feedback" id="coach-dashboard-status">Syncing your live coach dashboard data.</p>
           </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Admin Access</span>
-          <h2>Admin Control Panel (Email Protected)</h2>
-          <p class="section-copy">
-            Enter an approved admin email to open the separate admin-only dashboard.
-          </p>
-          <form class="contact-form" id="admin-gate-form" data-admin-emails="admin@legacycoaching.com.my">
-            <div class="input-row">
-              <label>
-                Admin Email
-                <input type="email" name="adminEmail" placeholder="admin@legacycoaching.com.my" required />
-              </label>
-              <label>
-                Access Action
-                <input type="text" value="Approved admin email only" disabled />
-              </label>
+          <div class="crm-page-meta">
+            <p>Coach focus: clear requests first, protect schedule quality, then track KPI and payout progress.</p>
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
             </div>
-            <div class="section-actions">
-                <button class="btn btn-primary" type="submit">Open Admin Dashboard</button>
-            </div>
-          </form>
-          <p class="dashboard-feedback" id="admin-gate-feedback">Only listed admin emails can access the admin dashboard.</p>
-        </section>
+          </div>
+        </header>
 
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Client Profiles &amp; Coach Notes</span>
-          <h2>Personalized Client Oversight</h2>
-          <div class="split">
-            <article class="card">
-              <h3>Client Profiles</h3>
-              <ul class="dashboard-list">
-                <li><strong>Sarah Lim</strong> | Goal: Fat loss + strength | Status: On track (Week 8)</li>
-                <li><strong>Daniel Wong</strong> | Goal: Muscle gain | Status: Deload week</li>
-                <li><strong>Alicia Tan</strong> | Goal: Postnatal recovery | Status: Phase 2 progression</li>
-                <li><strong>Rahman Iskandar</strong> | Goal: Senior mobility | Status: Balance markers improving</li>
-              </ul>
-            </article>
-            <article class="card">
-              <h3>Private Coach Notes</h3>
-              <form class="contact-form" id="coach-note-form">
-                <label>
-                  Client
-                  <select name="client" required>
-                    <option value="">Select client</option>
-                    <option value="Sarah Lim">Sarah Lim</option>
-                    <option value="Daniel Wong">Daniel Wong</option>
-                    <option value="Alicia Tan">Alicia Tan</option>
-                    <option value="Rahman Iskandar">Rahman Iskandar</option>
-                  </select>
-                </label>
-                <label>
-                  Coach Note
-                  <textarea name="note" placeholder="Add follow-up action, movement cue, or risk note" required></textarea>
-                </label>
-                <button class="btn btn-secondary" type="submit">Save Note</button>
-              </form>
-              <p class="dashboard-feedback" id="coach-note-feedback">Notes are private and tied to each client profile.</p>
-              <div class="dashboard-note-log" id="coach-note-log">
-                <article class="dashboard-note">
-                  <p><strong>Sarah Lim</strong>: Progress squat depth with tempo control next session.</p>
-                  <small>Saved March 4, 2026 10:30 AM</small>
-                </article>
-                <article class="dashboard-note">
-                  <p><strong>Alicia Tan</strong>: Continue breathing + core bracing sequence before loaded sets.</p>
-                  <small>Saved March 3, 2026 4:15 PM</small>
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal coach-kpi-section" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">Snapshot</span>
+            <h2>What Needs Your Attention First</h2>
+            <div class="stats-grid crm-metric-grid">
+              <article class="stat crm-stat" data-crm-tone="info">
+                <p class="crm-stat__label">Client Load</p>
+                <p class="crm-stat__value" id="coach-stat-clients">0</p>
+                <p class="crm-stat__detail" id="coach-stat-clients-note">Assigned client roster will appear here.</p>
+              </article>
+              <article class="stat crm-stat" data-crm-tone="neutral">
+                <p class="crm-stat__label">Calendar Load</p>
+                <p class="crm-stat__value" id="coach-stat-sessions">0</p>
+                <p class="crm-stat__detail" id="coach-stat-sessions-note">Confirmed sessions across the next 14 days.</p>
+              </article>
+              <article class="stat crm-stat" data-crm-tone="neutral">
+                <p class="crm-stat__label">Commission</p>
+                <p class="crm-stat__value" id="coach-stat-commission">RM 0.00</p>
+                <p class="crm-stat__detail" id="coach-stat-commission-note">Commission records will appear as sessions are processed.</p>
+              </article>
+              <article class="stat crm-stat" data-crm-tone="neutral">
+                <p class="crm-stat__label">Reward Queue</p>
+                <p class="crm-stat__value" id="coach-stat-points">0</p>
+                <p class="crm-stat__detail" id="coach-stat-points-note">Coach-issued rewards wait for super admin approval.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Weekly Coach Brief</span>
+              <h2>What The Roster Is Telling You Right Now</h2>
+              <div class="coach-ops-brief-card" id="coach-ops-brief-card">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading weekly coaching brief</strong>
+                  <p>Your live roster summary, attention points, and coaching priorities will appear here as soon as the dashboard sync finishes.</p>
                 </article>
               </div>
             </article>
-          </div>
-        </section>
+            <article class="card" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Automation + Segments</span>
+              <h2>Saved Follow-Up Systems</h2>
+              <div class="coach-ops-summary-grid" id="coach-ops-summary-grid">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading automation health</strong>
+                  <p>Your saved automations and active follow-up coverage will appear here once the operations snapshot is ready.</p>
+                </article>
+              </div>
+              <div class="coach-ops-segment-stack" id="coach-ops-segment-stack">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading saved segment highlights</strong>
+                  <p>Your strongest roster segments will appear here once the coach operations engine finishes calculating them.</p>
+                </article>
+              </div>
+            </article>
+          </section>
 
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Client Packages</span>
-          <h2>Session Counts, Validity, and Usage Status</h2>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Client</th>
-                  <th>Package</th>
-                  <th>Sessions</th>
-                  <th>Validity</th>
-                  <th>Usage Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Sarah Lim</td>
-                  <td>Performance Plan</td>
-                  <td>8 / 12 used</td>
-                  <td>Mar 1 - Apr 30</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Daniel Wong</td>
-                  <td>Executive Elite</td>
-                  <td>11 / 16 used</td>
-                  <td>Feb 20 - Apr 20</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Alicia Tan</td>
-                  <td>Postnatal Journey</td>
-                  <td>6 / 10 used</td>
-                  <td>Mar 1 - May 1</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Rahman Iskandar</td>
-                  <td>Longevity Essential</td>
-                  <td>10 / 10 used</td>
-                  <td>Jan 10 - Mar 10</td>
-                  <td>Completed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+          <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+            <article class="card" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Coach Intelligence</span>
+              <h2>Roster Health, Adherence, And Review Pressure</h2>
+              <div class="coach-ops-intelligence-grid" id="coach-ops-intelligence-grid">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading roster intelligence</strong>
+                  <p>Risk patterns, review pressure, and roster health indicators will appear here once the live planner data is ready.</p>
+                </article>
+              </div>
+            </article>
+            <article class="card" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Immediate Focus</span>
+              <h2>High-Leverage Moves You Can Make Today</h2>
+              <div class="coach-ops-focus-stack" id="coach-ops-focus-stack">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading coach focus actions</strong>
+                  <p>High-leverage next actions for your roster will appear here as soon as the daily coaching brief finishes loading.</p>
+                </article>
+              </div>
+            </article>
+          </section>
 
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Calendar View</span>
-          <h2>Daily and Weekly Scheduling</h2>
-          <div class="card-grid">
-            <article class="card">
-              <h3>Monday</h3>
-              <ul class="dashboard-list">
-                <li>8:00 AM - Sarah Lim (1:1 Strength)</li>
-                <li>12:30 PM - Corporate Workshop Prep</li>
-                <li>6:30 PM - Daniel Wong (Hypertrophy)</li>
+          <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+            <article class="card" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Booking Queue</span>
+              <h2>Pending Requests</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Client</th>
+                      <th>Request</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-booking-request-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="6">
+                        <div class="dashboard-table__empty">
+                          <strong>No booking requests yet.</strong>
+                          <p>New client requests will land here first so you can approve, decline, or re-route them without leaving the dashboard.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Assigned Roster</span>
+              <h2>Client Summary</h2>
+              <ul class="dashboard-list" id="coach-client-roster">
+                <li class="dashboard-inline-placeholder">
+                  <strong>Loading assigned clients</strong>
+                  <p>Your linked roster will appear here with package, training, and readiness context once the live data sync completes.</p>
+                </li>
               </ul>
             </article>
-            <article class="card">
-              <h3>Tuesday</h3>
-              <ul class="dashboard-list">
-                <li>9:00 AM - Alicia Tan (Postnatal)</li>
-                <li>11:00 AM - Rahman Iskandar (Mobility)</li>
-                <li>7:00 PM - Expat Group Screening</li>
-              </ul>
-            </article>
-            <article class="card">
-              <h3>Wednesday</h3>
-              <ul class="dashboard-list">
-                <li>7:30 AM - Sarah Lim (Conditioning)</li>
-                <li>2:00 PM - Program Reviews</li>
-                <li>5:30 PM - Daniel Wong (Upper Body)</li>
-              </ul>
-            </article>
-          </div>
-        </section>
+          </section>
 
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Client Points Tracking</span>
-          <h2>Engagement and Loyalty Monitoring</h2>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Client</th>
-                  <th>Current Points</th>
-                  <th>Points This Week</th>
-                  <th>Milestone</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Sarah Lim</td>
-                  <td>420</td>
-                  <td>+40</td>
-                  <td>Consistency Badge Unlocked</td>
-                </tr>
-                <tr>
-                  <td>Daniel Wong</td>
-                  <td>390</td>
-                  <td>+25</td>
-                  <td>Strength Milestone Pending</td>
-                </tr>
-                <tr>
-                  <td>Alicia Tan</td>
-                  <td>310</td>
-                  <td>+50</td>
-                  <td>Postnatal Phase 2 Completed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">Upcoming Schedule</span>
+            <h2>Your Sessions and Completion Queue</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Client</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="coach-session-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No confirmed sessions yet.</strong>
+                        <p>Approved bookings and your session completion queue will appear here once the calendar starts filling up.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
 
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Commission Overview</span>
-          <h2>Transparent Commission Breakdown</h2>
-          <div class="stats-grid">
-            <article class="stat">
-              <h3>RM 4,120</h3>
-              <p>Commission this week</p>
-            </article>
-            <article class="stat">
-              <h3>RM 18,640</h3>
-              <p>Commission this month</p>
-            </article>
-            <article class="stat">
-              <h3>RM 52,310</h3>
-              <p>Quarter-to-date earnings</p>
-            </article>
-            <article class="stat">
-              <h3>11%</h3>
-              <p>Average commission rate</p>
-            </article>
-          </div>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Period</th>
-                  <th>Client</th>
-                  <th>Package</th>
-                  <th>Commission</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Mar Week 1</td>
-                  <td>Sarah Lim</td>
-                  <td>Performance Plan</td>
-                  <td>RM 620</td>
-                </tr>
-                <tr>
-                  <td>Mar Week 1</td>
-                  <td>Daniel Wong</td>
-                  <td>Executive Elite</td>
-                  <td>RM 980</td>
-                </tr>
-                <tr>
-                  <td>Mar Week 1</td>
-                  <td>Alicia Tan</td>
-                  <td>Postnatal Journey</td>
-                  <td>RM 540</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </main>
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">KPI Snapshot</span>
+            <h2>Your position, review timing, and promotion path</h2>
+            <div class="stats-grid">
+              <article class="stat" data-crm-tone="neutral">
+                <h3 id="coach-kpi-position">Not assigned</h3>
+                <p>Current position preset</p>
+              </article>
+              <article class="stat" data-crm-tone="neutral">
+                <h3 id="coach-kpi-tier">No tier set</h3>
+                <p>Current compensation tier</p>
+              </article>
+              <article class="stat" data-crm-tone="neutral">
+                <h3 id="coach-kpi-hours">0 / 0 hrs</h3>
+                <p>Tracked hours against target</p>
+              </article>
+              <article class="stat" data-crm-tone="neutral">
+                <h3 id="coach-kpi-review-date">No review date</h3>
+                <p>Next quarterly review</p>
+              </article>
+            </div>
+            <div class="split">
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Checklist</span>
+                <h3>What admin is tracking</h3>
+                <ul class="dashboard-list" id="coach-kpi-list">
+                  <li>Your KPI checklist will appear here once a tier is assigned.</li>
+                </ul>
+              </article>
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Commission Plan</span>
+                <h3>Your payout summary</h3>
+                <ul class="dashboard-list" id="coach-comp-plan-list">
+                  <li>Your base rate, cap, and bonus rules will appear here.</li>
+                </ul>
+              </article>
+            </div>
+          </section>
 
-      <footer class="site-footer">
-        <p>LEGACY+ Coaching | Coach Dashboard</p>
-        <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal workspace view.</p>
-      </footer>
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">Coach Leaderboard</span>
+            <h2>Coach XP Momentum Board</h2>
+            <div class="leaderboard-panel">
+              <p class="leaderboard-panel__intro">
+                Ranked by approved coach XP first, then impact and coaching consistency so the board rewards contribution, not payout comparison.
+              </p>
+              <div class="leaderboard-list" id="coach-leaderboard-rows">
+                <article class="leaderboard-row leaderboard-row--empty">
+                  <strong>Loading the live coach leaderboard</strong>
+                  <p>Quarter-to-date standings will appear here as soon as the live coaching activity and impact data finish syncing.</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Home</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach view.</p>
+        </footer>
+      </div>
     </div>
 
-    <script src="./script.js"></script>
+    <div id="coach-session-note-overlay" class="crm-overlay" hidden>
+      <button class="crm-overlay-backdrop" type="button" data-session-note-close aria-label="Close session note panel"></button>
+      <section class="crm-drawer coach-session-note-drawer" role="dialog" aria-modal="true" aria-labelledby="coach-session-note-title">
+        <div class="crm-drawer__head">
+          <div>
+            <p class="crm-drawer__eyebrow" id="coach-session-note-eyebrow">Session Notes</p>
+            <h2 id="coach-session-note-title">Complete session with notes</h2>
+          </div>
+          <button class="crm-icon-close" type="button" data-session-note-close aria-label="Close session note panel">×</button>
+        </div>
+        <div class="crm-drawer__body">
+          <p class="dashboard-feedback coach-session-note-intro" id="coach-session-note-intro">
+            Capture what happened in the session and what the client should do next.
+          </p>
+          <div class="coach-session-note-summary-grid" aria-label="Session summary">
+            <article class="coach-session-note-summary-card">
+              <span>Client</span>
+              <strong id="coach-session-note-client">Client</strong>
+            </article>
+            <article class="coach-session-note-summary-card">
+              <span>Session</span>
+              <strong id="coach-session-note-type">Coaching Session</strong>
+            </article>
+            <article class="coach-session-note-summary-card">
+              <span>Scheduled</span>
+              <strong id="coach-session-note-when">Awaiting confirmation</strong>
+            </article>
+            <article class="coach-session-note-summary-card">
+              <span>Note Status</span>
+              <strong id="coach-session-note-status">Pending</strong>
+            </article>
+          </div>
+          <div class="coach-session-note-callout">
+            <strong>Coach XP note window</strong>
+            <p id="coach-session-note-reward">Save notes within 24 hours of completion to qualify for COA-NOTE.</p>
+          </div>
+          <p class="coach-session-note-meta" id="coach-session-note-existing"></p>
+          <form class="contact-form coach-session-note-form" id="coach-session-note-form">
+            <label>
+              <span>Coaching takeaway</span>
+              <textarea
+                id="coach-session-note-field"
+                name="coachNote"
+                placeholder="What changed, clicked, or needed attention in this session?"
+                required
+              ></textarea>
+            </label>
+            <label>
+              <span>Next step for the client</span>
+              <textarea
+                id="coach-session-next-step-field"
+                name="nextStep"
+                placeholder="What should the client do before the next session?"
+                required
+              ></textarea>
+            </label>
+            <p class="dashboard-feedback" id="coach-session-note-feedback"></p>
+            <div class="section-actions coach-session-note-actions">
+              <button class="btn btn-ghost" type="button" data-session-note-close>Close</button>
+              <button class="btn btn-ghost" type="button" id="coach-session-note-edit" hidden>Edit Notes</button>
+              <button class="btn btn-secondary" type="submit" id="coach-session-note-submit">Save Notes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./coach-dashboard.js?v=20260403scheduleperf1"></script>
   </body>
 </html>

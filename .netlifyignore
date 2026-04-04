@@ -1,0 +1,19 @@
+.DS_Store
+node_modules/
+.tmp-*/
+docs/
+tests/
+XP coach gamification/tests/
+XP gamification/tests/
+PT Pricing/
+Programming/
+Training Library/
+tools/
+DATABASE_SCHEMA.docx
+assets/CRM Pictures/path_tiers/
+assets/store-generated/coach-performance-polo-blueprint/
+assets/store-generated/coach-performance-polo-delivery 2/
+assets/store-generated/coach-performance-polo-delivery.zip
+assets/store-generated/coach-performance-polo-delivery/
+assets/store-generated/coach-performance-polo-specs/
+assets/store-generated/coach-performance-polo-variants/

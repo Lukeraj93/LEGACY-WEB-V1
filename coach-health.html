@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Health | LEGACY+ Coach</title>
+    <meta
+      name="description"
+      content="Private coach health workspace for check-ins, progress-photo follow-up, health review, and roster operations."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="health" data-program-workspace="health">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a class="is-current" href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Health Desk</span>
+            <h1>Check-Ins, Progress Photos, and Health Review</h1>
+            <p class="dashboard-feedback" id="coach-programming-status">
+              Syncing your live health desk.
+            </p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <p>
+              Keep check-in templates, due forms, progress-photo cadence, and health follow-up separate from nutrition
+              delivery and training programming.
+            </p>
+          </div>
+        </header>
+
+        <nav class="crm-page-tabs reveal" aria-label="Coach health workspace tabs">
+          <button class="crm-page-tab is-active" type="button" data-coach-programming-tab="reviews">Review Queue</button>
+          <button class="crm-page-tab" type="button" data-coach-programming-tab="delivery">Forms + Scheduling</button>
+          <button class="crm-page-tab" type="button" data-coach-programming-tab="operations">Operations</button>
+        </nav>
+
+        <main class="dashboard-main crm-section-grid">
+          <div class="crm-page-panel is-active" data-coach-programming-panel="reviews">
+            <section class="section dashboard-section reveal" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Planner Review Queue</span>
+              <h2>Coach Health Review And Follow-Up</h2>
+              <p class="coach-programming-note">
+                Review submitted health forms, mark progress-photo checkpoints, and keep recovery follow-up moving before it stalls client momentum.
+              </p>
+              <article class="card coach-programming-guide-card" id="coach-program-review-empty-state" data-crm-tone="neutral" hidden>
+                <span class="kicker kicker--accent">Getting Started</span>
+                <h3>No Assigned Clients Yet</h3>
+                <p class="coach-programming-note">
+                  Your health queue fills only after clients are linked to you. Start in Clients, assign your roster, then come back here to review forms and progress photos.
+                </p>
+                <div class="button-row">
+                  <a class="btn btn-secondary" href="./coach-clients.html">Open Clients</a>
+                </div>
+              </article>
+              <div class="stats-grid crm-metric-grid coach-programming-review-summary-grid" id="coach-program-review-summary-grid">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading coach review metrics</strong>
+                  <p>Pending health forms, progress-photo follow-up, and overdue review pressure will appear here as soon as the queue sync completes.</p>
+                </article>
+              </div>
+              <div class="card coach-programming-review-toolbar-card" data-crm-tone="neutral">
+                <div class="input-row account-input-row coach-programming-review-toolbar">
+                  <label>
+                    Queue focus
+                    <select id="coach-program-review-focus">
+                      <option value="all">All queue items</option>
+                      <option value="health_followup">Health follow-up</option>
+                      <option value="high_risk">High-risk clients only</option>
+                    </select>
+                  </label>
+                  <label>
+                    Client
+                    <select id="coach-program-review-client">
+                      <option value="">All assigned clients</option>
+                    </select>
+                  </label>
+                  <label>
+                    Sort
+                    <select id="coach-program-review-sort">
+                      <option value="priority">Highest priority first</option>
+                      <option value="newest">Newest first</option>
+                      <option value="oldest">Oldest first</option>
+                      <option value="client">Client name</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="coach-programming-review-stack" id="coach-program-review-grid">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading planner review queue</strong>
+                  <p>Your live health review items will appear here once the review feed and filters finish loading.</p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="delivery" hidden>
+            <nav class="coach-programming-workspace-subtabs reveal" aria-label="Health workspace sections">
+              <button class="coach-programming-workspace-subtab is-active" type="button" data-coach-programming-subtab="plans">Health Forms</button>
+              <button class="coach-programming-workspace-subtab" type="button" data-coach-programming-subtab="actions">Scheduling</button>
+              <button class="coach-programming-workspace-subtab" type="button" data-coach-programming-subtab="library">Library</button>
+            </nav>
+
+            <div class="coach-programming-subpanel" data-coach-programming-subpanel="plans">
+              <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+                <article class="card coach-programming-guide-card" id="coach-program-delivery-empty-state" data-crm-tone="neutral" hidden>
+                  <span class="kicker kicker--accent">Getting Started</span>
+                  <h2>No Assigned Clients Yet</h2>
+                  <p class="coach-programming-note">
+                    Link your first client before building check-in templates and due forms. Once your roster is live, this becomes the place to manage health cadence cleanly.
+                  </p>
+                  <div class="button-row">
+                    <a class="btn btn-secondary" href="./coach-clients.html">Open Clients</a>
+                  </div>
+                </article>
+
+                <article class="card" data-crm-tone="warning" id="coach-program-delivery-plan-card">
+                  <span class="kicker kicker--accent">Health Template Builder</span>
+                  <h2>Create The Health Form You Want Clients To Answer</h2>
+                  <form class="contact-form" id="coach-program-checkin-template-form">
+                    <div class="input-row account-input-row">
+                      <label>
+                        Template title
+                        <input type="text" name="title" placeholder="Weekly Recovery Review" required />
+                      </label>
+                      <label>
+                        Cadence
+                        <select name="cadence" id="coach-program-checkin-cadence">
+                          <option value="weekly" selected>Weekly</option>
+                          <option value="daily">Daily</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Form type
+                        <select name="formType" id="coach-program-checkin-form-type">
+                          <option value="weekly_checkin" selected>Weekly Health Review</option>
+                          <option value="daily_adherence">Daily Recovery Pulse</option>
+                        </select>
+                      </label>
+                      <label>
+                        Template status
+                        <select name="isActive">
+                          <option value="true" selected>Active</option>
+                          <option value="false">Archived</option>
+                        </select>
+                      </label>
+                    </div>
+                    <label>
+                      Health guidance
+                      <textarea
+                        name="description"
+                        placeholder="Tell the client what this form is for, what signals matter most, and how detailed their answers should be."
+                      ></textarea>
+                    </label>
+
+                    <div class="coach-programming-day-stack" id="coach-program-checkin-questions"></div>
+
+                    <div class="section-actions section-actions--compact">
+                      <button class="btn btn-ghost" id="coach-program-add-question" type="button">Add Question</button>
+                      <button class="btn btn-primary" type="submit">Save Health Template</button>
+                    </div>
+                  </form>
+                  <p class="dashboard-feedback" id="coach-program-checkin-template-feedback">
+                    Use required questions for sleep, recovery, soreness, stress, digestion, schedule barriers, and next-step coaching adjustments.
+                  </p>
+                </article>
+
+                <article class="card" data-crm-tone="neutral">
+                  <span class="kicker kicker--accent">Nutrition Is Separate</span>
+                  <h2>Meal Plans And Food Library Stay In Nutrition</h2>
+                  <p class="coach-programming-note">
+                    Keep this desk focused on recovery, readiness, and progress-photo cadence. Open Nutrition when you need plans, recipes, or food-library work.
+                  </p>
+                  <div class="button-row">
+                    <a class="btn btn-secondary" href="./coach-programming.html">Open Nutrition Workspace</a>
+                  </div>
+                </article>
+              </section>
+            </div>
+
+            <div class="coach-programming-subpanel" data-coach-programming-subpanel="actions" hidden>
+              <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+                <article class="card" data-crm-tone="info">
+                  <span class="kicker kicker--accent">Health Scheduling</span>
+                  <h2>Assign A Due Health Form To A Client</h2>
+                  <form class="contact-form" id="coach-program-schedule-checkin-form">
+                    <div class="input-row account-input-row">
+                      <label>
+                        Client
+                        <select name="clientId" id="coach-program-checkin-client" required>
+                          <option value="">Select client</option>
+                        </select>
+                      </label>
+                      <label>
+                        Health template
+                        <select name="templateId" id="coach-program-checkin-template-select" required>
+                          <option value="">Select template</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Related program
+                        <select name="assignmentId" id="coach-program-checkin-assignment">
+                          <option value="">No linked program</option>
+                        </select>
+                      </label>
+                      <label>
+                        Due at
+                        <input type="datetime-local" name="dueAt" id="coach-program-checkin-due-at" required />
+                      </label>
+                    </div>
+                    <div class="section-actions section-actions--compact">
+                      <button class="btn btn-primary" type="submit">Schedule Health Form</button>
+                    </div>
+                  </form>
+                  <p class="dashboard-feedback" id="coach-program-schedule-checkin-feedback">
+                    Scheduling creates a due health update in the client planner, so missed recovery and readiness updates can actually be tracked.
+                  </p>
+                </article>
+
+                <article class="card" data-crm-tone="neutral">
+                  <span class="kicker kicker--accent">Progress Photos</span>
+                  <h2>Review Progress Cadence Alongside Check-Ins</h2>
+                  <p class="coach-programming-note">
+                    Progress-photo follow-up stays in this desk too, so you can keep readiness signals and body-composition checkpoints in one health flow.
+                  </p>
+                </article>
+              </section>
+            </div>
+
+            <div class="coach-programming-subpanel" data-coach-programming-subpanel="library" hidden>
+              <section class="section dashboard-section reveal" data-crm-tone="neutral">
+                <article class="card" data-crm-tone="neutral">
+                  <span class="kicker kicker--accent">Health Library</span>
+                  <h2>Health Templates Ready To Use</h2>
+                  <div class="coach-programming-template-grid" id="coach-program-delivery-library">
+                    <p class="coach-programming-empty">Loading live health templates...</p>
+                  </div>
+                </article>
+              </section>
+            </div>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="operations" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="info">
+              <span class="kicker kicker--accent">Roster Operations</span>
+              <h2>Run Health Follow-Up Across Your Entire Roster</h2>
+              <p class="coach-programming-note">
+                Use one weekly operations board to spot overdue health forms, progress-photo refresh needs, and quiet clients without opening each profile one-by-one.
+              </p>
+              <article class="card coach-programming-guide-card" id="coach-program-operations-empty-state" data-crm-tone="neutral" hidden>
+                <span class="kicker kicker--accent">Getting Started</span>
+                <h3>No Assigned Clients Yet</h3>
+                <p class="coach-programming-note">
+                  Operations becomes useful once you have a live roster. Link clients first, then come back here for follow-up and automated reminders.
+                </p>
+                <div class="button-row">
+                  <a class="btn btn-secondary" href="./coach-clients.html">Open Clients</a>
+                </div>
+              </article>
+              <div class="stats-grid crm-metric-grid coach-programming-ops-summary-grid" id="coach-program-ops-summary-grid">
+                <p class="coach-programming-empty">Loading operations summary...</p>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral" id="coach-program-ops-workflow-section">
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Bulk Nudges</span>
+                <h2>Prompt The Right Clients In One Pass</h2>
+                <p class="coach-programming-note">
+                  Send focused nudges to selected clients based on overdue health forms, quiet planner usage, or stale progress-photo cadence.
+                </p>
+                <form class="contact-form" id="coach-program-ops-nudge-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Nudge type
+                      <select id="coach-program-ops-nudge-category" required>
+                        <option value="checkin">Health check-in reminder</option>
+                        <option value="progress_photo">Progress photo request</option>
+                      </select>
+                    </label>
+                    <label>
+                      Optional coach note
+                      <textarea
+                        id="coach-program-ops-nudge-message"
+                        rows="2"
+                        placeholder="Example: Submit your recovery check-in tonight so I can adjust tomorrow's session."
+                      ></textarea>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-secondary" type="button" id="coach-program-ops-select-checkin">Select overdue health</button>
+                    <button class="btn btn-secondary" type="button" id="coach-program-ops-select-quiet">Select quiet roster</button>
+                    <button class="btn btn-secondary" type="button" id="coach-program-ops-clear">Clear</button>
+                  </div>
+                  <div class="coach-programming-bulk-list coach-programming-bulk-list--ops" id="coach-program-ops-nudge-list">
+                    <p class="coach-programming-empty">Loading coach operations nudge list...</p>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-primary" type="submit">Send nudge</button>
+                  </div>
+                  <p class="dashboard-feedback" id="coach-program-ops-nudge-feedback" aria-live="polite"></p>
+                </form>
+              </article>
+
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Weekly Operations Board</span>
+                <h2>Which Clients Need Attention This Week</h2>
+                <div class="coach-programming-template-grid coach-programming-template-grid--ops" id="coach-program-ops-board">
+                  <p class="coach-programming-empty">Loading weekly roster operations board...</p>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral" id="coach-program-ops-advanced-section">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Smart Segments</span>
+                <h2>Save Health Filters You Will Reuse Every Week</h2>
+                <p class="coach-programming-note">
+                  Create reusable roster segments for overdue health follow-up, photo refresh, or quiet clients so bulk actions stay fast as the roster grows.
+                </p>
+                <form class="contact-form" id="coach-program-segment-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Segment name
+                      <input type="text" id="coach-program-segment-name" maxlength="72" placeholder="Overdue check-in + quiet roster" required />
+                    </label>
+                    <label>
+                      Minimum risk score
+                      <input type="number" id="coach-program-segment-risk" min="0" max="100" step="1" value="0" />
+                    </label>
+                    <label>
+                      Minimum pending reviews
+                      <input type="number" id="coach-program-segment-reviews" min="0" max="20" step="1" value="0" />
+                    </label>
+                  </div>
+                  <div class="coach-programming-filter-grid">
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-segment-checkin" />
+                      <span>Needs health follow-up</span>
+                    </label>
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-segment-photo" />
+                      <span>Needs photo refresh</span>
+                    </label>
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-segment-quiet" />
+                      <span>Quiet this week</span>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-secondary" type="reset">Reset</button>
+                    <button class="btn btn-primary" type="submit">Save Segment</button>
+                  </div>
+                  <p class="dashboard-feedback" id="coach-program-segment-feedback" aria-live="polite"></p>
+                </form>
+                <div class="coach-programming-template-grid coach-programming-template-grid--ops" id="coach-program-segment-library">
+                  <p class="coach-programming-empty">Saved roster segments will appear here.</p>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Automation Rules</span>
+                <h2>Let The App Handle Repetitive Follow-Up</h2>
+                <p class="coach-programming-note">
+                  Attach nudges to saved segments and schedules so health reminders and photo checkpoints keep moving without manual chasing.
+                </p>
+                <form class="contact-form" id="coach-program-automation-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Rule name
+                      <input type="text" id="coach-program-automation-name" maxlength="72" placeholder="Weekly health reminder" required />
+                    </label>
+                    <label>
+                      Segment
+                      <select id="coach-program-automation-segment" required>
+                        <option value="">Choose saved segment</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Nudge category
+                      <select id="coach-program-automation-category" required>
+                        <option value="checkin">Health check-in reminder</option>
+                        <option value="progress_photo">Progress photo request</option>
+                      </select>
+                    </label>
+                    <label>
+                      Schedule
+                      <select id="coach-program-automation-schedule" required>
+                        <option value="hourly">Hourly pass</option>
+                        <option value="daily_morning">Daily morning</option>
+                        <option value="daily_evening">Daily evening</option>
+                        <option value="weekday_midday">Weekday midday</option>
+                        <option value="weekly_monday">Weekly Monday</option>
+                      </select>
+                    </label>
+                    <label>
+                      Cooldown (hours)
+                      <input type="number" id="coach-program-automation-cooldown" min="1" max="168" step="1" value="24" />
+                    </label>
+                  </div>
+                  <label>
+                    Coach note override
+                    <textarea
+                      id="coach-program-automation-message"
+                      rows="2"
+                      placeholder="Optional custom message to use instead of the default automation copy."
+                    ></textarea>
+                  </label>
+                  <div class="coach-programming-inline-controls">
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-weekly-briefing-enabled" checked />
+                      <span>Send me the weekly coach briefing on Monday morning</span>
+                    </label>
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-automation-enabled" checked />
+                      <span>Enable this rule immediately</span>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-secondary" type="reset">Reset</button>
+                    <button class="btn btn-primary" type="submit">Save Automation Rule</button>
+                  </div>
+                  <p class="dashboard-feedback" id="coach-program-automation-feedback" aria-live="polite"></p>
+                </form>
+                <div class="coach-programming-template-grid coach-programming-template-grid--ops" id="coach-program-automation-library">
+                  <p class="coach-programming-empty">Saved automation rules will appear here.</p>
+                </div>
+              </article>
+            </section>
+          </div>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Health</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach health view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./planner-athlete-engine.js?v=20260328demo3"></script>
+    <script src="./coach-programming.js?v=20260401trainheroic2"></script>
+  </body>
+</html>

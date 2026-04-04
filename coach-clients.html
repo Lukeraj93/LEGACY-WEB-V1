@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Clients | LEGACY+ Coach</title>
+    <meta name="description" content="Private coach roster, package tracking, and reward requests." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="clients" data-disable-page-tabs="true">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a class="is-current" href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Clients</span>
+            <h1>Roster, Packages, and Rewards</h1>
+            <p class="dashboard-feedback" id="coach-dashboard-status">Syncing your live coach dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <p>Everything here is limited to your assigned roster and your own reward requests.</p>
+          </div>
+        </header>
+
+        <nav class="crm-page-tabs reveal" aria-label="Coach client workspace tabs">
+          <button class="crm-page-tab is-active" type="button" data-coach-clients-tab="roster">Roster</button>
+          <button class="crm-page-tab" type="button" data-coach-clients-tab="consults">Consults</button>
+          <button class="crm-page-tab" type="button" data-coach-clients-tab="access">Client Access</button>
+        </nav>
+
+        <main class="dashboard-main crm-section-grid">
+          <div class="crm-page-panel is-active" data-coach-clients-panel="roster">
+            <section class="section dashboard-section reveal split">
+              <article class="card">
+                <span class="kicker kicker--accent">Assigned Roster</span>
+                <h2>Your Client Roster</h2>
+                <ul class="dashboard-list" id="coach-client-roster">
+                  <li class="dashboard-inline-placeholder">
+                    <strong>Loading assigned clients</strong>
+                    <p>Your linked roster will appear here with package, goal, and access context as soon as the client workspace finishes syncing.</p>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <span class="kicker kicker--accent">Issue Reward Points</span>
+                <h2>Submit Reward Request</h2>
+                <p class="dashboard-feedback" id="coach-points-bundle-status">
+                  Syncing the active rules engine and reward action catalog so approved requests map cleanly into the live XP system.
+                </p>
+                <form class="contact-form" id="coach-points-form">
+                  <label>
+                    Client
+                    <select name="clientId" id="coach-points-client" required>
+                      <option value="">Select client</option>
+                    </select>
+                  </label>
+                  <label>
+                    Reward Mode
+                    <select name="rewardMode" id="coach-points-mode">
+                      <option value="bundle">Rules Engine Action</option>
+                      <option value="manual">Manual Adjustment</option>
+                    </select>
+                  </label>
+                  <div id="coach-points-bundle-fields">
+                    <label>
+                      Gamification Action
+                      <select name="actionId" id="coach-points-action">
+                        <option value="">Select reward action</option>
+                      </select>
+                    </label>
+                    <div class="dashboard-badge-grid" id="coach-points-action-preview">
+                      <article class="dashboard-badge">
+                        <strong>Action Preview</strong>
+                        <p>Select a rules-engine action to preview its XP, coins, and verification rules.</p>
+                      </article>
+                    </div>
+                    <label>
+                      Coach Note
+                      <textarea
+                        name="coachNote"
+                        placeholder="Optional context for admin review, for example what the client specifically completed."
+                      ></textarea>
+                    </label>
+                  </div>
+                  <div id="coach-points-manual-fields" hidden>
+                    <div class="input-row">
+                      <label>
+                        Reward Type
+                        <select name="pointsType">
+                          <option value="xp">XP</option>
+                          <option value="gym_coins">Gym Coins</option>
+                        </select>
+                      </label>
+                      <label>
+                        Amount
+                        <input type="number" name="delta" min="1" step="1" value="10" />
+                      </label>
+                    </div>
+                    <label>
+                      Reason
+                      <textarea
+                        name="reason"
+                        placeholder="Describe the manual adjustment clearly so admin can review it safely."
+                      ></textarea>
+                    </label>
+                  </div>
+                  <button class="btn btn-secondary" type="submit">Submit Reward Request</button>
+                </form>
+                <p class="dashboard-feedback" id="coach-points-feedback">
+                  Reward requests are submitted as pending for super admin approval.
+                </p>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal">
+              <span class="kicker kicker--accent">Client Packages</span>
+              <h2>Session Counts, Validity, and Usage Status</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Client</th>
+                      <th>Package</th>
+                      <th>Sessions</th>
+                      <th>Validity</th>
+                      <th>Usage Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-package-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="5">
+                        <div class="dashboard-table__empty">
+                          <strong>No client packages are linked to your roster yet.</strong>
+                          <p>Once roster clients purchase packages, their session counts, validity, and usage status will appear here.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal">
+              <span class="kicker kicker--accent">Client Points Tracking</span>
+              <h2>Engagement and Loyalty Monitoring</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Client</th>
+                      <th>Current Points</th>
+                      <th>Points This Week</th>
+                      <th>Milestone</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-points-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No client point data available yet.</strong>
+                          <p>Engagement points, weekly movement, and milestone progress will appear here once your roster starts earning rewards.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-clients-panel="consults" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="warning">
+              <span class="kicker kicker--accent">1:1 Consult Intake</span>
+              <h2>Capture a Consult and Push It Into the Lead Pipeline</h2>
+              <div class="crm-consult-status-grid">
+                <article class="crm-consult-status-card" data-status-tone="yellow">
+                  <span class="crm-status-pill crm-status-pill--yellow">New</span>
+                  <strong id="coach-consult-stat-new">0</strong>
+                  <p>Fresh consult leads waiting for first follow-up.</p>
+                </article>
+                <article class="crm-consult-status-card" data-status-tone="orange">
+                  <span class="crm-status-pill crm-status-pill--orange">Contacted</span>
+                  <strong id="coach-consult-stat-contacted">0</strong>
+                  <p>Consult leads with outreach already logged.</p>
+                </article>
+                <article class="crm-consult-status-card" data-status-tone="blue">
+                  <span class="crm-status-pill crm-status-pill--blue">Qualified</span>
+                  <strong id="coach-consult-stat-qualified">0</strong>
+                  <p>Strong fits that are moving toward offer or onboarding.</p>
+                </article>
+                <article class="crm-consult-status-card" data-status-tone="green">
+                  <span class="crm-status-pill crm-status-pill--green">Converted</span>
+                  <strong id="coach-consult-stat-converted">0</strong>
+                  <p>Consult leads converted into paying clients.</p>
+                </article>
+                <article class="crm-consult-status-card" data-status-tone="gray">
+                  <span class="crm-status-pill crm-status-pill--gray">Ghosted</span>
+                  <strong id="coach-consult-stat-ghosted">0</strong>
+                  <p>Leads that stopped responding and need a decision.</p>
+                </article>
+                <article class="crm-consult-status-card" data-status-tone="red">
+                  <span class="crm-status-pill crm-status-pill--red">Overdue</span>
+                  <strong id="coach-consult-stat-overdue">0</strong>
+                  <p>Next follow-ups that are already overdue.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="warning">
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Consult Form</span>
+                <h3>Submit 1:1 Consult Intake</h3>
+                <form class="contact-form" id="coach-consult-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Full name
+                      <input type="text" name="fullName" required />
+                    </label>
+                    <label>
+                      Phone
+                      <input type="tel" name="phone" required />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Email
+                      <input type="email" name="email" />
+                    </label>
+                    <label>
+                      Age
+                      <input type="number" name="age" min="0" step="1" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      City / area
+                      <input type="text" name="cityArea" />
+                    </label>
+                    <label>
+                      Occupation
+                      <input type="text" name="occupation" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Work style
+                      <select name="workStyle">
+                        <option value="">Select work style</option>
+                        <option value="desk">Desk</option>
+                        <option value="mixed">Mixed</option>
+                        <option value="physical">Physical</option>
+                      </select>
+                    </label>
+                    <label>
+                      Heard about us from
+                      <select name="heardAbout">
+                        <option value="">Select source</option>
+                        <option value="ig">IG</option>
+                        <option value="referral">Referral</option>
+                        <option value="google">Google</option>
+                        <option value="walk_in">Walk-in</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Preferred message time
+                      <input type="text" name="preferredMessageWindow" placeholder="10am-6pm" />
+                    </label>
+                    <label>
+                      Off-hours
+                      <input type="text" name="offHours" placeholder="7pm-9am" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Main goal
+                      <input type="text" name="goal" placeholder="Fat loss, strength, rehab, performance" required />
+                    </label>
+                    <label>
+                      Meaningful timeline
+                      <select name="timeline">
+                        <option value="">Select timeline</option>
+                        <option value="6_8_weeks">6-8 weeks</option>
+                        <option value="12_weeks">12 weeks</option>
+                        <option value="3_6_months">3-6 months</option>
+                        <option value="6_12_months">6-12 months</option>
+                        <option value="not_sure">Not sure</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label>
+                    What does success look like in 6-12 weeks?
+                    <textarea name="successDefinition"></textarea>
+                  </label>
+                  <label>
+                    Why now? What changed?
+                    <textarea name="whyNow"></textarea>
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Goal importance (1-10)
+                      <input type="number" name="importanceScore" min="1" max="10" step="1" />
+                      <small class="score-guidance score-guidance--compact">
+                        <span><strong>1-3</strong><em>Low priority right now</em></span>
+                        <span><strong>4-6</strong><em>Matters, but still flexible</em></span>
+                        <span><strong>7-8</strong><em>Important and worth protecting</em></span>
+                        <span><strong>9-10</strong><em>Non-negotiable top priority</em></span>
+                      </small>
+                    </label>
+                    <label>
+                      Confidence (1-10)
+                      <input type="number" name="confidenceScore" min="1" max="10" step="1" />
+                      <small class="score-guidance score-guidance--compact">
+                        <span><strong>1-3</strong><em>Not confident at all</em></span>
+                        <span><strong>4-6</strong><em>Unsure and may need support</em></span>
+                        <span><strong>7-8</strong><em>Confident with a solid plan</em></span>
+                        <span><strong>9-10</strong><em>Fully confident and ready to act</em></span>
+                      </small>
+                    </label>
+                  </div>
+                  <label>
+                    Biggest barrier right now
+                    <input type="text" name="biggestBarrier" placeholder="Busy schedule, pain, food consistency, motivation dips" />
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Training experience
+                      <select name="trainingExperience">
+                        <option value="">Select experience</option>
+                        <option value="new">New</option>
+                        <option value="on_off">On/off</option>
+                        <option value="consistent_6_12">Consistent 6-12 months</option>
+                        <option value="1_3_years">1-3 years</option>
+                        <option value="3_plus_years">3+ years</option>
+                      </select>
+                    </label>
+                    <label>
+                      Current training days / week
+                      <input type="text" name="currentTraining" placeholder="0, 2, 3, 4+" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Main nutrition struggle
+                      <input type="text" name="nutritionStruggle" placeholder="Snacking, portions, low protein, eating out" />
+                    </label>
+                    <label>
+                      Sleep / stress note
+                      <input type="text" name="sleepStress" placeholder="Sleep 6h, stress 8/10, travel-heavy work" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Preferred coaching style
+                      <input type="text" name="coachingStyle" placeholder="Strict accountability, minimalist plan, lots of feedback" />
+                    </label>
+                    <label>
+                      Service fit
+                      <select name="recommendedService">
+                        <option value="">Select service</option>
+                        <option value="pt">In-person PT</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="online">Online coaching</option>
+                        <option value="not_sure">Not sure</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Lead heat
+                      <select name="hotness">
+                        <option value="">Select fit</option>
+                        <option value="hot">Hot</option>
+                        <option value="warm">Warm</option>
+                        <option value="cold">Cold</option>
+                      </select>
+                    </label>
+                    <label>
+                      Primary lever
+                      <select name="primaryLever">
+                        <option value="">Select lever</option>
+                        <option value="training">Training</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="sleep">Sleep</option>
+                        <option value="stress">Stress</option>
+                        <option value="accountability">Accountability</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label>
+                    Risk flags
+                    <input type="text" name="riskFlagsText" placeholder="High pain, unrealistic timeline, low readiness, budget mismatch" />
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Recommended frequency
+                      <input type="text" name="recommendedFrequency" placeholder="2 / week, 3 / week" />
+                    </label>
+                    <label>
+                      Recommended timeline
+                      <input type="text" name="recommendedTimeline" placeholder="12 weeks, 3-6 months" />
+                    </label>
+                  </div>
+                  <label>
+                    Next step
+                    <input type="text" name="nextStep" placeholder="Send proposal, book assessment, follow up in 3 days" />
+                  </label>
+                  <label>
+                    Coach summary
+                    <textarea name="summary" placeholder="Plain-English diagnosis, fit, and next move"></textarea>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Submit Consult Intake</button>
+                </form>
+                <p class="dashboard-feedback" id="coach-consult-feedback">
+                  Submitting this form creates or updates a lead in the CRM and links it to your coach account.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Consult Follow-Up</span>
+                <h3>Update Lead Status</h3>
+                <form class="contact-form" id="coach-consult-follow-up-form">
+                  <label>
+                    Lead
+                    <select name="leadId" id="coach-consult-lead" required>
+                      <option value="">Select consult lead</option>
+                    </select>
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Status
+                      <select name="status" required>
+                        <option value="new">New</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="qualified">Qualified</option>
+                        <option value="ghosted">Ghosted</option>
+                        <option value="lost">Lost</option>
+                        <option value="converted">Converted</option>
+                      </select>
+                    </label>
+                    <label>
+                      Next follow-up
+                      <input type="datetime-local" name="nextFollowUpAt" />
+                    </label>
+                  </div>
+                  <label>
+                    Follow-up note
+                    <textarea name="notes" placeholder="Log the outcome, objection, or next step" required></textarea>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Save Lead Update</button>
+                </form>
+                <p class="dashboard-feedback" id="coach-consult-follow-up-feedback">
+                  Use this to mark consult leads as contacted, qualified, ghosted, converted, or lost.
+                </p>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="info">
+              <span class="kicker kicker--accent">Consult Lead Tracker</span>
+              <h2>Consult Leads Owned by You</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Lead</th>
+                      <th>Status</th>
+                      <th>Heat</th>
+                      <th>Goal</th>
+                      <th>Next Step</th>
+                      <th>Follow-Up</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-consult-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="6">
+                        <div class="dashboard-table__empty">
+                          <strong>No consult leads yet.</strong>
+                          <p>New consult captures and follow-up candidates will appear here once the intake flow starts feeding the coach pipeline.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-clients-panel="access" hidden>
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="info">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Client Authentication</span>
+                <h2>Generate Client Access Code</h2>
+                <form class="contact-form" id="coach-client-code-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Client email
+                      <input type="email" name="recipientEmail" placeholder="client@example.com" required />
+                    </label>
+                    <label>
+                      Client full name
+                      <input type="text" name="recipientName" placeholder="Client full name" />
+                    </label>
+                  </div>
+                  <label>
+                    Note
+                    <input type="text" name="notes" placeholder="Optional note for your own reference" />
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Generate Client Access Code</button>
+                </form>
+                <p class="dashboard-feedback" id="coach-client-code-feedback">
+                  Client access codes are one-time and tied to the email entered above.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">How It Works</span>
+                <h3>Client account activation flow</h3>
+                <ul class="dashboard-list">
+                  <li>Generate a one-time code tied to the client email.</li>
+                  <li>Share the code with the client so they can activate their account securely.</li>
+                  <li>Once used, the code is locked and moves into the history table below.</li>
+                  <li>Use this flow only for real clients that already belong to your roster.</li>
+                </ul>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="info">
+              <span class="kicker kicker--accent">Access Code History</span>
+              <h2>Recently Generated Client Access Codes</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Client Email</th>
+                      <th>Code</th>
+                      <th>Status</th>
+                      <th>Expiry</th>
+                      <th>Created</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-client-code-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="5">
+                        <div class="dashboard-table__empty">
+                          <strong>No client access codes generated yet.</strong>
+                          <p>Fresh client onboarding codes will appear here after you create or reissue them from the coach workspace.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Clients</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach roster and client operations.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./coach-dashboard.js?v=20260403scheduleperf1"></script>
+  </body>
+</html>

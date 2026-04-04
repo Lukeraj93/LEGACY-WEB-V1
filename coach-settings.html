@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Settings | LEGACY+ Coach</title>
+    <meta name="description" content="Private coach settings for CRM appearance, portrait controls, and payout details." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="settings">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a class="is-current" href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Settings</span>
+            <h1>Appearance, Portrait and Payout Details</h1>
+            <p class="dashboard-feedback" id="coach-dashboard-status">Syncing your live coach dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <p>Coaches start on the standard LEGACY house palette by default. Choose a custom palette here only if you want your full coach workspace to feel different.</p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal account-settings-grid__wide">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Appearance</span>
+              <h2>Coach CRM Palette</h2>
+              <p class="section-copy">
+                Preview a full workspace palette here. Once applied, the selected theme follows you across the coach dashboard, training, nutrition, schedule, commissions, profile, settings, and coach-linked XP pages.
+              </p>
+              <p class="appearance-theme-current" id="account-coach-theme-current">Saved palette: House Blend.</p>
+              <div class="appearance-theme-grid" id="account-coach-theme-presets"></div>
+              <div class="section-actions">
+                <button class="btn btn-primary" id="account-coach-theme-apply" type="button" disabled>Palette Applied</button>
+              </div>
+              <p class="dashboard-feedback" id="account-coach-theme-feedback">
+                House Blend is the standard LEGACY coach palette. Click any palette to preview it across this page, then use Apply Palette to save it.
+              </p>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <article class="card">
+              <span class="kicker kicker--accent">Portrait</span>
+              <h2>Profile Portrait Library</h2>
+              <div class="appearance-avatar-preview-card" id="account-avatar-card-preview" aria-live="polite"></div>
+              <div class="appearance-avatar-library" id="account-avatar-presets"></div>
+              <div class="section-actions">
+                <button class="btn btn-primary" id="account-avatar-apply" type="button" disabled>Character Applied</button>
+              </div>
+              <p class="dashboard-feedback" id="account-avatar-feedback">
+                Choose any unlocked character, preview it, then click Apply Character to save it to your coach profile.
+              </p>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Payout Details</span>
+              <h2>Commission Bank Account</h2>
+              <p class="section-copy">
+                This is where your commission payout account is stored. It is separate from registration and can be updated here whenever needed.
+              </p>
+              <form class="contact-form" id="coach-payout-form">
+                <div class="input-row account-input-row">
+                  <label>
+                    Bank name
+                    <input type="text" name="bankName" placeholder="Maybank, CIMB, Public Bank" required />
+                  </label>
+                  <label>
+                    Account holder name
+                    <input type="text" name="accountName" placeholder="Full account holder name" required />
+                  </label>
+                </div>
+                <div class="input-row account-input-row">
+                  <label>
+                    Account number
+                    <input type="text" name="accountNumber" placeholder="Bank account number" required />
+                  </label>
+                  <label>
+                    Bank code / branch code
+                    <input type="text" name="bankCode" placeholder="Optional bank code or branch code" />
+                  </label>
+                </div>
+                <div class="section-actions">
+                  <button class="btn btn-primary" type="submit">Save Payout Details</button>
+                </div>
+              </form>
+              <p class="dashboard-feedback" id="coach-payout-feedback">
+                Your payout details are only visible to you and the super admin team.
+              </p>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Security</span>
+              <h2>Password and Account Access</h2>
+              <div class="account-meta-list">
+                <div class="account-meta-item">
+                  <strong>Account Email</strong>
+                  <span data-security-email>coach</span>
+                </div>
+                <div class="account-meta-item">
+                  <strong>Role</strong>
+                  <span data-security-role>Coach</span>
+                </div>
+                <div class="account-meta-item">
+                  <strong>Access Route</strong>
+                  <span>Use this section to replace your temporary password without leaving the coach workspace.</span>
+                </div>
+              </div>
+              <form class="contact-form account-security-form" id="account-security-password-form">
+                <div class="input-row account-input-row">
+                  <label>
+                    New password
+                    <input type="password" name="newPassword" placeholder="Create a new password" autocomplete="new-password" minlength="6" required />
+                  </label>
+                  <label>
+                    Confirm new password
+                    <input type="password" name="confirmPassword" placeholder="Confirm your new password" autocomplete="new-password" minlength="6" required />
+                  </label>
+                </div>
+                <div class="section-actions">
+                  <button class="btn btn-primary" id="account-security-submit" type="submit">Update Password</button>
+                  <button class="btn btn-ghost" id="account-security-reset" type="button">Send Reset Email</button>
+                  <button class="btn btn-ghost" type="button" data-account-sign-out>Sign Out</button>
+                </div>
+              </form>
+              <div class="crm-callout">
+                <p>Email changes still go through LEGACY+ support while the wider account-security rollout is being finished.</p>
+              </div>
+              <p class="dashboard-feedback" id="account-security-feedback">
+                Replace your temporary password here, or send yourself a reset link for later.
+              </p>
+            </article>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Settings</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./coach-dashboard.js?v=20260403scheduleperf1"></script>
+  </body>
+</html>

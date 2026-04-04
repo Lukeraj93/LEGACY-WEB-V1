@@ -1,0 +1,24 @@
+<svg width="480" height="320" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="320" rx="28" fill="#120C0A"/>
+  <rect x="20" y="20" width="440" height="280" rx="22" fill="#1B120E" stroke="#5E4027" stroke-width="2"/>
+  <rect x="44" y="34" width="392" height="252" rx="16" stroke="#B98555" stroke-width="2" stroke-dasharray="8 8" opacity="0.45"/>
+  <rect x="56" y="38" width="36" height="24" rx="12" fill="#3A2418"/>
+  <text x="74" y="54" text-anchor="middle" fill="#FFD6A6" font-family="Montserrat, Arial, sans-serif" font-size="11" font-weight="700">FRONT</text>
+  <rect x="122" y="242" width="236" height="14" rx="7" fill="#2A1A13"/>
+  <rect x="110" y="250" width="260" height="8" rx="4" fill="#20130E"/>
+  <circle cx="240" cy="104" r="22" fill="#F7DEC0"/>
+  <rect x="208" y="130" width="64" height="86" rx="30" fill="#F7DEC0"/>
+  <rect x="186" y="138" width="18" height="70" rx="9" fill="#F7DEC0"/>
+  <rect x="276" y="138" width="18" height="70" rx="9" fill="#F7DEC0"/>
+  <rect x="216" y="206" width="18" height="74" rx="9" fill="#F7DEC0"/>
+  <rect x="246" y="206" width="18" height="74" rx="9" fill="#F7DEC0"/>
+  <path d="M62 216H118" stroke="#FFCB92" stroke-width="3" stroke-linecap="round"/>
+  <path d="M62 224H118" stroke="#FFCB92" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+  <circle cx="76" cy="220" r="10" fill="#F7DEC0"/>
+  <rect x="86" y="211" width="20" height="18" rx="4" fill="#F7DEC0"/>
+  <path d="M94 229V248" stroke="#F7DEC0" stroke-width="4" stroke-linecap="round"/>
+  <path d="M86 248H102" stroke="#F7DEC0" stroke-width="4" stroke-linecap="round"/>
+  <path d="M240 84V60" stroke="#FFCB92" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+  <text x="240" y="52" text-anchor="middle" fill="#FFD6A6" font-family="Montserrat, Arial, sans-serif" font-size="13" font-weight="700">Chest-height camera</text>
+  <text x="240" y="292" text-anchor="middle" fill="#FFE9D1" font-family="Montserrat, Arial, sans-serif" font-size="15" font-weight="700">Feet hip-width, full body in frame</text>
+</svg>

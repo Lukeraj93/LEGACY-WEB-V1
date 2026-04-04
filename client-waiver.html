@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Waiver | LEGACY+ Coaching</title>
+    <meta
+      name="description"
+      content="Complete and sign the LEGACY+ client waiver before creating your account."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402waiverfix1" />
+  </head>
+  <body class="account-entry-page account-waiver-page">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <main class="pt-mode-main account-entry-main account-waiver-main">
+      <section class="account-registration-panel account-waiver-panel reveal in-view">
+        <div class="account-registration-head">
+          <p class="kicker">Client Waiver</p>
+          <h1>LEGACY+ Client Onboarding Waiver</h1>
+          <p class="account-registration-copy">
+            Your registration details are already carried over from the main form. Complete the health screening,
+            acknowledgements, and signature below, then submit to return to registration automatically.
+          </p>
+        </div>
+
+        <form class="contact-form account-waiver-form" id="client-waiver-form">
+          <section class="account-waiver-section">
+            <span class="kicker">C. PAR-Q+ Screening</span>
+            <div class="account-waiver-checklist">
+              <label>
+                1. Heart condition or high blood pressure
+                <select name="parq_q1" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label>
+                2. Chest pain / pressure during physical activity
+                <select name="parq_q2" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label>
+                3. Chest pain / pressure when not active in the last month
+                <select name="parq_q3" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label>
+                4. Dizziness, loss of balance, or fainting
+                <select name="parq_q4" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label>
+                5. Bone, joint, or soft-tissue issue that worsens with activity
+                <select name="parq_q5" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label>
+                6. Medication prescribed for heart condition or blood pressure
+                <select name="parq_q6" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+              <label>
+                7. Any other reason you should not exercise right now
+                <select name="parq_q7" required>
+                  <option value="">Yes / No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              If you answered YES to any question, explain
+              <textarea name="parqExplanation"></textarea>
+            </label>
+          </section>
+
+          <section class="account-waiver-section">
+            <span class="kicker">D. Medical, Injury, and Risk Notes</span>
+            <div class="account-waiver-chip-grid">
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="high_blood_pressure" /><span>High blood pressure</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="high_cholesterol" /><span>High cholesterol</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="diabetes" /><span>Diabetes / pre-diabetes</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="asthma" /><span>Asthma / respiratory</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="heart_disease" /><span>Heart disease</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="stroke_history" /><span>Stroke / TIA history</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="kidney_disease" /><span>Kidney disease</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="thyroid_disorder" /><span>Thyroid disorder</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="seizures" /><span>Seizures / epilepsy</span></label>
+              <label class="crm-checkbox"><input type="checkbox" name="conditions" value="anxiety" /><span>Anxiety / panic episodes</span></label>
+            </div>
+            <div class="input-row account-input-row">
+              <label class="crm-checkbox">
+                <input type="checkbox" name="hasCurrentPain" value="yes" />
+                <span>Current pain or injury affects movement / training</span>
+              </label>
+              <label class="crm-checkbox">
+                <input type="checkbox" name="surgeriesRecent" value="yes" />
+                <span>Surgery in the last 24 months</span>
+              </label>
+            </div>
+            <div class="input-row account-input-row">
+              <label>
+                Injury / pain location
+                <input type="text" name="injuryLocation" />
+              </label>
+              <label>
+                Injury triggers
+                <input type="text" name="injuryTriggers" />
+              </label>
+            </div>
+            <label>
+              Surgery details
+              <textarea name="surgeriesDetails"></textarea>
+            </label>
+            <div class="input-row account-input-row">
+              <label>
+                Current medications
+                <textarea name="currentMedications"></textarea>
+              </label>
+              <label>
+                Supplements
+                <textarea name="supplements"></textarea>
+              </label>
+            </div>
+            <label>
+              Allergies
+              <textarea name="allergies"></textarea>
+            </label>
+            <label class="account-waiver-field account-waiver-field--compact">
+              Pregnancy status
+              <select name="pregnancyStatus">
+                <option value="">Not applicable / not provided</option>
+                <option value="not_applicable">Not applicable</option>
+                <option value="pregnant">Pregnant</option>
+                <option value="postpartum">Postpartum</option>
+              </select>
+            </label>
+            <label>
+              Pregnancy or doctor restrictions
+              <textarea name="pregnancyRestrictions"></textarea>
+            </label>
+          </section>
+
+          <section class="account-waiver-section">
+            <span class="kicker">E. Privacy, Media, and Policy Acknowledgement</span>
+            <label class="crm-checkbox">
+              <input type="checkbox" name="pdpaConsent" value="yes" required />
+              <span>I consent to LEGACY+ collecting and processing my personal and health data for coaching delivery and safety.</span>
+            </label>
+            <label>
+              Media consent
+              <select name="mediaConsent" required>
+                <option value="">Choose one</option>
+                <option value="yes_full">Yes, you may use my photos / videos for marketing.</option>
+                <option value="yes_anonymised">Yes, but no face shown / anonymised.</option>
+                <option value="no">No, do not use my photos / videos.</option>
+              </select>
+            </label>
+            <p class="section-copy">
+              The single acknowledgement in the final declaration covers the full client policy set below.
+            </p>
+            <ul class="check-list">
+              <li>Cancellation and late arrival policy</li>
+              <li>No-show policy</li>
+              <li>Package validity and expiry policy</li>
+              <li>Refund policy</li>
+              <li>Facility rules and training conduct expectations</li>
+            </ul>
+          </section>
+
+          <section class="account-waiver-section">
+            <span class="kicker">F. Final Declaration and Signature</span>
+            <div class="input-row account-input-row">
+              <label>
+                Final declaration full name
+                <input type="text" name="finalDeclarationName" required />
+              </label>
+              <label>
+                Policy acknowledgement initials
+                <input type="text" name="policyAcknowledgementInitials" maxlength="6" required />
+              </label>
+            </div>
+            <div class="input-row account-input-row">
+              <label>
+                Coach / witness name (optional)
+                <input type="text" name="witnessName" />
+              </label>
+              <label>
+                Witness signature name (optional)
+                <input type="text" name="witnessSignatureName" />
+              </label>
+            </div>
+            <div class="account-signature-block">
+              <div class="account-signature-head">
+                <strong>Digital signature</strong>
+                <button class="btn btn-ghost" id="waiver-signature-clear" type="button">Clear signature</button>
+              </div>
+              <canvas id="waiver-signature-pad" width="960" height="260" aria-label="Digital signature pad"></canvas>
+              <p class="dashboard-feedback" id="waiver-signature-feedback">
+                Sign inside the box using your mouse, trackpad, or finger.
+              </p>
+            </div>
+          </section>
+
+          <div class="account-registration-actions">
+            <button class="btn btn-primary" type="submit">Submit waiver and return</button>
+            <a class="btn btn-secondary" id="waiver-return-link" href="./account.html?role=client">Back to registration</a>
+          </div>
+          <p class="dashboard-feedback account-registration-feedback" id="client-waiver-feedback">
+            The waiver must be completed before a client account can be created.
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <script src="./client-waiver.js?v=20260402waiverfix1"></script>
+  </body>
+</html>

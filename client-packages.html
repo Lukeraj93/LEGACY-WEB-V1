@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Packages | LEGACY+ Client</title>
+    <meta name="description" content="Private client package balance, purchases, and secure coaching checkout." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="client" data-live-dashboard="client" data-account-page="packages">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./client-dashboard.html">LEGACY<span>+</span> Client</a>
+        <p class="crm-sidebar-copy">Private client navigation for planning, nutrition, health, scheduling, and account progress.</p>
+        <nav class="crm-nav" aria-label="Client navigation">
+          <a href="./client-dashboard.html">Home</a>
+          <a href="./client-planner.html">Planner</a>
+          <a class="is-current" href="./client-packages.html">Packages</a>
+          <a href="./client-schedule.html">Schedule</a>
+          <a href="./client-rewards.html">Rewards</a>
+          <a href="./client-profile.html">Profile</a>
+          <a href="./client-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Packages</span>
+            <h1>Session Balance, Purchase Flow, and History</h1>
+            <p class="dashboard-feedback" id="client-dashboard-status">Syncing your live dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Package focus: see usable balance first, then choose the next purchase path, then review past orders.</p>
+            <p>Signed in as <strong data-account-email>client</strong></p>
+            <p id="client-member-id-display">Member ID loading...</p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" id="client-packages-balance" data-crm-tone="alert">
+            <span class="kicker kicker--accent">Owned Packages</span>
+            <h2>Your Session Balance</h2>
+            <p>Track active package usage, reserved sessions, and expiry before requesting your next slot.</p>
+            <div class="dashboard-card-grid" id="client-active-package-cards">
+              <article class="dashboard-note" data-crm-tone="alert">
+                <p>Your purchased packages and live balance will appear here once checkout is completed.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" id="client-package-store" data-crm-tone="warning">
+            <span class="kicker kicker--accent">Buy Packages</span>
+            <h2>Purchase More Coaching Sessions</h2>
+            <p class="section-copy">Choose the coaching approach first, then the format, tier, and bundle. Shared 1-to-2 purchases require the second client MEMBER ID so both accounts stay in sync.</p>
+            <p class="dashboard-feedback" id="client-package-store-feedback">
+              Choose your approach first, then narrow down to the session bundle you want.
+            </p>
+            <div class="crm-selector-layout" id="client-package-selector-shell">
+              <form class="contact-form crm-selector-form" id="client-package-selector-form">
+                <div class="input-row account-input-row">
+                  <label>
+                    Approach
+                    <select id="client-package-commitment" name="commitment" required>
+                      <option value="">Select approach</option>
+                    </select>
+                  </label>
+                  <label>
+                    Format
+                    <select id="client-package-format" name="trainingFormat" required>
+                      <option value="">Select format</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="input-row account-input-row">
+                  <label>
+                    Coach tier
+                    <select id="client-package-tier" name="tierCode" required>
+                      <option value="">Select coach tier</option>
+                    </select>
+                  </label>
+                  <label>
+                    Session bundle
+                    <select id="client-package-option" name="packageCode" required>
+                      <option value="">Select session bundle</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="input-row account-input-row" id="client-shared-package-fields" hidden>
+                  <label>
+                    Second client MEMBER ID
+                    <input
+                      type="text"
+                      id="client-package-second-member-id"
+                      name="secondMemberId"
+                      placeholder="Example: LC-1A2B3C4D5E"
+                      autocomplete="off"
+                    />
+                  </label>
+                </div>
+                <div class="crm-selector-summary" id="client-package-selection-summary">
+                  <p>Available coaching packages are loading...</p>
+                </div>
+                <div class="section-actions">
+                  <button class="btn btn-secondary" id="client-package-purchase-button" type="button">
+                    Continue to Secure Checkout
+                  </button>
+                </div>
+              </form>
+
+              <div class="dashboard-table-wrap crm-selector-reference">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Bundle</th>
+                      <th>Total</th>
+                      <th>Per Session</th>
+                      <th>Validity</th>
+                    </tr>
+                  </thead>
+                  <tbody id="client-package-option-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>Available bundles will appear here.</strong>
+                          <p>Once pricing options are loaded, you’ll see the bundle total, per-session rate, and validity in one place.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" id="client-packages-history" data-crm-tone="success">
+            <span class="kicker kicker--accent">Purchase History</span>
+            <h2>Packages and Transactions</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Package</th>
+                    <th>Amount</th>
+                    <th>Sessions</th>
+                    <th>Status</th>
+                    <th>Documents</th>
+                  </tr>
+                </thead>
+                <tbody id="client-purchase-history-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No purchases yet.</strong>
+                        <p>Your package payments, session balances, and supporting documents will appear here once the first purchase is completed.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Client | Packages</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private client view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./client-dashboard.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+  </body>
+</html>

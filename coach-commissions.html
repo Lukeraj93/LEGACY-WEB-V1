@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Commissions | LEGACY+ Coach</title>
+    <meta name="description" content="Private coach commission overview and payout status tracking." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="commissions">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, programming, schedule, and payouts.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a class="is-current" href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Commissions</span>
+            <h1>Track Generated, Approved, and Paid Commission</h1>
+            <p class="dashboard-feedback" id="coach-dashboard-status">Syncing your live coach dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Commission focus: current payout first, review timing second, then full session-level history.</p>
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" data-crm-tone="success">
+            <span class="kicker kicker--accent">Commission Overview</span>
+            <h2>Transparent Commission Breakdown</h2>
+            <div class="stats-grid">
+              <article class="stat" data-crm-tone="success">
+                <h3 id="coach-commission-week">RM 0.00</h3>
+                <p>Commission this week</p>
+              </article>
+              <article class="stat" data-crm-tone="success">
+                <h3 id="coach-commission-month">RM 0.00</h3>
+                <p>Commission this month</p>
+              </article>
+              <article class="stat" data-crm-tone="info">
+                <h3 id="coach-commission-quarter">RM 0.00</h3>
+                <p>Quarter-to-date earnings</p>
+              </article>
+              <article class="stat" data-crm-tone="info">
+                <h3 id="coach-commission-rate">0%</h3>
+                <p>Average commission rate</p>
+              </article>
+            </div>
+            <div class="coach-commission-overview-summary" id="coach-commission-overview-summary">
+              <article class="dashboard-note" data-crm-tone="warning">
+                <strong>Commission posture is loading.</strong>
+                <p>This section will summarize current payout readiness and what needs to happen next.</p>
+              </article>
+              <article class="dashboard-note" data-crm-tone="info">
+                <strong>Review timing is loading.</strong>
+                <p>Your live rate posture and next review checkpoint will appear here once the dashboard finishes syncing.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal coach-commission-setup-grid" data-crm-tone="info">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Current Setup</span>
+              <h2>What your payout is based on</h2>
+              <ul class="dashboard-list dashboard-list--cards" id="coach-comp-plan-list">
+                <li>
+                  <article class="dashboard-list-card dashboard-list-card--empty">
+                    <div class="dashboard-list-card__head">
+                      <strong>Commission plan is syncing</strong>
+                      <span class="dashboard-list-card__chip">Standby</span>
+                    </div>
+                    <p>Your base rate, cap, bonus rules, and progression path will appear here once the live commission setup finishes loading.</p>
+                  </article>
+                </li>
+              </ul>
+            </article>
+            <article class="card" data-crm-tone="warning">
+              <span class="kicker kicker--accent">KPI Timing</span>
+              <h2>The key review items you need to watch</h2>
+              <ul class="dashboard-list dashboard-list--cards" id="coach-kpi-list">
+                <li>
+                  <article class="dashboard-list-card dashboard-list-card--empty">
+                    <div class="dashboard-list-card__head">
+                      <strong>KPI checklist is syncing</strong>
+                      <span class="dashboard-list-card__chip">Review</span>
+                    </div>
+                    <p>Your quarterly checklist, review timing, and readiness notes will appear here once the active tier and KPI structure are loaded.</p>
+                  </article>
+                </li>
+              </ul>
+              <p class="dashboard-feedback" id="coach-kpi-review-note">Review schedule is loading...</p>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">Monthly Ledger</span>
+            <h2>Choose A Month To Inspect</h2>
+            <div class="coach-commission-month-grid" id="coach-commission-month-grid">
+              <article class="coach-commission-month-card coach-commission-month-card--placeholder">
+                <span>Month board</span>
+                <strong>Syncing</strong>
+                <p>Monthly commission snapshots will appear here once the ledger and payout rows finish loading.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="info">
+            <span class="kicker kicker--accent">Commission Records</span>
+            <h2>Session-Level Breakdown</h2>
+            <p class="dashboard-feedback" id="coach-commission-detail-period">
+              Pick a month above to review the client, date, time, and commission breakdown.
+            </p>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Client</th>
+                    <th>Package</th>
+                    <th>Commission</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="coach-commission-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No commission records yet.</strong>
+                        <p>As completed sessions begin generating payout rows, the session-level commission breakdown will appear here automatically.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Commissions</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./coach-dashboard.js?v=20260403scheduleperf1"></script>
+  </body>
+</html>

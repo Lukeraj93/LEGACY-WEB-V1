@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Dashboard | LEGACY+ Coaching</title>
+    <title>Admin Home | LEGACY+ CRM</title>
     <meta
       name="description"
-      content="Admin dashboard for LEGACY+ owners and managers to oversee coaches, clients, revenue, lead funnel, and commission payout systems."
+      content="LEGACY+ CRM home for super admin KPI visibility, lead alerts, and business oversight."
     />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,234 +15,153 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
   </head>
-  <body data-admin-emails="admin@legacycoaching.com.my">
-    <div class="dashboard-shell">
-      <header class="dashboard-topbar reveal">
-        <a class="dashboard-brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
-        <div class="dashboard-topbar-actions">
-          <a class="btn btn-ghost" href="./coach-dashboard.html">Coach Dashboard</a>
-          <button class="btn btn-secondary" id="admin-sign-out" type="button">Exit Admin</button>
-        </div>
-      </header>
-
-      <section class="admin-lock is-hidden" id="admin-lock">
-        <span class="kicker">Access Restricted</span>
-        <h2>Admin Dashboard Locked</h2>
-        <p>
-          This dashboard is available only to approved admin emails. Return to the coach dashboard and use the
-          admin access form.
-        </p>
-        <div class="section-actions">
-          <a class="btn btn-primary" href="./coach-dashboard.html">Back to Coach Dashboard</a>
-        </div>
-      </section>
-
-      <main class="dashboard-main is-hidden" id="admin-shell">
-        <section class="page-hero reveal">
-          <span class="kicker">Admin Control Panel</span>
-          <h1>Owner and Manager Oversight Dashboard</h1>
-          <p>
-            Logged in as admin: <strong id="admin-email-display">admin</strong>. This workspace centralizes coach,
-            client, revenue, and sales visibility in one interface.
-          </p>
-          <div class="stats-grid">
-            <article class="stat">
-              <h3>18 Coaches</h3>
-              <p>Active coaches monitored with role and commission settings.</p>
-            </article>
-            <article class="stat">
-              <h3>286 Clients</h3>
-              <p>Centralized active and historical client records.</p>
-            </article>
-            <article class="stat">
-              <h3>RM 412,000</h3>
-              <p>Monthly revenue tracked by package and source channel.</p>
-            </article>
-            <article class="stat">
-              <h3>62% Lead Conversion</h3>
-              <p>Lead-to-client conversion for current quarter.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Manage Coaches</span>
-          <h2>Roles, Permissions, and Commission Structures</h2>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Coach</th>
-                  <th>Role</th>
-                  <th>Commission Model</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Luke</td>
-                  <td>Head Coach</td>
-                  <td>Tiered 10-14%</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Amelia K.</td>
-                  <td>Senior Coach</td>
-                  <td>Flat 11%</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Daniel R.</td>
-                  <td>Coach</td>
-                  <td>Flat 9%</td>
-                  <td>Onboarding</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Manage Clients</span>
-          <h2>Centralized Client Database</h2>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Client</th>
-                  <th>Assigned Coach</th>
-                  <th>Package History</th>
-                  <th>Engagement Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Sarah Lim</td>
-                  <td>Luke</td>
-                  <td>3 active / 1 completed</td>
-                  <td>Highly Engaged</td>
-                </tr>
-                <tr>
-                  <td>Alicia Tan</td>
-                  <td>Amelia K.</td>
-                  <td>2 active / 0 completed</td>
-                  <td>On Progress Plan</td>
-                </tr>
-                <tr>
-                  <td>Rahman Iskandar</td>
-                  <td>Luke</td>
-                  <td>1 active / 2 completed</td>
-                  <td>Needs Re-engagement</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Lead Funnel</span>
-          <h2>Track Inquiry to Conversion</h2>
-          <div class="funnel-grid">
-            <article class="funnel-column">
-              <h3>New Leads</h3>
-              <ul>
-                <li>12 inbound WhatsApp leads this week</li>
-                <li>5 web form submissions pending contact</li>
-                <li>Primary sources: Search, referrals, Instagram</li>
-              </ul>
-            </article>
-            <article class="funnel-column">
-              <h3>Follow-Up Stage</h3>
-              <ul>
-                <li>9 consultation calls scheduled</li>
-                <li>4 proposals pending decision</li>
-                <li>Average response time: 3.2 hours</li>
-              </ul>
-            </article>
-            <article class="funnel-column">
-              <h3>Converted Clients</h3>
-              <ul>
-                <li>7 conversions in current week</li>
-                <li>Average package value: RM 2,740</li>
-                <li>Quarter conversion trend: +8%</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Commission Tracking &amp; Payout - v1</span>
-          <h2>Semi-Automated Workflow (Manual Review Required)</h2>
-          <p class="section-copy">
-            Commissions are calculated against predefined rules, then manually reviewed and approved by an admin
-            before payout processing.
-          </p>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Coach</th>
-                  <th>Calculated Commission</th>
-                  <th>Review Status</th>
-                  <th>Payout Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Luke</td>
-                  <td>RM 18,640</td>
-                  <td>Reviewed</td>
-                  <td>Approve for payout</td>
-                </tr>
-                <tr>
-                  <td>Amelia K.</td>
-                  <td>RM 9,480</td>
-                  <td>Pending Review</td>
-                  <td>Awaiting admin check</td>
-                </tr>
-                <tr>
-                  <td>Daniel R.</td>
-                  <td>RM 4,120</td>
-                  <td>Reviewed</td>
-                  <td>Approve for payout</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Commission Tracking &amp; Payout - v2</span>
-          <h2>Fully Automated End-to-End Processing</h2>
-          <p class="section-copy">
-            Automated rules calculate commissions in real time and process scheduled payouts with transparent logs,
-            payout status, and exception alerts.
-          </p>
-          <div class="card-grid">
-            <article class="card">
-              <h3>Real-Time Calculation</h3>
-              <p>Package and session events update commission values instantly.</p>
-            </article>
-            <article class="card">
-              <h3>Scheduled Payout Runs</h3>
-              <p>Weekly or monthly payout cycles with automatic execution and receipt logs.</p>
-            </article>
-            <article class="card">
-              <h3>Audit and Exception Tracking</h3>
-              <p>Every payout action is logged with traceable admin override controls.</p>
-            </article>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <p>LEGACY+ Coaching | Admin Dashboard</p>
-        <p>&copy; <span data-year></span> LEGACY+ Coaching. Confidential admin view.</p>
-      </footer>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="home">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
     </div>
 
-    <script src="./script.js"></script>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Private admin navigation for leads, clients, finance, operations, and platform controls.</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a class="is-current" href="./admin-dashboard.html">Home</a>
+          <a href="./admin-clients.html">TEAM</a>
+          <a href="./admin-leads.html">Leads</a>
+          <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Business Overview and Priority Queue</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Syncing your live admin dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Admin focus: urgent business flags first, coach reviews second, then move into the right workspace.</p>
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" data-crm-tone="alert">
+            <h2>The numbers that need attention first</h2>
+            <div class="stats-grid crm-metric-grid">
+              <a class="stat crm-stat crm-stat--link" data-crm-tone="info" href="./admin-financials.html#reports">
+                <p class="crm-stat__label">Net Revenue</p>
+                <p class="crm-stat__value" id="admin-stat-net-revenue">RM 0.00</p>
+              </a>
+              <a class="stat crm-stat crm-stat--link" data-crm-tone="alert" href="./admin-financials.html#payouts">
+                <p class="crm-stat__label">Coach Payouts</p>
+                <p class="crm-stat__value" id="admin-stat-payouts">RM 0.00</p>
+              </a>
+              <a class="stat crm-stat crm-stat--link" data-crm-tone="warning" href="./admin-financials.html#reports">
+                <p class="crm-stat__label">Unused Liability</p>
+                <p class="crm-stat__value" id="admin-stat-liability">RM 0.00</p>
+              </a>
+              <a class="stat crm-stat crm-stat--link" data-crm-tone="success" href="./admin-leads.html">
+                <p class="crm-stat__label">Conversion</p>
+                <p class="crm-stat__value" id="admin-stat-conversion">0%</p>
+              </a>
+              <a class="stat crm-stat crm-stat--link" data-crm-tone="success" href="./admin-clients.html">
+                <p class="crm-stat__label">Active Team</p>
+                <p class="crm-stat__value" id="admin-stat-active-clients">0</p>
+              </a>
+              <a class="stat crm-stat crm-stat--link" data-crm-tone="alert" href="./admin-dashboard.html#admin-watchlist">
+                <p class="crm-stat__label">Critical Flags</p>
+                <p class="crm-stat__value" id="admin-stat-alerts">0</p>
+              </a>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="alert" id="admin-watchlist">
+            <h2>What needs action now</h2>
+            <div class="dashboard-card-grid" id="admin-watchlist-cards">
+              <article class="dashboard-note dashboard-note--placeholder" data-crm-tone="alert">
+                <strong>Priority queue is syncing</strong>
+                <p>Financial, client, and pipeline flags will appear here once the live business summary finishes loading.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="warning">
+            <h2>Quarterly review queue and KPI follow-up</h2>
+            <div class="stats-grid">
+              <article class="stat" data-crm-tone="alert">
+                <h3 id="admin-review-overdue">0</h3>
+                <p>Overdue coach reviews</p>
+              </article>
+              <article class="stat" data-crm-tone="warning">
+                <h3 id="admin-review-due-soon">0</h3>
+                <p>Reviews due in the next 14 days</p>
+              </article>
+              <article class="stat" data-crm-tone="info">
+                <h3 id="admin-review-promotion-ready">0</h3>
+                <p>Coaches currently marked promotion-ready</p>
+              </article>
+              <article class="stat" data-crm-tone="success">
+                <h3 id="admin-review-green">0</h3>
+                <p>Coaches with KPI checks currently green</p>
+              </article>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Coach</th>
+                    <th>Position</th>
+                    <th>Tier</th>
+                    <th>KPI Progress</th>
+                    <th>Next Review</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-coach-review-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>Coach review data is syncing.</strong>
+                        <p>Quarterly review timing, KPI coverage, and promotion-ready coaches will appear here once the live admin dashboard finishes loading.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Home</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./admin-dashboard.js?v=20260401admin3"></script>
   </body>
 </html>

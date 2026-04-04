@@ -1,0 +1,1551 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Nutrition | LEGACY+ Coach</title>
+    <meta
+      name="description"
+      content="Private coach nutrition workspace for prescribing simple client nutrition plans, reviewing logs, and following up across the roster."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260403nutritionflow2" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="programming" data-program-workspace="nutrition">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a class="is-current" href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Nutrition Builder</span>
+            <h1>Prescribe Client Nutrition In One Clear Flow</h1>
+            <p class="dashboard-feedback" id="coach-programming-status">
+              Syncing your live nutrition desk.
+            </p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <p>
+              Pick a client, enter the coach inputs, set the weekly rhythm, and generate the live plan. Review and roster follow-up stay in their own tabs.
+            </p>
+          </div>
+        </header>
+
+        <nav class="crm-page-tabs reveal" aria-label="Coach nutrition workspace tabs">
+          <button class="crm-page-tab is-active" type="button" data-coach-programming-tab="delivery">Prescribe</button>
+          <button class="crm-page-tab" type="button" data-coach-programming-tab="reviews">Review</button>
+          <button class="crm-page-tab" type="button" data-coach-programming-tab="operations">Roster</button>
+        </nav>
+
+        <main class="dashboard-main crm-section-grid">
+          <div class="crm-page-panel" data-coach-programming-panel="overview" hidden>
+            <section class="section dashboard-section reveal coach-kpi-section" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Snapshot</span>
+              <h2>What Needs Programming Attention First</h2>
+              <div class="stats-grid crm-metric-grid">
+                <article class="stat crm-stat" data-crm-tone="info">
+                  <p class="crm-stat__label">Active Roster</p>
+                  <p class="crm-stat__value" id="coach-program-stat-roster">0</p>
+                  <p class="crm-stat__detail">Assigned clients available for programming.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="neutral">
+                  <p class="crm-stat__label">Templates</p>
+                  <p class="crm-stat__value" id="coach-program-stat-templates">0</p>
+                  <p class="crm-stat__detail">Reusable coach-owned templates in your library.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="neutral">
+                  <p class="crm-stat__label">Active Programs</p>
+                  <p class="crm-stat__value" id="coach-program-stat-assignments">0</p>
+                  <p class="crm-stat__detail">Client programs currently active or paused.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="warning">
+                  <p class="crm-stat__label">Pending Reviews</p>
+                  <p class="crm-stat__value" id="coach-program-stat-reviews">0</p>
+                  <p class="crm-stat__detail">Training, nutrition, health, photo, and reward items waiting on review.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="alert">
+                  <p class="crm-stat__label">At-Risk Clients</p>
+                  <p class="crm-stat__value" id="coach-program-stat-risk">0</p>
+                  <p class="crm-stat__detail">Clients currently showing adherence risk inside the planner loop.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="warning">
+                  <p class="crm-stat__label">Stale Clients</p>
+                  <p class="crm-stat__value" id="coach-program-stat-stale">0</p>
+                  <p class="crm-stat__detail">Clients with no meaningful planner activity in the last 14 days.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Roster Readiness</span>
+                <h2>Who Is Program-Ready Right Now</h2>
+                <div class="coach-programming-roster-grid" id="coach-program-roster-grid">
+                  <article class="dashboard-inline-placeholder">
+                    <strong>Loading roster programming coverage</strong>
+                    <p>Your live roster status will appear here with active program, nutrition, and health context as soon as the workspace sync completes.</p>
+                  </article>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Delivery Signals</span>
+                <h2>Gaps You Should Clear Next</h2>
+                <div class="coach-programming-signal-grid" id="coach-program-signals">
+                  <article class="dashboard-inline-placeholder">
+                    <strong>Loading delivery signals</strong>
+                    <p>The next nutrition, health, and adherence gaps to clear will appear here once the planner snapshot is ready.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Current Programs</span>
+              <h2>Assignments Already Live Across Your Roster</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Client</th>
+                      <th>Program</th>
+                      <th>Start</th>
+                      <th>Status</th>
+                      <th>Nutrition</th>
+                      <th>Latest Health Update</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-program-assignment-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="7">
+                        <div class="dashboard-table__empty">
+                          <strong>No program assignments yet.</strong>
+                          <p>Once you assign the first block to a roster client, the live program table will appear here with nutrition and health context alongside it.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="warning">
+              <article class="card" data-crm-tone="alert">
+                <span class="kicker kicker--accent">Adherence Radar</span>
+                <h2>Who Looks Most At Risk Right Now</h2>
+                <div class="coach-programming-roster-grid" id="coach-program-risk-grid">
+                  <article class="dashboard-inline-placeholder">
+                    <strong>Loading adherence risk board</strong>
+                    <p>At-risk clients will appear here with the exact signals that need intervention once the roster analysis finishes.</p>
+                  </article>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Stale Client Detection</span>
+                <h2>Who Has Gone Quiet Long Enough To Need Intervention</h2>
+                <div class="coach-programming-template-grid" id="coach-program-stale-grid">
+                  <article class="dashboard-inline-placeholder">
+                    <strong>Loading stale-client scan</strong>
+                    <p>Clients who have gone quiet long enough to matter will appear here once the weekly engagement scan completes.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="templates" hidden>
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Template Builder</span>
+                <h2>Create a Reusable Weekly Structure</h2>
+                <p class="coach-programming-note">
+                  Build one weekly structure here. The selected duration repeats that structure across the template.
+                </p>
+                <form class="contact-form" id="coach-program-template-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Template title
+                      <input type="text" name="title" placeholder="Foundational Strength Block" required />
+                    </label>
+                    <label>
+                      Objective
+                      <input type="text" name="objective" placeholder="Return to strength base, rebuild consistency" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Audience
+                      <input type="text" name="audience" placeholder="Busy professionals, rehab return, general strength" />
+                    </label>
+                    <label>
+                      Category
+                      <select name="category">
+                        <option value="strength">Strength</option>
+                        <option value="hypertrophy">Hypertrophy</option>
+                        <option value="conditioning">Conditioning</option>
+                        <option value="runner">Runner</option>
+                        <option value="hyrox">HYROX</option>
+                        <option value="endurance">Endurance</option>
+                        <option value="rehab">Rehab</option>
+                        <option value="general">General</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Difficulty
+                      <select name="difficulty">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate" selected>Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    </label>
+                    <label>
+                      Duration (weeks)
+                      <input type="number" name="durationWeeks" min="1" max="16" value="4" required />
+                    </label>
+                  </div>
+                  <label>
+                    Coach notes
+                    <textarea
+                      name="notes"
+                      placeholder="Explain the intent of the block, progression logic, and any delivery notes for the coach team."
+                    ></textarea>
+                  </label>
+
+                  <div class="coach-programming-day-stack" id="coach-program-template-days"></div>
+
+                  <div class="section-actions section-actions--compact">
+                    <button class="btn btn-ghost" id="coach-program-add-day" type="button">Add Training Day</button>
+                    <button class="btn btn-primary" type="submit">Save Program Template</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="coach-program-template-feedback">
+                  Strength rows still accept <strong>Exercise Name | Sets | Reps or Range | RPE/RIR | Rest Seconds | Notes</strong>.
+                  Structured session fields only appear for conditioning, runner, HYROX, and endurance templates.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Template Library</span>
+                <h2>Your Reusable Blocks</h2>
+                <div class="coach-programming-template-grid" id="coach-program-template-library">
+                  <article class="dashboard-inline-placeholder">
+                    <strong>Loading saved templates</strong>
+                    <p>Your reusable nutrition blocks will appear here as soon as the template library finishes loading.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <details class="coach-programming-advanced coach-programming-advanced--library">
+                <summary>Exercise Demo Search</summary>
+                <p class="coach-programming-note">
+                  This stays hidden until you search. Use it only when you need a temporary demo link before the proper LEGACY exercise library replaces it.
+                </p>
+                <div class="coach-programming-library-stack">
+                  <div class="input-row account-input-row client-planner-search-row">
+                    <label>
+                      Search exercise library
+                      <input type="search" id="coach-program-exercise-search" placeholder="Back squat, easy run, ski erg..." />
+                    </label>
+                    <button class="btn btn-ghost" id="coach-program-exercise-search-button" type="button">Search Library</button>
+                  </div>
+                  <div class="coach-programming-template-grid" id="coach-program-exercise-library">
+                    <p class="coach-programming-empty">Search for an exercise name to reveal matching demos.</p>
+                  </div>
+                  <details class="coach-programming-advanced coach-programming-advanced--secondary">
+                    <summary>Add or replace a demo link</summary>
+                    <form class="contact-form" id="coach-program-exercise-form">
+                      <input type="hidden" name="id" />
+                      <div class="input-row account-input-row">
+                        <label>
+                          Exercise name
+                          <input type="text" name="name" placeholder="Romanian deadlift" required />
+                        </label>
+                        <label>
+                          Demo URL
+                          <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required />
+                        </label>
+                      </div>
+                      <div class="input-row account-input-row">
+                        <label>
+                          Body part
+                          <input type="text" name="bodyPart" placeholder="Posterior chain, full body, conditioning" />
+                        </label>
+                        <label>
+                          Exercise type
+                          <select name="exerciseType">
+                            <option value="standard">Standard</option>
+                            <option value="strength">Strength</option>
+                            <option value="conditioning">Conditioning</option>
+                            <option value="mobility">Mobility</option>
+                            <option value="running_drill">Running drill</option>
+                            <option value="endurance_session">Endurance session</option>
+                          </select>
+                        </label>
+                      </div>
+                      <div class="input-row account-input-row">
+                        <label>
+                          Tags
+                          <input type="text" name="tags" placeholder="hinge, barbell, lower body" />
+                        </label>
+                        <label>
+                          Demo note
+                          <input type="text" name="demoNote" placeholder="Temporary YouTube demo until LEGACY library is ready" />
+                        </label>
+                      </div>
+                      <label>
+                        Coaching notes
+                        <textarea name="notes" placeholder="What matters most in the demo or what the coach team should swap later."></textarea>
+                      </label>
+                      <div class="section-actions section-actions--compact">
+                        <button class="btn btn-ghost" id="coach-program-exercise-reset-button" type="reset">Clear</button>
+                        <button class="btn btn-primary" type="submit">Save Demo Link</button>
+                      </div>
+                    </form>
+                  </details>
+                  <details class="coach-programming-advanced coach-programming-advanced--secondary">
+                    <summary>Bulk import demo links</summary>
+                    <form class="contact-form" id="coach-program-exercise-bulk-form">
+                      <label>
+                        Bulk rows
+                        <textarea
+                          name="bulkRows"
+                          placeholder="Quick paste: Romanian deadlift | https://www.youtube.com/watch?v=...&#10;Future LEGACY import: exercise_name,youtube_url,published_at,channel_name,demo_source_mode,tags,demo_note"
+                        ></textarea>
+                      </label>
+                      <div class="section-actions section-actions--compact">
+                      <a class="btn btn-ghost" href="./assets/training-library/legacy-youtube-library-import-template.csv" download>Download LEGACY Import Template</a>
+                        <button class="btn btn-secondary" type="submit">Import Demo Links In Bulk</button>
+                      </div>
+                    </form>
+                  </details>
+                </div>
+                <p class="dashboard-feedback" id="coach-program-exercise-feedback">
+                  Use one row per exercise. Quick paste accepts <code>Exercise Name | URL</code>. The LEGACY template accepts <code>exercise_name,youtube_url,published_at,channel_name,demo_source_mode,tags,demo_note</code>.
+                </p>
+              </details>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="assignments" hidden>
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Assignment Flow</span>
+                <h2>Assign a Program Without Leaving the Roster Context</h2>
+                <form class="contact-form" id="coach-program-assign-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Client
+                      <select name="clientId" id="coach-program-client" required>
+                        <option value="">Select client</option>
+                      </select>
+                    </label>
+                    <label>
+                      Template
+                      <select name="templateId" id="coach-program-template-select" required>
+                        <option value="">Select template</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Start date
+                      <input type="date" name="startDate" id="coach-program-start-date" required />
+                    </label>
+                    <label>
+                      Assignment title override
+                      <input type="text" name="title" placeholder="Optional if the client version needs a tighter name" />
+                    </label>
+                  </div>
+                  <label>
+                    Assignment objective
+                    <input type="text" name="objective" placeholder="What this client should achieve in this block" />
+                  </label>
+                  <div class="coach-programming-assignment-profile">
+                    <div class="coach-programming-assignment-profile__head">
+                      <div>
+                        <span class="kicker kicker--accent">Athlete Profile</span>
+                        <h3>Client Training Profile</h3>
+                      </div>
+                      <p class="coach-programming-note">
+                        These fields shape the client-facing overview so the client understands the block focus, sport context, and what to expect.
+                      </p>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Athlete profile
+                        <select name="athleteProfile">
+                          <option value="">Use template defaults</option>
+                          <option value="general_strength">General strength</option>
+                          <option value="runner">Runner</option>
+                          <option value="hyrox">HYROX</option>
+                          <option value="endurance">Endurance athlete</option>
+                          <option value="hybrid">Hybrid athlete</option>
+                        </select>
+                      </label>
+                      <label>
+                        Primary sport
+                        <input type="text" name="primarySport" placeholder="Road running, HYROX, cycling, trail, triathlon" />
+                      </label>
+                      <label>
+                        Goal focus
+                        <input type="text" name="goalFocus" placeholder="Build aerobic base, improve threshold, race prep" />
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Goal event / target
+                        <input type="text" name="goalEvent" placeholder="10K PB, Half Marathon, HYROX Open" />
+                      </label>
+                      <label>
+                        Goal date
+                        <input type="date" name="goalDate" />
+                      </label>
+                      <label>
+                        Training age
+                        <select name="trainingAgeLevel">
+                          <option value="">Not set</option>
+                          <option value="beginner">Beginner</option>
+                          <option value="intermediate">Intermediate</option>
+                          <option value="advanced">Advanced</option>
+                        </select>
+                      </label>
+                      <label>
+                        Days available / week
+                        <input type="number" name="daysAvailablePerWeek" min="1" max="14" step="1" placeholder="4" />
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Current weekly hours
+                        <input type="number" name="currentWeeklyHours" min="0" step="0.1" placeholder="5.5" />
+                      </label>
+                      <label>
+                        Planned weekly hours
+                        <input type="number" name="plannedWeeklyHours" min="0" step="0.1" placeholder="7.0" />
+                      </label>
+                      <label>
+                        Current longest session (hrs)
+                        <input type="number" name="currentLongestSessionHours" min="0" step="0.1" placeholder="1.8" />
+                      </label>
+                      <label>
+                        Planned hard sessions / week
+                        <input type="number" name="plannedHardSessionsPerWeek" min="0" max="7" step="1" placeholder="2" />
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Planned strength sessions / week
+                        <input type="number" name="plannedStrengthSessionsPerWeek" min="0" max="7" step="1" placeholder="2" />
+                      </label>
+                      <label>
+                        Current limiter
+                        <input type="text" name="currentLimiter" placeholder="Aerobic durability, pacing, heat tolerance" />
+                      </label>
+                      <label>
+                        Health focus
+                        <input type="text" name="healthFocus" placeholder="Sleep rhythm, hydration, recovery, digestion" />
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Sex
+                        <select name="sex">
+                          <option value="">Not set</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </label>
+                      <label>
+                        Age
+                        <input type="number" name="ageYears" min="0" step="1" placeholder="31" />
+                      </label>
+                      <label>
+                        Body mass (kg)
+                        <input type="number" name="bodyMassKg" min="0" step="0.1" placeholder="72" />
+                      </label>
+                      <label>
+                        Sleep (h/night)
+                        <input type="number" name="sleepHours" min="0" step="0.1" placeholder="7.5" />
+                      </label>
+                      <label>
+                        Injury risk right now?
+                        <select name="injuryRiskFlag">
+                          <option value="">Not set</option>
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="coach-programming-calculator-shell">
+                      <p class="coach-programming-note">
+                        The athlete calculator below mirrors the workbook logic so the app can generate phase, safe ramp, long-session targets, fueling ranges, and athlete-facing summary cards.
+                      </p>
+
+                      <div class="coach-programming-calculator-group" data-athlete-calculator-group="runner" hidden>
+                        <div class="coach-programming-calculator-group__head">
+                          <strong>Runner Inputs</strong>
+                          <span>5K, 10K, half marathon, marathon, and trail-style blocks</span>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Current weekly volume (km)
+                            <input type="number" name="runnerCurrentWeeklyKm" min="0" step="0.1" placeholder="42" />
+                          </label>
+                          <label>
+                            Current long run (km)
+                            <input type="number" name="runnerCurrentLongRunKm" min="0" step="0.1" placeholder="14" />
+                          </label>
+                          <label>
+                            Latest race distance (km)
+                            <input type="number" name="runnerLatestRaceDistanceKm" min="0" step="0.1" placeholder="10" />
+                          </label>
+                          <label>
+                            Latest race time (min)
+                            <input type="number" name="runnerLatestRaceTimeMin" min="0" step="0.1" placeholder="47" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Threshold pace (min/km)
+                            <input type="number" name="runnerThresholdPaceMinPerKm" min="0" step="0.01" placeholder="4.75" />
+                          </label>
+                          <label>
+                            Resting HR
+                            <input type="number" name="runnerRestingHrBpm" min="0" step="1" placeholder="52" />
+                          </label>
+                          <label>
+                            Max HR
+                            <input type="number" name="runnerMaxHrBpm" min="0" step="1" placeholder="188" />
+                          </label>
+                          <label>
+                            Planned weekly volume (km)
+                            <input type="number" name="runnerPlannedWeeklyKm" min="0" step="0.1" placeholder="45" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Planned long run (km)
+                            <input type="number" name="runnerPlannedLongRunKm" min="0" step="0.1" placeholder="15" />
+                          </label>
+                          <label>
+                            Planned CHO (g/kg/day)
+                            <input type="number" name="runnerPlannedChoGPerKg" min="0" step="0.1" placeholder="5.5" />
+                          </label>
+                          <label>
+                            Planned protein (g/kg/day)
+                            <input type="number" name="runnerPlannedProteinGPerKg" min="0" step="0.1" placeholder="1.7" />
+                          </label>
+                          <label>
+                            Planned long-run fuel (g/h)
+                            <input type="number" name="runnerPlannedLongRunFuelGPerH" min="0" step="1" placeholder="40" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Planned fluid (mL/h)
+                            <input type="number" name="runnerPlannedFluidMlPerH" min="0" step="1" placeholder="550" />
+                          </label>
+                          <label>
+                            Planned sodium (mg/h)
+                            <input type="number" name="runnerPlannedSodiumMgPerH" min="0" step="1" placeholder="450" />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="coach-programming-calculator-group" data-athlete-calculator-group="hyrox" hidden>
+                        <div class="coach-programming-calculator-group__head">
+                          <strong>HYROX Inputs</strong>
+                          <span>Engine, stations, specificity, and race-fuel targets</span>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Current run volume (km/wk)
+                            <input type="number" name="hyroxCurrentRunKm" min="0" step="0.1" placeholder="30" />
+                          </label>
+                          <label>
+                            Recent 5K time (min)
+                            <input type="number" name="hyroxRecent5kTimeMin" min="0" step="0.1" placeholder="25.5" />
+                          </label>
+                          <label>
+                            Predicted race duration (min)
+                            <input type="number" name="hyroxPredictedRaceDurationMin" min="0" step="1" placeholder="95" />
+                          </label>
+                          <label>
+                            VO2max (optional)
+                            <input type="number" name="hyroxVo2maxMlPerKgMin" min="0" step="0.1" placeholder="48" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Weakest area
+                            <select name="hyroxWeakestArea">
+                              <option value="">Not set</option>
+                              <option value="Running">Running</option>
+                              <option value="Sleds">Sleds</option>
+                              <option value="Wall Balls">Wall Balls</option>
+                              <option value="Carry/Lunges">Carry/Lunges</option>
+                              <option value="Mixed">Mixed</option>
+                            </select>
+                          </label>
+                          <label>
+                            Wall-ball unbroken reps
+                            <input type="number" name="hyroxWallBallUnbrokenReps" min="0" step="1" placeholder="35" />
+                          </label>
+                          <label>
+                            Sled tolerance (1-5)
+                            <input type="number" name="hyroxSledToleranceScore" min="1" max="5" step="1" placeholder="3" />
+                            <small class="score-guidance score-guidance--compact">
+                              <span><strong>1</strong><em>Very poor tolerance</em></span>
+                              <span><strong>3</strong><em>Manageable but work needed</em></span>
+                              <span><strong>5</strong><em>Strong and repeatable</em></span>
+                            </small>
+                          </label>
+                          <label>
+                            Planned run volume (km/wk)
+                            <input type="number" name="hyroxPlannedRunKm" min="0" step="0.1" placeholder="32" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Planned CHO (g/kg/day)
+                            <input type="number" name="hyroxPlannedChoGPerKg" min="0" step="0.1" placeholder="5.5" />
+                          </label>
+                          <label>
+                            Planned protein (g/kg/day)
+                            <input type="number" name="hyroxPlannedProteinGPerKg" min="0" step="0.1" placeholder="1.8" />
+                          </label>
+                          <label>
+                            Planned race fuel (g/h)
+                            <input type="number" name="hyroxPlannedRaceFuelGPerH" min="0" step="1" placeholder="45" />
+                          </label>
+                          <label>
+                            Planned fluid (mL/h)
+                            <input type="number" name="hyroxPlannedFluidMlPerH" min="0" step="1" placeholder="600" />
+                          </label>
+                          <label>
+                            Planned sodium (mg/h)
+                            <input type="number" name="hyroxPlannedSodiumMgPerH" min="0" step="1" placeholder="500" />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="coach-programming-calculator-group" data-athlete-calculator-group="endurance" hidden>
+                        <div class="coach-programming-calculator-group__head">
+                          <strong>Endurance Inputs</strong>
+                          <span>Uses the hours-based fields above for weekly load and long-session planning</span>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Event duration target (hrs)
+                            <input type="number" name="enduranceEventDurationHours" min="0" step="0.1" placeholder="4.5" />
+                          </label>
+                          <label>
+                            Resting HR
+                            <input type="number" name="enduranceRestingHrBpm" min="0" step="1" placeholder="48" />
+                          </label>
+                          <label>
+                            Max HR
+                            <input type="number" name="enduranceMaxHrBpm" min="0" step="1" placeholder="186" />
+                          </label>
+                          <label>
+                            Threshold HR
+                            <input type="number" name="enduranceThresholdHrBpm" min="0" step="1" placeholder="162" />
+                          </label>
+                          <label>
+                            Hot conditions expected?
+                            <select name="enduranceHotConditionsFlag">
+                              <option value="">Not set</option>
+                              <option value="No">No</option>
+                              <option value="Yes">Yes</option>
+                            </select>
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Planned CHO (g/kg/day)
+                            <input type="number" name="endurancePlannedChoGPerKg" min="0" step="0.1" placeholder="6" />
+                          </label>
+                          <label>
+                            Planned protein (g/kg/day)
+                            <input type="number" name="endurancePlannedProteinGPerKg" min="0" step="0.1" placeholder="1.7" />
+                          </label>
+                          <label>
+                            Planned event fuel (g/h)
+                            <input type="number" name="endurancePlannedEventFuelGPerH" min="0" step="1" placeholder="70" />
+                          </label>
+                          <label>
+                            Planned fluid (mL/h)
+                            <input type="number" name="endurancePlannedFluidMlPerH" min="0" step="1" placeholder="750" />
+                          </label>
+                          <label>
+                            Planned sodium (mg/h)
+                            <input type="number" name="endurancePlannedSodiumMgPerH" min="0" step="1" placeholder="700" />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="coach-programming-workbook-preview" id="coach-programming-workbook-preview" hidden>
+                      <div class="coach-programming-workbook-preview__head">
+                        <div>
+                          <span class="kicker kicker--accent">Athlete Summary Preview</span>
+                          <h4>Auto-generated from the athlete inputs above</h4>
+                        </div>
+                        <p class="coach-programming-note" id="coach-programming-workbook-preview-note">
+                          Add the athlete inputs above to generate phase, safe ramp, long-session targets, and client-facing summary guidance.
+                        </p>
+                      </div>
+                      <dl class="client-planner-kv-grid coach-programming-workbook-preview__grid" id="coach-programming-workbook-preview-grid"></dl>
+                      <div class="client-planner-summary-copy coach-programming-workbook-preview__summary" id="coach-programming-workbook-preview-summary"></div>
+                    </div>
+                  </div>
+                  <label>
+                    Delivery notes
+                    <textarea
+                      name="notes"
+                      placeholder="Add start notes, progression instructions, or anything the client should know from day one."
+                    ></textarea>
+                  </label>
+                  <div class="section-actions">
+                    <button class="btn btn-primary" type="submit">Assign Program</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="coach-program-assign-feedback">
+                  Once assigned, the client will see the program in their planner-facing account tabs when those views are switched on.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Selected Client</span>
+                <h2>Assignment Context</h2>
+                <div class="coach-programming-focus-card" id="coach-program-client-focus">
+                  <p class="coach-programming-empty">Choose a client to review their current program, nutrition plan, health rhythm, and photo cadence.</p>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Delivery Queue</span>
+              <h2>Assignment Coverage Across Your Whole Roster</h2>
+              <div class="coach-programming-template-grid" id="coach-program-delivery-list">
+                <p class="coach-programming-empty">Loading roster delivery coverage...</p>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="warning">
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Bulk Programming</span>
+                <h2>Assign One Template To Safe Candidates In One Run</h2>
+                <p class="coach-programming-note">
+                  This bulk tool only targets clients without an active or paused program, so it does not overwrite live blocks.
+                </p>
+                <form class="contact-form" id="coach-program-bulk-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Template
+                      <select name="templateId" id="coach-program-bulk-template" required>
+                        <option value="">Select template</option>
+                      </select>
+                    </label>
+                    <label>
+                      Start date
+                      <input type="date" name="startDate" id="coach-program-bulk-start-date" required />
+                    </label>
+                  </div>
+                  <label>
+                    Shared objective
+                    <input type="text" name="objective" placeholder="What this cohort should achieve in the next block" />
+                  </label>
+                  <label>
+                    Shared notes
+                    <textarea
+                      name="notes"
+                      placeholder="Add shared delivery notes, emphasis points, or setup reminders that should go to each selected client."
+                    ></textarea>
+                  </label>
+                  <div class="section-actions section-actions--compact">
+                    <button class="btn btn-ghost" id="coach-program-bulk-select-all" type="button">Select All Safe Candidates</button>
+                    <button class="btn btn-ghost" id="coach-program-bulk-select-risk" type="button">Select At-Risk Only</button>
+                    <button class="btn btn-ghost" id="coach-program-bulk-clear" type="button">Clear</button>
+                  </div>
+                  <div class="coach-programming-bulk-list" id="coach-program-bulk-list">
+                    <p class="coach-programming-empty">Loading safe bulk-assignment candidates...</p>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-primary" type="submit">Assign Template To Selected Clients</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="coach-program-bulk-feedback">
+                  This is best for new onboarding cohorts or clients who have no active block yet.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Bulk Rules</span>
+                <h2>What This Tool Will And Will Not Do</h2>
+                <div class="coach-programming-focus-card">
+                  <dl class="coach-programming-roster-meta">
+                    <div>
+                      <dt>Included</dt>
+                      <dd>Clients without any active or paused program assignment.</dd>
+                    </div>
+                    <div>
+                      <dt>Excluded</dt>
+                      <dd>Clients already on a live block, to avoid duplicate active assignments.</dd>
+                    </div>
+                    <div>
+                      <dt>Best use</dt>
+                      <dd>Fresh onboarding waves, restart cohorts, and stale clients needing a clean re-entry block.</dd>
+                    </div>
+                    <div>
+                      <dt>Follow-up</dt>
+                      <dd>After bulk assignment, layer nutrition and schedule health forms from the delivery tab.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel is-active" data-coach-programming-panel="delivery">
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <article class="card coach-programming-guide-card" id="coach-program-delivery-empty-state" data-crm-tone="neutral" hidden>
+                <span class="kicker kicker--accent">Getting Started</span>
+                <h2>No Assigned Clients Yet</h2>
+                <p class="coach-programming-note">
+                  Link your first client before building a live nutrition plan. Once someone is assigned, this becomes a simple coach-input flow instead of a full admin desk.
+                </p>
+                <div class="button-row">
+                  <a class="btn btn-secondary" href="./coach-clients.html">Open Clients</a>
+                </div>
+              </article>
+
+              <article class="card coach-training-wizard-card coach-nutrition-wizard-card" data-crm-tone="success" id="coach-program-delivery-plan-card">
+                <span class="kicker kicker--accent">Nutrition Builder</span>
+                <h2>Build The Nutrition Plan In One Clear Flow</h2>
+                <form class="contact-form coach-training-wizard-form coach-nutrition-wizard-form" id="coach-program-nutrition-form">
+                  <div class="coach-training-topbar coach-nutrition-topbar">
+                    <label>
+                      Select client to prescribe
+                      <select name="clientId" id="coach-program-nutrition-client" required>
+                        <option value="">Select client</option>
+                      </select>
+                    </label>
+                    <label>
+                      Link to active program
+                      <select name="assignmentId" id="coach-program-nutrition-assignment">
+                        <option value="">No linked program</option>
+                      </select>
+                    </label>
+                    <label>
+                      Client-facing title
+                      <input type="text" name="title" placeholder="Phase 1 Nutrition Reset" required />
+                    </label>
+                  </div>
+
+                  <nav class="coach-training-step-tabs" aria-label="Nutrition builder steps">
+                    <button class="coach-training-step-tab is-active" type="button" data-coach-nutrition-step="inputs">Plan Inputs</button>
+                    <button class="coach-training-step-tab" type="button" data-coach-nutrition-step="targets">Targets</button>
+                    <button class="coach-training-step-tab" type="button" data-coach-nutrition-step="habits">Habits</button>
+                    <button class="coach-training-step-tab" type="button" data-coach-nutrition-step="week">Weekly Rhythm</button>
+                    <button class="coach-training-step-tab" type="button" data-coach-nutrition-step="generate">Generate</button>
+                  </nav>
+
+                  <div class="coach-training-step-panels">
+                    <section class="coach-training-step-panel is-active" data-coach-nutrition-step-panel="inputs">
+                      <div class="coach-training-step-panel__head">
+                        <div>
+                          <span class="kicker kicker--accent">Step 1</span>
+                          <h3>Enter The Workbook Inputs</h3>
+                        </div>
+                        <p>Only fill the real coach decision cells. The calorie logic, meal rhythm, and client-facing plan build in the background.</p>
+                      </div>
+
+                      <div class="coach-training-wizard-grid">
+                        <article class="coach-training-wizard-section">
+                          <span class="kicker kicker--accent">Plan Setup</span>
+                          <div class="input-row account-input-row">
+                            <label>
+                              Strategy
+                              <select name="strategy">
+                                <option value="hybrid" selected>Hybrid</option>
+                                <option value="habits">Habits</option>
+                                <option value="macros">Macros</option>
+                                <option value="meal_plan">Meal Plan</option>
+                              </select>
+                            </label>
+                            <label>
+                              Athlete category
+                              <select name="athleteCategory" data-nutrition-workbook-input>
+                                <option value="general_fitness">General Fitness</option>
+                                <option value="elderly">Elderly</option>
+                                <option value="hypertrophy">Hypertrophy</option>
+                                <option value="strength">Strength</option>
+                                <option value="combat">Combat</option>
+                                <option value="endurance">Endurance</option>
+                                <option value="hyrox">HYROX</option>
+                              </select>
+                            </label>
+                            <label>
+                              Primary goal
+                              <select name="primaryGoal" data-nutrition-workbook-input>
+                                <option value="fat_loss">Fat Loss</option>
+                                <option value="recomp">Maintenance / Recomp</option>
+                                <option value="muscle_gain">Muscle Gain</option>
+                                <option value="performance_peak">Performance / Peak</option>
+                              </select>
+                            </label>
+                          </div>
+                          <div class="input-row account-input-row">
+                            <label>
+                              Start date
+                              <input type="date" name="startDate" id="coach-program-nutrition-start-date" data-nutrition-workbook-input required />
+                            </label>
+                            <label>
+                              Event / assessment date
+                              <input type="date" name="eventDate" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              End date
+                              <input type="date" name="endDate" />
+                            </label>
+                          </div>
+                          <div class="input-row account-input-row">
+                            <label>
+                              Sex
+                              <select name="sex" data-nutrition-workbook-input>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                              </select>
+                            </label>
+                            <label>
+                              Age
+                              <input type="number" name="ageYears" min="0" step="1" placeholder="31" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Height (cm)
+                              <input type="number" name="heightCm" min="0" step="1" placeholder="175" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Body weight (kg)
+                              <input type="number" name="currentBodyWeightKg" min="0" step="0.1" placeholder="72" data-nutrition-workbook-input />
+                            </label>
+                          </div>
+                          <div class="input-row account-input-row">
+                            <label>
+                              Target body weight (kg)
+                              <input type="number" name="targetBodyWeightKg" min="0" step="0.1" placeholder="68" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Training sessions / week
+                              <input type="number" name="trainingSessionsPerWeek" min="0" max="14" step="1" value="4" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Average session duration (min)
+                              <input type="number" name="averageSessionDurationMin" min="0" step="5" value="60" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Steps / day
+                              <input type="number" name="averageStepsPerDay" min="0" step="100" value="8000" data-nutrition-workbook-input />
+                            </label>
+                          </div>
+                        </article>
+
+                        <article class="coach-training-wizard-section">
+                          <span class="kicker kicker--accent">Daily Rhythm</span>
+                          <div class="input-row account-input-row">
+                            <label>
+                              Meals / day
+                              <input type="number" name="mealsPerDayPreference" min="3" max="6" step="1" value="4" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Diet style
+                              <select name="dietStyle" data-nutrition-workbook-input>
+                                <option value="mixed">Mixed</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="halal_friendly">Halal-friendly</option>
+                                <option value="higher_carb">Higher carb</option>
+                              </select>
+                            </label>
+                            <label>
+                              GI sensitivity
+                              <select name="giSensitivity" data-nutrition-workbook-input>
+                                <option value="normal">Normal</option>
+                                <option value="sensitive">Sensitive</option>
+                                <option value="high">High</option>
+                              </select>
+                            </label>
+                            <label>
+                              Appetite
+                              <select name="appetite" data-nutrition-workbook-input>
+                                <option value="low">Low</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="high">High</option>
+                              </select>
+                            </label>
+                          </div>
+                          <div class="input-row account-input-row">
+                            <label>
+                              Sweat rate / salty sweater
+                              <select name="sweatRate" data-nutrition-workbook-input>
+                                <option value="normal">Normal</option>
+                                <option value="high">High</option>
+                              </select>
+                            </label>
+                            <label>
+                              Main training start
+                              <input type="time" name="trainingStartTime" value="18:00" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Current kcal / day
+                              <input type="number" name="currentCaloriesPerDay" min="0" step="1" placeholder="2100" data-nutrition-workbook-input />
+                            </label>
+                            <label>
+                              Manual maintenance kcal
+                              <input type="number" name="manualMaintenanceKcal" min="0" step="1" placeholder="Leave blank to estimate" data-nutrition-workbook-input />
+                            </label>
+                          </div>
+                          <label>
+                            Client nutrition guidance
+                            <textarea
+                              name="notes"
+                              placeholder="Restaurant rules, substitutions, weekend guardrails, and what the client should do when training load shifts."
+                            ></textarea>
+                          </label>
+                          <div class="coach-programming-workbook-preview coach-programming-workbook-preview--nutrition" id="coach-program-nutrition-workbook-preview">
+                            <div class="coach-programming-workbook-preview__head">
+                              <div>
+                                <span class="kicker kicker--accent">Workbook Summary</span>
+                                <h4>Auto-generated from the coach inputs above</h4>
+                              </div>
+                              <p class="coach-programming-note" id="coach-program-nutrition-workbook-note">
+                                Start with the athlete setup. The workbook will calculate calories, macros, hydration, and the weekly rhythm before the client sees anything.
+                              </p>
+                            </div>
+                            <dl class="client-planner-kv-grid coach-programming-workbook-preview__grid" id="coach-program-nutrition-workbook-grid"></dl>
+                            <div class="client-planner-summary-copy coach-programming-workbook-preview__summary" id="coach-program-nutrition-workbook-summary"></div>
+                          </div>
+                        </article>
+                      </div>
+
+                      <div class="coach-training-step-actions coach-training-step-actions--footer">
+                        <button class="btn btn-secondary" type="button" data-coach-nutrition-nav="next">Next: Targets</button>
+                      </div>
+                    </section>
+
+                    <section class="coach-training-step-panel" data-coach-nutrition-step-panel="targets" hidden>
+                      <div class="coach-training-step-panel__head">
+                        <div>
+                          <span class="kicker kicker--accent">Step 2</span>
+                          <h3>Set The Targets That Drive The Week</h3>
+                        </div>
+                        <p>Review the workbook recommendation, then only override the targets if this athlete needs a human adjustment.</p>
+                      </div>
+
+                      <div class="coach-training-wizard-grid coach-training-wizard-grid--single">
+                        <article class="coach-training-wizard-section coach-training-wizard-section--stacked">
+                          <span class="kicker kicker--accent">Workbook Targets</span>
+                          <div class="client-planner-kv-grid coach-nutrition-preview-grid" id="coach-program-nutrition-target-grid"></div>
+                          <div class="coach-training-step-panel__head coach-training-step-panel__head--compact coach-nutrition-subsection-head">
+                            <div>
+                              <span class="kicker kicker--accent">Coach Overrides</span>
+                              <h3>Only touch these if the workbook needs a human adjustment</h3>
+                            </div>
+                            <p>Leave them alone if the recommendation already fits the athlete and phase.</p>
+                          </div>
+                          <div class="input-row account-input-row coach-nutrition-target-grid">
+                            <label>
+                              Calories
+                              <input type="number" name="caloriesTarget" min="0" step="1" placeholder="2100" />
+                            </label>
+                            <label>
+                              Protein (g)
+                              <input type="number" name="proteinTargetG" min="0" step="1" placeholder="140" />
+                            </label>
+                            <label>
+                              Carbs (g)
+                              <input type="number" name="carbsTargetG" min="0" step="1" placeholder="220" />
+                            </label>
+                            <label>
+                              Fats (g)
+                              <input type="number" name="fatTargetG" min="0" step="1" placeholder="60" />
+                            </label>
+                          </div>
+                          <div class="section-actions section-actions--compact">
+                            <button class="btn btn-ghost" id="coach-program-nutrition-regenerate-targets" type="button">Reapply Workbook Targets</button>
+                          </div>
+                        </article>
+                      </div>
+
+                      <div class="coach-training-step-actions coach-training-step-actions--footer">
+                        <button class="btn btn-ghost" type="button" data-coach-nutrition-nav="back">Back</button>
+                        <button class="btn btn-secondary" type="button" data-coach-nutrition-nav="next">Next: Habits</button>
+                      </div>
+                    </section>
+
+                    <section class="coach-training-step-panel" data-coach-nutrition-step-panel="habits" hidden>
+                      <div class="coach-training-step-panel__head">
+                        <div>
+                          <span class="kicker kicker--accent">Step 3</span>
+                          <h3>Set The Key Behavior Rules</h3>
+                        </div>
+                        <p>Keep this tight. These are the only habits the client should need to think about week to week.</p>
+                      </div>
+
+                      <div class="coach-training-wizard-grid coach-training-wizard-grid--single">
+                        <article class="coach-training-wizard-section coach-training-wizard-section--stacked">
+                          <span class="kicker kicker--accent">Habit Rules</span>
+                          <p class="coach-programming-note">Make the behavior targets obvious, measurable, and easy to coach against.</p>
+                          <div class="coach-programming-day-stack" id="coach-program-nutrition-habits"></div>
+                          <div class="section-actions section-actions--compact">
+                            <button class="btn btn-ghost" id="coach-program-add-habit" type="button">Add Habit Target</button>
+                            <button class="btn btn-ghost" id="coach-program-regenerate-habits" type="button">Reset To Workbook Habits</button>
+                          </div>
+                        </article>
+                      </div>
+
+                      <div class="coach-training-step-actions coach-training-step-actions--footer">
+                        <button class="btn btn-ghost" type="button" data-coach-nutrition-nav="back">Back</button>
+                        <button class="btn btn-secondary" type="button" data-coach-nutrition-nav="next">Next: Weekly Rhythm</button>
+                      </div>
+                    </section>
+
+                    <section class="coach-training-step-panel" data-coach-nutrition-step-panel="week" hidden>
+                      <div class="coach-training-step-panel__head">
+                        <div>
+                          <span class="kicker kicker--accent">Step 4</span>
+                          <h3>Build The Weekly Meal Rhythm</h3>
+                        </div>
+                        <p>Pick a day, edit that day, then move on. The client only sees the finished calendar later.</p>
+                      </div>
+
+                      <div class="coach-nutrition-week-section">
+                        <div class="coach-programming-meal-plan-builder coach-programming-meal-plan-builder--nutrition">
+                          <div class="coach-programming-meal-plan-builder__head">
+                            <div>
+                              <span class="kicker kicker--accent">Weekly Structure</span>
+                              <h3>Coach-Owned Meal Calendar</h3>
+                            </div>
+                            <p>Set the day type once, keep the meals clean, and let the client just open the day and execute.</p>
+                          </div>
+                          <div class="section-actions section-actions--compact">
+                            <button class="btn btn-ghost" id="coach-program-meal-plan-reset" type="button">Regenerate Weekly Rhythm</button>
+                          </div>
+                          <div class="coach-programming-day-stack" id="coach-program-meal-plan-days"></div>
+                        </div>
+                      </div>
+
+                      <div class="coach-training-step-actions coach-training-step-actions--footer">
+                        <button class="btn btn-ghost" type="button" data-coach-nutrition-nav="back">Back</button>
+                        <button class="btn btn-secondary" type="button" data-coach-nutrition-nav="next">Next: Generate</button>
+                      </div>
+                    </section>
+
+                    <section class="coach-training-step-panel" data-coach-nutrition-step-panel="generate" hidden>
+                      <div class="coach-training-step-panel__head">
+                        <div>
+                          <span class="kicker kicker--accent">Step 5</span>
+                          <h3>Generate The Live Plan</h3>
+                        </div>
+                        <p>Review the coach inputs, then save one clean client-facing nutrition plan.</p>
+                      </div>
+
+                      <div class="coach-training-wizard-grid">
+                        <article class="coach-training-wizard-section">
+                          <span class="kicker kicker--accent">Plan Preview</span>
+                          <div class="client-planner-kv-grid coach-nutrition-preview-grid" id="coach-program-nutrition-preview-grid">
+                            <div>
+                              <dt>Client</dt>
+                              <dd>Select a client</dd>
+                            </div>
+                          </div>
+                          <p class="dashboard-note" id="coach-program-nutrition-preview-note">
+                            The plan summary updates as you work through the inputs.
+                          </p>
+                        </article>
+                      </div>
+
+                      <div class="coach-training-step-actions coach-training-step-actions--footer coach-training-generate-actions">
+                        <button class="btn btn-ghost" type="button" data-coach-nutrition-nav="back">Back</button>
+                        <button class="btn btn-primary" type="submit">Generate Nutrition Plan</button>
+                      </div>
+                    </section>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="coach-program-nutrition-feedback">
+                  The generated plan becomes the client's live nutrition calendar and updates immediately.
+                </p>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="reviews" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Planner Review Queue</span>
+              <h2>Coach Nutrition Ops And Planner Triage</h2>
+              <p class="coach-programming-note">
+                Clear low-confidence nutrition items first, keep meal diaries moving, and tighten meal adherence before it turns into roster drag.
+              </p>
+              <article class="card coach-programming-guide-card" id="coach-program-review-empty-state" data-crm-tone="neutral" hidden>
+                <span class="kicker kicker--accent">Getting Started</span>
+                <h3>No Assigned Clients Yet</h3>
+                <p class="coach-programming-note">
+                  Your review queue fills only after clients are linked to you. Start in Clients, assign your roster, then come back here to review logs, photos, and health updates.
+                </p>
+                <div class="button-row">
+                  <a class="btn btn-secondary" href="./coach-clients.html">Open Clients</a>
+                </div>
+              </article>
+              <div class="stats-grid crm-metric-grid coach-programming-review-summary-grid" id="coach-program-review-summary-grid">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading coach review metrics</strong>
+                  <p>Pending planner reviews, nutrition approvals, health follow-up, and reward actions will appear here as soon as the queue sync completes.</p>
+                </article>
+              </div>
+              <div class="card coach-programming-review-toolbar-card" data-crm-tone="neutral">
+                <div class="input-row account-input-row coach-programming-review-toolbar">
+                  <label>
+                    Queue focus
+                    <select id="coach-program-review-focus">
+                      <option value="all">All queue items</option>
+                      <option value="nutrition_backlog">Nutrition backlog</option>
+                      <option value="photo_triage">Photo assist triage</option>
+                      <option value="meal_diary">Meal diary reviews</option>
+                      <option value="high_risk">High-risk clients only</option>
+                    </select>
+                  </label>
+                  <label>
+                    Client
+                    <select id="coach-program-review-client">
+                      <option value="">All assigned clients</option>
+                    </select>
+                  </label>
+                  <label>
+                    Sort
+                    <select id="coach-program-review-sort">
+                      <option value="priority">Highest priority first</option>
+                      <option value="newest">Newest first</option>
+                      <option value="oldest">Oldest first</option>
+                      <option value="client">Client name</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="coach-programming-review-stack" id="coach-program-review-grid">
+                <article class="dashboard-inline-placeholder">
+                  <strong>Loading planner review queue</strong>
+                  <p>Your live client review items will appear here once the review feed and active filters finish loading.</p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="operations" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="info">
+              <span class="kicker kicker--accent">Roster Follow-Up</span>
+              <h2>Run Nutrition Follow-Up Across Your Entire Roster</h2>
+              <p class="coach-programming-note">
+                Use one weekly operations board to spot who needs a nutrition nudge or has gone quiet without opening each client one-by-one.
+              </p>
+              <article class="card coach-programming-guide-card" id="coach-program-operations-empty-state" data-crm-tone="neutral" hidden>
+                <span class="kicker kicker--accent">Getting Started</span>
+                <h3>No Assigned Clients Yet</h3>
+                <p class="coach-programming-note">
+                  Operations becomes useful once you have a live roster. Link clients first, then come back here for nudges, watchlists, and automated follow-up.
+                </p>
+                <div class="button-row">
+                  <a class="btn btn-secondary" href="./coach-clients.html">Open Clients</a>
+                </div>
+              </article>
+              <div class="stats-grid crm-metric-grid coach-programming-ops-summary-grid" id="coach-program-ops-summary-grid">
+                <p class="coach-programming-empty">Loading operations summary...</p>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral" id="coach-program-ops-workflow-section">
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Bulk Nudges</span>
+                <h2>Prompt The Right Clients In One Pass</h2>
+                <p class="coach-programming-note">
+                  Send focused nudges to selected clients based on nutrition gaps or quiet planner usage.
+                </p>
+                <form class="contact-form" id="coach-program-ops-nudge-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Nudge type
+                      <select id="coach-program-ops-nudge-category" required>
+                        <option value="nutrition">Nutrition follow-up</option>
+                      </select>
+                    </label>
+                    <label>
+                      Optional coach note
+                      <textarea
+                        id="coach-program-ops-nudge-message"
+                        rows="2"
+                        placeholder="Example: Log your dinner and supper today so I can tighten tomorrow's calorie split."
+                      ></textarea>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-secondary" type="button" id="coach-program-ops-select-nutrition">Select nutrition gaps</button>
+                    <button class="btn btn-secondary" type="button" id="coach-program-ops-select-quiet">Select quiet roster</button>
+                    <button class="btn btn-secondary" type="button" id="coach-program-ops-clear">Clear</button>
+                  </div>
+                  <div class="coach-programming-bulk-list coach-programming-bulk-list--ops" id="coach-program-ops-nudge-list">
+                    <p class="coach-programming-empty">Loading coach operations nudge list...</p>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-primary" type="submit">Send nudge</button>
+                  </div>
+                  <p class="dashboard-feedback" id="coach-program-ops-nudge-feedback" aria-live="polite"></p>
+                </form>
+              </article>
+
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Weekly Operations Board</span>
+                <h2>Which Clients Need Attention This Week</h2>
+                <div class="coach-programming-template-grid coach-programming-template-grid--ops" id="coach-program-ops-board">
+                  <p class="coach-programming-empty">Loading weekly roster operations board...</p>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral" id="coach-program-ops-advanced-section">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Smart Segments</span>
+                <h2>Save Roster Filters You Will Reuse Every Week</h2>
+                <p class="coach-programming-note">
+                  Create reusable roster segments for high-risk clients, nutrition drop-off, or quiet clients so bulk actions stay fast as the roster grows.
+                </p>
+                <form class="contact-form" id="coach-program-segment-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Segment name
+                      <input type="text" id="coach-program-segment-name" maxlength="72" placeholder="High risk + no meal logs" required />
+                    </label>
+                    <label>
+                      Minimum risk score
+                      <input type="number" id="coach-program-segment-risk" min="0" max="100" step="1" value="0" />
+                      <small class="score-guidance score-guidance--compact">
+                        <span><strong>0-29</strong><em>Low concern</em></span>
+                        <span><strong>30-59</strong><em>Watch closely</em></span>
+                        <span><strong>60-79</strong><em>Needs intervention</em></span>
+                        <span><strong>80-100</strong><em>High risk priority</em></span>
+                      </small>
+                    </label>
+                    <label>
+                      Minimum pending reviews
+                      <input type="number" id="coach-program-segment-reviews" min="0" max="20" step="1" value="0" />
+                    </label>
+                  </div>
+                  <div class="coach-programming-filter-grid">
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-segment-nutrition" />
+                      <span>Needs nutrition nudge</span>
+                    </label>
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-segment-quiet" />
+                      <span>Quiet this week</span>
+                    </label>
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-segment-no-nutrition" />
+                      <span>No active nutrition</span>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-secondary" type="reset">Reset</button>
+                    <button class="btn btn-primary" type="submit">Save Segment</button>
+                  </div>
+                  <p class="dashboard-feedback" id="coach-program-segment-feedback" aria-live="polite"></p>
+                </form>
+                <div class="coach-programming-template-grid coach-programming-template-grid--ops" id="coach-program-segment-library">
+                  <p class="coach-programming-empty">Saved roster segments will appear here.</p>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Automation Rules</span>
+                <h2>Let The App Handle Repetitive Follow-Up</h2>
+                <p class="coach-programming-note">
+                  Attach nudges to saved segments and schedules so nutrition follow-up keeps moving without manual chasing.
+                </p>
+                <form class="contact-form" id="coach-program-automation-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Rule name
+                      <input type="text" id="coach-program-automation-name" maxlength="72" placeholder="Daily meal log nudge" required />
+                    </label>
+                    <label>
+                      Segment
+                      <select id="coach-program-automation-segment" required>
+                        <option value="">Choose saved segment</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Nudge category
+                      <select id="coach-program-automation-category" required>
+                        <option value="nutrition">Nutrition follow-up</option>
+                      </select>
+                    </label>
+                    <label>
+                      Schedule
+                      <select id="coach-program-automation-schedule" required>
+                        <option value="hourly">Hourly pass</option>
+                        <option value="daily_morning">Daily morning</option>
+                        <option value="daily_evening">Daily evening</option>
+                        <option value="weekday_midday">Weekday midday</option>
+                        <option value="weekly_monday">Weekly Monday</option>
+                      </select>
+                    </label>
+                    <label>
+                      Cooldown (hours)
+                      <input type="number" id="coach-program-automation-cooldown" min="1" max="168" step="1" value="24" />
+                    </label>
+                  </div>
+                  <label>
+                    Coach note override
+                    <textarea
+                      id="coach-program-automation-message"
+                      rows="2"
+                      placeholder="Optional custom message to use instead of the default automation copy."
+                    ></textarea>
+                  </label>
+                  <div class="coach-programming-inline-controls">
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-weekly-briefing-enabled" checked />
+                      <span>Send me the weekly coach briefing on Monday morning</span>
+                    </label>
+                    <label class="crm-choice">
+                      <input type="checkbox" id="coach-program-automation-enabled" checked />
+                      <span>Enable this rule immediately</span>
+                    </label>
+                  </div>
+                  <div class="button-row">
+                    <button class="btn btn-secondary" type="reset">Reset</button>
+                    <button class="btn btn-primary" type="submit">Save Automation Rule</button>
+                  </div>
+                  <p class="dashboard-feedback" id="coach-program-automation-feedback" aria-live="polite"></p>
+                </form>
+                <div class="coach-programming-template-grid coach-programming-template-grid--ops" id="coach-program-automation-library">
+                  <p class="coach-programming-empty">Saved automation rules will appear here.</p>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-coach-programming-panel="calendar" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="info">
+              <span class="kicker kicker--accent">Roster Calendar</span>
+              <h2>See Your Entire Coaching Week In One Command View</h2>
+              <p class="coach-programming-note">
+                Track scheduled training days, meal rhythm, due check-ins, and progress-photo cadence across the whole roster
+                without opening each client one-by-one.
+              </p>
+              <div class="stats-grid crm-metric-grid coach-programming-calendar-summary-grid" id="coach-program-calendar-summary-grid">
+                <p class="coach-programming-empty">Loading weekly calendar summary...</p>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="neutral">
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Weekly Timeline</span>
+                <h2 id="coach-program-calendar-week-label">This Week</h2>
+                <div class="card coach-programming-calendar-toolbar-card" data-crm-tone="neutral">
+                  <div class="input-row account-input-row coach-programming-calendar-toolbar">
+                    <div class="button-row">
+                      <button class="btn btn-secondary" type="button" id="coach-program-calendar-prev">Previous week</button>
+                      <button class="btn btn-secondary" type="button" id="coach-program-calendar-today">This week</button>
+                      <button class="btn btn-secondary" type="button" id="coach-program-calendar-next">Next week</button>
+                    </div>
+                    <label>
+                      Client filter
+                      <select id="coach-program-calendar-client">
+                        <option value="">Entire roster</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div class="coach-programming-calendar-grid-shell">
+                  <div class="coach-programming-calendar-grid" id="coach-program-calendar-grid">
+                    <p class="coach-programming-empty">Loading weekly roster calendar...</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Week Attention</span>
+                <h2>Who Needs A Coach Move This Week</h2>
+                <div class="coach-programming-review-stack coach-programming-calendar-attention" id="coach-program-calendar-attention">
+                  <p class="coach-programming-empty">Loading weekly attention board...</p>
+                </div>
+              </article>
+            </section>
+          </div>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Nutrition</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach nutrition view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./planner-athlete-engine.js?v=20260328demo3"></script>
+    <script src="./nutrition-workbook-engine.js?v=20260403workbookux1"></script>
+    <script src="./coach-programming.js?v=20260403nutritionflow2"></script>
+  </body>
+</html>

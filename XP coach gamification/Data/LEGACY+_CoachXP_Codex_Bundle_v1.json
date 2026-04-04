@@ -1,0 +1,1307 @@
+{
+  "bundleType": "LEGACY+_CoachXP_Codex_Bundle",
+  "bundleVersion": "v1.0",
+  "generatedAt": "2026-03-25T08:22:37.744155+00:00",
+  "contents": {
+    "rulesEngine": {
+      "metadata": {
+        "systemName": "LEGACY+",
+        "version": "v2.0",
+        "timezone": "Asia/Kuala_Lumpur",
+        "region": "Malaysia",
+        "effectiveDate": "2026-03-23",
+        "notes": "Coach XP module. App should import once, then compute summaries/ledger in code."
+      },
+      "settings": {
+        "maxXP": 20000,
+        "coachingWeeklyCapXP": 120,
+        "educationMonthlyCapXP": 150,
+        "opsMonthlyCapXP": 120,
+        "mentorshipMonthlyCapXP": 150,
+        "impactQuarterlyCapXP": 300,
+        "weekStartType": "Mon"
+      },
+      "capBuckets": [
+        {
+          "name": "Coaching",
+          "period": "Weekly",
+          "xpCap": 120,
+          "buckets": [
+            "Coaching"
+          ]
+        },
+        {
+          "name": "Education",
+          "period": "Monthly",
+          "xpCap": 150,
+          "buckets": [
+            "Education"
+          ]
+        },
+        {
+          "name": "Ops",
+          "period": "Monthly",
+          "xpCap": 120,
+          "buckets": [
+            "Ops",
+            "Professional",
+            "Systems",
+            "Programming",
+            "Experience"
+          ]
+        },
+        {
+          "name": "Mentorship",
+          "period": "Monthly",
+          "xpCap": 150,
+          "buckets": [
+            "Mentorship",
+            "Reputation"
+          ]
+        },
+        {
+          "name": "Impact",
+          "period": "Quarterly",
+          "xpCap": 300,
+          "buckets": [
+            "Impact",
+            "Competition"
+          ]
+        },
+        {
+          "name": "Uncapped",
+          "period": "None",
+          "xpCap": 0,
+          "buckets": [
+            "Admin",
+            "Seeding"
+          ]
+        }
+      ],
+      "xpBands": [
+        {
+          "tier": "T1",
+          "minXP": 0,
+          "maxXP": 499,
+          "levelStart": 0,
+          "levelEnd": 10,
+          "levelCount": 11,
+          "stepXP": 45.45454545454545
+        },
+        {
+          "tier": "T2",
+          "minXP": 500,
+          "maxXP": 1499,
+          "levelStart": 11,
+          "levelEnd": 20,
+          "levelCount": 10,
+          "stepXP": 100.0
+        },
+        {
+          "tier": "T3",
+          "minXP": 1500,
+          "maxXP": 2999,
+          "levelStart": 21,
+          "levelEnd": 30,
+          "levelCount": 10,
+          "stepXP": 150.0
+        },
+        {
+          "tier": "T4",
+          "minXP": 3000,
+          "maxXP": 4999,
+          "levelStart": 31,
+          "levelEnd": 40,
+          "levelCount": 10,
+          "stepXP": 200.0
+        },
+        {
+          "tier": "T5",
+          "minXP": 5000,
+          "maxXP": 7499,
+          "levelStart": 41,
+          "levelEnd": 50,
+          "levelCount": 10,
+          "stepXP": 250.0
+        },
+        {
+          "tier": "T6",
+          "minXP": 7500,
+          "maxXP": 9999,
+          "levelStart": 51,
+          "levelEnd": 60,
+          "levelCount": 10,
+          "stepXP": 250.0
+        },
+        {
+          "tier": "T7",
+          "minXP": 10000,
+          "maxXP": 12999,
+          "levelStart": 61,
+          "levelEnd": 70,
+          "levelCount": 10,
+          "stepXP": 300.0
+        },
+        {
+          "tier": "T8",
+          "minXP": 13000,
+          "maxXP": 14999,
+          "levelStart": 71,
+          "levelEnd": 80,
+          "levelCount": 10,
+          "stepXP": 200.0
+        },
+        {
+          "tier": "T9",
+          "minXP": 15000,
+          "maxXP": 20000,
+          "levelStart": 81,
+          "levelEnd": 100,
+          "levelCount": 20,
+          "stepXP": 250.05
+        }
+      ],
+      "operationalRoles": [
+        {
+          "operationalRole": "T1",
+          "minXPEligible": 0,
+          "operationalTitle": "Apprentice Coach",
+          "greekTitle": "Apprentice",
+          "aesirTitle": "First Breath"
+        },
+        {
+          "operationalRole": "T2",
+          "minXPEligible": 500,
+          "operationalTitle": "Coach",
+          "greekTitle": "Pathfinder",
+          "aesirTitle": "Steady"
+        },
+        {
+          "operationalRole": "T3",
+          "minXPEligible": 1500,
+          "operationalTitle": "Performance Coach",
+          "greekTitle": "Champion",
+          "aesirTitle": "Shieldmaiden"
+        },
+        {
+          "operationalRole": "T4",
+          "minXPEligible": 3000,
+          "operationalTitle": "Specialist",
+          "greekTitle": "Mentor",
+          "aesirTitle": "Healer"
+        },
+        {
+          "operationalRole": "T5",
+          "minXPEligible": 5000,
+          "operationalTitle": "Lead Coach",
+          "greekTitle": "Strategist",
+          "aesirTitle": "Rune Teacher"
+        },
+        {
+          "operationalRole": "T6",
+          "minXPEligible": 7500,
+          "operationalTitle": "Head Coach / Studio Manager",
+          "greekTitle": "Elder",
+          "aesirTitle": "Seer"
+        },
+        {
+          "operationalRole": "T7",
+          "minXPEligible": 10000,
+          "operationalTitle": "Area Performance Manager",
+          "greekTitle": "Founder",
+          "aesirTitle": "Wayfinder"
+        },
+        {
+          "operationalRole": "T8",
+          "minXPEligible": 13000,
+          "operationalTitle": "Director of Coaching & Education",
+          "greekTitle": "Demigod",
+          "aesirTitle": "Valkyrie"
+        },
+        {
+          "operationalRole": "T9",
+          "minXPEligible": 15000,
+          "operationalTitle": "C-Level",
+          "greekTitle": "Olympus",
+          "aesirTitle": "Aesir"
+        }
+      ],
+      "actions": [
+        {
+          "actionId": "COA-SESS",
+          "displayName": "Coaching Session Logged Properly",
+          "bucket": "Coaching",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Session logged"
+        },
+        {
+          "actionId": "COA-NOTE",
+          "displayName": "Session Notes + Next Step <24h",
+          "bucket": "Coaching",
+          "xp": 3,
+          "capPeriod": "Weekly",
+          "verification": "Notes reviewed"
+        },
+        {
+          "actionId": "COA-CHK",
+          "displayName": "Client Check-In On Time",
+          "bucket": "Coaching",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Check-in record"
+        },
+        {
+          "actionId": "COA-ADJ",
+          "displayName": "Intelligent Session Adjustment",
+          "bucket": "Coaching",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Coach notes"
+        },
+        {
+          "actionId": "COA-CUE",
+          "displayName": "Technique Issue Corrected",
+          "bucket": "Coaching",
+          "xp": 3,
+          "capPeriod": "Weekly",
+          "verification": "Coach notes"
+        },
+        {
+          "actionId": "COA-SAFE",
+          "displayName": "Safety-First Decision Logged",
+          "bucket": "Coaching",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Incident note"
+        },
+        {
+          "actionId": "PRO-ONTM",
+          "displayName": "Perfect Punctuality (Week)",
+          "bucket": "Professional",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Attendance record"
+        },
+        {
+          "actionId": "PRO-COMM",
+          "displayName": "Clear Client Communication",
+          "bucket": "Professional",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Message log"
+        },
+        {
+          "actionId": "PRO-PREP",
+          "displayName": "Sessions Pre-Planned",
+          "bucket": "Professional",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Program check"
+        },
+        {
+          "actionId": "PRO-CALM",
+          "displayName": "De-escalated Client Issue",
+          "bucket": "Professional",
+          "xp": 8,
+          "capPeriod": "Weekly",
+          "verification": "Manager note"
+        },
+        {
+          "actionId": "SYS-NOTE100",
+          "displayName": "100% Documentation Rate",
+          "bucket": "Systems",
+          "xp": 8,
+          "capPeriod": "Weekly",
+          "verification": "CRM audit"
+        },
+        {
+          "actionId": "SYS-CRM",
+          "displayName": "CRM Updated Cleanly",
+          "bucket": "Systems",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "CRM audit"
+        },
+        {
+          "actionId": "SYS-FLOW",
+          "displayName": "SOP Followed Consistently",
+          "bucket": "Systems",
+          "xp": 5,
+          "capPeriod": "Weekly",
+          "verification": "Manager review"
+        },
+        {
+          "actionId": "EDU-MOD",
+          "displayName": "Internal Education Module Completed",
+          "bucket": "Education",
+          "xp": 30,
+          "capPeriod": "Monthly",
+          "verification": "Module completion"
+        },
+        {
+          "actionId": "EDU-EXAM",
+          "displayName": "Passed Module Exam",
+          "bucket": "Education",
+          "xp": 50,
+          "capPeriod": "Monthly",
+          "verification": "Exam result"
+        },
+        {
+          "actionId": "EDU-CASE",
+          "displayName": "Client Case Study Submitted",
+          "bucket": "Education",
+          "xp": 40,
+          "capPeriod": "Monthly",
+          "verification": "Case review"
+        },
+        {
+          "actionId": "EDU-JCLB",
+          "displayName": "Journal Club Presentation",
+          "bucket": "Education",
+          "xp": 40,
+          "capPeriod": "Monthly",
+          "verification": "Presentation record"
+        },
+        {
+          "actionId": "EDU-APPL",
+          "displayName": "Evidence Applied to Client",
+          "bucket": "Education",
+          "xp": 30,
+          "capPeriod": "Monthly",
+          "verification": "Coach notes"
+        },
+        {
+          "actionId": "PRG-BLOCK",
+          "displayName": "Training Block Designed",
+          "bucket": "Programming",
+          "xp": 40,
+          "capPeriod": "Monthly",
+          "verification": "Program review"
+        },
+        {
+          "actionId": "PRG-ADPT",
+          "displayName": "Intelligent Program Adaptation",
+          "bucket": "Programming",
+          "xp": 30,
+          "capPeriod": "Monthly",
+          "verification": "Program notes"
+        },
+        {
+          "actionId": "PRG-AUDT",
+          "displayName": "Program Audit for Coach",
+          "bucket": "Programming",
+          "xp": 30,
+          "capPeriod": "Monthly",
+          "verification": "Audit form"
+        },
+        {
+          "actionId": "EXP-CHECK",
+          "displayName": "Client Experience Review",
+          "bucket": "Experience",
+          "xp": 30,
+          "capPeriod": "Monthly",
+          "verification": "Review form"
+        },
+        {
+          "actionId": "EXP-CARE",
+          "displayName": "Above-Baseline Client Support",
+          "bucket": "Experience",
+          "xp": 20,
+          "capPeriod": "Monthly",
+          "verification": "Coach notes"
+        },
+        {
+          "actionId": "EXP-EDU",
+          "displayName": "Client Education Session Delivered",
+          "bucket": "Experience",
+          "xp": 20,
+          "capPeriod": "Monthly",
+          "verification": "Education log"
+        },
+        {
+          "actionId": "OPS-COVR",
+          "displayName": "Covered Shift Responsibly",
+          "bucket": "Ops",
+          "xp": 20,
+          "capPeriod": "Monthly",
+          "verification": "Schedule record"
+        },
+        {
+          "actionId": "OPS-INCD",
+          "displayName": "Incident Handled & Documented",
+          "bucket": "Ops",
+          "xp": 40,
+          "capPeriod": "Monthly",
+          "verification": "Incident log"
+        },
+        {
+          "actionId": "OPS-SOPAD",
+          "displayName": "SOP Improvement Adopted",
+          "bucket": "Ops",
+          "xp": 80,
+          "capPeriod": "Monthly",
+          "verification": "SOP approval"
+        },
+        {
+          "actionId": "OPS-QA",
+          "displayName": "Passed Monthly QA Audit",
+          "bucket": "Ops",
+          "xp": 40,
+          "capPeriod": "Monthly",
+          "verification": "QA record"
+        },
+        {
+          "actionId": "IMP-RETQ",
+          "displayName": "Quarterly Retention Benchmark",
+          "bucket": "Impact",
+          "xp": 150,
+          "capPeriod": "Quarterly",
+          "verification": "Retention report"
+        },
+        {
+          "actionId": "IMP-NPSQ",
+          "displayName": "Client Satisfaction Benchmark",
+          "bucket": "Impact",
+          "xp": 150,
+          "capPeriod": "Quarterly",
+          "verification": "NPS report"
+        },
+        {
+          "actionId": "IMP-SAVE",
+          "displayName": "Client Saved from Churn",
+          "bucket": "Impact",
+          "xp": 60,
+          "capPeriod": "Quarterly",
+          "verification": "Manager approval"
+        },
+        {
+          "actionId": "IMP-TRANS",
+          "displayName": "Documented Client Transformation",
+          "bucket": "Impact",
+          "xp": 80,
+          "capPeriod": "Quarterly",
+          "verification": "Case proof"
+        },
+        {
+          "actionId": "MNT-MENT",
+          "displayName": "Mentoring Session Logged",
+          "bucket": "Mentorship",
+          "xp": 20,
+          "capPeriod": "Quarterly",
+          "verification": "Mentorship log"
+        },
+        {
+          "actionId": "MNT-SHAD",
+          "displayName": "Shadow Evaluation Completed",
+          "bucket": "Mentorship",
+          "xp": 25,
+          "capPeriod": "Quarterly",
+          "verification": "Evaluation form"
+        },
+        {
+          "actionId": "MNT-DEV",
+          "displayName": "Development Plan Created",
+          "bucket": "Mentorship",
+          "xp": 40,
+          "capPeriod": "Quarterly",
+          "verification": "Plan review"
+        },
+        {
+          "actionId": "MNT-WORK",
+          "displayName": "Ran Coach Development Workshop",
+          "bucket": "Mentorship",
+          "xp": 80,
+          "capPeriod": "Quarterly",
+          "verification": "Session record"
+        },
+        {
+          "actionId": "SYS-BUILD",
+          "displayName": "System Built for Team Use",
+          "bucket": "Systems",
+          "xp": 120,
+          "capPeriod": "Quarterly",
+          "verification": "System adopted"
+        },
+        {
+          "actionId": "SYS-SCALE",
+          "displayName": "System Scaled Across Coaches",
+          "bucket": "Systems",
+          "xp": 150,
+          "capPeriod": "Quarterly",
+          "verification": "Usage proof"
+        },
+        {
+          "actionId": "SYS-FIX",
+          "displayName": "Recurring Ops Issue Resolved",
+          "bucket": "Systems",
+          "xp": 100,
+          "capPeriod": "Quarterly",
+          "verification": "Manager note"
+        },
+        {
+          "actionId": "REP-STND",
+          "displayName": "Standard Bearer Nomination",
+          "bucket": "Reputation",
+          "xp": 150,
+          "capPeriod": "Quarterly",
+          "verification": "Panel approval"
+        },
+        {
+          "actionId": "REP-ETHC",
+          "displayName": "Ethical Leadership Shown",
+          "bucket": "Reputation",
+          "xp": 120,
+          "capPeriod": "Quarterly",
+          "verification": "Director approval"
+        },
+        {
+          "actionId": "REP-CULT",
+          "displayName": "Culture Carrier Recognition",
+          "bucket": "Reputation",
+          "xp": 100,
+          "capPeriod": "Quarterly",
+          "verification": "Peer + manager"
+        },
+        {
+          "actionId": "SEED-INIT",
+          "displayName": "Initial Seed Placement",
+          "bucket": "Seeding",
+          "xp": 0,
+          "capPeriod": "One-Time",
+          "verification": "SeedPlacement approved"
+        },
+        {
+          "actionId": "SEED-ADJ",
+          "displayName": "Director Seed Adjustment",
+          "bucket": "Seeding",
+          "xp": 0,
+          "capPeriod": "One-Time",
+          "verification": "Director approval"
+        },
+        {
+          "actionId": "DIR-BONUS",
+          "displayName": "Director Exceptional Bonus",
+          "bucket": "Admin",
+          "xp": 0,
+          "capPeriod": "Adhoc",
+          "verification": "Director approval"
+        },
+        {
+          "actionId": "FREEZE-XP",
+          "displayName": "XP Freeze (Disciplinary)",
+          "bucket": "Admin",
+          "xp": 0,
+          "capPeriod": "Adhoc",
+          "verification": "Director decision"
+        },
+        {
+          "actionId": "CMP-GOLD",
+          "displayName": "Competition – 1st Place / Gold Medal",
+          "bucket": "Competition",
+          "xp": 300,
+          "capPeriod": "Quarterly",
+          "verification": "Official results + media proof"
+        },
+        {
+          "actionId": "CMP-SILV",
+          "displayName": "Competition – 2nd Place / Silver Medal",
+          "bucket": "Competition",
+          "xp": 200,
+          "capPeriod": "Quarterly",
+          "verification": "Official results + media proof"
+        },
+        {
+          "actionId": "CMP-BRON",
+          "displayName": "Competition – 3rd Place / Bronze Medal",
+          "bucket": "Competition",
+          "xp": 150,
+          "capPeriod": "Quarterly",
+          "verification": "Official results + media proof"
+        },
+        {
+          "actionId": "CMP-PODI",
+          "displayName": "Competition – Podium Finish (Any)",
+          "bucket": "Competition",
+          "xp": 120,
+          "capPeriod": "Quarterly",
+          "verification": "Official results"
+        },
+        {
+          "actionId": "CMP-FINA",
+          "displayName": "Competition – Finals Qualification",
+          "bucket": "Competition",
+          "xp": 80,
+          "capPeriod": "Quarterly",
+          "verification": "Official results"
+        },
+        {
+          "actionId": "CMP-COMP",
+          "displayName": "Competition – Competed (Represented Brand)",
+          "bucket": "Competition",
+          "xp": 50,
+          "capPeriod": "Quarterly",
+          "verification": "Event registration + proof"
+        },
+        {
+          "actionId": "CMP-TEAM",
+          "displayName": "Team Competition Representation",
+          "bucket": "Competition",
+          "xp": 60,
+          "capPeriod": "Quarterly",
+          "verification": "Team roster + results"
+        },
+        {
+          "actionId": "CMP-INTL",
+          "displayName": "International Competition Representation",
+          "bucket": "Competition",
+          "xp": 120,
+          "capPeriod": "Quarterly",
+          "verification": "Event sanctioning proof"
+        },
+        {
+          "actionId": "CMP-NATL",
+          "displayName": "National-Level Competition Representation",
+          "bucket": "Competition",
+          "xp": 100,
+          "capPeriod": "Quarterly",
+          "verification": "Event sanctioning proof"
+        },
+        {
+          "actionId": "CMP-REGN",
+          "displayName": "Regional/State Competition Representation",
+          "bucket": "Competition",
+          "xp": 70,
+          "capPeriod": "Quarterly",
+          "verification": "Event sanctioning proof"
+        }
+      ]
+    },
+    "rulesSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://legacy.plus/schemas/coach-xp-rules.v1.json",
+      "title": "LEGACY+ Coach XP Rules Engine",
+      "type": "object",
+      "required": [
+        "metadata",
+        "settings",
+        "capBuckets",
+        "xpBands",
+        "operationalRoles",
+        "actions"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "required": [
+            "systemName",
+            "version",
+            "timezone",
+            "region"
+          ],
+          "properties": {
+            "systemName": {
+              "type": "string",
+              "const": "LEGACY+"
+            },
+            "version": {
+              "type": "string"
+            },
+            "timezone": {
+              "type": "string",
+              "default": "Asia/Kuala_Lumpur"
+            },
+            "region": {
+              "type": "string",
+              "default": "Malaysia"
+            },
+            "effectiveDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "settings": {
+          "type": "object",
+          "required": [
+            "maxXP"
+          ],
+          "properties": {
+            "maxXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "coachingWeeklyCapXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "educationMonthlyCapXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "opsMonthlyCapXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mentorshipMonthlyCapXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "impactQuarterlyCapXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "weekStartType": {
+              "type": "string"
+            }
+          }
+        },
+        "capBuckets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "period",
+              "xpCap",
+              "buckets"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "period": {
+                "type": "string",
+                "enum": [
+                  "Weekly",
+                  "Monthly",
+                  "Quarterly",
+                  "None"
+                ]
+              },
+              "xpCap": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "buckets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "xpBands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "tier",
+              "minXP",
+              "maxXP",
+              "levelStart",
+              "levelEnd",
+              "levelCount",
+              "stepXP"
+            ],
+            "properties": {
+              "tier": {
+                "type": "string"
+              },
+              "minXP": {
+                "type": "integer"
+              },
+              "maxXP": {
+                "type": "integer"
+              },
+              "levelStart": {
+                "type": "integer"
+              },
+              "levelEnd": {
+                "type": "integer"
+              },
+              "levelCount": {
+                "type": "integer"
+              },
+              "stepXP": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "operationalRoles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "operationalRole",
+              "minXPEligible",
+              "operationalTitle",
+              "greekTitle",
+              "aesirTitle"
+            ],
+            "properties": {
+              "operationalRole": {
+                "type": "string"
+              },
+              "minXPEligible": {
+                "type": "integer"
+              },
+              "operationalTitle": {
+                "type": "string"
+              },
+              "greekTitle": {
+                "type": "string"
+              },
+              "aesirTitle": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "actionId",
+              "displayName",
+              "bucket",
+              "xp",
+              "capPeriod",
+              "verification"
+            ],
+            "properties": {
+              "actionId": {
+                "type": "string"
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "bucket": {
+                "type": "string"
+              },
+              "xp": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "capPeriod": {
+                "type": "string",
+                "enum": [
+                  "Weekly",
+                  "Monthly",
+                  "Quarterly",
+                  "One-Time",
+                  "Adhoc",
+                  "None"
+                ]
+              },
+              "verification": {
+                "type": "string"
+              },
+              "active": {
+                "type": "boolean",
+                "default": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "importContract": {
+      "bundleVersion": "v1.0",
+      "module": "LEGACY+ Coach XP",
+      "sourceWorkbook": "LEGACY+_CoachXP_System_v2_FIXED.xlsx",
+      "tabs": {
+        "Settings": {
+          "purpose": "Global caps and constants",
+          "headers": [
+            "Name",
+            "Value"
+          ],
+          "map": [
+            {
+              "sheetHeader": "Name",
+              "appField": "settings.key"
+            },
+            {
+              "sheetHeader": "Value",
+              "appField": "settings.value"
+            }
+          ]
+        },
+        "CoachRoster": {
+          "purpose": "Coach roster / source of truth for identity path and current operational role",
+          "headers": [
+            "CoachID",
+            "CoachName",
+            "IdentityPath",
+            "OperationalRole",
+            "Active"
+          ],
+          "map": [
+            {
+              "sheetHeader": "CoachID",
+              "appField": "coaches.coach_id",
+              "type": "string",
+              "key": "pk"
+            },
+            {
+              "sheetHeader": "CoachName",
+              "appField": "coaches.name",
+              "type": "string"
+            },
+            {
+              "sheetHeader": "IdentityPath",
+              "appField": "coaches.identity_path",
+              "type": "enum",
+              "values": [
+                "Greek",
+                "Aesir",
+                "Neutral"
+              ]
+            },
+            {
+              "sheetHeader": "OperationalRole",
+              "appField": "coaches.operational_role",
+              "type": "enum",
+              "values": [
+                "T1",
+                "T2",
+                "T3",
+                "T4",
+                "T5",
+                "T6",
+                "T7",
+                "T8",
+                "T9"
+              ]
+            },
+            {
+              "sheetHeader": "Active",
+              "appField": "coaches.active",
+              "type": "enum",
+              "values": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        "XPMenu": {
+          "purpose": "Authoritative coach action rules",
+          "headers": [
+            "ActionID",
+            "ActionName",
+            "Bucket",
+            "XPper",
+            "CapPeriod",
+            "Verification"
+          ],
+          "map": [
+            {
+              "sheetHeader": "ActionID",
+              "appField": "coach_actions.action_id",
+              "type": "string",
+              "key": "pk"
+            },
+            {
+              "sheetHeader": "ActionName",
+              "appField": "coach_actions.display_name",
+              "type": "string"
+            },
+            {
+              "sheetHeader": "Bucket",
+              "appField": "coach_actions.bucket",
+              "type": "string"
+            },
+            {
+              "sheetHeader": "XPper",
+              "appField": "coach_actions.xp",
+              "type": "int"
+            },
+            {
+              "sheetHeader": "CapPeriod",
+              "appField": "coach_actions.cap_period",
+              "type": "string"
+            },
+            {
+              "sheetHeader": "Verification",
+              "appField": "coach_actions.verification",
+              "type": "string"
+            }
+          ]
+        },
+        "RoleTitles": {
+          "purpose": "Operational role titles + Greek/Aesir skins",
+          "headers": [
+            "OperationalRole",
+            "MinXPEligible",
+            "OperationalTitle",
+            "GreekTitle",
+            "AesirTitle"
+          ],
+          "map": [
+            {
+              "sheetHeader": "OperationalRole",
+              "appField": "role_titles.operational_role",
+              "key": "pk"
+            },
+            {
+              "sheetHeader": "MinXPEligible",
+              "appField": "role_titles.min_xp_eligible"
+            },
+            {
+              "sheetHeader": "OperationalTitle",
+              "appField": "role_titles.operational_title"
+            },
+            {
+              "sheetHeader": "GreekTitle",
+              "appField": "role_titles.greek_title"
+            },
+            {
+              "sheetHeader": "AesirTitle",
+              "appField": "role_titles.aesir_title"
+            }
+          ]
+        },
+        "XPBands": {
+          "purpose": "Tier and level mapping",
+          "headers": [
+            "Tier",
+            "MinXP",
+            "MaxXP",
+            "LevelStart",
+            "LevelEnd",
+            "LevelCount",
+            "StepXP"
+          ],
+          "map": [
+            {
+              "sheetHeader": "Tier",
+              "appField": "xp_bands.tier",
+              "key": "pk"
+            },
+            {
+              "sheetHeader": "MinXP",
+              "appField": "xp_bands.min_xp"
+            },
+            {
+              "sheetHeader": "MaxXP",
+              "appField": "xp_bands.max_xp"
+            },
+            {
+              "sheetHeader": "LevelStart",
+              "appField": "xp_bands.level_start"
+            },
+            {
+              "sheetHeader": "LevelEnd",
+              "appField": "xp_bands.level_end"
+            },
+            {
+              "sheetHeader": "LevelCount",
+              "appField": "xp_bands.level_count"
+            },
+            {
+              "sheetHeader": "StepXP",
+              "appField": "xp_bands.step_xp"
+            }
+          ]
+        },
+        "XPLog": {
+          "purpose": "Append-only coach XP event log; source of truth after import",
+          "headers": [
+            "Date",
+            "CoachID",
+            "ActionSelect",
+            "ActionID",
+            "Qty",
+            "Verified",
+            "Evidence",
+            "Notes",
+            "ActionName",
+            "Bucket",
+            "XPper",
+            "XPOverride",
+            "XPRaw",
+            "WeekKey",
+            "MonthKey",
+            "QuarterKey"
+          ],
+          "map": [
+            {
+              "sheetHeader": "Date",
+              "appField": "coach_events.event_date",
+              "type": "date"
+            },
+            {
+              "sheetHeader": "CoachID",
+              "appField": "coach_events.coach_id",
+              "type": "string",
+              "fk": "CoachRoster.CoachID"
+            },
+            {
+              "sheetHeader": "ActionID",
+              "appField": "coach_events.action_id",
+              "type": "string",
+              "fk": "XPMenu.ActionID"
+            },
+            {
+              "sheetHeader": "Qty",
+              "appField": "coach_events.qty",
+              "type": "number"
+            },
+            {
+              "sheetHeader": "Verified",
+              "appField": "coach_events.verified",
+              "type": "enum",
+              "values": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "sheetHeader": "Evidence",
+              "appField": "coach_events.evidence",
+              "type": "string"
+            },
+            {
+              "sheetHeader": "Notes",
+              "appField": "coach_events.notes",
+              "type": "string"
+            },
+            {
+              "sheetHeader": "XPOverride",
+              "appField": "coach_events.xp_override",
+              "type": "number",
+              "optional": true
+            }
+          ],
+          "computedNotImported": [
+            "ActionSelect",
+            "ActionName",
+            "Bucket",
+            "XPper",
+            "XPRaw",
+            "WeekKey",
+            "MonthKey",
+            "QuarterKey"
+          ]
+        },
+        "Trials": {
+          "purpose": "Promotion gate log; do not compute as truth, import rows if used",
+          "headers": [
+            "CoachID",
+            "CurrentRole",
+            "TargetRole",
+            "TrialDate",
+            "SkillTrial",
+            "KnowledgeTrial",
+            "Portfolio",
+            "Result",
+            "Notes",
+            "XPEligible?",
+            "PromoteAllowed?"
+          ],
+          "map": [
+            {
+              "sheetHeader": "CoachID",
+              "appField": "coach_trials.coach_id"
+            },
+            {
+              "sheetHeader": "CurrentRole",
+              "appField": "coach_trials.current_role"
+            },
+            {
+              "sheetHeader": "TargetRole",
+              "appField": "coach_trials.target_role"
+            },
+            {
+              "sheetHeader": "TrialDate",
+              "appField": "coach_trials.trial_date"
+            },
+            {
+              "sheetHeader": "SkillTrial",
+              "appField": "coach_trials.skill_trial"
+            },
+            {
+              "sheetHeader": "KnowledgeTrial",
+              "appField": "coach_trials.knowledge_trial"
+            },
+            {
+              "sheetHeader": "Portfolio",
+              "appField": "coach_trials.portfolio"
+            },
+            {
+              "sheetHeader": "Result",
+              "appField": "coach_trials.result"
+            },
+            {
+              "sheetHeader": "Notes",
+              "appField": "coach_trials.notes"
+            }
+          ],
+          "computedNotImported": [
+            "XPEligible?",
+            "PromoteAllowed?"
+          ]
+        },
+        "SeedPlacement": {
+          "purpose": "Management-only seeding rubric; import only approved rows if needed as seed events",
+          "headers": [
+            "CoachID",
+            "CoachingQuality",
+            "MovementLiteracy",
+            "ProgrammingThinking",
+            "Professionalism",
+            "SystemsDiscipline",
+            "ClientCommunication",
+            "EthicalJudgment",
+            "TrackingConsistency",
+            "SelfMastery",
+            "KnowledgeLevel",
+            "SeedXP",
+            "SeedLevel",
+            "Approved",
+            "Notes"
+          ],
+          "map": [
+            {
+              "sheetHeader": "CoachID",
+              "appField": "coach_seeding.coach_id"
+            },
+            {
+              "sheetHeader": "SeedXP",
+              "appField": "coach_seeding.seed_xp"
+            },
+            {
+              "sheetHeader": "Approved",
+              "appField": "coach_seeding.approved"
+            },
+            {
+              "sheetHeader": "Notes",
+              "appField": "coach_seeding.notes"
+            }
+          ]
+        }
+      },
+      "computedViews": {
+        "Weekly_Coaching": "Derived in app using capBuckets Coaching",
+        "Monthly_Edu": "Derived in app using capBuckets Education",
+        "Monthly_Ops": "Derived in app using capBuckets Ops",
+        "Monthly_Mentor": "Derived in app using capBuckets Mentorship",
+        "Quarterly_Impact": "Derived in app using capBuckets Impact",
+        "Ledger": "Derived in app from coach_events + role_titles + xp_bands"
+      },
+      "notes": [
+        "Do not import computed summary tabs as truth.",
+        "Only verified events count toward XP.",
+        "App should compute level within XP band and next operational eligibility."
+      ]
+    }
+  }
+}

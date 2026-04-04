@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trials Manager | LEGACY+ Coach XP</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="coach_xp" data-disable-page-tabs="true" data-xp-coach-page="trials">
+    <div class="cinematic-bg" aria-hidden="true"><div class="bg-layer bg-layer--base"></div><div class="bg-layer bg-layer--smoke"></div><div class="bg-layer bg-layer--embers"></div><div class="bg-vignette"></div></div>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view"></aside>
+      <div class="crm-content">
+        <header class="crm-page-head reveal"><div><h1>Trials Manager</h1><p class="dashboard-feedback" id="xp-coach-status">Loading trials…</p></div><div class="crm-page-meta"><p>Promotion is only valid when the role threshold and all three trial gates pass.</p></div></header>
+        <nav class="xp-coach-page-tabs reveal in-view" id="xp-coach-page-tabs" aria-label="Coach XP module pages"></nav>
+        <main class="dashboard-main crm-section-grid xp-coach-layout">
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Create or Update Trial</h2></div>
+              <form class="xp-coach-form-grid" id="xp-coach-trial-form">
+                <input name="id" type="hidden" />
+                <label><span>Coach</span><select id="xp-coach-trial-coach-id" name="coach_id" required><option value="">Select coach</option></select></label>
+                <label><span>Current Role</span><select name="current_role"><option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option><option>T9</option></select></label>
+                <label><span>Target Role</span><select name="target_role"><option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option><option>T9</option></select></label>
+                <label><span>Trial Date</span><input name="trial_date" type="date" /></label>
+                <label><span>Skill Trial</span><select name="skill_trial"><option>Pending</option><option>Pass</option><option>Fail</option></select></label>
+                <label><span>Knowledge Trial</span><select name="knowledge_trial"><option>Pending</option><option>Pass</option><option>Fail</option></select></label>
+                <label><span>Portfolio</span><select name="portfolio"><option>Pending</option><option>Pass</option><option>Fail</option></select></label>
+                <label class="xp-coach-form-grid__wide"><span>Notes</span><textarea name="notes" rows="3"></textarea></label>
+                <div class="xp-coach-form-actions xp-coach-form-grid__wide"><button class="btn btn-secondary" type="submit">Save Trial</button><button class="btn btn-ghost" id="xp-coach-trial-reset" type="button">Clear Form</button></div>
+              </form>
+            </article>
+          </section>
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Trial Queue</h2></div>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead><tr><th>Coach</th><th>Current</th><th>Target</th><th>Date</th><th>Result</th><th></th></tr></thead>
+                  <tbody id="xp-coach-trials-table"><tr><td colspan="6">No trial rows yet.</td></tr></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </main>
+        <footer class="site-footer"><p>LEGACY+ CRM | Coach XP Trials</p><p>&copy; <span data-year></span> LEGACY+ Coaching.</p></footer>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260402deployready1"></script>
+    <script src="./coach-xp-admin.js?v=20260331xp2"></script>
+  </body>
+</html>

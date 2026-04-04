@@ -1,0 +1,15 @@
+<svg width="480" height="320" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="320" rx="28" fill="#120C0A"/>
+  <rect x="20" y="20" width="440" height="280" rx="22" fill="#1B120E" stroke="#5E4027" stroke-width="2"/>
+  <rect x="44" y="34" width="392" height="252" rx="16" stroke="#B98555" stroke-width="2" stroke-dasharray="8 8" opacity="0.45"/>
+  <rect x="52" y="38" width="40" height="24" rx="12" fill="#3A2418"/>
+  <text x="72" y="54" text-anchor="middle" fill="#FFD6A6" font-family="Montserrat, Arial, sans-serif" font-size="11" font-weight="700">DETAIL</text>
+  <rect x="156" y="62" width="168" height="192" rx="28" fill="#F7DEC0"/>
+  <circle cx="240" cy="110" r="22" fill="#F7DEC0"/>
+  <rect x="208" y="132" width="64" height="90" rx="30" fill="#F7DEC0"/>
+  <circle cx="300" cy="176" r="58" fill="rgba(255,203,146,0.16)" stroke="#FFCB92" stroke-width="4"/>
+  <path d="M332 208L370 246" stroke="#FFCB92" stroke-width="8" stroke-linecap="round"/>
+  <rect x="348" y="228" width="34" height="10" rx="5" transform="rotate(45 348 228)" fill="#FFCB92"/>
+  <text x="240" y="48" text-anchor="middle" fill="#FFD6A6" font-family="Montserrat, Arial, sans-serif" font-size="13" font-weight="700">Optional close-up only when you need it</text>
+  <text x="240" y="282" text-anchor="middle" fill="#FFE9D1" font-family="Montserrat, Arial, sans-serif" font-size="15" font-weight="700">Use detail shots to flag one area for your coach</text>
+</svg>

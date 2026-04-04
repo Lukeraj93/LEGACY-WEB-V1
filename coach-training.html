@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Training | LEGACY+ Coach</title>
+    <meta
+      name="description"
+      content="Private coach training workspace for workbook-style block setup, athlete inputs, and simple client-facing program generation."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260403nutritionflow2" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="training" data-program-workspace="training">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a class="is-current" href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal coach-training-page-head">
+          <div class="crm-page-title-block">
+            <span class="kicker kicker--accent">Training Builder</span>
+            <h1>Prescribe The Program In One Clean Workbook Flow</h1>
+            <p class="dashboard-feedback" id="coach-programming-status">
+              Syncing your live training planner.
+            </p>
+          </div>
+          <div class="crm-page-meta coach-training-page-meta">
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <p>
+              Keep the logic simple: choose a client, answer the key workbook inputs, build the days, then generate the live block.
+              Everything else stays in the background.
+            </p>
+          </div>
+        </header>
+
+        <main class="dashboard-main coach-training-workbook coach-training-workbook--wizard">
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <article class="card coach-training-wizard-card" data-crm-tone="info">
+              <form class="contact-form coach-training-wizard-form" id="coach-program-template-form">
+                <input type="hidden" name="id" value="" />
+                <input type="hidden" name="activeAssignmentId" value="" />
+                <div class="coach-training-topbar">
+                  <label>
+                    Select client to prescribe
+                    <select name="clientId" id="coach-program-client" required>
+                      <option value="">Select client</option>
+                    </select>
+                  </label>
+                  <label>
+                    Program start date
+                    <input type="date" name="startDate" id="coach-program-start-date" required />
+                  </label>
+                  <label>
+                    Client-facing title
+                    <input type="text" name="assignmentTitle" placeholder="Optional shorter title for the client" />
+                  </label>
+                </div>
+
+                <div class="dashboard-note dashboard-note--placeholder coach-training-edit-note" id="coach-training-edit-note" hidden>
+                  <strong>Editing a live client block</strong>
+                  <p>Review the workbook inputs, update the weeks, then generate to publish a refreshed live version while preserving prior logged history.</p>
+                </div>
+
+                <nav class="coach-training-step-tabs" aria-label="Training builder steps">
+                  <button class="coach-training-step-tab is-active" type="button" data-coach-training-step="inputs">Workbook Inputs</button>
+                  <button class="coach-training-step-tab" type="button" data-coach-training-step="split">Weekly Split</button>
+                  <button class="coach-training-step-tab" type="button" data-coach-training-step="exercises">Exercise Setup</button>
+                  <button class="coach-training-step-tab" type="button" data-coach-training-step="generate">Generate</button>
+                </nav>
+
+                <div class="coach-training-step-panels">
+                  <section class="coach-training-step-panel is-active" data-coach-training-step-panel="inputs">
+                    <div class="coach-training-step-panel__head">
+                      <div>
+                        <span class="kicker kicker--accent">Step 1</span>
+                        <h2>Enter The Inputs That Drive The Program</h2>
+                      </div>
+                      <p>These are the highlighted coach inputs. The formulas and client-facing summaries stay in the background.</p>
+                    </div>
+
+                    <div class="coach-training-wizard-grid coach-training-wizard-grid--single coach-training-wizard-grid--inputs">
+                      <article class="coach-training-wizard-section">
+                        <span class="kicker kicker--accent">Coach Inputs</span>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Block title
+                            <input type="text" name="title" placeholder="Wedding Hypertrophy Cut - Phase 1" required />
+                          </label>
+                          <label>
+                            Primary objective
+                            <input type="text" name="objective" placeholder="Preserve strength, cut body fat, keep training quality high" />
+                          </label>
+                          <label>
+                            Athlete profile
+                            <select name="athleteProfile">
+                              <option value="">Select athlete type</option>
+                              <option value="general_fitness">General Fitness</option>
+                              <option value="elderly">Elderly</option>
+                              <option value="hypertrophy">Hypertrophy</option>
+                              <option value="strength">Strength</option>
+                              <option value="endurance">Endurance</option>
+                              <option value="hyrox">HYROX</option>
+                              <option value="combat">Combat</option>
+                            </select>
+                          </label>
+                          <label>
+                            Training category
+                            <select name="category">
+                              <option value="strength">Strength</option>
+                              <option value="hypertrophy">Hypertrophy</option>
+                              <option value="conditioning">Conditioning</option>
+                              <option value="general">General</option>
+                              <option value="general_fitness">General Fitness</option>
+                              <option value="elderly">Elderly</option>
+                              <option value="rehab">Rehab</option>
+                              <option value="runner">Runner</option>
+                              <option value="hyrox">HYROX</option>
+                              <option value="endurance">Endurance</option>
+                              <option value="combat">Combat</option>
+                            </select>
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Primary phase
+                            <select name="primaryPhase">
+                              <option value="Off-Season Build">Off-Season Build</option>
+                              <option value="Pre-Season Specific">Pre-Season Specific</option>
+                              <option value="In-Season">In-Season</option>
+                              <option value="Peak / Taper">Peak / Taper</option>
+                            </select>
+                          </label>
+                          <label>
+                            Primary event
+                            <select name="primaryEvent">
+                              <option value="">Select event</option>
+                              <option value="General Health">General Health</option>
+                              <option value="Ageing Well">Ageing Well</option>
+                              <option value="Bodybuilding / Physique">Bodybuilding / Physique</option>
+                              <option value="Powerlifting">Powerlifting</option>
+                              <option value="5K">5K</option>
+                              <option value="10K">10K</option>
+                              <option value="Half Marathon">Half Marathon</option>
+                              <option value="Marathon">Marathon</option>
+                              <option value="HYROX Open">HYROX Open</option>
+                              <option value="HYROX Pro">HYROX Pro</option>
+                              <option value="Fight Camp">Fight Camp</option>
+                            </select>
+                          </label>
+                          <label>
+                            Experience level
+                            <select name="experienceLevel">
+                              <option value="Beginner">Beginner</option>
+                              <option value="Intermediate" selected>Intermediate</option>
+                              <option value="Advanced">Advanced</option>
+                            </select>
+                          </label>
+                          <label>
+                            Competition date
+                            <input type="date" name="competitionDate" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Block length (weeks)
+                            <input type="number" name="durationWeeks" min="1" max="16" value="8" required />
+                          </label>
+                          <label>
+                            Resistance days / week
+                            <input type="number" name="resistanceDaysPerWeek" min="0" max="6" step="1" placeholder="3" />
+                          </label>
+                          <label>
+                            Conditioning days / week
+                            <input type="number" name="conditioningDaysPerWeek" min="0" max="6" step="1" placeholder="2" />
+                          </label>
+                          <label>
+                            Avg session minutes
+                            <input type="number" name="avgSessionMinutes" min="0" step="5" placeholder="75" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Current fatigue (1-5)
+                            <input type="number" name="currentFatigue" min="1" max="5" step="1" placeholder="2" />
+                          </label>
+                          <label>
+                            Sex
+                            <select name="sex">
+                              <option value="">Not set</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
+                          </label>
+                          <label>
+                            Age
+                            <input type="number" name="ageYears" min="0" step="1" placeholder="31" />
+                          </label>
+                          <label>
+                            Body mass (kg)
+                            <input type="number" name="bodyMassKg" min="0" step="0.1" placeholder="72" />
+                          </label>
+                        </div>
+                        <div class="input-row account-input-row">
+                          <label>
+                            Sleep (h/night)
+                            <input type="number" name="sleepHours" min="0" step="0.1" placeholder="7.5" />
+                          </label>
+                          <label>
+                            Training level
+                            <select name="difficulty">
+                              <option value="beginner">Beginner</option>
+                              <option value="intermediate" selected>Intermediate</option>
+                              <option value="advanced">Advanced</option>
+                            </select>
+                          </label>
+                          <label>
+                            Session target (mins)
+                            <input type="number" name="estimatedDurationMinutes" min="0" step="5" placeholder="75" />
+                          </label>
+                          <label>
+                            Priority bias
+                            <input type="text" name="priorityBias" placeholder="Strength first, race economy, body comp support" />
+                          </label>
+                        </div>
+                        <div class="coach-programming-calculator-shell">
+                          <p class="coach-programming-note">Only the athlete-type fields that matter should appear below. Leave the rest alone.</p>
+
+                          <div class="input-row account-input-row">
+                            <label>
+                              Current squat 1RM (kg)
+                              <input type="number" name="currentSquat1rmKg" min="0" step="0.5" placeholder="140" />
+                            </label>
+                            <label>
+                              Current bench 1RM (kg)
+                              <input type="number" name="currentBench1rmKg" min="0" step="0.5" placeholder="95" />
+                            </label>
+                            <label>
+                              Current deadlift 1RM (kg)
+                              <input type="number" name="currentDeadlift1rmKg" min="0" step="0.5" placeholder="180" />
+                            </label>
+                            <label>
+                              Weigh-in type
+                              <select name="weighInType">
+                                <option value="N/A">N/A</option>
+                                <option value="Same Day / <6 h">Same Day / &lt;6 h</option>
+                                <option value="24 h+">24 h+</option>
+                                <option value="Multi-Day Tournament">Multi-Day Tournament</option>
+                              </select>
+                            </label>
+                          </div>
+
+                          <div class="coach-programming-calculator-group" data-athlete-calculator-group="runner" hidden>
+                            <div class="coach-programming-calculator-group__head">
+                              <strong>Runner Inputs</strong>
+                              <span>Only show these for run-based blocks.</span>
+                            </div>
+                            <div class="input-row account-input-row">
+                              <label>
+                                Current weekly running km
+                                <input type="number" name="currentWeeklyRunningKm" min="0" step="0.1" placeholder="30" />
+                              </label>
+                              <label>
+                                Longest run completed km
+                                <input type="number" name="longestRunCompletedKm" min="0" step="0.1" placeholder="14" />
+                              </label>
+                              <label>
+                                Recent 5K time (min)
+                                <input type="number" name="recent5kTimeMin" min="0" step="0.1" placeholder="25" />
+                              </label>
+                              <label>
+                                Planned weekly volume (km)
+                                <input type="number" name="runnerPlannedWeeklyKm" min="0" step="0.1" placeholder="45" />
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="coach-programming-calculator-group" data-athlete-calculator-group="hyrox" hidden>
+                            <div class="coach-programming-calculator-group__head">
+                              <strong>HYROX Inputs</strong>
+                              <span>Only show these for HYROX blocks.</span>
+                            </div>
+                            <div class="input-row account-input-row">
+                              <label>
+                                Recent 5K time (min)
+                                <input type="number" name="hyroxRecent5kTimeMin" min="0" step="0.1" placeholder="25.5" />
+                              </label>
+                              <label>
+                                Predicted race duration (min)
+                                <input type="number" name="hyroxPredictedRaceDurationMin" min="0" step="1" placeholder="95" />
+                              </label>
+                              <label>
+                                Weakest area
+                                <select name="hyroxWeakestArea">
+                                  <option value="">Not set</option>
+                                  <option value="Running">Running</option>
+                                  <option value="Sleds">Sleds</option>
+                                  <option value="Wall Balls">Wall Balls</option>
+                                  <option value="Carry/Lunges">Carry/Lunges</option>
+                                  <option value="Mixed">Mixed</option>
+                                </select>
+                              </label>
+                              <label>
+                                Planned run volume (km/wk)
+                                <input type="number" name="hyroxPlannedRunKm" min="0" step="0.1" placeholder="32" />
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="coach-programming-calculator-group" data-athlete-calculator-group="endurance" hidden>
+                            <div class="coach-programming-calculator-group__head">
+                              <strong>Endurance Inputs</strong>
+                              <span>Only show these for long endurance blocks.</span>
+                            </div>
+                            <div class="input-row account-input-row">
+                              <label>
+                                Event duration target (hrs)
+                                <input type="number" name="enduranceEventDurationHours" min="0" step="0.1" placeholder="4.5" />
+                              </label>
+                              <label>
+                                Hot conditions expected?
+                                <select name="enduranceHotConditionsFlag">
+                                  <option value="">Not set</option>
+                                  <option value="No">No</option>
+                                  <option value="Yes">Yes</option>
+                                </select>
+                              </label>
+                              <label>
+                                Planned CHO (g/kg/day)
+                                <input type="number" name="endurancePlannedChoGPerKg" min="0" step="0.1" placeholder="6" />
+                              </label>
+                              <label>
+                                Planned event fuel (g/h)
+                                <input type="number" name="endurancePlannedEventFuelGPerH" min="0" step="1" placeholder="60" />
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <label>
+                          Coach block notes
+                          <textarea name="notes" placeholder="Progression logic, substitutions, deload reminders, or anything the coach team should know."></textarea>
+                        </label>
+                        <label>
+                          Injury / limitation notes
+                          <textarea name="injuryNotes" placeholder="Relevant injuries, pain points, movement limits, or medical coaching notes."></textarea>
+                        </label>
+                        <label>
+                          Client-facing block context
+                          <textarea name="goalFocus" placeholder="What the athlete should prioritise and what must stay protected in this block."></textarea>
+                        </label>
+
+                        <input type="hidden" name="description" value="" />
+                        <input type="hidden" name="audience" value="" />
+                        <input type="hidden" name="goals" value="" />
+                        <input type="hidden" name="equipmentRequired" value="" />
+                        <input type="hidden" name="trainingAgeLevel" value="intermediate" />
+                        <input type="hidden" name="daysAvailablePerWeek" value="6" />
+                        <input type="hidden" name="goalDate" value="" />
+                        <input type="hidden" name="goalEvent" value="" />
+                        <input type="hidden" name="primarySport" value="" />
+                        <input type="hidden" name="currentWeeklyHours" value="" />
+                        <input type="hidden" name="plannedWeeklyHours" value="" />
+                        <input type="hidden" name="currentLongestSessionHours" value="" />
+                        <input type="hidden" name="plannedHardSessionsPerWeek" value="" />
+                        <input type="hidden" name="plannedStrengthSessionsPerWeek" value="" />
+                        <input type="hidden" name="currentLimiter" value="" />
+                        <input type="hidden" name="healthFocus" value="" />
+                        <input type="hidden" name="runnerLatestRaceDistanceKm" value="" />
+                        <input type="hidden" name="runnerLatestRaceTimeMin" value="" />
+                        <input type="hidden" name="runnerThresholdPaceMinPerKm" value="" />
+                        <input type="hidden" name="runnerRestingHrBpm" value="" />
+                        <input type="hidden" name="runnerMaxHrBpm" value="" />
+                        <input type="hidden" name="runnerPlannedLongRunKm" value="" />
+                        <input type="hidden" name="runnerPlannedChoGPerKg" value="" />
+                        <input type="hidden" name="runnerPlannedProteinGPerKg" value="" />
+                        <input type="hidden" name="runnerPlannedLongRunFuelGPerH" value="" />
+                        <input type="hidden" name="runnerPlannedFluidMlPerH" value="" />
+                        <input type="hidden" name="runnerPlannedSodiumMgPerH" value="" />
+                        <input type="hidden" name="hyroxCurrentRunKm" value="" />
+                        <input type="hidden" name="hyroxVo2maxMlPerKgMin" value="" />
+                        <input type="hidden" name="hyroxWallBallUnbrokenReps" value="" />
+                        <input type="hidden" name="hyroxSledToleranceScore" value="" />
+                        <input type="hidden" name="hyroxPlannedChoGPerKg" value="" />
+                        <input type="hidden" name="hyroxPlannedProteinGPerKg" value="" />
+                        <input type="hidden" name="hyroxPlannedRaceFuelGPerH" value="" />
+                        <input type="hidden" name="hyroxPlannedFluidMlPerH" value="" />
+                        <input type="hidden" name="hyroxPlannedSodiumMgPerH" value="" />
+                        <input type="hidden" name="enduranceRestingHrBpm" value="" />
+                        <input type="hidden" name="enduranceMaxHrBpm" value="" />
+                        <input type="hidden" name="enduranceThresholdHrBpm" value="" />
+                        <input type="hidden" name="endurancePlannedProteinGPerKg" value="" />
+                        <input type="hidden" name="endurancePlannedFluidMlPerH" value="" />
+                        <input type="hidden" name="endurancePlannedSodiumMgPerH" value="" />
+                        <input type="hidden" name="injuryRiskFlag" value="" />
+                      </article>
+                    </div>
+
+                    <div class="section-actions section-actions--compact coach-training-step-actions">
+                      <button class="btn btn-primary" type="button" data-coach-training-nav="next">Next</button>
+                    </div>
+                  </section>
+
+                  <section class="coach-training-step-panel" data-coach-training-step-panel="split" hidden>
+                    <div class="coach-training-step-panel__head">
+                      <div>
+                        <span class="kicker kicker--accent">Step 2</span>
+                        <h2>Set The Weekly Split</h2>
+                      </div>
+                      <p>Name the days, set the focus, and keep the recovery rules clean before you move into the exercise rows.</p>
+                    </div>
+                    <div class="coach-training-week-switch" id="coach-training-week-switch" hidden>
+                      <div class="coach-training-week-switch__copy">
+                        <span class="kicker kicker--accent">Workbook Weeks</span>
+                        <p id="coach-training-week-summary">Week 1 is ready for coach review.</p>
+                      </div>
+                      <div class="coach-training-week-switch__tabs" id="coach-training-week-tabs-split"></div>
+                    </div>
+                    <div class="coach-programming-day-stack coach-training-day-stack" id="coach-program-template-days"></div>
+                    <div class="section-actions section-actions--compact coach-training-step-actions">
+                      <button class="btn btn-ghost" id="coach-program-template-reset" type="button">Start Fresh</button>
+                      <button class="btn btn-ghost" id="coach-program-add-day" type="button">Add Training Day</button>
+                      <button class="btn btn-secondary" type="button" data-coach-training-nav="back">Back</button>
+                      <button class="btn btn-primary" type="button" data-coach-training-nav="next">Next</button>
+                    </div>
+                    <p class="dashboard-feedback" id="coach-program-template-feedback">
+                      Set the day structure first. The next step focuses only on exercise rows and client-entry columns.
+                    </p>
+                  </section>
+
+                  <section class="coach-training-step-panel" data-coach-training-step-panel="exercises" hidden>
+                    <div class="coach-training-step-panel__head">
+                      <div>
+                        <span class="kicker kicker--accent">Step 3</span>
+                        <h2>Populate Only The Exercise Inputs</h2>
+                      </div>
+                      <p>Coach-owned columns live here. The client only sees the finished sheet and logs execution later.</p>
+                    </div>
+                    <div class="coach-training-week-switch coach-training-week-switch--compact" id="coach-training-exercise-week-switch" hidden>
+                      <div class="coach-training-week-switch__tabs" id="coach-training-week-tabs-exercises"></div>
+                    </div>
+                    <div class="coach-training-step-copy">
+                      <p>Keep the highlighted inputs simple: block label, exercise, sets, reps or target, effort, progression rule, and the client logging mode.</p>
+                    </div>
+                    <div class="coach-programming-day-stack coach-training-day-stack coach-training-day-stack--exercise-only" id="coach-training-exercise-days"></div>
+                    <div class="section-actions section-actions--compact coach-training-step-actions">
+                      <button class="btn btn-secondary" type="button" data-coach-training-nav="back">Back</button>
+                      <button class="btn btn-primary" type="button" data-coach-training-nav="next">Next</button>
+                    </div>
+                  </section>
+
+                  <section class="coach-training-step-panel" data-coach-training-step-panel="generate" hidden>
+                    <div class="coach-training-step-panel__head">
+                      <div>
+                        <span class="kicker kicker--accent">Step 4</span>
+                        <h2>Generate The Program</h2>
+                      </div>
+                      <p>Review the athlete summary, tighten the client-facing objective, then generate the live block.</p>
+                    </div>
+
+                    <div class="coach-training-wizard-grid coach-training-wizard-grid--generate">
+                      <article class="coach-training-wizard-section">
+                        <span class="kicker kicker--accent">Client Summary</span>
+                        <div class="coach-programming-focus-card" id="coach-program-client-focus">
+                          <p class="coach-programming-empty">Choose a client to review their active training block and recent planner activity.</p>
+                        </div>
+                      </article>
+
+                      <article class="coach-training-wizard-section">
+                        <span class="kicker kicker--accent">Workbook Preview</span>
+                        <div class="coach-programming-workbook-preview" id="coach-programming-workbook-preview" hidden>
+                          <div class="coach-programming-workbook-preview__head">
+                            <div>
+                              <span class="kicker kicker--accent">Athlete Summary Preview</span>
+                              <h4>Auto-generated from the inputs above</h4>
+                            </div>
+                            <p class="coach-programming-note" id="coach-programming-workbook-preview-note">
+                              Add the athlete inputs above to generate phase, safe ramp, long-session targets, and client-facing summary guidance.
+                            </p>
+                          </div>
+                          <dl class="client-planner-kv-grid coach-programming-workbook-preview__grid" id="coach-programming-workbook-preview-grid"></dl>
+                          <div class="client-planner-summary-copy coach-programming-workbook-preview__summary" id="coach-programming-workbook-preview-summary"></div>
+                        </div>
+                      </article>
+                    </div>
+
+                    <div class="coach-training-wizard-grid">
+                      <article class="coach-training-wizard-section">
+                        <span class="kicker kicker--accent">Client-Facing Notes</span>
+                        <label>
+                          Objective for the client
+                          <input type="text" name="assignmentObjective" placeholder="Build muscle while keeping fatigue under control across the week." />
+                        </label>
+                        <label>
+                          Delivery note
+                          <textarea name="assignmentNotes" placeholder="Anything this client should know before starting week one."></textarea>
+                        </label>
+                      </article>
+                    </div>
+
+                    <div class="section-actions coach-training-generate-actions">
+                      <button class="btn btn-secondary" type="button" data-coach-training-nav="back">Back</button>
+                      <button class="btn btn-primary" id="coach-training-generate-program" type="button">Generate Program</button>
+                    </div>
+                    <p class="dashboard-feedback" id="coach-training-generate-feedback">
+                      Generate saves the block template in the background and assigns the finished program directly to the selected client.
+                    </p>
+                  </section>
+                </div>
+
+              </form>
+            </article>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Training</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach training view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./planner-athlete-engine.js?v=20260328demo3"></script>
+    <script src="./coach-programming.js?v=20260403nutritionflow2"></script>
+  </body>
+</html>

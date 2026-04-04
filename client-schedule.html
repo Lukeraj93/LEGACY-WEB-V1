@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Schedule | LEGACY+ Client</title>
+    <meta name="description" content="Private client booking requests and upcoming coaching schedule." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="client" data-live-dashboard="client" data-account-page="schedule">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./client-dashboard.html">LEGACY<span>+</span> Client</a>
+        <p class="crm-sidebar-copy">Private client navigation for planning, nutrition, health, scheduling, and account progress.</p>
+        <nav class="crm-nav" aria-label="Client navigation">
+          <a href="./client-dashboard.html">Home</a>
+          <a href="./client-planner.html">Planner</a>
+          <a href="./client-packages.html">Packages</a>
+          <a class="is-current" href="./client-schedule.html">Schedule</a>
+          <a href="./client-rewards.html">Rewards</a>
+          <a href="./client-profile.html">Profile</a>
+          <a href="./client-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Schedule</span>
+            <h1>Request Sessions and Track Confirmations</h1>
+            <p class="dashboard-feedback" id="client-dashboard-status">Syncing your live dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>client</strong></p>
+            <p>Bookings only use active package balance that is still free after pending and scheduled sessions.</p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" id="client-schedule-booking">
+            <span class="kicker kicker--accent">Book Sessions</span>
+            <h2>Choose From Your Coach&apos;s Next 4 Weeks</h2>
+            <div class="coach-schedule-embed" id="client-booking-calendar"></div>
+            <p class="dashboard-feedback" id="client-booking-feedback">
+              Tap any available slot to prefill a booking request. If the exact time you need is missing, use the button below to request it manually.
+            </p>
+            <div class="client-booking-request-shell">
+              <button class="btn btn-ghost" id="client-booking-request-toggle" type="button" aria-expanded="false" aria-controls="client-booking-request-panel">
+                Request A Specific Day And Time
+              </button>
+              <div class="client-booking-request-panel" id="client-booking-request-panel" hidden>
+                <form class="contact-form" id="client-booking-form">
+                  <div class="input-row">
+                    <label>
+                      Use Package
+                      <select name="clientPackageId" id="client-booking-package" required>
+                        <option value="">Loading available package balance...</option>
+                      </select>
+                    </label>
+                    <label>
+                      Session Type
+                      <select name="service" required>
+                        <option value="">Select one</option>
+                        <option value="1:1 Strength Session">1:1 Strength Session</option>
+                        <option value="Mobility Session">Mobility Session</option>
+                        <option value="Progress Review">Progress Review</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row">
+                    <label>
+                      Preferred Date
+                      <input type="date" name="sessionDate" data-min-today required />
+                    </label>
+                    <label>
+                      Preferred Time
+                      <select name="sessionTime" id="client-booking-time" data-time-slot-select data-placeholder="Select a time slot" required>
+                        <option value="">Select a time slot</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row">
+                    <label>
+                      Notes
+                      <input type="text" name="sessionNote" placeholder="Any training focus for this session" />
+                    </label>
+                  </div>
+                  <button class="btn btn-primary" type="submit">Request Session</button>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" id="client-schedule-availability">
+            <span class="kicker kicker--accent">Coach Availability</span>
+            <h2>Reference View Of Your Coach&apos;s Calendar</h2>
+            <div class="coach-schedule-embed" id="client-coach-availability-calendar"></div>
+            <div class="dashboard-table-wrap" id="client-coach-availability-fallback" hidden>
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Window</th>
+                    <th>Timezone</th>
+                  </tr>
+                </thead>
+                <tbody id="client-coach-availability-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="3">
+                      <div class="dashboard-table__empty">
+                        <strong>No availability windows published yet.</strong>
+                        <p>Your coach’s next available windows will appear here as soon as their live calendar is opened for booking.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="dashboard-feedback" id="client-coach-availability-feedback">
+              This view mirrors the next 4 weeks of published coaching availability so you can plan ahead before you submit or change sessions.
+            </p>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Confirmed Sessions</span>
+            <h2>Manage Upcoming Appointments</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Coach</th>
+                    <th>Package</th>
+                    <th>Status</th>
+                    <th>Change</th>
+                  </tr>
+                </thead>
+                <tbody id="client-confirmed-session-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No confirmed sessions yet.</strong>
+                        <p>Approved bookings will appear here once a session has been scheduled with your coach.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal split">
+            <article class="card">
+              <span class="kicker kicker--accent">Change Request</span>
+              <h2>Ask To Reschedule or Cancel</h2>
+              <form class="contact-form" id="client-session-change-form">
+                <div class="input-row">
+                  <label>
+                    Scheduled Session
+                    <select name="sessionId" id="client-session-change-session" required>
+                      <option value="">Loading confirmed sessions...</option>
+                    </select>
+                  </label>
+                  <label>
+                    Request Type
+                    <select name="requestType" id="client-session-change-type" required>
+                      <option value="reschedule">Reschedule</option>
+                      <option value="cancel">Cancel</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="input-row" id="client-session-change-time-fields">
+                  <label>
+                    New Preferred Date
+                    <input type="date" name="requestedDate" id="client-session-change-date" data-min-today />
+                  </label>
+                  <label>
+                    New Preferred Time
+                    <select
+                      name="requestedTime"
+                      id="client-session-change-time"
+                      data-time-slot-select
+                      data-placeholder="Select a new time slot"
+                    >
+                      <option value="">Select a new time slot</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="input-row">
+                  <label>
+                    Reason
+                    <input type="text" name="reason" id="client-session-change-reason" placeholder="Why does this session need to move?" required />
+                  </label>
+                </div>
+                <button class="btn btn-secondary" type="submit">Submit Change Request</button>
+              </form>
+              <p class="dashboard-feedback" id="client-session-change-feedback">
+                Reschedule and cancellation requests stay pending until your coach reviews them.
+              </p>
+            </article>
+
+            <article class="card">
+              <span class="kicker kicker--accent">Open Requests</span>
+              <h2>Pending Booking and Change Requests</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Requested For</th>
+                      <th>Details</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="client-open-request-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No open requests right now.</strong>
+                          <p>Pending booking, reschedule, and cancellation requests will stay visible here until your coach reviews them.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Overview</span>
+            <h2>Your Sessions and Booking Requests</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Coach</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="client-schedule-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>No schedule activity yet.</strong>
+                        <p>Your confirmed sessions, booking requests, and change requests will all roll up into this overview once you start booking.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Client | Schedule</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private client view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./client-dashboard.js?v=20260402deployready1"></script>
+    <script src="./assets/coach-availability-calendar.js?v=20260401schedulefix1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+  </body>
+</html>

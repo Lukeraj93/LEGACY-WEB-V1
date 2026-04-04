@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XP Menu | LEGACY+ Coach XP</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="coach_xp" data-disable-page-tabs="true" data-xp-coach-page="actions">
+    <div class="cinematic-bg" aria-hidden="true"><div class="bg-layer bg-layer--base"></div><div class="bg-layer bg-layer--smoke"></div><div class="bg-layer bg-layer--embers"></div><div class="bg-vignette"></div></div>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view"></aside>
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div><h1>XP Menu</h1><p class="dashboard-feedback" id="xp-coach-status">Loading XP rules…</p></div>
+          <div class="crm-page-meta"><p>Edit action values and cap settings here. Only super admin can touch this engine.</p></div>
+        </header>
+        <nav class="xp-coach-page-tabs reveal in-view" id="xp-coach-page-tabs" aria-label="Coach XP module pages"></nav>
+        <main class="dashboard-main crm-section-grid xp-coach-layout">
+          <section class="section dashboard-section reveal">
+            <div class="xp-coach-grid xp-coach-grid--two">
+              <article class="crm-card">
+                <div class="xp-coach-card-head"><h2>Cap Settings</h2></div>
+                <form class="xp-coach-form-grid" id="xp-coach-settings-form">
+                  <label><span>Coaching Weekly Cap</span><input name="CoachingWeeklyCapXP" type="number" min="0" /></label>
+                  <label><span>Education Monthly Cap</span><input name="EducationMonthlyCapXP" type="number" min="0" /></label>
+                  <label><span>Ops Monthly Cap</span><input name="OpsMonthlyCapXP" type="number" min="0" /></label>
+                  <label><span>Mentorship Monthly Cap</span><input name="MentorshipMonthlyCapXP" type="number" min="0" /></label>
+                  <label><span>Impact Quarterly Cap</span><input name="ImpactQuarterlyCapXP" type="number" min="0" /></label>
+                  <label><span>Competition Quarterly Cap</span><input name="CompetitionQuarterlyCapXP" type="number" min="0" /></label>
+                  <label><span>Week Start</span><select name="WeekStart"><option>MON</option><option>SUN</option></select></label>
+                  <label><span>Max XP</span><input name="MaxXP" type="number" min="1" /></label>
+                  <div class="xp-coach-form-actions xp-coach-form-grid__wide"><button class="btn btn-secondary" type="submit">Save Settings</button></div>
+                </form>
+              </article>
+              <article class="crm-card">
+                <div class="xp-coach-card-head"><h2>Action Editor</h2></div>
+                <form class="xp-coach-form-grid" id="xp-coach-action-form">
+                  <label><span>Internal Action Key</span><input name="action_id" required type="text" /></label>
+                  <label><span>Action Name</span><input name="action_name" required type="text" /></label>
+                  <label><span>Bucket</span><input name="bucket" required type="text" /></label>
+                  <label><span>XP Per</span><input name="xp_per" required type="number" min="0" /></label>
+                  <label><span>Cap Period</span><select name="cap_period"><option>None</option><option>Weekly</option><option>Monthly</option><option>Quarterly</option><option>Yearly</option><option>OneTime</option></select></label>
+                  <label><span>Cooldown Days</span><input name="cooldown_days" type="number" min="0" value="0" /></label>
+                  <label><span>Verification</span><input name="verification" type="text" /></label>
+                  <label><span>Status</span><select name="is_active"><option value="true">Active</option><option value="false">Inactive</option></select></label>
+                  <div class="xp-coach-form-actions xp-coach-form-grid__wide"><button class="btn btn-secondary" type="submit">Save Action</button><button class="btn btn-ghost" id="xp-coach-action-reset" type="button">Clear Form</button></div>
+                </form>
+              </article>
+            </div>
+          </section>
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Authoritative XP Menu</h2></div>
+              <div class="xp-coach-actions-toolbar">
+                <div class="xp-coach-actions-filters" id="xp-coach-actions-filters" aria-label="XP action groups"></div>
+                <p class="xp-coach-actions-summary" id="xp-coach-actions-summary">Loading action groups…</p>
+              </div>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead><tr><th>Action</th><th>Group</th><th>Reward</th><th>Cap</th><th>Status</th><th></th></tr></thead>
+                  <tbody id="xp-coach-actions-table"><tr><td colspan="6">No XP menu actions imported yet.</td></tr></tbody>
+                </table>
+              </div>
+              <div class="xp-coach-pagination" id="xp-coach-actions-pagination" aria-label="XP actions pages"></div>
+            </article>
+          </section>
+        </main>
+        <footer class="site-footer"><p>LEGACY+ CRM | Coach XP Menu</p><p>&copy; <span data-year></span> LEGACY+ Coaching.</p></footer>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260402deployready1"></script>
+    <script src="./coach-xp-admin.js?v=20260331xp2"></script>
+  </body>
+</html>

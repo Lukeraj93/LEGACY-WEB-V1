@@ -12,43 +12,67 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
   </head>
   <body>
-    <header class="site-header reveal">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="../index.html" aria-label="LEGACY home"></a>
+        <a class="brand" href="https://www.legacycoaching.com.my/" aria-label="LEGACY home"></a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-          <a href="../index.html">Home</a>
           <div class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
-              Coaching
+              Programs
               <span class="nav-caret" aria-hidden="true"></span>
             </button>
-            <div class="nav-submenu" role="menu" aria-label="Coaching submenu">
-              <a href="../coaching/1-1.html" role="menuitem">1:1 Coaching</a>
-              <a href="../coaching/pre-postnatal.html" role="menuitem">Pre &amp; Postnatal</a>
-              <a href="../coaching/longevity-seniors.html" role="menuitem">Older Adults</a>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaches.html" role="menuitem">Meet the Team</a>
+              <a href="/corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
             </div>
           </div>
-          <a href="../coaching/corporate.html">Corporate</a>
-          <a href="../results.html">Results</a>
+          <a href="/packages.html">Pricing</a>
           <div class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
-              Others
+              Facilities
               <span class="nav-caret" aria-hidden="true"></span>
             </button>
-            <div class="nav-submenu" role="menu" aria-label="Others submenu">
-              <a href="../about.html" role="menuitem">About Us</a>
-              <a href="../blog.html" role="menuitem">Blog</a>
-              <a href="../contact.html" role="menuitem">Contact</a>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="/facilities.html" role="menuitem">Gym Information</a>
+              <a href="/gallery.html" role="menuitem">Gallery</a>
             </div>
           </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="/about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="/contact.html" role="menuitem">Contact Us</a>
+              <a href="/locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+          <a class="account-gateway-trigger" href="/account.html">My Account</a>
         </nav>
         <div class="header-cta-group">
-          <a class="btn btn-primary" href="./client.html">Client Login</a>
-          <a class="btn btn-primary" href="./coach.html">Coach Login</a>
+          <a class="btn btn-primary account-gateway-trigger" href="/account.html">My Account</a>
         </div>
       </div>
     </header>
@@ -76,16 +100,29 @@
           <div class="input-row">
             <label>
               Email
-              <input id="coach-login-email" type="email" name="coachEmail" placeholder="name@legacycoaching.com.my" required />
+              <input
+                id="coach-login-email"
+                type="email"
+                name="coachEmail"
+                placeholder="admin@legacycoaching.com.my"
+                autocomplete="email"
+                required
+              />
             </label>
             <label>
               Password
-              <input type="password" name="coachPassword" placeholder="Enter password" required />
+              <input
+                type="password"
+                name="coachPassword"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                required
+              />
             </label>
           </div>
           <button class="btn btn-primary" type="submit">Continue</button>
           <p class="dashboard-feedback" id="coach-login-feedback">
-            Demo mode: admin email opens admin dashboard, all other emails open coach dashboard.
+            Coach accounts open the coach workspace. Super-admin accounts route into the admin workspace automatically.
           </p>
         </form>
       </section>
@@ -96,6 +133,9 @@
       <p>&copy; <span data-year></span> LEGACY+ Coaching. All rights reserved.</p>
     </footer>
 
-    <script src="../script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js?v=20260402deployready1"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../script.js?v=20260402deployready1"></script>
   </body>
 </html>

@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Planner | LEGACY+ Client</title>
+    <meta
+      name="description"
+      content="Private LEGACY+ client planner for training, nutrition, health, and progress tracking."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260403workbookux1" />
+  </head>
+  <body data-required-role="client" data-live-dashboard="client" data-account-page="planner" data-disable-page-tabs="true">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./client-dashboard.html">LEGACY<span>+</span> Client</a>
+        <p class="crm-sidebar-copy">Private client navigation for planning, nutrition, health, scheduling, and account progress.</p>
+        <nav class="crm-nav" aria-label="Client navigation">
+          <a href="./client-dashboard.html">Home</a>
+          <a class="is-current" href="./client-planner.html">Planner</a>
+          <a href="./client-packages.html">Packages</a>
+          <a href="./client-schedule.html">Schedule</a>
+          <a href="./client-rewards.html">Rewards</a>
+          <a href="./client-profile.html">Profile</a>
+          <a href="./client-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Planner</span>
+            <h1>Your Planner, Split Into Training, Nutrition, Health, and Progress</h1>
+            <p class="dashboard-feedback" id="client-planner-status">
+              Syncing your live planner workspace.
+            </p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>client</strong></p>
+            <p>
+              Your dashboard stays overview-only. Use the tabs here to work on one coaching stream at a time without training,
+              nutrition, health, and progress crowding the same screen.
+            </p>
+          </div>
+        </header>
+
+        <nav class="crm-page-tabs reveal" id="client-planner-tabs" aria-label="Client planner tabs">
+          <button class="crm-page-tab is-active" type="button" data-client-planner-tab="training">Training</button>
+          <button class="crm-page-tab" type="button" data-client-planner-tab="nutrition">Nutrition</button>
+          <button class="crm-page-tab" type="button" data-client-planner-tab="health">Health</button>
+          <button class="crm-page-tab" type="button" data-client-planner-tab="progress">Progress</button>
+        </nav>
+
+        <main class="dashboard-main crm-section-grid">
+          <div class="crm-page-panel is-active" data-client-planner-panel="training">
+            <section class="section dashboard-section reveal" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Training Snapshot</span>
+              <h2>What Is Live In Your Coaching Block Right Now</h2>
+              <div class="stats-grid crm-metric-grid">
+                <article class="stat crm-stat" data-crm-tone="warning">
+                  <p class="crm-stat__label">Active Block</p>
+                  <p class="crm-stat__value" id="client-planner-stat-program">None</p>
+                  <p class="crm-stat__detail" id="client-planner-stat-program-note">Your next assigned block will appear here.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="info">
+                  <p class="crm-stat__label">Planned Days</p>
+                  <p class="crm-stat__value" id="client-planner-stat-days">0</p>
+                  <p class="crm-stat__detail" id="client-planner-stat-days-note">Scheduled training and recovery days in the live plan.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="success">
+                  <p class="crm-stat__label">Completed This Week</p>
+                  <p class="crm-stat__value" id="client-planner-stat-completed">0</p>
+                  <p class="crm-stat__detail" id="client-planner-stat-completed-note">Coach-reviewable completions from the last 7 days.</p>
+                </article>
+                <article class="stat crm-stat" data-crm-tone="neutral">
+                  <p class="crm-stat__label">Pending Review</p>
+                  <p class="crm-stat__value" id="client-planner-stat-review">0</p>
+                  <p class="crm-stat__detail" id="client-planner-stat-review-note">Items still waiting on coach review.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal split split--focus-left" id="client-planner-current-block" data-crm-tone="neutral">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Assigned Program</span>
+                <h2>Your Current Block</h2>
+                <div id="client-planner-assignment-summary">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>No active program yet</strong>
+                    <p>Your coach can assign a live block from the training workspace. Once that happens, this panel will show your cycle, goal context, and plan structure.</p>
+                  </article>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Selected Day</span>
+                <h2>Open One Day And See The Full Training Sheet</h2>
+                <div id="client-planner-day-focus">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>No training day loaded yet</strong>
+                    <p>When your coach assigns a block, the selected training day will show here with the session focus, timing, and workbook summary.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" id="client-planner-training-days" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Training Calendar</span>
+              <h2>Pick A Day, Open The Sheet, Then Log Only Your Execution</h2>
+              <div class="client-planner-training-shell">
+                <div class="client-planner-training-calendar" id="client-planner-training-calendar">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>No training days available yet</strong>
+                    <p>Your coach-assigned days will appear here in a calendar-style picker once the live block is ready.</p>
+                  </article>
+                </div>
+                <div class="client-planner-training-detail" id="client-planner-training-detail">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>Select a day to open the sheet</strong>
+                    <p>Your program sheet will appear here with coach targets on the left and only your editable columns on the right.</p>
+                  </article>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-client-planner-panel="nutrition" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <article class="card" data-crm-tone="success">
+                <span class="kicker kicker--accent">Current Nutrition Plan</span>
+                <div class="client-planner-nutrition-hero">
+                  <div class="client-planner-nutrition-hero__copy">
+                    <h2>Choose Your Plan, Then Log In One Clear Flow</h2>
+                    <p>Pick the plan you are following, review today&apos;s targets, then use one workspace at a time.</p>
+                  </div>
+                  <label class="client-planner-plan-selector">
+                    <span>Plan in focus</span>
+                    <select id="client-planner-nutrition-plan" name="nutritionPlanId" required>
+                      <option value="">Select plan</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="client-planner-standard-grid client-planner-standard-grid--nutrition-overview">
+                  <div id="client-planner-nutrition-summary">
+                    <p class="dashboard-note">Your live nutrition plan will appear here once your coach sets it up.</p>
+                  </div>
+                  <div class="client-planner-habit-list" id="client-planner-habit-list">
+                    <p class="dashboard-note">Habit targets will appear here once your coach assigns the plan.</p>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Nutrition Calendar</span>
+              <h2>Pick A Day, Then Log Against That Day Only</h2>
+              <div class="client-planner-training-shell client-planner-nutrition-shell">
+                <div class="client-planner-training-calendar client-planner-nutrition-calendar" id="client-planner-nutrition-calendar">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>No nutrition days available yet</strong>
+                    <p>Your coach-planned meal rhythm will appear here once the live plan is ready.</p>
+                  </article>
+                </div>
+                <div class="client-planner-training-detail client-planner-nutrition-detail" id="client-planner-nutrition-day-detail">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>Select a day to open the plan</strong>
+                    <p>Your selected day will show the meal structure, coach guidance, and the correct logging flow for that day.</p>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <div class="client-planner-workspace-nav" role="tablist" aria-label="Nutrition workspace">
+                <button class="client-planner-workspace-tab is-active" type="button" role="tab" aria-selected="true" data-client-nutrition-workspace="adherence">
+                  Daily Log
+                </button>
+                <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-nutrition-workspace="meals">
+                  Meal Diary
+                </button>
+                <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-nutrition-workspace="photo">
+                  Photo Assist
+                </button>
+              </div>
+
+              <div class="client-planner-workspace-stack">
+                <article class="card client-planner-workspace-panel is-active" data-crm-tone="warning" data-client-nutrition-workspace-panel="adherence">
+                  <span class="kicker kicker--accent">Daily Log</span>
+                  <h2>Submit Today&apos;s Nutrition Adherence</h2>
+                  <p class="dashboard-note client-planner-workspace-note">Use this when you want to tell your coach how the day actually went.</p>
+                  <form class="contact-form" id="client-planner-nutrition-form">
+                    <div class="input-row account-input-row">
+                      <label>
+                        Log date
+                        <input id="client-planner-nutrition-date" name="logDate" type="date" required />
+                      </label>
+                      <label>
+                        Status
+                        <select name="status">
+                          <option value="on_plan">On plan</option>
+                          <option value="partial">Partial</option>
+                          <option value="off_plan">Off plan</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Balanced meals
+                        <input name="balancedMealsCount" type="number" min="0" step="1" value="0" />
+                      </label>
+                      <label>
+                        Calories logged
+                        <input name="caloriesLogged" type="number" min="0" step="1" />
+                      </label>
+                      <label>
+                        Protein logged (g)
+                        <input name="proteinLoggedG" type="number" min="0" step="1" />
+                      </label>
+                    </div>
+                    <div class="input-row account-input-row">
+                      <label class="client-planner-check-toggle">
+                        <input name="hydrationTargetHit" type="checkbox" />
+                        <span>Hydration target hit</span>
+                      </label>
+                      <label class="client-planner-check-toggle">
+                        <input name="proteinTargetHit" type="checkbox" />
+                        <span>Protein target hit</span>
+                      </label>
+                      <label class="client-planner-check-toggle">
+                        <input name="mealPrepCompleted" type="checkbox" />
+                        <span>Meal prep completed</span>
+                      </label>
+                    </div>
+                    <label>
+                      Note
+                      <textarea name="note" placeholder="Anything your coach should review from today&apos;s nutrition."></textarea>
+                    </label>
+                    <button class="btn btn-secondary" type="submit">Submit Nutrition Log</button>
+                  </form>
+                  <p class="dashboard-feedback" id="client-planner-nutrition-feedback">
+                    Nutrition logs are sent straight into your coach review workflow.
+                  </p>
+                  <div class="client-planner-feed" id="client-planner-nutrition-feed">
+                    <p class="dashboard-note">Nutrition entries will appear here after your first submission.</p>
+                  </div>
+                </article>
+
+                <article class="card client-planner-workspace-panel" data-crm-tone="info" data-client-nutrition-workspace-panel="meals" hidden>
+                  <span class="kicker kicker--accent">Meal Diary</span>
+                  <h2>Log One Meal At A Time</h2>
+                  <p class="dashboard-note client-planner-workspace-note">Pick the day, add foods, edit your portions, and keep the meal entry simple and clear.</p>
+                  <form class="contact-form" id="client-planner-meal-form">
+                    <div class="input-row account-input-row">
+                      <label>
+                        Log date
+                        <input id="client-planner-meal-date" name="logDate" type="date" required />
+                      </label>
+                      <label>
+                        Meal type
+                        <select name="mealType">
+                          <option value="breakfast">Breakfast</option>
+                          <option value="lunch">Lunch</option>
+                          <option value="dinner">Dinner</option>
+                          <option value="snack">Snack</option>
+                          <option value="pre_workout">Pre-workout</option>
+                          <option value="post_workout">Post-workout</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </label>
+                    </div>
+                    <article class="client-planner-feed-card client-planner-feed-card--nutrition-assets">
+                      <div class="client-planner-card-head">
+                        <div>
+                          <h3>Quick Picks</h3>
+                          <p>Use saved foods, recent foods, or a coach recipe when you want a faster meal entry.</p>
+                        </div>
+                      </div>
+                      <div class="client-planner-standard-grid client-planner-standard-grid--quick-picks">
+                        <div>
+                          <h4>Favorites</h4>
+                          <div class="client-planner-asset-list" id="client-planner-favorite-foods">
+                            <span class="client-planner-asset-chip">Favorite foods will appear here.</span>
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Recent Foods</h4>
+                          <div class="client-planner-asset-list" id="client-planner-recent-foods">
+                            <span class="client-planner-asset-chip">Recent foods will appear here.</span>
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Coach Recipes</h4>
+                          <div class="client-planner-asset-list" id="client-planner-recipe-picks">
+                            <span class="client-planner-asset-chip">Coach recipes will appear here.</span>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                    <div class="client-planner-meal-entry-shell">
+                      <div class="client-planner-meal-entry-head">
+                        <button
+                          class="btn btn-primary client-planner-meal-entry-trigger"
+                          id="client-planner-meal-entry-toggle"
+                          type="button"
+                          aria-expanded="false"
+                          aria-controls="client-planner-meal-entry-actions"
+                        >
+                          <span aria-hidden="true">+</span>
+                          Add Food
+                        </button>
+                        <p>Keep this simple. Open one food-entry path at a time, then reveal more only when you need it.</p>
+                      </div>
+                      <div class="client-planner-meal-entry-actions" id="client-planner-meal-entry-actions" hidden>
+                        <button class="client-planner-meal-entry-option" type="button" data-meal-entry-mode="search" aria-pressed="false">
+                          Search library
+                        </button>
+                        <button class="client-planner-meal-entry-option" type="button" data-meal-entry-mode="barcode" aria-pressed="false">
+                          Scan barcode
+                        </button>
+                        <button class="client-planner-meal-entry-option" type="button" data-meal-entry-mode="photo" aria-pressed="false">
+                          Use photo assist
+                        </button>
+                      </div>
+                    </div>
+                    <div class="client-planner-meal-entry-panel" data-meal-entry-panel="barcode" hidden>
+                      <div class="input-row account-input-row client-planner-search-row client-planner-search-row--barcode">
+                        <label>
+                          Barcode lookup
+                          <input
+                            id="client-planner-food-barcode"
+                            name="foodBarcode"
+                            type="text"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            placeholder="Scan or enter a product barcode"
+                          />
+                        </label>
+                        <button class="btn btn-ghost" id="client-planner-food-barcode-button" type="button">Lookup Barcode</button>
+                      </div>
+                      <div class="section-actions section-actions--compact client-planner-barcode-actions">
+                        <button class="btn btn-ghost" id="client-planner-barcode-camera-button" type="button">Scan With Camera</button>
+                        <button class="btn btn-ghost" id="client-planner-barcode-stop-button" type="button" hidden>Stop Scanner</button>
+                        <button class="btn btn-ghost" id="client-planner-barcode-photo-button" type="button">Scan From Photo</button>
+                        <input id="client-planner-barcode-photo-input" type="file" accept="image/*" capture="environment" hidden />
+                      </div>
+                      <div class="client-planner-standard-grid" id="client-planner-barcode-photo-selection">
+                        <p class="dashboard-note">Selected barcode photo will appear here before scan.</p>
+                      </div>
+                      <div class="client-planner-barcode-scanner" id="client-planner-barcode-scanner" hidden>
+                        <div class="client-planner-barcode-scanner__stage">
+                          <video id="client-planner-barcode-video" playsinline muted autoplay></video>
+                          <div class="client-planner-barcode-scanner__reticle" aria-hidden="true"></div>
+                        </div>
+                        <p class="dashboard-feedback client-planner-inline-feedback" id="client-planner-barcode-feedback">
+                          The camera scanner will look for EAN and UPC style product barcodes.
+                        </p>
+                      </div>
+                      <div class="client-planner-standard-grid" id="client-planner-barcode-result">
+                        <p class="dashboard-note">Packaged foods will appear here once barcode lookup is available.</p>
+                      </div>
+                    </div>
+                    <div class="client-planner-meal-entry-panel" data-meal-entry-panel="search" hidden>
+                      <div class="input-row account-input-row client-planner-search-row">
+                        <label>
+                          Search foods
+                          <input id="client-planner-food-search" name="foodSearch" type="search" placeholder="Chicken rice, oats, tempeh, banana..." />
+                        </label>
+                        <button class="btn btn-ghost" id="client-planner-food-search-button" type="button">Search Foods</button>
+                      </div>
+                      <div class="client-planner-standard-grid" id="client-planner-food-search-results">
+                        <p class="dashboard-note">Search the library to add foods into this meal.</p>
+                      </div>
+                    </div>
+                    <div class="client-planner-meal-builder" id="client-planner-meal-builder">
+                      <p class="dashboard-note">Added foods will appear here with serving, quantity, and gram controls.</p>
+                    </div>
+                    <div class="client-planner-summary-card" id="client-planner-meal-totals">
+                      <div class="client-planner-card-head">
+                        <div>
+                          <h3>Meal totals</h3>
+                          <p>Calories, protein, carbs, and fats update as you build the meal.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <label>
+                      Meal title
+                      <input name="title" type="text" placeholder="Post-run chicken rice bowl" />
+                    </label>
+                    <label>
+                      Meal note
+                      <textarea name="note" placeholder="Add context like olive oil swap, less rice, extra veg, or anything your coach should know."></textarea>
+                    </label>
+                    <button class="btn btn-secondary" type="submit">Save Meal Entry</button>
+                  </form>
+                  <p class="dashboard-feedback" id="client-planner-meal-feedback">
+                    Meals are saved into your planner nutrition history and sent into the coach review flow.
+                  </p>
+                  <div class="client-planner-feed" id="client-planner-meal-feed">
+                    <p class="dashboard-note">Meals built from the food library will appear here after your first save.</p>
+                  </div>
+                </article>
+
+                <article class="card client-planner-workspace-panel" data-crm-tone="warning" data-client-nutrition-workspace-panel="photo" hidden>
+                  <span class="kicker kicker--accent">Photo Meal Assist</span>
+                  <h2>Snap The Meal, Then Refine The Suggestions</h2>
+                  <p class="dashboard-note client-planner-workspace-note">Use this when speed matters and you want the planner to suggest likely foods first.</p>
+                  <form class="contact-form" id="client-planner-photo-form">
+                    <div class="input-row account-input-row">
+                      <label>
+                        Log date
+                        <input id="client-planner-photo-date" name="logDate" type="date" required />
+                      </label>
+                      <label>
+                        Meal type
+                        <select name="mealType">
+                          <option value="breakfast">Breakfast</option>
+                          <option value="lunch">Lunch</option>
+                          <option value="dinner">Dinner</option>
+                          <option value="snack">Snack</option>
+                          <option value="pre_workout">Pre-workout</option>
+                          <option value="post_workout">Post-workout</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </label>
+                    </div>
+                    <label>
+                      Meal title
+                      <input name="mealTitle" type="text" placeholder="Chicken rice after training" />
+                    </label>
+                    <label>
+                      What is in the meal?
+                      <textarea name="clientNote" placeholder="What you can see or what you ordered. Example: grilled chicken, white rice, stir-fried veg, chili on the side."></textarea>
+                    </label>
+                    <label>
+                      Correction note
+                      <textarea name="correctionNote" placeholder="Use this if the photo might be misleading. Example: olive oil instead of coconut oil, half rice, double chicken, sauce separate."></textarea>
+                    </label>
+                    <div class="input-row account-input-row">
+                      <label>
+                        Main meal photo
+                        <input name="mealPhoto" type="file" accept="image/*" required />
+                      </label>
+                      <label>
+                        Optional second angle
+                        <input name="secondaryPhoto" type="file" accept="image/*" />
+                      </label>
+                      <label>
+                        Optional close-up / packaging
+                        <input name="detailPhoto" type="file" accept="image/*" />
+                      </label>
+                    </div>
+                    <div class="section-actions section-actions--compact client-planner-guide-actions">
+                      <button
+                        class="btn btn-ghost"
+                        type="button"
+                        data-planner-guide-toggle="meal-photo"
+                        aria-expanded="false"
+                        aria-controls="client-planner-guide-meal-photo"
+                        data-guide-open-label="View Meal Photo Guide"
+                        data-guide-close-label="Hide Meal Photo Guide"
+                      >
+                        View Meal Photo Guide
+                      </button>
+                    </div>
+                    <div class="client-planner-guide" id="client-planner-guide-meal-photo" data-planner-guide-panel="meal-photo" hidden>
+                      <div class="client-planner-guide__head">
+                        <div>
+                          <h3>How To Shoot Meal Photos</h3>
+                          <p>Keep the meal clear, well lit, and easy to identify before you upload it for analysis.</p>
+                        </div>
+                      </div>
+                      <div class="client-planner-guide__grid client-planner-guide__grid--meal">
+                        <article class="client-planner-guide-card">
+                          <div class="client-planner-guide-card__visual client-planner-guide-card__visual--meal-top client-planner-guide-card__visual--reference">
+                            <span class="client-planner-guide-card__badge">Top Down</span>
+                            <img src="./assets/planner-guides/meal-top-guide.svg" alt="Example top-down meal photo" loading="lazy" />
+                            <strong>Center the whole plate</strong>
+                          </div>
+                          <p>Hold the phone above the meal so the full plate, bowl, or tray is visible inside the frame.</p>
+                        </article>
+                        <article class="client-planner-guide-card">
+                          <div class="client-planner-guide-card__visual client-planner-guide-card__visual--meal-angle client-planner-guide-card__visual--reference">
+                            <span class="client-planner-guide-card__badge">Second Angle</span>
+                            <img src="./assets/planner-guides/meal-angle-guide.svg" alt="Example angled meal photo" loading="lazy" />
+                            <strong>Use a 45 degree shot</strong>
+                          </div>
+                          <p>Add a second angle when layers, sauces, toppings, or portion depth are hard to see from above.</p>
+                        </article>
+                        <article class="client-planner-guide-card">
+                          <div class="client-planner-guide-card__visual client-planner-guide-card__visual--meal-detail client-planner-guide-card__visual--reference">
+                            <span class="client-planner-guide-card__badge">Detail</span>
+                            <img src="./assets/planner-guides/meal-detail-guide.svg" alt="Example packaging and detail photo" loading="lazy" />
+                            <strong>Include labels or packaging</strong>
+                          </div>
+                          <p>Take a close-up of packaging, drinks, or sauces when the brand or serving size matters.</p>
+                        </article>
+                      </div>
+                      <div class="client-planner-guide-rules">
+                        <article class="client-planner-guide-rule-card">
+                          <h4>Best Practice</h4>
+                          <ul>
+                            <li>Use bright natural or overhead light.</li>
+                            <li>Keep the phone steady and the meal in focus.</li>
+                            <li>Show sauces, drinks, and sides separately when possible.</li>
+                          </ul>
+                        </article>
+                        <article class="client-planner-guide-rule-card">
+                          <h4>Avoid</h4>
+                          <ul>
+                            <li>Dark shadows, heavy filters, and motion blur.</li>
+                            <li>Cropped plates where food is cut off.</li>
+                            <li>Uploading only the packaging when the actual meal is plated.</li>
+                          </ul>
+                        </article>
+                      </div>
+                    </div>
+                    <div class="client-planner-standard-grid" id="client-planner-photo-selection">
+                      <p class="dashboard-note">Selected meal-photo files will appear here before upload.</p>
+                    </div>
+                    <button class="btn btn-secondary" type="submit">Analyze Meal Photo</button>
+                  </form>
+                  <p class="dashboard-feedback" id="client-planner-photo-feedback">
+                    The planner will suggest likely foods, estimate macros, and send low-confidence meals to your coach review queue.
+                  </p>
+                  <div class="client-planner-feed" id="client-planner-photo-feed">
+                    <p class="dashboard-note">Meal-photo submissions and suggested foods will appear here after your first upload.</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-client-planner-panel="health" hidden>
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="info">
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Health Summary</span>
+                <h2>Recovery, Readiness, And Coaching Health Signals</h2>
+                <div id="client-planner-health-summary">
+                  <p class="dashboard-note">Your current health rhythm will appear here once your coach sets it up.</p>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Health Form</span>
+                <h2>Submit Your Current Recovery And Health Update</h2>
+                <form class="contact-form" id="client-planner-checkin-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Health template
+                      <select id="client-planner-checkin-template" name="templateId" required>
+                        <option value="">Select template</option>
+                      </select>
+                    </label>
+                    <label>
+                      Due at
+                      <input id="client-planner-checkin-due" name="dueAt" type="datetime-local" required />
+                    </label>
+                  </div>
+                  <label>
+                    Overall recovery score
+                    <input name="overallAdherenceScore" type="number" min="1" max="10" step="1" />
+                    <small class="score-guidance score-guidance--compact">
+                      <span><strong>1-3</strong><em>Depleted and struggling to recover</em></span>
+                      <span><strong>4-6</strong><em>Mixed and not fully steady yet</em></span>
+                      <span><strong>7-8</strong><em>Solid and coping well</em></span>
+                      <span><strong>9-10</strong><em>Excellent and fully ready</em></span>
+                    </small>
+                  </label>
+                  <div class="client-planner-question-stack" id="client-planner-question-stack">
+                    <p class="dashboard-note">Questions will load after you select a health template.</p>
+                  </div>
+                  <button class="btn btn-secondary" type="submit">Submit Health Update</button>
+                </form>
+                <p class="dashboard-feedback" id="client-planner-checkin-feedback">
+                  Your coach will be notified as soon as this health update is submitted.
+                </p>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Recent Health Updates</span>
+              <h2>Your Latest Submitted Recovery And Health Notes</h2>
+              <div class="client-planner-feed" id="client-planner-checkin-feed">
+                <p class="dashboard-note">Submitted health updates and coach comments will appear here.</p>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-client-planner-panel="progress" hidden>
+            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="warning">
+              <article class="card" data-crm-tone="warning">
+                <span class="kicker kicker--accent">Progress Upload</span>
+                <h2>Capture Your Latest Checkpoint</h2>
+                <form class="contact-form" id="client-planner-progress-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Captured at
+                      <input id="client-planner-progress-captured-at" name="capturedAt" type="datetime-local" required />
+                    </label>
+                    <label>
+                      Capture period
+                      <select name="capturePeriod" required>
+                        <option value="weekly">Weekly</option>
+                        <option value="biweekly">Bi-weekly</option>
+                        <option value="monthly">Monthly</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Weight (kg)
+                      <input name="weightKg" type="number" min="0" step="0.1" />
+                    </label>
+                    <label>
+                      Body fat (%)
+                      <input name="bodyFatPercent" type="number" min="0" step="0.1" />
+                    </label>
+                  </div>
+                  <label>
+                    Client note
+                    <textarea name="clientNote" placeholder="Anything you want your coach to notice in this photo batch."></textarea>
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Front photo
+                      <input name="frontPhoto" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" required />
+                    </label>
+                    <label>
+                      Side photo
+                      <input name="sidePhoto" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" required />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Back photo
+                      <input name="backPhoto" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" required />
+                    </label>
+                    <label>
+                      Detail photo
+                      <input name="detailPhoto" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" />
+                    </label>
+                  </div>
+                  <p class="client-planner-progress-hint">Use JPEG or PNG images only, up to 10 MB each.</p>
+                  <div class="section-actions section-actions--compact client-planner-guide-actions">
+                    <button
+                      class="btn btn-ghost"
+                      type="button"
+                      data-planner-guide-toggle="progress-photo"
+                      aria-expanded="false"
+                      aria-controls="client-planner-guide-progress-photo"
+                      data-guide-open-label="View Progress Photo Guide"
+                      data-guide-close-label="Hide Progress Photo Guide"
+                    >
+                      View Progress Photo Guide
+                    </button>
+                  </div>
+                  <div class="client-planner-guide" id="client-planner-guide-progress-photo" data-planner-guide-panel="progress-photo" hidden>
+                    <div class="client-planner-guide__head">
+                      <div>
+                        <h3>How To Take Progress Photos</h3>
+                        <p>Keep the setup consistent every time so your coach can compare real changes, not different angles or lighting.</p>
+                      </div>
+                    </div>
+                    <div class="client-planner-guide__grid">
+                      <article class="client-planner-guide-card">
+                        <div class="client-planner-guide-card__visual client-planner-guide-card__visual--front client-planner-guide-card__visual--reference">
+                          <span class="client-planner-guide-card__badge">Front</span>
+                          <img src="./assets/planner-guides/progress-front-guide.svg" alt="Example front progress photo stance" loading="lazy" />
+                          <strong>Stand tall and relaxed</strong>
+                        </div>
+                        <p>Face the camera, feet hip-width apart, arms relaxed slightly away from your sides, full body in frame.</p>
+                      </article>
+                      <article class="client-planner-guide-card">
+                        <div class="client-planner-guide-card__visual client-planner-guide-card__visual--side client-planner-guide-card__visual--reference">
+                          <span class="client-planner-guide-card__badge">Side</span>
+                          <img src="./assets/planner-guides/progress-side-guide.svg" alt="Example side progress photo stance" loading="lazy" />
+                          <strong>Turn 90 degrees</strong>
+                        </div>
+                        <p>Stand in a natural side pose with your posture neutral and your body not twisted toward the camera.</p>
+                      </article>
+                      <article class="client-planner-guide-card">
+                        <div class="client-planner-guide-card__visual client-planner-guide-card__visual--back client-planner-guide-card__visual--reference">
+                          <span class="client-planner-guide-card__badge">Back</span>
+                          <img src="./assets/planner-guides/progress-back-guide.svg" alt="Example back progress photo stance" loading="lazy" />
+                          <strong>Match the same framing</strong>
+                        </div>
+                        <p>Keep the same distance, camera height, and lighting as the front shot so the comparison stays clean.</p>
+                      </article>
+                      <article class="client-planner-guide-card">
+                        <div class="client-planner-guide-card__visual client-planner-guide-card__visual--detail client-planner-guide-card__visual--reference">
+                          <span class="client-planner-guide-card__badge">Detail</span>
+                          <img src="./assets/planner-guides/progress-detail-guide.svg" alt="Example detail progress photo" loading="lazy" />
+                          <strong>Use only if needed</strong>
+                        </div>
+                        <p>Add a detail shot only when you want your coach to notice a specific area, posture change, or physique detail.</p>
+                      </article>
+                    </div>
+                    <div class="client-planner-guide-rules">
+                      <article class="client-planner-guide-rule-card">
+                        <h4>Wear</h4>
+                        <ul>
+                          <li>Fitted training clothes you are comfortable repeating each check-in.</li>
+                          <li>Shorts, leggings, fitted tee, tank, sports bra, or crop top that shows your actual shape.</li>
+                          <li>The same or very similar outfit each time for cleaner comparisons.</li>
+                        </ul>
+                      </article>
+                      <article class="client-planner-guide-rule-card">
+                        <h4>Camera Rules</h4>
+                        <ul>
+                          <li>Place the camera around chest height and 2 to 3 meters away.</li>
+                          <li>Use a plain wall, even light, and keep your full body inside the frame.</li>
+                          <li>Avoid mirrors, tilted phones, filters, jackets, hoodies, hats, and shoes.</li>
+                        </ul>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="client-planner-feed" id="client-planner-progress-selection">
+                    <p class="dashboard-note">Selected files will appear here before upload.</p>
+                  </div>
+                  <div
+                    class="client-planner-upload-meter"
+                    id="client-planner-progress-meter"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    hidden
+                  >
+                    <div class="client-planner-upload-meter__head">
+                      <strong id="client-planner-progress-meter-label">Preparing secure upload...</strong>
+                      <span id="client-planner-progress-meter-percent">0%</span>
+                    </div>
+                    <div
+                      class="crm-progress"
+                      role="progressbar"
+                      aria-labelledby="client-planner-progress-meter-label"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-valuenow="0"
+                    >
+                      <span class="crm-progress__fill" id="client-planner-progress-meter-fill" style="width: 0%;"></span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="submit">Track Progress Photos</button>
+                </form>
+                <p class="dashboard-feedback" id="client-planner-progress-feedback">
+                  Progress batches are uploaded privately and sent to your coach for review.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Latest Review</span>
+                <h2>Current Progress Snapshot</h2>
+                <div class="client-planner-standard-grid">
+                  <article class="client-planner-summary-card">
+                    <div class="client-planner-card-head">
+                      <h3>Latest cycle</h3>
+                      <p id="client-planner-progress-period">No progress-photo period captured yet.</p>
+                      <p id="client-planner-progress-weight">Weight snapshots tied to progress-photo entries will appear here.</p>
+                      <p id="client-planner-progress-ai">AI estimate will appear here after your upload is processed.</p>
+                      <p id="client-planner-progress-review">Coach review status will appear here.</p>
+                    </div>
+                  </article>
+                </div>
+              </article>
+            </section>
+
+            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Progress History</span>
+              <h2>Uploaded Photo Batches And Reviews</h2>
+              <div class="client-planner-feed" id="client-planner-progress-feed">
+                <p class="dashboard-note">Your uploaded progress batches will appear here.</p>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Client | Planner</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private client planner workspace.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./planner-athlete-engine.js?v=20260328demo3"></script>
+    <script src="./lib/progress-photo-upload.js?v=20260330progress1"></script>
+    <script src="./client-planner.js?v=20260403workbookux1"></script>
+  </body>
+</html>

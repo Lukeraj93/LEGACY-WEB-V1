@@ -1,0 +1,202 @@
+{
+  "contractVersion": "legacyplus.clients.workbook.v2",
+  "workbook": {
+    "filename": "LEGACY+_XP_System_v2_FIXED.xlsx",
+    "timezone": "Asia/Kuala_Lumpur",
+    "weekStart": "MON"
+  },
+  "normalization": {
+    "trimHeaders": true,
+    "trimStrings": true,
+    "emptyToNull": true,
+    "yesNoToBoolean": {
+      "Yes": true,
+      "No": false,
+      "": null
+    }
+  },
+  "entities": {
+    "settings": {
+      "sourceSheet": "Settings",
+      "kvColumns": {
+        "key": "Name",
+        "value": "Value"
+      },
+      "requiredKeys": [
+        "RoutineWeeklyCapXP",
+        "MonthlyCoinCap",
+        "CoinValueRM"
+      ]
+    },
+    "members": {
+      "sourceSheet": "Members",
+      "primaryKey": "member_id",
+      "columns": {
+        "member_id": "MemberID",
+        "member_name": "Member Name",
+        "mode": "Mode",
+        "status": "Status"
+      },
+      "requiredColumns": [
+        "MemberID",
+        "Member Name",
+        "Mode",
+        "Status"
+      ],
+      "notes": "Ignore helper column ActiveMemberIDs; compute active list where status == 'Active'."
+    },
+    "actions": {
+      "sourceSheets": {
+        "rules": "ActionsCatalog",
+        "display": "ActionMap"
+      },
+      "primaryKey": "action_id",
+      "rulesColumns": {
+        "action_id": "ActionID",
+        "earn_type": "Type",
+        "xp": "XP",
+        "coins_per": "CoinsPer",
+        "display_name": "Display Name",
+        "category": "Category"
+      },
+      "displayColumns": {
+        "display_name_coach_sees": "Display Name (Coach sees)",
+        "action_id": "ActionID",
+        "xp": "XP",
+        "coins": "Coins",
+        "category": "Type"
+      },
+      "requiredRulesColumns": [
+        "ActionID",
+        "Type",
+        "XP",
+        "CoinsPer",
+        "Display Name",
+        "Category"
+      ],
+      "requiredDisplayColumns": [
+        "Display Name (Coach sees)",
+        "ActionID",
+        "XP",
+        "Coins",
+        "Type"
+      ],
+      "validation": {
+        "mustMatchOnActionId": [
+          "xp",
+          "coins"
+        ],
+        "mustHaveUnique": [
+          "ActionID"
+        ],
+        "earnTypeEnum": [
+          "Routine",
+          "Milestone",
+          "Achievement",
+          "Boss"
+        ]
+      }
+    },
+    "events": {
+      "sourceSheet": "QuickLog",
+      "primaryKey": "event_id",
+      "appendOnly": true,
+      "inputColumns": {
+        "date": "Date",
+        "member_id": "MemberID",
+        "action_id": "Action ID",
+        "qty": "Qty",
+        "verified": "Verified",
+        "coach": "Coach",
+        "notes": "Notes"
+      },
+      "optionalColumns": {
+        "action_name": "Action Name",
+        "mode": "Mode",
+        "member_name": "Member Name"
+      },
+      "computedDoNotImportAsTruth": [
+        "Type",
+        "XP Per",
+        "Coins Per",
+        "XP Raw",
+        "Coins Raw",
+        "Week Key",
+        "MonthKey"
+      ],
+      "rowInclusionRule": "Include row if Date OR MemberID OR Action ID is non-empty; ignore completely blank rows."
+    },
+    "seedPlacement": {
+      "sourceSheet": "SeedPlacement",
+      "primaryKey": "member_id",
+      "columns": {
+        "member_id": "MemberID",
+        "months_coached": "MonthsCoached",
+        "avg_sessions_per_week": "AvgSessionsPerWeek",
+        "adherence_score": "AdherenceScore (1–5)",
+        "movement_competency": "MovementCompetency (1–5)",
+        "strength_level": "StrengthLevel (1–5)",
+        "lifestyle_habits": "LifestyleHabits (1–5)",
+        "tracking_consistency": "TrackingConsistency (1–5)",
+        "self_mastery": "SelfMastery (1–5)",
+        "knowledge_level": "KnowledgeLevel (1–5)",
+        "seed_xp_calc": "SeedXP_Calc",
+        "seed_level_calc": "SeedLevel (calculated)",
+        "approved": "Approved (Yes/No)",
+        "seed_xp_locked": "SeedXP_Locked",
+        "notes": "Notes"
+      },
+      "recommendedAppBehavior": "If approved==Yes and seed_xp_locked is present, inject one seed event (ActionID='SEED-INIT') with xp_override=seed_xp_locked for auditability; do not directly edit ledger totals."
+    }
+  },
+  "derivedViews": {
+    "weeklySummary": {
+      "sourceSheet": "WeeklySummary",
+      "doNotImportAsTruth": true,
+      "computeFrom": [
+        "events",
+        "actions",
+        "settings"
+      ],
+      "logic": {
+        "routineXP_raw": "sum events where earn_type=='Routine' per member/week",
+        "routineXP_counted": "min(routineXP_raw, RoutineWeeklyCapXP)",
+        "milestoneXP_raw": "sum events where earn_type in ('Milestone','Achievement','Boss') per member/week",
+        "totalXP_week": "routineXP_counted + milestoneXP_raw",
+        "coins_raw_week": "sum coins from verified events per member/week",
+        "coins_counted_week": "optional (no weekly coin cap in workbook)"
+      }
+    },
+    "monthlySummary": {
+      "sourceSheet": "MonthlySummary",
+      "doNotImportAsTruth": true,
+      "computeFrom": [
+        "events",
+        "actions",
+        "settings"
+      ],
+      "logic": {
+        "coins_raw_month": "sum coins from verified events per member/month",
+        "coins_counted_month": "min(coins_raw_month, MonthlyCoinCap)",
+        "worth_rm": "coins_counted_month * CoinValueRM"
+      }
+    },
+    "ledger": {
+      "sourceSheet": "Ledger",
+      "doNotImportAsTruth": true,
+      "computeFrom": [
+        "weeklySummary",
+        "monthlySummary",
+        "seedPlacement"
+      ],
+      "logic": {
+        "total_xp": "seed_xp + sum weekly totalXP_week",
+        "level": "min(100, floor(sqrt(total_xp)))",
+        "next_level_xp": "(level+1)^2",
+        "xp_to_next": "next_level_xp - total_xp",
+        "coins_earned_counted": "sum monthly coins_counted_month",
+        "coin_balance": "coins_earned_counted - coins_redeemed"
+      }
+    }
+  }
+}
