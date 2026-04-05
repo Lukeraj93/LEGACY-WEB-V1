@@ -12,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
   </head>
   <body data-required-role="client" data-live-dashboard="client" data-account-page="packages">
     <div class="cinematic-bg" aria-hidden="true">
@@ -48,7 +48,7 @@
             <p class="dashboard-feedback" id="client-dashboard-status">Syncing your live dashboard data.</p>
           </div>
           <div class="crm-page-meta">
-            <p>Package focus: see usable balance first, then choose the next purchase path, then review past orders.</p>
+            <p>Review usable balance first, choose the right next package, then check your payment history.</p>
             <p>Signed in as <strong data-account-email>client</strong></p>
             <p id="client-member-id-display">Member ID loading...</p>
             <div class="crm-priority-legend" aria-label="Priority legend">
@@ -77,7 +77,7 @@
             <h2>Purchase More Coaching Sessions</h2>
             <p class="section-copy">Choose the coaching approach first, then the format, tier, and bundle. Shared 1-to-2 purchases require the second client MEMBER ID so both accounts stay in sync.</p>
             <p class="dashboard-feedback" id="client-package-store-feedback">
-              Choose your approach first, then narrow down to the session bundle you want.
+              Start with the coaching approach, then refine the format, tier, and session bundle.
             </p>
             <div class="crm-selector-layout" id="client-package-selector-shell">
               <form class="contact-form crm-selector-form" id="client-package-selector-form">
@@ -145,8 +145,8 @@
                     <tr class="dashboard-table__empty-row">
                       <td colspan="4">
                         <div class="dashboard-table__empty">
-                          <strong>Available bundles will appear here.</strong>
-                          <p>Once pricing options are loaded, you’ll see the bundle total, per-session rate, and validity in one place.</p>
+                          <strong>Bundle options will appear here.</strong>
+                          <p>Once your selections are in place, you’ll see the bundle total, per-session rate, and validity in one clean table.</p>
                         </div>
                       </td>
                     </tr>
@@ -194,10 +194,10 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
     <script src="./auth-client.js?v=20260402deployready1"></script>
-    <script src="./account-shell.js?v=20260402deployready1"></script>
-    <script src="./client-dashboard.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
+    <script src="./client-dashboard.js?v=20260404notifications1"></script>
     <script src="./dashboard-auth.js?v=20260402deployready1"></script>
   </body>
 </html>

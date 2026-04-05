@@ -30,6 +30,8 @@
 
   const tabNodes = Array.from(document.querySelectorAll("[data-client-planner-tab]"));
   const panelNodes = Array.from(document.querySelectorAll("[data-client-planner-panel]"));
+  const workspaceTabNodes = Array.from(document.querySelectorAll("[data-client-workspace-tab]"));
+  const workspacePanelNodes = Array.from(document.querySelectorAll("[data-client-workspace-panel]"));
 
   const metricProgramNode = document.getElementById("client-planner-stat-program");
   const metricProgramNoteNode = document.getElementById("client-planner-stat-program-note");
@@ -43,6 +45,7 @@
   const assignmentSummaryNode = document.getElementById("client-planner-assignment-summary");
   const dayFocusNode = document.getElementById("client-planner-day-focus");
   const trainingCalendarNode = document.getElementById("client-planner-training-calendar");
+  const trainingCalendarPreviewNode = document.getElementById("client-planner-training-calendar-preview");
   const trainingDetailNode = document.getElementById("client-planner-training-detail");
   const workoutListNode = trainingDetailNode;
 
@@ -149,6 +152,7 @@
     data: { ...EMPTY_DATA },
     activePanel: "training",
     selectedTrainingDayId: "",
+    trainingAdvancedOpen: false,
     selectedNutritionDayKey: "",
     activeNutritionWorkspace: "adherence",
     mealEntryDisclosureOpen: false,
@@ -172,6 +176,39 @@
     },
     refreshTimer: 0,
     realtimeChannel: null,
+    trainingCalendarExpanded: false,
+    activeWorkspaceTabs: {
+      training: "day",
+      nutrition: "overview",
+      health: "summary",
+      progress: "upload",
+    },
+  };
+
+  const WORKSPACE_TAB_DEFAULTS = {
+    training: "day",
+    nutrition: "overview",
+    health: "summary",
+    progress: "upload",
+  };
+
+  const WORKSPACE_TAB_KEYS = {
+    training: new Set(["snapshot", "assigned", "day", "calendar"]),
+    nutrition: new Set(["overview", "calendar", "adherence", "meals", "photo"]),
+    health: new Set(["summary", "form", "history"]),
+    progress: new Set(["upload", "latest", "history"]),
+  };
+
+  const NUTRITION_SUBTAB_TO_WORKSPACE = {
+    adherence: "adherence",
+    meals: "meals",
+    photo: "photo",
+  };
+
+  const NUTRITION_WORKSPACE_TO_SUBTAB = {
+    adherence: "adherence",
+    meals: "meals",
+    photo: "photo",
   };
 
   function setStatus(message, isError) {
@@ -395,6 +432,34 @@
 
   function asObject(value) {
     return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  }
+
+  function compactText(value) {
+    return String(value ?? "").trim();
+  }
+
+  function parseNumber(value) {
+    if (value === null || value === undefined || value === "") {
+      return null;
+    }
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric : null;
+  }
+
+  function parseInteger(value) {
+    if (value === null || value === undefined || value === "") {
+      return null;
+    }
+    const numeric = Number.parseInt(String(value), 10);
+    return Number.isFinite(numeric) ? numeric : null;
+  }
+
+  function clampNumber(value, min, max) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) {
+      return min;
+    }
+    return Math.min(max, Math.max(min, numeric));
   }
 
   function buildSkeletonLine(width = "100%", modifier = "copy") {
@@ -733,62 +798,54 @@
     return asObject(workbook?.outputs)[key];
   }
 
-  function buildWorkbookPairs(workbook) {
+  function buildClientWorkbookPairs(workbook) {
     if (!workbook?.kind) {
       return [];
     }
 
-    if (Array.isArray(workbook.previewPairs) && workbook.previewPairs.length) {
-      return workbook.previewPairs
-        .filter((item) => item?.label && item?.value)
-        .map((item) => ({
-          label: String(item.label || "").trim(),
-          value: String(item.value || "").trim(),
-        }));
-    }
-
-    if (workbook.kind === "runner") {
-      return [
-        { label: "Phase", value: getWorkbookOutput(workbook, "runner_phase") },
-        { label: "Days to goal", value: formatDecimalHuman(getWorkbookOutput(workbook, "runner_days_to_event")) },
-        { label: "Safe ramp", value: formatPercentHuman(getWorkbookOutput(workbook, "runner_safe_volume_ramp_pct")) },
-        { label: "Next-week target", value: formatDecimalHuman(getWorkbookOutput(workbook, "runner_suggested_next_week_km"), " km") },
-        { label: "Long-run target", value: formatDecimalHuman(getWorkbookOutput(workbook, "runner_recommended_long_run_km"), " km") },
-        { label: "Readiness", value: workbook.readiness?.band || "" },
-      ].filter((item) => item.value);
-    }
-
-    if (workbook.kind === "hyrox") {
-      return [
-        { label: "Phase", value: getWorkbookOutput(workbook, "hyrox_phase") },
-        { label: "Days to race", value: formatDecimalHuman(getWorkbookOutput(workbook, "hyrox_days_to_event")) },
-        { label: "Safe run ramp", value: formatPercentHuman(getWorkbookOutput(workbook, "hyrox_safe_run_ramp_pct")) },
-        { label: "Next-week run", value: formatDecimalHuman(getWorkbookOutput(workbook, "hyrox_suggested_next_week_run_km"), " km") },
-        { label: "Hybrid sessions", value: formatDecimalHuman(getWorkbookOutput(workbook, "hyrox_recommended_hybrid_sessions_wk")) },
-        { label: "Readiness", value: workbook.readiness?.band || "" },
-      ].filter((item) => item.value);
-    }
+    const kindLabel = toTitleCase(String(workbook.kind || "").replace(/_/gu, " "));
+    const phaseMap = {
+      runner: getWorkbookOutput(workbook, "runner_phase"),
+      hyrox: getWorkbookOutput(workbook, "hyrox_phase"),
+      endurance: getWorkbookOutput(workbook, "endurance_phase"),
+    };
+    const daysToEventMap = {
+      runner: getWorkbookOutput(workbook, "runner_days_to_event"),
+      hyrox: getWorkbookOutput(workbook, "hyrox_days_to_event"),
+      endurance: getWorkbookOutput(workbook, "endurance_days_to_event"),
+    };
 
     return [
-      { label: "Phase", value: getWorkbookOutput(workbook, "endurance_phase") },
-      { label: "Days to event", value: formatDecimalHuman(getWorkbookOutput(workbook, "endurance_days_to_event")) },
-      { label: "Safe ramp", value: formatPercentHuman(getWorkbookOutput(workbook, "endurance_safe_volume_ramp_pct")) },
-      { label: "Next-week target", value: formatDecimalHuman(getWorkbookOutput(workbook, "endurance_suggested_next_week_hours"), " h") },
-      { label: "Long session", value: formatDecimalHuman(getWorkbookOutput(workbook, "endurance_recommended_long_session_h"), " h") },
-      { label: "Readiness", value: workbook.readiness?.band || "" },
+      { label: "Track", value: kindLabel },
+      { label: "Phase", value: phaseMap[workbook.kind] || "" },
+      {
+        label: workbook.kind === "hyrox" ? "Days to race" : "Days to goal",
+        value: formatDecimalHuman(daysToEventMap[workbook.kind]),
+      },
     ].filter((item) => item.value);
   }
 
-  function buildWorkbookSummaryMarkup(workbook) {
-    const lines = Array.isArray(workbook?.summaryCard) ? workbook.summaryCard.filter(Boolean) : [];
-    if (!lines.length) {
-      return "";
-    }
-    return `
-      <div class="client-planner-summary-copy">
-        ${lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
-      </div>
-    `;
+  function buildClientSportProfilePairs(profile) {
+    const resolved = asObject(profile);
+    const daysToGoal = computeDaysToGoal(resolved.goalDate);
+    return [
+      {
+        label: "Track",
+        value: toTitleCase(resolved.athleteProfile || resolved.primarySport || ""),
+      },
+      {
+        label: "Goal",
+        value: resolved.goalEvent || resolved.goalFocus || "",
+      },
+      {
+        label: "Days to goal",
+        value: daysToGoal !== null ? `${daysToGoal} days` : "",
+      },
+      {
+        label: "Training days",
+        value: resolved.daysAvailablePerWeek ? `${resolved.daysAvailablePerWeek} / wk` : "",
+      },
+    ].filter((item) => item.value);
   }
 
   function computeDaysToGoal(goalDate) {
@@ -1320,16 +1377,17 @@
     const activeWorkbook = getAssignmentWorkbook(activeAssignment);
 
     const programDays = (state.data.programDays || []).slice().sort((left, right) => compareByDateAscending(left, right, "scheduled_date"));
-    const exercisesByDay = new Map();
-    (state.data.programExercises || [])
+    const programExercises = (state.data.programExercises || [])
       .slice()
-      .sort((left, right) => Number(left?.sort_order || 0) - Number(right?.sort_order || 0))
-      .forEach((exercise) => {
-        const key = exercise.client_program_day_id;
-        const list = exercisesByDay.get(key) || [];
-        list.push(exercise);
-        exercisesByDay.set(key, list);
-      });
+      .sort((left, right) => Number(left?.sort_order || 0) - Number(right?.sort_order || 0));
+    const exerciseById = new Map(programExercises.map((exercise) => [exercise.id, exercise]));
+    const exercisesByDay = new Map();
+    programExercises.forEach((exercise) => {
+      const key = exercise.client_program_day_id;
+      const list = exercisesByDay.get(key) || [];
+      list.push(exercise);
+      exercisesByDay.set(key, list);
+    });
 
     const workoutLogs = (state.data.workoutLogs || []).slice().sort((left, right) => {
       return new Date(right?.completed_at || right?.updated_at || 0).getTime() - new Date(left?.completed_at || left?.updated_at || 0).getTime();
@@ -1345,13 +1403,27 @@
       list.push(entry);
       workoutExerciseLogsByWorkoutLog.set(key, list);
     });
+    const workoutLogById = new Map(workoutLogs.map((log) => [log.id, log]));
     const latestExerciseLogByExerciseId = new Map();
+    const exerciseHistoryByKey = new Map();
     workoutLogs.forEach((log) => {
       const exerciseEntries = workoutExerciseLogsByWorkoutLog.get(log.id) || [];
       exerciseEntries.forEach((entry) => {
         const exerciseId = String(entry.client_program_day_exercise_id || "").trim();
         if (exerciseId && !latestExerciseLogByExerciseId.has(exerciseId)) {
           latestExerciseLogByExerciseId.set(exerciseId, entry);
+        }
+
+        const exercise = exerciseById.get(exerciseId) || null;
+        const historyKey = buildExerciseHistoryKey(exercise);
+        if (historyKey) {
+          const list = exerciseHistoryByKey.get(historyKey) || [];
+          list.push({
+            workoutLog: log,
+            exerciseLog: entry,
+            exercise,
+          });
+          exerciseHistoryByKey.set(historyKey, list);
         }
       });
     });
@@ -1536,12 +1608,16 @@
       activeSportProfile,
       activeWorkbook,
       programDays,
+      programExercises,
+      exerciseById,
       exercisesByDay,
       workoutLogs,
+      workoutLogById,
       workoutLogByDay,
       workoutExerciseLogs,
       workoutExerciseLogsByWorkoutLog,
       latestExerciseLogByExerciseId,
+      exerciseHistoryByKey,
       nutritionPlans,
       activeNutritionPlan,
       selectedNutritionDay,
@@ -1565,6 +1641,16 @@
       openCheckinByTemplateId,
       progressPhotos,
       progressAssetsByEntry,
+      orderedTrainingDays: activeDays.length
+        ? activeDays
+        : programDays.slice().sort((left, right) => {
+            const leftDate = String(left?.scheduled_date || "");
+            const rightDate = String(right?.scheduled_date || "");
+            if (leftDate && rightDate && leftDate !== rightDate) {
+              return leftDate.localeCompare(rightDate);
+            }
+            return Number(left?.day_number || 0) - Number(right?.day_number || 0);
+          }),
       nextDay,
       selectedTrainingDay,
       metrics: {
@@ -1593,13 +1679,15 @@
       panelNode.hidden = !isActive;
     });
 
+    applyWorkspaceTabState(panelKey);
+    syncPlannerQueryState();
     setPlannerSyncState(state.loading);
     if (state.loading && !state.hasLoadedOnce) {
       renderInitialPlannerSkeleton();
     }
   }
 
-  function setActiveNutritionWorkspace(workspaceKey) {
+  function setActiveNutritionWorkspace(workspaceKey, options = {}) {
     const allowed = new Set(["adherence", "meals", "photo"]);
     const nextWorkspace = allowed.has(workspaceKey) ? workspaceKey : "adherence";
     if (nextWorkspace !== "meals" && state.barcodeScanner.active) {
@@ -1617,6 +1705,13 @@
       panelNode.classList.toggle("is-active", isActive);
       panelNode.hidden = !isActive;
     });
+
+    if (!options.skipSubtabSync) {
+      const nextTab = NUTRITION_WORKSPACE_TO_SUBTAB[nextWorkspace];
+      if (nextTab) {
+        setActiveWorkspaceTab("nutrition", nextTab, { skipNutritionSync: true });
+      }
+    }
 
     if (nextWorkspace !== "meals") {
       setMealEntryDisclosure(false);
@@ -1703,20 +1798,118 @@
     return allowed.has(requested) ? requested : state.activePanel;
   }
 
+  function getWorkspaceTabLabel(workspaceKey) {
+    const labelMap = {
+      training: "Training",
+      nutrition: "Nutrition",
+      health: "Health",
+      progress: "Progress",
+    };
+    return labelMap[workspaceKey] || toTitleCase(workspaceKey || "Planner");
+  }
+
+  function syncClientPlannerChrome() {
+    const titleNode = document.querySelector(".crm-topbar__display-title");
+    if (titleNode instanceof HTMLElement) {
+      titleNode.textContent = getWorkspaceTabLabel(state.activePanel);
+    }
+
+    const sidebarLinks = Array.from(document.querySelectorAll('#account-sidebar .crm-nav-link[href*="client-planner.html"]'));
+    sidebarLinks.forEach((link) => {
+      let isActive = false;
+      try {
+        const linkUrl = new URL(link.getAttribute("href") || "", window.location.origin);
+        const linkTab = String(linkUrl.searchParams.get("tab") || "training").trim().toLowerCase();
+        isActive = linkTab === state.activePanel;
+      } catch (_) {
+        isActive = false;
+      }
+      link.classList.toggle("is-active", isActive);
+      link.classList.toggle("is-current", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  function syncPlannerQueryState() {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("tab", state.activePanel);
+      window.history.replaceState({ plannerPanel: state.activePanel }, "", `${url.pathname}${url.search}${url.hash}`);
+    } catch (_) {
+      // Ignore query sync failures in restricted environments.
+    }
+    syncClientPlannerChrome();
+  }
+
+  function applyWorkspaceTabState(workspaceKey) {
+    const allowed = WORKSPACE_TAB_KEYS[workspaceKey];
+    if (!allowed) {
+      return;
+    }
+
+    const resolvedTab = allowed.has(state.activeWorkspaceTabs[workspaceKey])
+      ? state.activeWorkspaceTabs[workspaceKey]
+      : WORKSPACE_TAB_DEFAULTS[workspaceKey];
+
+    state.activeWorkspaceTabs[workspaceKey] = resolvedTab;
+
+    workspaceTabNodes.forEach((tabNode) => {
+      const isTargetWorkspace = tabNode.dataset.clientWorkspace === workspaceKey;
+      if (!isTargetWorkspace) {
+        return;
+      }
+      const isActive = tabNode.dataset.clientWorkspaceTab === resolvedTab;
+      tabNode.classList.toggle("is-active", isActive);
+      tabNode.setAttribute("aria-selected", String(isActive));
+    });
+
+    workspacePanelNodes.forEach((panelNode) => {
+      const isTargetWorkspace = panelNode.dataset.clientWorkspacePanel === workspaceKey;
+      if (!isTargetWorkspace) {
+        return;
+      }
+      const isActive = panelNode.dataset.clientWorkspacePanelKey === resolvedTab;
+      panelNode.classList.toggle("is-active", isActive);
+      panelNode.hidden = !isActive;
+    });
+  }
+
+  function setActiveWorkspaceTab(workspaceKey, tabKey, options = {}) {
+    const allowed = WORKSPACE_TAB_KEYS[workspaceKey];
+    if (!allowed) {
+      return;
+    }
+
+    const resolvedTab = allowed.has(tabKey) ? tabKey : WORKSPACE_TAB_DEFAULTS[workspaceKey];
+    state.activeWorkspaceTabs[workspaceKey] = resolvedTab;
+    applyWorkspaceTabState(workspaceKey);
+
+    if (workspaceKey === "nutrition" && !options.skipNutritionSync) {
+      const nextWorkspace = NUTRITION_SUBTAB_TO_WORKSPACE[resolvedTab];
+      if (nextWorkspace) {
+        setActiveNutritionWorkspace(nextWorkspace, { skipSubtabSync: true });
+      }
+    }
+  }
+
   function renderMetrics(derived) {
     metricProgramNode.textContent = derived.activeAssignment?.title || "None";
-    metricProgramNoteNode.textContent = derived.activeAssignment?.objective || "Your next assigned block will appear here.";
+    metricProgramNoteNode.textContent = derived.activeAssignment?.objective || "Your next live block will appear here.";
     metricDaysNode.textContent = formatCount(derived.metrics.plannedDays);
     metricDaysNoteNode.textContent = derived.activeAssignment
-      ? `${formatCount(derived.programDays.filter((day) => day.assignment_id === derived.activeAssignment.id).length)} days loaded from your live assignment.`
-      : "Scheduled training and recovery days in the live plan.";
+      ? `${formatCount(derived.programDays.filter((day) => day.assignment_id === derived.activeAssignment.id).length)} days are loaded in your current block.`
+      : "Training and recovery days will appear here once your block is live.";
     metricCompletedNode.textContent = formatCount(derived.metrics.completedThisWeek);
     metricCompletedNoteNode.textContent = derived.metrics.completedThisWeek
-      ? `${formatCount(derived.metrics.completedThisWeek)} completed training log${derived.metrics.completedThisWeek === 1 ? "" : "s"} in the last 7 days.`
-      : "Coach-reviewable completions from the last 7 days.";
+      ? `${formatCount(derived.metrics.completedThisWeek)} session${derived.metrics.completedThisWeek === 1 ? "" : "s"} completed in the last 7 days.`
+      : "This updates when you log completed sessions this week.";
     metricReviewNode.textContent = formatCount(derived.metrics.pendingReviews);
     metricReviewNoteNode.textContent = derived.metrics.pendingReviews
-      ? "These training, nutrition, health, or progress items are still waiting on review."
+      ? "Some recent items are still waiting on coach review."
       : "Nothing is currently waiting on coach review.";
   }
 
@@ -1840,10 +2033,10 @@
     }
 
     const planDays = derived.programDays.filter((day) => day.assignment_id === assignment.id);
-    const workbookPairs = buildWorkbookPairs(derived.activeWorkbook);
+    const workbookPairs = buildClientWorkbookPairs(derived.activeWorkbook);
     const sportProfilePairs = workbookPairs.length
       ? workbookPairs
-      : buildSportProfilePairs(derived.activeSportProfile).slice(0, 6);
+      : buildClientSportProfilePairs(derived.activeSportProfile);
     assignmentSummaryNode.innerHTML = `
       <div class="client-planner-summary-card">
         <div class="client-planner-card-head">
@@ -1883,7 +2076,6 @@
               .join("")
           }
         </dl>
-        ${buildWorkbookSummaryMarkup(derived.activeWorkbook)}
         ${assignment.notes ? `<p class="client-planner-summary-note">${escapeHtml(assignment.notes)}</p>` : ""}
       </div>
     `;
@@ -1913,7 +2105,7 @@
     const primaryMeta = asObject(primaryExercise?.metadata);
     const sessionPairs = [
       {
-        label: "Session cue",
+        label: "Coach cue",
         value: primaryMeta.intensity_cue || "",
       },
       {
@@ -1937,14 +2129,108 @@
         value: primaryExercise?.heart_rate_zone ? `Zone ${primaryExercise.heart_rate_zone}` : "",
       },
     ].filter((item) => item.value);
+    const primarySummary = [
+      {
+        label: timing.key === "today" ? "Today" : "Session timing",
+        value: timing.longLabel,
+      },
+      {
+        label: "Week",
+        value: `Week ${String(day.week_number || 1)}`,
+      },
+      {
+        label: "Rows to log",
+        value: String(exercises.length),
+      },
+      log
+        ? {
+            label: "Latest review",
+            value: toTitleCase(log.review_status || "pending"),
+          }
+        : null,
+    ].filter(Boolean);
     dayFocusNode.innerHTML = `
-      <div class="client-planner-summary-card">
+      <article class="client-planner-day-hero">
+        <div class="client-planner-day-hero__head">
+          <div class="client-planner-day-hero__copy">
+            <div class="client-planner-day-hero__eyebrow">
+              ${timing.key === "today"
+                ? `<span class="client-planner-day-hero__today">TODAY</span>`
+                : `<span>${escapeHtml(timing.longLabel)}</span>`}
+              <span>${escapeHtml(formatDate(day.scheduled_date))}</span>
+            </div>
+            <h3>${escapeHtml(day.title || resolvePlannerDayTitle(day, todayValue) || `Day ${day.day_number || ""}`)}</h3>
+            <p>${escapeHtml(day.focus || `${toTitleCase(day.day_type)} day`)}</p>
+            ${day.notes ? `<p class="client-planner-summary-note">${escapeHtml(day.notes)}</p>` : ""}
+          </div>
+          <div class="client-planner-day-hero__actions">
+            ${buildStatusPill(day.status, day.status)}
+            <button class="btn btn-ghost" type="button" data-open-training-workspace="calendar">View Week</button>
+          </div>
+        </div>
+        <div class="client-planner-day-glance">
+          ${primarySummary
+            .map(
+              (item) => `
+                <article class="client-planner-day-glance__card">
+                  <span>${escapeHtml(item.label)}</span>
+                  <strong>${escapeHtml(item.value)}</strong>
+                </article>
+              `
+            )
+            .join("")}
+        </div>
+        ${
+          sessionPairs.length
+            ? `
+              <div class="client-planner-day-pills">
+                ${sessionPairs
+                  .map(
+                    (item) => `
+                      <span class="client-planner-day-pill">
+                        <strong>${escapeHtml(item.label)}</strong>
+                        <span>${escapeHtml(item.value)}</span>
+                      </span>
+                    `
+                  )
+                  .join("")}
+              </div>
+            `
+            : ""
+        }
+      </article>
+    `;
+  }
+
+  function renderTrainingCalendarPreview(derived) {
+    if (!trainingCalendarPreviewNode) {
+      return;
+    }
+
+    const day = derived.selectedTrainingDay;
+    if (!day) {
+      trainingCalendarPreviewNode.innerHTML = `
+        <article class="dashboard-note dashboard-note--placeholder">
+          <strong>Select a day to preview it</strong>
+          <p>You can review the selected day here, then open the full session in the Session tab when you are ready to log it.</p>
+        </article>
+      `;
+      return;
+    }
+
+    const todayValue = getTodayDateOnly();
+    const timing = getPlannerDayTiming(day, todayValue);
+    const exercises = derived.exercisesByDay.get(day.id) || [];
+    const log = derived.workoutLogByDay.get(day.id) || null;
+
+    trainingCalendarPreviewNode.innerHTML = `
+      <article class="client-planner-summary-card client-planner-summary-card--calendar-preview">
         <div class="client-planner-card-head">
           <div>
-            <h3>${escapeHtml(resolvePlannerDayTitle(day, todayValue) || `Day ${day.day_number || ""}`)}</h3>
+            <h3>${escapeHtml(day.title || resolvePlannerDayTitle(day, todayValue) || `Day ${day.day_number || ""}`)}</h3>
             <p>${escapeHtml(day.focus || `${toTitleCase(day.day_type)} day`)}</p>
           </div>
-          ${buildStatusPill(day.status, day.status)}
+          ${timing.key === "today" ? `<span class="client-planner-day-hero__today">TODAY</span>` : buildStatusPill(day.status, day.status)}
         </div>
         <dl class="client-planner-kv-grid">
           <div>
@@ -1957,14 +2243,10 @@
           </div>
           <div>
             <dt>Week</dt>
-            <dd>Week ${escapeHtml(String(day.week_number || 1))}</dd>
+            <dd>${escapeHtml(`Week ${String(day.week_number || 1)}`)}</dd>
           </div>
           <div>
-            <dt>Day type</dt>
-            <dd>${escapeHtml(toTitleCase(day.day_type))}</dd>
-          </div>
-          <div>
-            <dt>Exercise count</dt>
+            <dt>Rows to log</dt>
             <dd>${escapeHtml(String(exercises.length))}</dd>
           </div>
           ${
@@ -1977,21 +2259,12 @@
               `
               : ""
           }
-          ${
-            sessionPairs
-              .map(
-                (item) => `
-                  <div>
-                    <dt>${escapeHtml(item.label)}</dt>
-                    <dd>${escapeHtml(item.value)}</dd>
-                  </div>
-                `
-              )
-              .join("")
-          }
         </dl>
         ${day.notes ? `<p class="client-planner-summary-note">${escapeHtml(day.notes)}</p>` : ""}
-      </div>
+        <div class="section-actions section-actions--compact">
+          <button class="btn btn-primary" type="button" data-open-training-workspace="day">Open Session</button>
+        </div>
+      </article>
     `;
   }
 
@@ -2028,12 +2301,776 @@
     return "";
   }
 
+  function parseRepTargetRange(exercise) {
+    const explicitMin = parseInteger(exercise?.rep_range_min);
+    const explicitMax = parseInteger(exercise?.rep_range_max);
+    if (explicitMin || explicitMax) {
+      return {
+        min: explicitMin || explicitMax || null,
+        max: explicitMax || explicitMin || null,
+      };
+    }
+
+    const text = compactText(exercise?.reps);
+    if (!text) {
+      return { min: null, max: null };
+    }
+
+    const match = text.match(/(\d+)\s*[-–]\s*(\d+)/u);
+    if (match) {
+      const min = parseInteger(match[1]);
+      const max = parseInteger(match[2]);
+      return {
+        min: min || max || null,
+        max: max || min || null,
+      };
+    }
+
+    const singleValue = parseInteger(text);
+    return {
+      min: singleValue,
+      max: singleValue,
+    };
+  }
+
+  function resolveExerciseEffortMetric(exercise, metadata) {
+    if (String(exercise?.intensity_mode || "").trim().toLowerCase() === "rir") {
+      return "rir";
+    }
+    if (String(exercise?.intensity_mode || "").trim().toLowerCase() === "rpe") {
+      return "rpe";
+    }
+
+    const intensityText = [metadata?.intensity_cue, exercise?.intensity_mode, exercise?.notes]
+      .map((value) => compactText(value))
+      .filter(Boolean)
+      .join(" ");
+    if (/rir/iu.test(intensityText)) {
+      return "rir";
+    }
+    if (/rpe/iu.test(intensityText)) {
+      return "rpe";
+    }
+    return "rir";
+  }
+
+  function resolveExerciseLogConfig(exercise) {
+    const metadata = asObject(exercise?.metadata);
+    const repRange = parseRepTargetRange(exercise);
+    const targetSets = parseInteger(exercise?.sets) || 1;
+    const startingLoad = parseNumber(exercise?.prescribed_weight_kg ?? metadata.starting_load ?? metadata.auto_start_load);
+    const incrementKg = parseNumber(metadata.increment_kg);
+    const effortMetric = resolveExerciseEffortMetric(exercise, metadata);
+    const targetEffort =
+      effortMetric === "rir"
+        ? parseNumber(
+            String(exercise?.intensity_mode || "").trim().toLowerCase() === "rir"
+              ? exercise?.intensity_value
+              : compactText(metadata.target_rir).replace(/[^\d.\-]/gu, "")
+          )
+        : parseNumber(
+            String(exercise?.intensity_mode || "").trim().toLowerCase() === "rpe"
+              ? exercise?.intensity_value
+              : compactText(metadata.target_rpe).replace(/[^\d.\-]/gu, "")
+          );
+
+    return {
+      mode: compactText(metadata.client_entry_mode || metadata.client_input_mode || "log_weight_reps_rpe").toLowerCase() || "log_weight_reps_rpe",
+      targetSets,
+      repMin: repRange.min,
+      repMax: repRange.max,
+      startingLoad,
+      incrementKg,
+      effortMetric,
+      targetEffort,
+      progressionRule: compactText(metadata.progression_rule || exercise?.progressive_overload_goal),
+      coachNote: compactText(exercise?.notes),
+      tempo: compactText(metadata.tempo || exercise?.tempo),
+      restSeconds: parseInteger(exercise?.rest_time_seconds),
+    };
+  }
+
+  function buildExerciseHistoryKey(exercise) {
+    const key = compactText(
+      exercise?.name_override
+        || exercise?.metadata?.exercise_name
+        || exercise?.exercise_library?.name
+        || exercise?.notes
+    )
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim();
+    return key;
+  }
+
+  function resolveExerciseHistoryBundle(derived, day, exercise) {
+    const historyKey = buildExerciseHistoryKey(exercise);
+    const dayLog = derived.workoutLogByDay.get(day.id) || null;
+    const currentExerciseLog = dayLog
+      ? (derived.workoutExerciseLogsByWorkoutLog.get(dayLog.id) || []).find((entry) => {
+          return String(entry?.client_program_day_exercise_id || "").trim() === String(exercise?.id || "").trim();
+        }) || null
+      : null;
+
+    const history = historyKey ? (derived.exerciseHistoryByKey.get(historyKey) || []) : [];
+    const previousItem = history.find((item) => {
+      if (!item?.exerciseLog) {
+        return false;
+      }
+      const sameDay = String(item?.workoutLog?.client_program_day_id || "") === String(day?.id || "");
+      const sameExercise = String(item?.exerciseLog?.client_program_day_exercise_id || "") === String(exercise?.id || "");
+      return !(sameDay && sameExercise);
+    }) || null;
+
+    return {
+      currentExerciseLog,
+      currentWorkoutLog: dayLog,
+      previousExerciseLog: previousItem?.exerciseLog || null,
+      previousWorkoutLog: previousItem?.workoutLog || null,
+      history,
+    };
+  }
+
+  function buildSetRowDrafts(exercise, currentExerciseLog, previousExerciseLog, config) {
+    const existingRows = Array.isArray(currentExerciseLog?.set_logs)
+      ? currentExerciseLog.set_logs
+      : [];
+    const previousRows = Array.isArray(previousExerciseLog?.set_logs)
+      ? previousExerciseLog.set_logs
+      : [];
+    const previousSummary = summarizeSetRows(previousRows, config);
+    const previousSignal = previousExerciseLog
+      ? computeExerciseProgressSignal(config, previousSummary, previousExerciseLog?.pain_score, [])
+      : null;
+    const rowCount = Math.max(
+      config.targetSets || 1,
+      existingRows.length,
+      previousRows.length,
+      1
+    );
+
+    const suggestedLoad =
+      previousSignal?.nextLoad
+      ?? parseNumber(previousExerciseLog?.logged_weight_kg)
+      ?? parseNumber(previousRows.find((row) => parseNumber(row?.loadKg ?? row?.load_kg ?? row?.loggedWeightKg) !== null)?.loadKg ?? "")
+      ?? config.startingLoad;
+
+    const suggestedReps =
+      currentExerciseLog
+        ? null
+        : previousSignal?.tone === "on_course"
+          ? (config.repMin ?? config.repMax)
+          : previousSignal?.tone === "borderline"
+            ? Math.min(
+                config.repMax ?? Number.MAX_SAFE_INTEGER,
+                (previousSummary.averageReps ? Math.round(previousSummary.averageReps) + 1 : (config.repMin ?? config.repMax ?? 0))
+              ) || config.repMin || config.repMax || null
+            : (config.repMin ?? config.repMax);
+
+    const preferredLoad =
+      parseNumber(currentExerciseLog?.logged_weight_kg)
+      ?? parseNumber(existingRows.find((row) => parseNumber(row?.loadKg ?? row?.load_kg ?? row?.loggedWeightKg) !== null)?.loadKg ?? "")
+      ?? suggestedLoad;
+
+    const preferredReps =
+      parseInteger(existingRows.find((row) => parseInteger(row?.reps ?? row?.completedReps) !== null)?.reps ?? "")
+      ?? suggestedReps
+      ?? parseInteger(previousRows.find((row) => parseInteger(row?.reps ?? row?.completedReps) !== null)?.reps ?? "")
+      ?? config.repMin
+      ?? config.repMax
+      ?? parseInteger(currentExerciseLog?.completed_reps)
+      ?? parseInteger(previousExerciseLog?.completed_reps);
+
+    return Array.from({ length: rowCount }, (_, index) => {
+      const existing = asObject(existingRows[index]);
+      const previous = asObject(previousRows[index]);
+      const effortValue =
+        parseNumber(existing.effort ?? existing.rir ?? existing.rpe)
+        ?? parseNumber(previous.effort ?? previous.rir ?? previous.rpe)
+        ?? config.targetEffort;
+      return {
+        setIndex: index + 1,
+        loadKg:
+          parseNumber(existing.loadKg ?? existing.load_kg ?? existing.loggedWeightKg)
+          ?? parseNumber(previous.loadKg ?? previous.load_kg ?? previous.loggedWeightKg)
+          ?? preferredLoad,
+        reps:
+          parseInteger(existing.reps ?? existing.completedReps)
+          ?? parseInteger(previous.reps ?? previous.completedReps)
+          ?? preferredReps,
+        effort: effortValue,
+        durationSeconds:
+          parseInteger(existing.durationSeconds ?? existing.duration_seconds ?? existing.loggedDurationSeconds)
+          ?? parseInteger(previous.durationSeconds ?? previous.duration_seconds ?? previous.loggedDurationSeconds),
+        distanceMeters:
+          parseNumber(existing.distanceMeters ?? existing.distance_meters ?? existing.loggedDistanceMeters)
+          ?? parseNumber(previous.distanceMeters ?? previous.distance_meters ?? previous.loggedDistanceMeters),
+        completed: Boolean(existing.completed ?? previous.completed ?? config.mode === "completion_only"),
+      };
+    });
+  }
+
+  function summarizeSetRows(setRows, config) {
+    const rows = Array.isArray(setRows) ? setRows : [];
+    const meaningfulRows = rows.filter((row) => {
+      if (config.mode === "completion_only") {
+        return Boolean(row?.completed);
+      }
+      return (
+        parseNumber(row?.loadKg) !== null
+        || parseInteger(row?.reps) !== null
+        || parseNumber(row?.effort) !== null
+        || parseInteger(row?.durationSeconds) !== null
+        || parseNumber(row?.distanceMeters) !== null
+      );
+    });
+
+    const reps = meaningfulRows
+      .map((row) => parseInteger(row?.reps))
+      .filter((value) => value !== null);
+    const loads = meaningfulRows
+      .map((row) => parseNumber(row?.loadKg))
+      .filter((value) => value !== null);
+    const efforts = meaningfulRows
+      .map((row) => parseNumber(row?.effort))
+      .filter((value) => value !== null);
+    const durations = meaningfulRows
+      .map((row) => parseInteger(row?.durationSeconds))
+      .filter((value) => value !== null);
+    const distances = meaningfulRows
+      .map((row) => parseNumber(row?.distanceMeters))
+      .filter((value) => value !== null);
+
+    return {
+      meaningfulRows,
+      completedSets: meaningfulRows.length,
+      reps,
+      loads,
+      efforts,
+      durations,
+      distances,
+      totalReps: reps.reduce((sum, value) => sum + value, 0),
+      averageLoad: loads.length ? roundNumber(loads.reduce((sum, value) => sum + value, 0) / loads.length) : null,
+      averageEffort: efforts.length ? roundNumber(efforts.reduce((sum, value) => sum + value, 0) / efforts.length) : null,
+      averageReps: reps.length ? roundNumber(reps.reduce((sum, value) => sum + value, 0) / reps.length) : null,
+      minReps: reps.length ? Math.min(...reps) : null,
+      maxReps: reps.length ? Math.max(...reps) : null,
+      totalDurationSeconds: durations.reduce((sum, value) => sum + value, 0) || null,
+      totalDistanceMeters: distances.length ? roundNumber(distances.reduce((sum, value) => sum + value, 0)) : null,
+    };
+  }
+
+  function computeExerciseProgressSignal(config, summary, painScore, history = []) {
+    const targetSets = Math.max(1, config.targetSets || 1);
+    const incrementKg = config.incrementKg || 0;
+    const repMin = config.repMin;
+    const repMax = config.repMax;
+    const pain = parseInteger(painScore) ?? 0;
+    const completedSets = summary.completedSets || 0;
+    const hasData = completedSets > 0;
+    const averageLoad = summary.averageLoad ?? config.startingLoad;
+    const offTrackStreak = history.reduce((count, item) => {
+      if (!item?.exerciseLog) {
+        return count;
+      }
+      const tone = computeExerciseProgressSignal(
+        resolveExerciseLogConfig(item.exercise),
+        summarizeSetRows(Array.isArray(item.exerciseLog.set_logs) ? item.exerciseLog.set_logs : [], resolveExerciseLogConfig(item.exercise)),
+        item.exerciseLog.pain_score,
+        []
+      ).tone;
+      if (tone === "off_course") {
+        return count + 1;
+      }
+      return count;
+    }, 0);
+
+    let label = "Awaiting entry";
+    let tone = "neutral";
+    let nextLoad = averageLoad;
+    let nextRepGoal = repMin && repMax ? `${repMin}-${repMax} reps` : "Complete all prescribed work";
+    let nextNote = "Log your first round so we can show the progression cue here.";
+
+    if (!hasData) {
+      if (averageLoad !== null) {
+        nextNote = `Start around ${formatDecimalHuman(averageLoad, " kg")} and record every working set.`;
+      }
+    } else if (pain >= 7) {
+      label = "Off course";
+      tone = "off_course";
+      nextLoad = averageLoad !== null && incrementKg ? Math.max(0, averageLoad - incrementKg) : averageLoad;
+      nextNote = "Pain is too high. Pull load back, clean up the pattern, and flag this for your coach.";
+    } else if (pain >= 5) {
+      label = "Borderline";
+      tone = "borderline";
+      nextNote = "Hold this load, keep reps clean, and only progress once the movement feels more comfortable.";
+    } else if (completedSets < targetSets || (repMin !== null && summary.minReps !== null && summary.minReps < repMin)) {
+      label = "Off course";
+      tone = "off_course";
+      nextLoad = averageLoad !== null && incrementKg ? Math.max(0, averageLoad - incrementKg) : averageLoad;
+      nextRepGoal = repMin && repMax ? `${repMin}-${repMax} reps at cleaner execution` : nextRepGoal;
+      nextNote = "Stay conservative. Rebuild the minimum target across all sets before pushing load.";
+    } else if (repMax !== null && summary.maxReps !== null && summary.meaningfulRows.length >= targetSets && summary.reps.every((value) => value >= repMax)) {
+      label = "On course";
+      tone = "on_course";
+      nextLoad = averageLoad !== null && incrementKg ? roundNumber(averageLoad + incrementKg) : averageLoad;
+      nextRepGoal = repMin && repMax ? `${repMin}-${repMax} reps` : nextRepGoal;
+      nextNote = incrementKg
+        ? `Progress load next time by ${formatDecimalHuman(incrementKg, " kg")} and restart at the lower end of the range.`
+        : "You hit the top of the range cleanly. Ask your coach whether to progress load or difficulty.";
+    } else if (repMin !== null && summary.averageReps !== null && summary.averageReps >= repMin) {
+      label = "Borderline";
+      tone = "borderline";
+      nextLoad = averageLoad;
+      nextRepGoal = repMax !== null ? `Beat ${repMax} reps across more sets before adding load` : nextRepGoal;
+      nextNote = "Stay at this load and beat the logbook with cleaner reps before chasing more weight.";
+    } else {
+      label = "On course";
+      tone = "on_course";
+      nextNote = "Keep building with the current setup and add a little more only where the movement stays clean.";
+    }
+
+    const recoveryCue =
+      pain >= 7
+        ? "High pain signal. Back off and message your coach."
+        : pain >= 5
+          ? "Moderate pain signal. Keep the load honest and recover well before the next repeat."
+          : offTrackStreak >= 2
+            ? "You have stacked a few rough repeats. Recovery and technique matter more than load right now."
+            : "Progress only where execution stays repeatable.";
+
+    return {
+      hasData,
+      label,
+      tone,
+      nextLoad,
+      nextRepGoal,
+      nextNote,
+      completedSets,
+      totalReps: summary.totalReps || 0,
+      averageLoad,
+      averageEffort: summary.averageEffort,
+      offTrackStreak,
+      recoveryCue,
+    };
+  }
+
+  function buildTrainingMetricPills(metrics, options = {}) {
+    const pills = Array.isArray(metrics) ? metrics.filter(Boolean).slice(0, options.limit || 4) : [];
+    if (!pills.length) {
+      return "";
+    }
+    const className = compactText(options.className);
+    return `
+      <div class="client-planner-summary-pills${className ? ` ${escapeHtml(className)}` : ""}">
+        ${pills
+          .map((item) => `<span class="client-planner-summary-pill">${escapeHtml(item)}</span>`)
+          .join("")}
+      </div>
+    `;
+  }
+
+  function buildTrainingToneBadge(tone) {
+    const labelMap = {
+      on_course: "On course",
+      borderline: "Borderline",
+      off_course: "Off course",
+    };
+    const label = labelMap[tone] || "Track";
+    return `
+      <span class="client-planner-summary-badge client-planner-summary-badge--${escapeHtml(tone || "neutral")}" data-training-track-label>
+        ${escapeHtml(label)}
+      </span>
+    `;
+  }
+
+  function buildSessionHistorySummary(exerciseLog, workoutLog, config) {
+    if (!exerciseLog) {
+      return {
+        headline: "No previous same-exercise log yet",
+        detail: "Start from the coach target and this card will learn from your next repeat.",
+        metrics: [],
+      };
+    }
+
+    const summary = summarizeSetRows(Array.isArray(exerciseLog.set_logs) ? exerciseLog.set_logs : [], config);
+    const parts = [];
+    const metrics = [];
+    if (summary.averageLoad !== null) {
+      parts.push(formatDecimalHuman(summary.averageLoad, " kg"));
+      metrics.push(`Avg ${formatDecimalHuman(summary.averageLoad, " kg")}`);
+    } else if (exerciseLog.logged_weight_kg !== null && exerciseLog.logged_weight_kg !== undefined && exerciseLog.logged_weight_kg !== "") {
+      parts.push(formatDecimalHuman(exerciseLog.logged_weight_kg, " kg"));
+      metrics.push(`${formatDecimalHuman(exerciseLog.logged_weight_kg, " kg")}`);
+    }
+    if (summary.reps.length) {
+      parts.push(`${summary.reps.join(" / ")} reps`);
+      metrics.push(`${summary.totalReps || summary.reps.reduce((sum, value) => sum + value, 0)} total reps`);
+    } else if (exerciseLog.completed_reps) {
+      parts.push(`${exerciseLog.completed_reps} reps`);
+      metrics.push(`${exerciseLog.completed_reps} reps`);
+    }
+    const effortValue = config.effortMetric === "rir"
+      ? parseNumber(exerciseLog.logged_rir)
+      : parseNumber(exerciseLog.logged_rpe);
+    if (effortValue !== null) {
+      parts.push(`${config.effortMetric.toUpperCase()} ${formatDecimalHuman(effortValue)}`);
+      metrics.push(`${config.effortMetric.toUpperCase()} ${formatDecimalHuman(effortValue)}`);
+    }
+    if (summary.completedSets) {
+      metrics.unshift(`${summary.completedSets} set${summary.completedSets === 1 ? "" : "s"}`);
+    }
+
+    return {
+      headline: workoutLog?.completed_at ? `Last logged ${formatDate(workoutLog.completed_at)}` : "Last session",
+      detail: parts.join(" • ") || "Previous data is available but did not include set details.",
+      metrics,
+    };
+  }
+
+  function buildCoachTargetMetrics(exercise, config) {
+    const metrics = [];
+    if (config.targetSets) {
+      metrics.push(`${config.targetSets} set${config.targetSets === 1 ? "" : "s"}`);
+    }
+    if (config.repMin !== null || config.repMax !== null) {
+      metrics.push(
+        config.repMin !== null && config.repMax !== null
+          ? `${config.repMin}-${config.repMax} reps`
+          : `${config.repMin ?? config.repMax} reps`
+      );
+    }
+    if (config.targetEffort !== null) {
+      metrics.push(`${config.effortMetric.toUpperCase()} ${formatDecimalHuman(config.targetEffort)}`);
+    }
+    if (config.restSeconds) {
+      metrics.push(`${formatDurationHuman(config.restSeconds)} rest`);
+    }
+    return metrics;
+  }
+
+  function buildNextSessionMetrics(signal, config) {
+    const metrics = [];
+    if (signal?.nextLoad !== null) {
+      metrics.push(`${formatDecimalHuman(signal.nextLoad, " kg")} next`);
+    }
+    if (signal?.nextRepGoal) {
+      metrics.push(signal.nextRepGoal);
+    }
+    if (signal?.completedSets) {
+      metrics.push(`${signal.completedSets} set${signal.completedSets === 1 ? "" : "s"} logged`);
+    }
+    if (signal?.averageEffort !== null) {
+      metrics.push(`${config.effortMetric.toUpperCase()} ${formatDecimalHuman(signal.averageEffort)}`);
+    }
+    return metrics;
+  }
+
+  function buildCurrentEntrySummary(signal, config) {
+    if (!signal?.hasData) {
+      return config.startingLoad !== null
+        ? `Prefilled around ${formatDecimalHuman(config.startingLoad, " kg")} based on the coach setup.`
+        : "Enter each working set to see your live track status and next-session cue.";
+    }
+
+    const parts = [`${signal.completedSets} set${signal.completedSets === 1 ? "" : "s"} logged`];
+    if (signal.totalReps) {
+      parts.push(`${signal.totalReps} total reps`);
+    }
+    if (signal.averageLoad !== null) {
+      parts.push(`${formatDecimalHuman(signal.averageLoad, " kg")} avg load`);
+    }
+    if (signal.averageEffort !== null) {
+      parts.push(`${config.effortMetric.toUpperCase()} ${formatDecimalHuman(signal.averageEffort)}`);
+    }
+    return parts.join(" • ");
+  }
+
+  function buildTrainingTrackRail(tone) {
+    const options = [
+      ["on_course", "On course"],
+      ["borderline", "Borderline"],
+      ["off_course", "Off course"],
+    ];
+    return `
+      <div class="client-planner-track-rail" data-training-track-rail>
+        ${options
+          .map(([value, label]) => `
+            <span class="client-planner-track-chip${tone === value ? ` is-active is-${value}` : ""}" data-track-option="${value}">
+              ${escapeHtml(label)}
+            </span>
+          `)
+          .join("")}
+      </div>
+    `;
+  }
+
+  function buildTrainingSetRows(exercise, setRows, config) {
+    return setRows
+      .map((row) => {
+        if (config.mode === "completion_only") {
+          return `
+            <div class="client-planner-set-row client-planner-set-row--simple" data-training-set-row data-set-index="${escapeHtml(String(row.setIndex))}">
+              <span class="client-planner-set-row__label">Set ${escapeHtml(String(row.setIndex))}</span>
+              <label class="client-planner-check-toggle">
+                <input type="checkbox" name="setCompleted" ${row.completed ? "checked" : ""} />
+                <span>Completed cleanly</span>
+              </label>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="client-planner-set-row" data-training-set-row data-set-index="${escapeHtml(String(row.setIndex))}">
+            <span class="client-planner-set-row__label">Set ${escapeHtml(String(row.setIndex))}</span>
+            ${
+              config.mode === "log_weight_reps_rpe"
+                ? `
+                  <label>
+                    Load (kg)
+                    <input class="client-planner-dark-input" type="number" name="setLoadKg" min="0" step="0.5" value="${escapeHtml(row.loadKg ?? "")}" />
+                  </label>
+                `
+                : ""
+            }
+            ${
+              config.mode === "log_time_distance"
+                ? `
+                  <label>
+                    Time (sec)
+                    <input class="client-planner-dark-input" type="number" name="setDurationSeconds" min="0" step="1" value="${escapeHtml(row.durationSeconds ?? "")}" />
+                  </label>
+                  <label>
+                    Distance (m)
+                    <input class="client-planner-dark-input" type="number" name="setDistanceMeters" min="0" step="1" value="${escapeHtml(row.distanceMeters ?? "")}" />
+                  </label>
+                `
+                : `
+                  <label>
+                    Reps
+                    <input class="client-planner-dark-input" type="number" name="setReps" min="0" step="1" value="${escapeHtml(row.reps ?? "")}" />
+                  </label>
+                `
+            }
+            <label>
+              ${escapeHtml(config.effortMetric === "rir" ? "Effort (RIR)" : "Effort (RPE)")}
+              <input class="client-planner-dark-input" type="number" name="setEffort" min="0" max="10" step="0.5" value="${escapeHtml(row.effort ?? "")}" />
+            </label>
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function buildTrainingExerciseCard(exercise, index, historyBundle, config, advancedOpen) {
+    const previousReferenceLog = historyBundle.previousExerciseLog || historyBundle.currentExerciseLog || null;
+    const previousReferenceWorkoutLog =
+      historyBundle.previousExerciseLog
+        ? historyBundle.previousWorkoutLog
+        : historyBundle.currentExerciseLog
+          ? historyBundle.currentWorkoutLog
+          : null;
+    const defaultSetRows = buildSetRowDrafts(exercise, historyBundle.currentExerciseLog, historyBundle.previousExerciseLog, config);
+    const defaultPainScore = parseInteger(historyBundle.currentExerciseLog?.pain_score) ?? "";
+    const liveSummary = summarizeSetRows(defaultSetRows, config);
+    const liveSignal = computeExerciseProgressSignal(config, liveSummary, defaultPainScore, historyBundle.history.slice(0, 3));
+    const historySummary = buildSessionHistorySummary(previousReferenceLog, previousReferenceWorkoutLog, config);
+    const coachTargetParts = [
+      buildPrescriptionText(exercise),
+      config.progressionRule,
+    ].filter(Boolean);
+    const coachTargetMetrics = buildCoachTargetMetrics(exercise, config);
+    const nextSessionMetrics = buildNextSessionMetrics(liveSignal, config);
+
+    return `
+      <section
+        class="client-planner-exercise-card"
+        data-training-exercise-card
+        data-mode="${escapeHtml(config.mode)}"
+        data-target-sets="${escapeHtml(String(config.targetSets || 1))}"
+        data-rep-min="${escapeHtml(String(config.repMin ?? ""))}"
+        data-rep-max="${escapeHtml(String(config.repMax ?? ""))}"
+        data-increment-kg="${escapeHtml(String(config.incrementKg ?? ""))}"
+        data-starting-load="${escapeHtml(String(config.startingLoad ?? ""))}"
+        data-effort-metric="${escapeHtml(config.effortMetric)}"
+      >
+        <input type="hidden" name="exerciseId" value="${escapeHtml(exercise.id)}" />
+        <div class="client-planner-exercise-card__head">
+          <div>
+            <span class="client-planner-exercise-card__block">${escapeHtml(exercise.block_label || `A${index + 1}`)}</span>
+            <h4>${escapeHtml(buildExerciseLabel(exercise))}</h4>
+            ${exercise.notes ? `<p>${escapeHtml(exercise.notes)}</p>` : ""}
+          </div>
+        </div>
+        <div class="client-planner-exercise-card__summary-grid">
+          <article class="client-planner-exercise-card__summary client-planner-exercise-card__summary--target">
+            <div class="client-planner-exercise-card__summary-top">
+              <span>Coach target</span>
+            </div>
+            <strong>${escapeHtml(buildPrescriptionText(exercise))}</strong>
+            ${buildTrainingMetricPills(coachTargetMetrics)}
+            <p>${escapeHtml(coachTargetParts.slice(1).join(" • ") || "Complete the work cleanly, then log only what you actually did.")}</p>
+          </article>
+          <article class="client-planner-exercise-card__summary client-planner-exercise-card__summary--history">
+            <div class="client-planner-exercise-card__summary-top">
+              <span>Last time</span>
+            </div>
+            <strong>${escapeHtml(historySummary.headline)}</strong>
+            ${buildTrainingMetricPills(historySummary.metrics)}
+            <p>${escapeHtml(historySummary.detail)}</p>
+          </article>
+          <article class="client-planner-exercise-card__summary client-planner-exercise-card__summary--accent">
+            <div class="client-planner-exercise-card__summary-top">
+              <span>Next cue</span>
+              ${buildTrainingToneBadge(liveSignal.tone)}
+            </div>
+            <strong data-training-next-load>${escapeHtml(liveSignal.nextLoad !== null ? formatDecimalHuman(liveSignal.nextLoad, " kg") : "Stay on current setup")}</strong>
+            <div data-training-next-metrics>${buildTrainingMetricPills(nextSessionMetrics)}</div>
+            <p data-training-next-note>${escapeHtml(liveSignal.nextNote)}</p>
+            <small data-training-next-rep-goal>${escapeHtml(liveSignal.nextRepGoal)}</small>
+          </article>
+        </div>
+        ${buildExerciseExecutionNote(exercise)}
+        <div class="client-planner-exercise-card__set-shell">
+          <div class="client-planner-exercise-card__set-head">
+            <div>
+              <strong>Your log today</strong>
+              <p data-training-current-summary>${escapeHtml(buildCurrentEntrySummary(liveSignal, config))}</p>
+            </div>
+            ${buildTrainingToneBadge(liveSignal.tone)}
+          </div>
+          <div class="client-planner-set-list">
+            ${buildTrainingSetRows(exercise, defaultSetRows, config)}
+          </div>
+        </div>
+        <div class="client-planner-exercise-card__footer-grid">
+          <label>
+            Pain (0-10)
+            <input class="client-planner-dark-input" type="number" name="painScore" min="0" max="10" step="1" value="${escapeHtml(defaultPainScore)}" />
+          </label>
+          <label class="client-planner-exercise-card__note">
+            Note for coach
+            <textarea class="client-planner-dark-input" name="exerciseNote" rows="3" placeholder="Anything your coach should know about this exercise today.">${escapeHtml(historyBundle.currentExerciseLog?.exercise_note || "")}</textarea>
+          </label>
+        </div>
+        <div class="client-planner-exercise-card__advanced" data-training-advanced-panel ${advancedOpen ? "" : "hidden"}>
+          <div>
+            <span>Trend signal</span>
+            <strong data-training-trend-copy>${escapeHtml(liveSignal.label)}</strong>
+            <p>${escapeHtml(liveSignal.recoveryCue)}</p>
+          </div>
+          <div>
+            <span>Coach rule</span>
+            <strong>${escapeHtml(config.progressionRule || "Double progression")}</strong>
+            <p>${escapeHtml(config.coachNote || "Coach note appears here when added.")}</p>
+          </div>
+          <div>
+            <span>Tempo / Rest</span>
+            <strong>${escapeHtml(config.tempo || "Coach set")}</strong>
+            <p>${escapeHtml(config.restSeconds ? `${formatDurationHuman(config.restSeconds)} rest` : "Rest timing will follow the coach target above.")}</p>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function readTrainingExerciseCard(card) {
+    const config = {
+      mode: compactText(card?.dataset?.mode || "log_weight_reps_rpe") || "log_weight_reps_rpe",
+      targetSets: parseInteger(card?.dataset?.targetSets) || 1,
+      repMin: parseInteger(card?.dataset?.repMin),
+      repMax: parseInteger(card?.dataset?.repMax),
+      incrementKg: parseNumber(card?.dataset?.incrementKg),
+      startingLoad: parseNumber(card?.dataset?.startingLoad),
+      effortMetric: compactText(card?.dataset?.effortMetric || "rir") || "rir",
+    };
+    const setRows = Array.from(card.querySelectorAll("[data-training-set-row]")).map((row) => ({
+      loadKg: row.querySelector('[name="setLoadKg"]')?.value || "",
+      reps: row.querySelector('[name="setReps"]')?.value || "",
+      effort: row.querySelector('[name="setEffort"]')?.value || "",
+      durationSeconds: row.querySelector('[name="setDurationSeconds"]')?.value || "",
+      distanceMeters: row.querySelector('[name="setDistanceMeters"]')?.value || "",
+      completed: row.querySelector('[name="setCompleted"]')?.checked || false,
+    }));
+    const painScore = card.querySelector('[name="painScore"]')?.value || "";
+    return {
+      config,
+      setRows,
+      painScore,
+    };
+  }
+
+  function refreshTrainingExerciseCard(card) {
+    if (!(card instanceof HTMLElement)) {
+      return;
+    }
+
+    const { config, setRows, painScore } = readTrainingExerciseCard(card);
+    const summary = summarizeSetRows(setRows, config);
+    const signal = computeExerciseProgressSignal(config, summary, painScore);
+
+    const currentSummaryNode = card.querySelector("[data-training-current-summary]");
+    if (currentSummaryNode) {
+      currentSummaryNode.textContent = buildCurrentEntrySummary(signal, config);
+    }
+
+    const nextLoadNode = card.querySelector("[data-training-next-load]");
+    if (nextLoadNode) {
+      nextLoadNode.textContent = signal.nextLoad !== null ? formatDecimalHuman(signal.nextLoad, " kg") : "Stay on current setup";
+    }
+    const nextNoteNode = card.querySelector("[data-training-next-note]");
+    if (nextNoteNode) {
+      nextNoteNode.textContent = signal.nextNote;
+    }
+    const nextRepGoalNode = card.querySelector("[data-training-next-rep-goal]");
+    if (nextRepGoalNode) {
+      nextRepGoalNode.textContent = signal.nextRepGoal;
+    }
+    const trendCopyNode = card.querySelector("[data-training-trend-copy]");
+    if (trendCopyNode) {
+      trendCopyNode.textContent = signal.label;
+    }
+    const nextMetricsNode = card.querySelector("[data-training-next-metrics]");
+    if (nextMetricsNode) {
+      nextMetricsNode.innerHTML = buildTrainingMetricPills(buildNextSessionMetrics(signal, config));
+    }
+    const trackLabelNode = card.querySelector("[data-training-track-label]");
+    if (trackLabelNode) {
+      trackLabelNode.textContent =
+        signal.tone === "off_course"
+          ? "Off course"
+          : signal.tone === "borderline"
+            ? "Borderline"
+            : "On course";
+      trackLabelNode.className = `client-planner-summary-badge client-planner-summary-badge--${signal.tone || "neutral"}`;
+    }
+
+    const trackRail = card.querySelector("[data-training-track-rail]");
+    if (trackRail) {
+      Array.from(trackRail.querySelectorAll("[data-track-option]")).forEach((node) => {
+        const option = node.getAttribute("data-track-option");
+        const isActive = option === signal.tone;
+        node.classList.toggle("is-active", isActive);
+        node.classList.toggle("is-on_course", isActive && option === "on_course");
+        node.classList.toggle("is-borderline", isActive && option === "borderline");
+        node.classList.toggle("is-off_course", isActive && option === "off_course");
+      });
+    }
+  }
+
+  function refreshTrainingExerciseCards(scopeNode) {
+    Array.from(scopeNode?.querySelectorAll?.("[data-training-exercise-card]") || []).forEach((card) => {
+      refreshTrainingExerciseCard(card);
+    });
+  }
+
   function buildClientTrainingCalendar(derived) {
     if (!trainingCalendarNode) {
       return;
     }
 
-    if (!derived.programDays.length) {
+    const orderedDays = Array.isArray(derived.orderedTrainingDays) ? derived.orderedTrainingDays : [];
+    if (!orderedDays.length) {
       trainingCalendarNode.innerHTML = `
         <article class="dashboard-note dashboard-note--placeholder">
           <strong>No training days available yet</strong>
@@ -2044,30 +3081,94 @@
     }
 
     const todayValue = getTodayDateOnly();
-    trainingCalendarNode.innerHTML = derived.programDays
+    const selectedIndex = Math.max(0, orderedDays.findIndex((day) => day.id === derived.selectedTrainingDay?.id));
+    const pageSize = 7;
+    const pageCount = Math.max(1, Math.ceil(orderedDays.length / pageSize));
+    const currentPage = Math.floor(selectedIndex / pageSize);
+    const pageStart = currentPage * pageSize;
+    const visibleDays = state.trainingCalendarExpanded ? orderedDays : orderedDays.slice(pageStart, pageStart + pageSize);
+    const firstVisibleDay = visibleDays[0] || null;
+    const lastVisibleDay = visibleDays[visibleDays.length - 1] || null;
+    const todayDay = orderedDays.find((day) => String(day?.scheduled_date || "") === todayValue) || null;
+    const jumpDay = todayDay || derived.nextDay || orderedDays[0] || null;
+    const rangeLabel = firstVisibleDay && lastVisibleDay
+      ? firstVisibleDay?.scheduled_date && lastVisibleDay?.scheduled_date
+        ? firstVisibleDay.scheduled_date === lastVisibleDay.scheduled_date
+          ? formatDate(firstVisibleDay.scheduled_date)
+          : `${formatDate(firstVisibleDay.scheduled_date)} - ${formatDate(lastVisibleDay.scheduled_date)}`
+        : `Days ${pageStart + 1}-${pageStart + visibleDays.length}`
+      : "No scheduled days";
+
+    const cardMarkup = visibleDays
       .map((day) => {
         const timing = getPlannerDayTiming(day, todayValue);
         const isSelected = derived.selectedTrainingDay?.id === day.id;
-        const exerciseCount = (derived.exercisesByDay.get(day.id) || []).length;
+        const isToday = timing.key === "today";
         const log = derived.workoutLogByDay.get(day.id) || null;
         return `
           <button
-            class="client-planner-calendar-card${isSelected ? " is-active" : ""}"
+            class="client-planner-calendar-card${isSelected ? " is-active" : ""}${isToday ? " is-today" : ""}"
             type="button"
             data-training-day-select="${escapeHtml(day.id)}"
           >
-            <span class="client-planner-calendar-card__date">${escapeHtml(formatDate(day.scheduled_date))}</span>
-            <strong>${escapeHtml(resolvePlannerDayTitle(day, todayValue) || `Day ${day.day_number || ""}`)}</strong>
+            <span class="client-planner-calendar-card__date">${escapeHtml(day.scheduled_date ? formatDate(day.scheduled_date) : "Date pending")}</span>
+            <strong>${escapeHtml(day.title || `Day ${day.day_number || ""}`)}</strong>
             <small>${escapeHtml(day.focus || `${toTitleCase(day.day_type)} day`)}</small>
-            <div class="client-planner-card-subhead">
-              <span>${escapeHtml(timing.shortLabel)}</span>
-              <span>${escapeHtml(`${exerciseCount} row${exerciseCount === 1 ? "" : "s"}`)}</span>
+            <div class="client-planner-calendar-card__meta">
+              ${isToday ? `<span class="client-planner-calendar-card__today">TODAY</span>` : `<span>${escapeHtml(timing.label || (day.scheduled_date ? formatDate(day.scheduled_date) : "Scheduled"))}</span>`}
+              <span>${escapeHtml(`Week ${day.week_number || 1}`)}</span>
               ${log ? `<span>${escapeHtml(`Review ${toTitleCase(log.review_status || "pending")}`)}</span>` : ""}
             </div>
           </button>
         `;
       })
       .join("");
+
+    trainingCalendarNode.innerHTML = `
+      <div class="client-planner-calendar-shell">
+        <div class="client-planner-calendar-shell__controls">
+          <button class="btn btn-ghost client-planner-calendar-shell__control" type="button" data-training-calendar-today${jumpDay ? "" : " disabled"}>
+            ${todayDay ? "Back To Today" : "Go To Next Live Day"}
+          </button>
+          <div class="client-planner-calendar-shell__paging">
+            <button
+              class="client-planner-calendar-shell__icon"
+              type="button"
+              data-training-calendar-nav="prev"
+              aria-label="Show previous week"
+              ${state.trainingCalendarExpanded || currentPage <= 0 ? "disabled" : ""}
+            >
+              &#8249;
+            </button>
+            <p class="client-planner-calendar-shell__range">
+              ${escapeHtml(state.trainingCalendarExpanded ? `Full block view • ${orderedDays.length} day${orderedDays.length === 1 ? "" : "s"}` : rangeLabel)}
+            </p>
+            <button
+              class="client-planner-calendar-shell__icon"
+              type="button"
+              data-training-calendar-nav="next"
+              aria-label="Show next week"
+              ${state.trainingCalendarExpanded || currentPage >= pageCount - 1 ? "disabled" : ""}
+            >
+              &#8250;
+            </button>
+          </div>
+          <button
+            class="btn btn-ghost client-planner-calendar-shell__icon client-planner-calendar-shell__icon--expand"
+            type="button"
+            data-training-calendar-expand
+            aria-pressed="${state.trainingCalendarExpanded ? "true" : "false"}"
+            aria-label="${state.trainingCalendarExpanded ? "Collapse to weekly view" : "Expand to full block view"}"
+            title="${state.trainingCalendarExpanded ? "Collapse to weekly view" : "Expand to full block view"}"
+          >
+            ${state.trainingCalendarExpanded ? "⊟" : "⤢"}
+          </button>
+        </div>
+        <div class="client-planner-training-calendar__grid${state.trainingCalendarExpanded ? " is-block" : " is-week"}">
+          ${cardMarkup}
+        </div>
+      </div>
+    `;
   }
 
   function renderTrainingDetail(derived) {
@@ -2091,16 +3192,28 @@
     const feedbackText = log
       ? `Latest log: ${toTitleCase(log.log_status || "pending")} • Review ${toTitleCase(log.review_status || "pending")}`
       : "Save the sheet once you finish the session. Your coach will review it from the training desk.";
+    const timing = getPlannerDayTiming(day, getTodayDateOnly());
 
     trainingDetailNode.innerHTML = `
       <article class="client-planner-training-sheet">
         <div class="client-planner-card-head">
           <div>
-            <span class="kicker kicker--accent">Program Sheet</span>
+            <span class="kicker kicker--accent">${escapeHtml(timing.key === "today" ? "Today’s Session" : "Session Log")}</span>
             <h3>${escapeHtml(day.title || `Day ${day.day_number || ""}`)}</h3>
             <p>${escapeHtml(day.focus || `${toTitleCase(day.day_type)} day`)}</p>
           </div>
-          ${buildStatusPill(day.status, day.status)}
+          <div class="client-planner-training-sheet__head-actions">
+            ${buildStatusPill(day.status, day.status)}
+            <button
+              class="client-planner-training-sheet__toggle"
+              type="button"
+              data-training-advanced-toggle
+              aria-expanded="${state.trainingAdvancedOpen ? "true" : "false"}"
+              title="${state.trainingAdvancedOpen ? "Hide extra progression guidance" : "Show extra progression guidance"}"
+            >
+              ${state.trainingAdvancedOpen ? "–" : "+"}
+            </button>
+          </div>
         </div>
         ${day.notes ? `<p class="client-planner-summary-note">${escapeHtml(day.notes)}</p>` : ""}
         <form class="client-planner-training-form" data-training-day-form="${escapeHtml(day.id)}">
@@ -2118,57 +3231,23 @@
               <input type="text" name="clientFeedback" value="${escapeHtml(log?.client_feedback || "")}" placeholder="How did the full session feel?" />
             </label>
           </div>
-          <div class="client-planner-training-table-shell">
-            <table class="client-planner-training-table">
-              <thead>
-                <tr>
-                  <th>Block</th>
-                  <th>Exercise</th>
-                  <th>Coach Target</th>
-                  <th>Sets</th>
-                  <th>Reps</th>
-                  <th>RPE</th>
-                  <th>Note</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${
-                  exercises.length
-                    ? exercises
-                        .map((exercise, index) => {
-                          const exerciseLog = derived.latestExerciseLogByExerciseId.get(exercise.id) || null;
-                          return `
-                            <tr>
-                              <td>${escapeHtml(exercise.block_label || `A${index + 1}`)}</td>
-                              <td>
-                                <strong>${escapeHtml(buildExerciseLabel(exercise))}</strong>
-                                ${exercise.notes ? `<small>${escapeHtml(exercise.notes)}</small>` : ""}
-                              </td>
-                              <td>${escapeHtml(buildPrescriptionText(exercise))}</td>
-                              <td>
-                                <input type="hidden" name="exerciseId" value="${escapeHtml(exercise.id)}" />
-                                <input type="number" name="completedSets" min="0" step="1" value="${escapeHtml(buildDefaultCompletedSets(exercise, exerciseLog))}" />
-                              </td>
-                              <td><input type="number" name="completedReps" min="0" step="1" value="${escapeHtml(buildDefaultCompletedReps(exercise, exerciseLog))}" /></td>
-                              <td><input type="number" name="loggedRpe" min="0" max="10" step="0.5" value="${escapeHtml(buildDefaultLoggedRpe(exercise, exerciseLog))}" /></td>
-                              <td><input type="text" name="exerciseNote" value="${escapeHtml(exerciseLog?.exercise_note || "")}" placeholder="Notes for coach" /></td>
-                            </tr>
-                          `;
-                        })
-                        .join("")
-                    : `
-                      <tr>
-                        <td colspan="7">
-                          <div class="dashboard-note dashboard-note--placeholder">
-                            <strong>No exercise rows attached yet</strong>
-                            <p>Your coach still needs to add the day rows for this session.</p>
-                          </div>
-                        </td>
-                      </tr>
-                    `
-                }
-              </tbody>
-            </table>
+          <div class="client-planner-training-exercise-list">
+            ${
+              exercises.length
+                ? exercises
+                    .map((exercise, index) => {
+                      const historyBundle = resolveExerciseHistoryBundle(derived, day, exercise);
+                      const config = resolveExerciseLogConfig(exercise);
+                      return buildTrainingExerciseCard(exercise, index, historyBundle, config, state.trainingAdvancedOpen);
+                    })
+                    .join("")
+                : `
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>No exercise rows attached yet</strong>
+                    <p>Your coach still needs to add the day rows for this session.</p>
+                  </article>
+                `
+            }
           </div>
           <div class="section-actions section-actions--compact">
             <button class="btn btn-primary" type="button" data-training-day-save="${escapeHtml(day.id)}">Save Training Sheet</button>
@@ -2179,6 +3258,8 @@
         </form>
       </article>
     `;
+
+    refreshTrainingExerciseCards(trainingDetailNode);
   }
 
   function buildExerciseLabel(exercise) {
@@ -4032,6 +5113,7 @@
     renderAssignmentSummary(derived);
     renderDayFocus(derived);
     buildClientTrainingCalendar(derived);
+    renderTrainingCalendarPreview(derived);
     renderTrainingDetail(derived);
     renderNutritionSummary(derived);
     renderNutritionPlanOptions(derived);
@@ -4053,7 +5135,8 @@
     renderCheckinFeed(derived);
     renderProgressFeed(derived);
     renderProgressSummary(derived);
-    setActiveNutritionWorkspace(state.activeNutritionWorkspace);
+    setActiveNutritionWorkspace(state.activeNutritionWorkspace, { skipSubtabSync: true });
+    applyWorkspaceTabState(state.activePanel);
   }
 
   async function handleWorkoutAction(button) {
@@ -4095,24 +5178,54 @@
       return [];
     }
 
-    return Array.from(form.querySelectorAll("tbody tr"))
-      .map((row, index) => {
-        const clientProgramDayExerciseId = row.querySelector('[name="exerciseId"]')?.value || "";
+    return Array.from(form.querySelectorAll("[data-training-exercise-card]"))
+      .map((card, index) => {
+        const clientProgramDayExerciseId = card.querySelector('[name="exerciseId"]')?.value || "";
         if (!clientProgramDayExerciseId) {
           return null;
         }
 
-        const completedSets = row.querySelector('[name="completedSets"]')?.value || "";
-        const completedReps = row.querySelector('[name="completedReps"]')?.value || "";
-        const loggedRpe = row.querySelector('[name="loggedRpe"]')?.value || "";
-        const exerciseNote = row.querySelector('[name="exerciseNote"]')?.value || "";
+        const { config, setRows, painScore } = readTrainingExerciseCard(card);
+        const summary = summarizeSetRows(setRows, config);
+        const meaningfulSetLogs = setRows
+          .filter((row) => {
+            if (config.mode === "completion_only") {
+              return Boolean(row.completed);
+            }
+            return (
+              parseNumber(row.loadKg) !== null
+              || parseInteger(row.reps) !== null
+              || parseNumber(row.effort) !== null
+              || parseInteger(row.durationSeconds) !== null
+              || parseNumber(row.distanceMeters) !== null
+            );
+          })
+          .map((row, setIndex) => ({
+            setIndex: setIndex + 1,
+            loadKg: parseNumber(row.loadKg),
+            reps: parseInteger(row.reps),
+            effort: parseNumber(row.effort),
+            durationSeconds: parseInteger(row.durationSeconds),
+            distanceMeters: parseNumber(row.distanceMeters),
+            completed: Boolean(row.completed),
+          }));
+
+        const exerciseNote = card.querySelector('[name="exerciseNote"]')?.value || "";
+        const averageEffort = summary.averageEffort;
+        const representativeLoad = summary.averageLoad;
 
         return {
           clientProgramDayExerciseId,
           sortOrder: index,
-          completedSets: completedSets ? Number(completedSets) : null,
-          completedReps: completedReps ? Number(completedReps) : null,
-          loggedRpe: loggedRpe ? Number(loggedRpe) : null,
+          completedSets: summary.completedSets || null,
+          completedReps: summary.totalReps || null,
+          loggedWeightKg: representativeLoad,
+          loggedDurationSeconds: summary.totalDurationSeconds,
+          loggedDistanceMeters: summary.totalDistanceMeters,
+          loggedRpe: config.effortMetric === "rpe" ? averageEffort : null,
+          loggedRir: config.effortMetric === "rir" ? averageEffort : null,
+          setLogs: meaningfulSetLogs,
+          painScore: painScore ? Number(painScore) : null,
           exerciseNote,
         };
       })
@@ -4902,6 +6015,12 @@
       });
     });
 
+    workspaceTabNodes.forEach((tabNode) => {
+      tabNode.addEventListener("click", () => {
+        setActiveWorkspaceTab(tabNode.dataset.clientWorkspace || "", tabNode.dataset.clientWorkspaceTab || "");
+      });
+    });
+
     plannerGuideToggleNodes.forEach((buttonNode) => {
       buttonNode.addEventListener("click", () => {
         const guideKey = buttonNode.dataset.plannerGuideToggle || "";
@@ -4913,7 +6032,80 @@
       });
     });
 
+    dayFocusNode?.addEventListener("click", (event) => {
+      const workspaceButton = event.target.closest("[data-open-training-workspace]");
+      if (!workspaceButton) {
+        return;
+      }
+      setActiveWorkspaceTab("training", workspaceButton.dataset.openTrainingWorkspace || "day");
+    });
+
+    trainingCalendarPreviewNode?.addEventListener("click", (event) => {
+      const workspaceButton = event.target.closest("[data-open-training-workspace]");
+      if (!workspaceButton) {
+        return;
+      }
+      setActiveWorkspaceTab("training", workspaceButton.dataset.openTrainingWorkspace || "day");
+    });
+
     trainingCalendarNode?.addEventListener("click", (event) => {
+      const workspaceButton = event.target.closest("[data-open-training-workspace]");
+      if (workspaceButton) {
+        setActiveWorkspaceTab("training", workspaceButton.dataset.openTrainingWorkspace || "day");
+        return;
+      }
+
+      const todayButton = event.target.closest("[data-training-calendar-today]");
+      if (todayButton) {
+        const derived = deriveWorkspace();
+        const todayValue = getTodayDateOnly();
+        const targetDay =
+          derived.orderedTrainingDays.find((day) => String(day?.scheduled_date || "") === todayValue)
+          || derived.nextDay
+          || derived.orderedTrainingDays[0]
+          || null;
+        if (!targetDay) {
+          return;
+        }
+        state.trainingCalendarExpanded = false;
+        state.selectedTrainingDayId = targetDay.id;
+        const nextDerived = deriveWorkspace();
+        renderDayFocus(nextDerived);
+        buildClientTrainingCalendar(nextDerived);
+        renderTrainingCalendarPreview(nextDerived);
+        renderTrainingDetail(nextDerived);
+        return;
+      }
+
+      const navButton = event.target.closest("[data-training-calendar-nav]");
+      if (navButton) {
+        const direction = navButton.dataset.trainingCalendarNav === "prev" ? -1 : 1;
+        const derived = deriveWorkspace();
+        const orderedDays = Array.isArray(derived.orderedTrainingDays) ? derived.orderedTrainingDays : [];
+        if (!orderedDays.length) {
+          return;
+        }
+        const currentIndex = Math.max(0, orderedDays.findIndex((day) => day.id === derived.selectedTrainingDay?.id));
+        const pageSize = 7;
+        const currentPage = Math.floor(currentIndex / pageSize);
+        const nextPage = Math.max(0, Math.min(Math.ceil(orderedDays.length / pageSize) - 1, currentPage + direction));
+        const targetDay = orderedDays[nextPage * pageSize] || orderedDays[currentIndex] || orderedDays[0];
+        state.selectedTrainingDayId = targetDay.id;
+        const nextDerived = deriveWorkspace();
+        buildClientTrainingCalendar(nextDerived);
+        renderDayFocus(nextDerived);
+        renderTrainingCalendarPreview(nextDerived);
+        renderTrainingDetail(nextDerived);
+        return;
+      }
+
+      const expandButton = event.target.closest("[data-training-calendar-expand]");
+      if (expandButton) {
+        state.trainingCalendarExpanded = !state.trainingCalendarExpanded;
+        buildClientTrainingCalendar(deriveWorkspace());
+        return;
+      }
+
       const button = event.target.closest("[data-training-day-select]");
       if (!button) {
         return;
@@ -4922,15 +6114,45 @@
       const derived = deriveWorkspace();
       renderDayFocus(derived);
       buildClientTrainingCalendar(derived);
+      renderTrainingCalendarPreview(derived);
       renderTrainingDetail(derived);
     });
 
     trainingDetailNode?.addEventListener("click", (event) => {
+      const advancedToggle = event.target.closest("[data-training-advanced-toggle]");
+      if (advancedToggle) {
+        state.trainingAdvancedOpen = !state.trainingAdvancedOpen;
+        advancedToggle.setAttribute("aria-expanded", String(state.trainingAdvancedOpen));
+        advancedToggle.textContent = state.trainingAdvancedOpen ? "–" : "+";
+        advancedToggle.setAttribute(
+          "title",
+          state.trainingAdvancedOpen ? "Hide extra progression guidance" : "Show extra progression guidance"
+        );
+        Array.from(trainingDetailNode.querySelectorAll("[data-training-advanced-panel]")).forEach((panel) => {
+          panel.hidden = !state.trainingAdvancedOpen;
+        });
+        return;
+      }
+
       const button = event.target.closest("[data-training-day-save]");
       if (!button) {
         return;
       }
       handleTrainingDaySave(button).catch(() => null);
+    });
+    trainingDetailNode?.addEventListener("input", (event) => {
+      const card = event.target.closest("[data-training-exercise-card]");
+      if (!card) {
+        return;
+      }
+      refreshTrainingExerciseCard(card);
+    });
+    trainingDetailNode?.addEventListener("change", (event) => {
+      const card = event.target.closest("[data-training-exercise-card]");
+      if (!card) {
+        return;
+      }
+      refreshTrainingExerciseCard(card);
     });
 
     nutritionForm?.addEventListener("submit", handleNutritionSubmit);

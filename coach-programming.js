@@ -70,12 +70,27 @@
   const trainingGenerateButton = document.getElementById("coach-training-generate-program");
   const trainingGenerateFeedbackNode = document.getElementById("coach-training-generate-feedback");
   const trainingExerciseMirrorNode = document.getElementById("coach-training-exercise-days");
+  const trainingWorkbookPreviewNode = document.getElementById("coach-training-workbook-preview");
+  const trainingWorkbookPreviewGridNode = document.getElementById("coach-training-workbook-preview-grid");
+  const trainingWorkbookPreviewSummaryNode = document.getElementById("coach-training-workbook-preview-summary");
+  const trainingWorkbookPreviewNoteNode = document.getElementById("coach-training-workbook-preview-note");
+  const trainingWeekMapNode = document.getElementById("coach-training-week-map");
+  const trainingSessionDayTabsNode = document.getElementById("coach-training-session-day-tabs");
+  const trainingExerciseSuggestionsNode = document.getElementById("coach-training-exercise-suggestions");
   const trainingEditNoteNode = document.getElementById("coach-training-edit-note");
   const trainingWeekSwitchNode = document.getElementById("coach-training-week-switch");
   const trainingExerciseWeekSwitchNode = document.getElementById("coach-training-exercise-week-switch");
   const trainingWeekTabsSplitNode = document.getElementById("coach-training-week-tabs-split");
   const trainingWeekTabsExercisesNode = document.getElementById("coach-training-week-tabs-exercises");
   const trainingWeekSummaryNode = document.getElementById("coach-training-week-summary");
+  const trainingSessionDeskNode = document.getElementById("coach-training-session-desk");
+  const trainingSessionEmptyStateNode = document.getElementById("coach-training-session-empty-state");
+  const trainingSessionBodyNode = document.getElementById("coach-training-session-body");
+  const trainingSessionSummaryNode = document.getElementById("coach-training-session-summary");
+  const trainingSessionDayPickerNode = document.getElementById("coach-training-session-day-picker");
+  const trainingSessionForm = document.getElementById("coach-training-session-form");
+  const trainingSessionSheetNode = document.getElementById("coach-training-session-sheet");
+  const trainingSessionFeedbackNode = document.getElementById("coach-training-session-feedback");
   const workbookImportForm = document.getElementById("coach-program-workbook-import-form");
   const workbookFileNode = document.getElementById("coach-program-workbook-file");
   const workbookSheetNode = document.getElementById("coach-program-workbook-sheet");
@@ -230,8 +245,10 @@
     rosterAssignments: [],
     programAssignments: [],
     programDays: [],
+    programExercises: [],
     nutritionPlans: [],
     workoutLogs: [],
+    workoutExerciseLogs: [],
     nutritionLogs: [],
     mealEntries: [],
     mealItems: [],
@@ -359,6 +376,11 @@
     },
     trainingWizard: {
       activeStep: "inputs",
+      activeDayId: "",
+      suggestionQuery: "",
+    },
+    trainingSession: {
+      activeDayId: "",
     },
     editingAssignment: null,
     trainingWorkbook: {
@@ -483,16 +505,68 @@
 
     if (isStructuredSessionCategory()) {
       templateFeedbackNode.innerHTML = `
-        Session-level endurance fields are enabled for conditioning, runner, HYROX, and endurance templates. Use the
-        exercise cards below for strength support, accessories, and technique blocks.
+        Structured endurance fields are enabled for conditioning, runner, HYROX, combat, and endurance blocks. Review the
+        weekly structure first, then use the session templates step to override exercises only where needed.
       `;
       return;
     }
 
     templateFeedbackNode.innerHTML = `
-      Use exercise cards for each lift, accessory, or circuit line. Structured endurance fields stay hidden for strength,
-      hypertrophy, rehab, and general templates so the builder stays focused.
+      The workbook is generating the block for you. Use the weekly structure step for day setup, then use the session
+      templates step to keep or override the generated exercise rows without rebuilding the whole sheet manually.
     `;
+  }
+
+  function getTrainingWorkbookValidationIssues() {
+    if (!(isTrainingWorkspace() && assignForm === templateForm)) {
+      return [];
+    }
+
+    const athleteProfileField = assignForm?.elements?.namedItem("athleteProfile");
+    const issues = [];
+    if (!compactText(athleteProfileField?.value)) {
+      issues.push({
+        field: athleteProfileField,
+        label: "athlete profile",
+      });
+    }
+    return issues;
+  }
+
+  function focusTrainingWorkbookIssue(issue) {
+    const field = issue?.field;
+    if (!field || typeof field.focus !== "function") {
+      return;
+    }
+
+    try {
+      field.scrollIntoView({ block: "center", behavior: "smooth" });
+    } catch (_) {}
+
+    try {
+      field.focus({ preventScroll: true });
+    } catch (_) {
+      field.focus();
+    }
+  }
+
+  function validateTrainingWorkbookInputsForGeneration() {
+    const issues = getTrainingWorkbookValidationIssues();
+    if (!issues.length) {
+      return true;
+    }
+
+    const labels = issues.map((issue) => issue.label);
+    const joinedLabels =
+      labels.length > 1
+        ? `${labels.slice(0, -1).join(", ")} and ${labels[labels.length - 1]}`
+        : labels[0];
+    const message = `Complete the ${joinedLabels} in Step 1 first. The block map generates as soon as the athlete profile is set.`;
+
+    setStatus(message, true);
+    setInlineFeedback(templateFeedbackNode, message, true);
+    focusTrainingWorkbookIssue(issues[0]);
+    return false;
   }
 
   function setTemplateEditorState(template) {
@@ -964,10 +1038,14 @@
   }
 
   function createEmptyExerciseRow(index, defaults = {}) {
+    const defaultName = compactText(defaults.defaultName || defaults.name);
+    const overrideName = compactText(defaults.overrideName);
     return {
       id: defaults.id || buildLocalId(`exercise-${index}`),
       blockLabel: compactText(defaults.blockLabel),
-      name: compactText(defaults.name),
+      defaultName,
+      overrideName,
+      name: compactText(overrideName || defaults.name || defaultName),
       sets: defaults.sets ?? "",
       repTarget: compactText(defaults.repTarget),
       intensity: compactText(defaults.intensity),
@@ -1618,7 +1696,16 @@
       };
       renderAll();
       const derived = deriveWorkspace();
-      setStatus(resolveWorkspaceCopy().liveSummary(derived), false);
+      if (state.access?.role && state.access.role !== "coach") {
+        setStatus(
+          "This workspace is open under a super admin session. Live client rosters only load for the actual coach account, so sign in as the assigned coach to prescribe for clients here.",
+          true
+        );
+      } else if (!derived.roster.length) {
+        setStatus("This coach session is live, but there are no assigned clients on the roster yet.", false);
+      } else {
+        setStatus(resolveWorkspaceCopy().liveSummary(derived), false);
+      }
     } catch (error) {
       const message = String(error?.message || "");
       if (/does not exist/iu.test(message) || /relation/iu.test(message)) {
@@ -1692,8 +1779,34 @@
       .sort((left, right) => {
       return new Date(left?.scheduled_date || 0).getTime() - new Date(right?.scheduled_date || 0).getTime();
       });
+    const programExercises = (state.data.programExercises || [])
+      .slice()
+      .sort((left, right) => Number(left?.sort_order || 0) - Number(right?.sort_order || 0));
+    const exercisesByProgramDayId = programExercises.reduce((map, exercise) => {
+      const key = String(exercise?.client_program_day_id || "");
+      if (!key) {
+        return map;
+      }
+      const list = map.get(key) || [];
+      list.push(exercise);
+      map.set(key, list);
+      return map;
+    }, new Map());
     const nutritionPlans = sortByDateDescending(state.data.nutritionPlans, "updated_at");
     const workoutLogs = sortByDateDescending(state.data.workoutLogs, "updated_at");
+    const workoutExerciseLogs = (state.data.workoutExerciseLogs || [])
+      .slice()
+      .sort((left, right) => Number(left?.sort_order || 0) - Number(right?.sort_order || 0));
+    const workoutExerciseLogsByWorkoutLogId = workoutExerciseLogs.reduce((map, entry) => {
+      const key = String(entry?.workout_log_id || "");
+      if (!key) {
+        return map;
+      }
+      const list = map.get(key) || [];
+      list.push(entry);
+      map.set(key, list);
+      return map;
+    }, new Map());
     const nutritionLogs = sortByDateDescending(state.data.nutritionLogs, "updated_at");
     const mealEntries = sortByDateDescending(state.data.mealEntries, "updated_at");
     const mealItemsByEntry = new Map();
@@ -1742,6 +1855,7 @@
           const assignment = clientAssignments.find((candidate) => candidate.id === item.assignment_id);
           return Boolean(assignment);
         });
+        const clientProgramDayIds = new Set(clientProgramDays.map((item) => item.id).filter(Boolean));
         const activeProgram =
           clientAssignments.find((item) => String(item.status || "").toLowerCase() === "active")
           || clientAssignments.find((item) => String(item.status || "").toLowerCase() === "paused")
@@ -1959,6 +2073,7 @@
           activeProgram,
           latestProgram,
           programDays: clientProgramDays,
+          programExercises: programExercises.filter((item) => clientProgramDayIds.has(item.client_program_day_id)),
           activeNutrition,
           latestWorkoutLog,
           latestNutritionLog,
@@ -2506,6 +2621,38 @@
           },
         ];
 
+    const selectedTrainingClientId = compactText(assignClientNode?.value);
+    const selectedTrainingClient = roster.find((client) => client.id === selectedTrainingClientId) || null;
+    const selectedTrainingDaysSource = selectedTrainingClient?.activeProgram
+      ? programDays.filter((day) => day.assignment_id === selectedTrainingClient.activeProgram.id)
+      : selectedTrainingClient?.programDays || [];
+    const selectedTrainingDays = selectedTrainingDaysSource.filter((day) => {
+      const normalizedDayType = String(day?.day_type || "").trim().toLowerCase();
+      return normalizedDayType !== "rest";
+    });
+    const availableTrainingDays = selectedTrainingDays.length ? selectedTrainingDays : selectedTrainingDaysSource;
+
+    if (!availableTrainingDays.some((day) => day.id === state.trainingSession.activeDayId)) {
+      state.trainingSession.activeDayId = availableTrainingDays[0]?.id || "";
+    }
+
+    const selectedTrainingDay = availableTrainingDays.find((day) => day.id === state.trainingSession.activeDayId) || null;
+    const selectedTrainingExercises = selectedTrainingDay
+      ? (exercisesByProgramDayId.get(selectedTrainingDay.id) || [])
+      : [];
+    const selectedWorkoutLog = selectedTrainingDay
+      ? workoutLogs.find((item) => item.client_program_day_id === selectedTrainingDay.id) || null
+      : null;
+    const selectedWorkoutExerciseLogByExerciseId = new Map(
+      (
+        selectedWorkoutLog
+          ? (workoutExerciseLogsByWorkoutLogId.get(selectedWorkoutLog.id) || [])
+          : []
+      )
+        .map((entry) => [entry.client_program_day_exercise_id, entry])
+        .filter(([exerciseId]) => Boolean(exerciseId))
+    );
+
     return {
       templates,
       checkinTemplates,
@@ -2552,6 +2699,16 @@
       calendarRangeLabel: formatWeekRange(calendarRange.start, calendarRange.end),
       signals,
       programDays,
+      programExercises,
+      exercisesByProgramDayId,
+      workoutExerciseLogs,
+      workoutExerciseLogsByWorkoutLogId,
+      selectedTrainingClient,
+      selectedTrainingDays: availableTrainingDays,
+      selectedTrainingDay,
+      selectedTrainingExercises,
+      selectedWorkoutLog,
+      selectedWorkoutExerciseLogByExerciseId,
       metrics: {
         roster: roster.length,
         templates: templates.length,
@@ -2947,8 +3104,14 @@
       return;
     }
 
+    const isCoachRosterSession = state.access?.role === "coach";
+    const placeholderLabel = !isCoachRosterSession
+      ? "Sign in as the coach to load roster"
+      : derived.roster.length
+        ? "Select client"
+        : "No assigned clients yet";
     const optionMarkup = [
-      '<option value="">Select client</option>',
+      `<option value="">${escapeHtml(placeholderLabel)}</option>`,
       ...derived.roster.map((client) => {
         const label = client.preferredName || client.displayName || "Client";
         const suffix = client.primaryGoal ? ` · ${client.primaryGoal}` : "";
@@ -2966,6 +3129,7 @@
       }
       const currentValue = node.value;
       node.innerHTML = optionMarkup;
+      node.disabled = !isCoachRosterSession || !derived.roster.length;
       if (currentValue) {
         node.value = currentValue;
       }
@@ -3157,244 +3321,451 @@
     `;
   }
 
-  function renderBuilderDays() {
+  function getFinalExerciseName(row) {
+    return compactText(row?.overrideName || row?.name || row?.defaultName);
+  }
+
+  function renderTrainingWorkbookPreview() {
+    if (!trainingWorkbookPreviewGridNode || !trainingWorkbookPreviewSummaryNode) {
+      return;
+    }
+
+    if (!state.trainingWorkbook?.weeks?.length) {
+      trainingWorkbookPreviewGridNode.innerHTML = "";
+      trainingWorkbookPreviewSummaryNode.innerHTML = "<p>Select the athlete profile first. The workbook will then generate the block map underneath.</p>";
+      if (trainingWorkbookPreviewNoteNode) {
+        trainingWorkbookPreviewNoteNode.textContent = "The block map starts generating as soon as the athlete profile is selected. Phase, schedule, and performance inputs then sharpen the output.";
+      }
+      return;
+    }
+
+    trainingWorkbookPreviewGridNode.innerHTML = state.trainingWorkbook.previewPairs
+      .map(
+        (item) => `
+          <div>
+            <dt>${escapeHtml(item.label)}</dt>
+            <dd>${escapeHtml(item.value)}</dd>
+          </div>
+        `
+      )
+      .join("");
+    trainingWorkbookPreviewSummaryNode.innerHTML = state.trainingWorkbook.summaryCard
+      .map((line) => `<p>${escapeHtml(line)}</p>`)
+      .join("");
+
+    if (trainingWorkbookPreviewNoteNode) {
+      trainingWorkbookPreviewNoteNode.textContent = state.trainingWorkbook.athleteType
+        ? `${toTitleCase(state.trainingWorkbook.athleteType.replace(/_/gu, " "))} workbook loaded. Review the week map before editing the structure.`
+        : "Workbook generated from the coach inputs.";
+    }
+  }
+
+  function renderTrainingWeekMap() {
+    if (!trainingWeekMapNode) {
+      return;
+    }
+
+    if (!state.trainingWorkbook?.weeks?.length) {
+      trainingWeekMapNode.innerHTML = `
+        <article class="dashboard-note dashboard-note--placeholder" data-crm-tone="info">
+          <strong>The week map appears as soon as the athlete profile is selected.</strong>
+          <p>Set the athlete profile first, then use the phase, schedule, and profile inputs to sharpen the generated week-by-week structure.</p>
+        </article>
+      `;
+      return;
+    }
+
+    trainingWeekMapNode.innerHTML = state.trainingWorkbook.weeks
+      .map((week) => {
+        const dayChips = Array.isArray(week.days)
+          ? week.days
+              .map((day) => `<span>${escapeHtml(day.title || `Day ${day.dayNumber || ""}`)}</span>`)
+              .join("")
+          : "";
+        return `
+          <article class="coach-training-week-map-card${week.weekNumber === state.trainingWorkbook.activeWeek ? " is-active" : ""}">
+            <div class="coach-training-week-map-card__head">
+              <div>
+                <span class="kicker kicker--accent">Week ${escapeHtml(String(week.weekNumber || ""))}</span>
+                <h3>${escapeHtml(week.title || `Week ${week.weekNumber || ""}`)}</h3>
+              </div>
+              <button class="btn btn-ghost" type="button" data-training-workbook-week="${escapeHtml(String(week.weekNumber || ""))}">
+                Open Week
+              </button>
+            </div>
+            <p>${escapeHtml(week.summary || "Generated workbook week")}</p>
+            <div class="coach-training-week-map-card__days">
+              ${dayChips}
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function buildStructuredMetricsMarkup(day, structuredMode) {
+    if (!structuredMode) {
+      return "";
+    }
+    return `
+      <details class="coach-training-day-advanced">
+        <summary>Structured session metrics</summary>
+        <div class="coach-training-day-grid coach-training-day-grid--advanced">
+          <label>
+            Session type
+            <select data-day-field="sessionType">
+              ${[
+                ["standard", "Standard"],
+                ["aerobic_base", "Aerobic base"],
+                ["threshold", "Threshold"],
+                ["intervals", "Intervals"],
+                ["long_session", "Long session"],
+                ["race_specific", "Race specific"],
+                ["hybrid", "Hybrid"],
+                ["recovery", "Recovery"],
+              ]
+                .map(
+                  ([value, label]) =>
+                    `<option value="${value}"${value === day.sessionType ? " selected" : ""}>${escapeHtml(label)}</option>`
+                )
+                .join("")}
+            </select>
+          </label>
+          <label>
+            Session label
+            <input type="text" data-day-field="sessionLabel" value="${escapeHtml(day.sessionLabel)}" placeholder="Tempo run or station circuit" />
+          </label>
+          <label>
+            Distance (km)
+            <input type="number" min="0" step="0.1" data-day-field="distanceKm" value="${escapeHtml(day.distanceKm)}" placeholder="8.0" />
+          </label>
+          <label>
+            HR zone
+            <input type="number" min="1" max="5" step="1" data-day-field="heartRateZone" value="${escapeHtml(day.heartRateZone)}" placeholder="2" />
+          </label>
+          <label>
+            Intensity cue
+            <input type="text" data-day-field="intensityCue" value="${escapeHtml(day.intensityCue)}" placeholder="Zone 2 conversational" />
+          </label>
+          <label>
+            Pace / speed
+            <input type="text" data-day-field="targetPace" value="${escapeHtml(day.targetPace)}" placeholder="5:10 /km" />
+          </label>
+          <label>
+            Fuel cue
+            <input type="text" data-day-field="fuelCue" value="${escapeHtml(day.fuelCue)}" placeholder="30-60 g carbs/hr" />
+          </label>
+        </div>
+      </details>
+    `;
+  }
+
+  function ensureActiveTrainingDaySelection() {
+    const dayIds = state.builderDays.map((day) => day.id);
+    if (!dayIds.length) {
+      state.trainingWizard.activeDayId = "";
+      return null;
+    }
+    if (!dayIds.includes(state.trainingWizard.activeDayId)) {
+      state.trainingWizard.activeDayId = dayIds[0];
+    }
+    return state.builderDays.find((day) => day.id === state.trainingWizard.activeDayId) || state.builderDays[0] || null;
+  }
+
+  function renderTrainingStructureDays() {
     if (!templateDaysNode) {
       return;
     }
 
     const structuredMode = isStructuredSessionCategory();
-    syncTemplateBuilderMode();
-    renderTrainingWorkbookWeekControls();
-
     templateDaysNode.innerHTML = state.builderDays
-      .map((day, index) => {
-        const supportsExercises = day.dayType !== "rest";
-        const exerciseRows = Array.isArray(day.exerciseRows) && day.exerciseRows.length ? day.exerciseRows : [createEmptyExerciseRow(1)];
-        return `
-          <article class="coach-training-day-card${supportsExercises ? "" : " coach-training-day-card--rest"}" data-day-id="${escapeHtml(day.id)}">
-            <div class="coach-training-day-card__head">
-              <div>
-                <span class="kicker kicker--accent">Training Day ${index + 1}</span>
-                <h3>${escapeHtml(day.title || `Day ${index + 1}`)}</h3>
-              </div>
-              <button class="btn btn-ghost" type="button" data-remove-day="${escapeHtml(day.id)}"${
-                state.builderDays.length === 1 ? " disabled" : ""
-              }>Remove Day</button>
+      .map((day, index) => `
+        <article class="coach-training-day-card${day.dayType !== "rest" ? "" : " coach-training-day-card--rest"}" data-day-id="${escapeHtml(day.id)}">
+          <div class="coach-training-day-card__head">
+            <div>
+              <span class="kicker kicker--accent">Training Day ${index + 1}</span>
+              <h3>${escapeHtml(day.title || `Day ${index + 1}`)}</h3>
             </div>
+            <button class="btn btn-ghost" type="button" data-remove-day="${escapeHtml(day.id)}"${
+              state.builderDays.length === 1 ? " disabled" : ""
+            }>Remove Day</button>
+          </div>
 
-            <div class="coach-training-day-grid">
-              <label>
-                Day title
-                <input type="text" data-day-field="title" value="${escapeHtml(day.title)}" placeholder="Lower A" />
-              </label>
-              <label>
-                Focus
-                <input type="text" data-day-field="focus" value="${escapeHtml(day.focus)}" placeholder="Lower body hypertrophy" />
-              </label>
-              <label>
-                Day type
-                <select data-day-field="dayType">
-                  ${["workout", "conditioning", "mobility", "recovery", "rest"]
-                    .map(
-                      (option) =>
-                        `<option value="${option}"${option === day.dayType ? " selected" : ""}>${escapeHtml(
-                          toTitleCase(option)
-                        )}</option>`
-                    )
-                    .join("")}
-                </select>
-              </label>
-              <label>
-                Session mins
-                <input type="number" min="0" data-day-field="estimatedDurationMinutes" value="${escapeHtml(day.estimatedDurationMinutes)}" placeholder="75" />
-              </label>
-            </div>
-
-            ${
-              structuredMode
-                ? `
-                  <details class="coach-training-day-advanced">
-                    <summary>Structured session metrics</summary>
-                    <div class="coach-training-day-grid coach-training-day-grid--advanced">
-                      <label>
-                        Session type
-                        <select data-day-field="sessionType">
-                          ${[
-                            ["standard", "Standard"],
-                            ["aerobic_base", "Aerobic base"],
-                            ["threshold", "Threshold"],
-                            ["intervals", "Intervals"],
-                            ["long_session", "Long session"],
-                            ["race_specific", "Race specific"],
-                            ["hybrid", "Hybrid"],
-                            ["recovery", "Recovery"],
-                          ]
-                            .map(
-                              ([value, label]) =>
-                                `<option value="${value}"${value === day.sessionType ? " selected" : ""}>${escapeHtml(label)}</option>`
-                            )
-                            .join("")}
-                        </select>
-                      </label>
-                      <label>
-                        Session label
-                        <input type="text" data-day-field="sessionLabel" value="${escapeHtml(day.sessionLabel)}" placeholder="Tempo run or station circuit" />
-                      </label>
-                      <label>
-                        Distance (km)
-                        <input type="number" min="0" step="0.1" data-day-field="distanceKm" value="${escapeHtml(day.distanceKm)}" placeholder="8.0" />
-                      </label>
-                      <label>
-                        HR zone
-                        <input type="number" min="1" max="5" step="1" data-day-field="heartRateZone" value="${escapeHtml(day.heartRateZone)}" placeholder="2" />
-                      </label>
-                      <label>
-                        Intensity cue
-                        <input type="text" data-day-field="intensityCue" value="${escapeHtml(day.intensityCue)}" placeholder="Zone 2 conversational" />
-                      </label>
-                      <label>
-                        Pace / speed
-                        <input type="text" data-day-field="targetPace" value="${escapeHtml(day.targetPace)}" placeholder="5:10 /km" />
-                      </label>
-                      <label>
-                        Fuel cue
-                        <input type="text" data-day-field="fuelCue" value="${escapeHtml(day.fuelCue)}" placeholder="30-60 g carbs/hr" />
-                      </label>
-                    </div>
-                  </details>
-                `
-                : ""
-            }
-
+          <div class="coach-training-day-grid">
             <label>
-              Day notes
-              <textarea data-day-field="notes" placeholder="Session intent, recovery rules, or weekly coaching reminders.">${escapeHtml(
-                day.notes
-              )}</textarea>
+              Day title
+              <input type="text" data-day-field="title" value="${escapeHtml(day.title)}" placeholder="Lower A" />
             </label>
+            <label>
+              Focus
+              <input type="text" data-day-field="focus" value="${escapeHtml(day.focus)}" placeholder="Lower body hypertrophy" />
+            </label>
+            <label>
+              Day type
+              <select data-day-field="dayType">
+                ${["workout", "conditioning", "mobility", "recovery", "rest"]
+                  .map(
+                    (option) =>
+                      `<option value="${option}"${option === day.dayType ? " selected" : ""}>${escapeHtml(toTitleCase(option))}</option>`
+                  )
+                  .join("")}
+              </select>
+            </label>
+            <label>
+              Session mins
+              <input type="number" min="0" data-day-field="estimatedDurationMinutes" value="${escapeHtml(day.estimatedDurationMinutes)}" placeholder="75" />
+            </label>
+          </div>
 
-            ${
-              supportsExercises
-                ? `
-                  <section class="coach-training-exercise-sheet">
-                    <div class="coach-training-exercise-sheet__head">
-                      <div>
-                        <span class="kicker kicker--accent">Exercise Setup</span>
-                        <h4>Coach Rows For This Day</h4>
-                      </div>
-                      <button class="btn btn-ghost" type="button" data-add-exercise="${escapeHtml(day.id)}">Add Exercise</button>
-                    </div>
-                    <div class="coach-training-exercise-sheet__legend">
-                      <span>Coach sets the prescription here. Client only logs execution later.</span>
-                    </div>
-                    <div class="coach-training-exercise-list">
-                      ${exerciseRows
-                        .map(
-                          (row, exerciseIndex) => `
-                            <article class="coach-training-exercise-row" data-exercise-id="${escapeHtml(row.id)}">
-                              <div class="coach-training-exercise-row__head">
-                                <div>
-                                  <span class="kicker kicker--accent">Row ${exerciseIndex + 1}</span>
-                                  <h4>${escapeHtml(row.name || "New exercise")}</h4>
-                                </div>
-                                <div class="coach-training-exercise-row__actions">
-                                  <button class="btn btn-ghost" type="button" data-move-exercise="${escapeHtml(row.id)}" data-move-direction="-1"${exerciseIndex === 0 ? " disabled" : ""}>Up</button>
-                                  <button class="btn btn-ghost" type="button" data-move-exercise="${escapeHtml(row.id)}" data-move-direction="1"${exerciseIndex === exerciseRows.length - 1 ? " disabled" : ""}>Down</button>
-                                  <button class="btn btn-ghost" type="button" data-remove-exercise="${escapeHtml(row.id)}"${exerciseRows.length === 1 ? " disabled" : ""}>Remove</button>
-                                </div>
-                              </div>
-                              <div class="coach-training-exercise-row__main">
-                                <label>
-                                  Block
-                                  <input type="text" data-exercise-field="blockLabel" value="${escapeHtml(row.blockLabel)}" placeholder="A1" />
-                                </label>
-                                <label>
-                                  Exercise
-                                  <input type="text" data-exercise-field="name" value="${escapeHtml(row.name)}" placeholder="Back squat" />
-                                </label>
-                                <label>
-                                  Sets
-                                  <input type="number" min="0" data-exercise-field="sets" value="${escapeHtml(row.sets)}" placeholder="4" />
-                                </label>
-                                <label>
-                                  Reps / target
-                                  <input type="text" data-exercise-field="repTarget" value="${escapeHtml(row.repTarget)}" placeholder="8-10" />
-                                </label>
-                                <label>
-                                  Effort
-                                  <input type="text" data-exercise-field="intensity" value="${escapeHtml(row.intensity)}" placeholder="RPE 7-8" />
-                                </label>
-                                <label>
-                                  Week 1 load (kg)
-                                  <input type="number" min="0" step="0.5" data-exercise-field="startingLoad" value="${escapeHtml(row.startingLoad)}" placeholder="60" />
-                                </label>
-                                <label>
-                                  Increment (kg)
-                                  <input type="number" min="0" step="0.5" data-exercise-field="increment" value="${escapeHtml(row.increment)}" placeholder="2.5" />
-                                </label>
-                              </div>
-                              <div class="coach-training-exercise-row__meta">
-                                <label>
-                                  Rest
-                                  <input type="text" data-exercise-field="rest" value="${escapeHtml(row.rest)}" placeholder="90 sec" />
-                                </label>
-                                <label>
-                                  Tempo
-                                  <input type="text" data-exercise-field="tempo" value="${escapeHtml(row.tempo)}" placeholder="31X1" />
-                                </label>
-                                <label>
-                                  Client logs
-                                  <select data-exercise-field="clientEntryMode">
-                                    ${[
-                                      ["log_weight_reps_rpe", "Weight, reps, RPE"],
-                                      ["log_reps_rpe", "Reps and RPE"],
-                                      ["log_time_distance", "Time or distance"],
-                                      ["completion_only", "Completion only"],
-                                    ]
-                                      .map(
-                                        ([value, label]) =>
-                                          `<option value="${value}"${value === row.clientEntryMode ? " selected" : ""}>${escapeHtml(label)}</option>`
-                                      )
-                                      .join("")}
-                                  </select>
-                                </label>
-                                <label class="coach-training-exercise-row__wide">
-                                  Progression rule
-                                  <input type="text" data-exercise-field="progressionRule" value="${escapeHtml(row.progressionRule)}" placeholder="Add 2.5 kg if all reps are hit cleanly." />
-                                </label>
-                              </div>
-                              <label>
-                                Coach note
-                                <textarea data-exercise-field="notes" placeholder="Execution cue, substitution, or coaching reminder.">${escapeHtml(
-                                  row.notes
-                                )}</textarea>
-                              </label>
-                            </article>
-                          `
-                        )
-                        .join("")}
-                    </div>
-                  </section>
-                `
-                : `
-                  <div class="coach-programming-day-card__rest-note">
-                    <strong>Rest day</strong>
-                    <p>No exercise rows are needed here. Use the notes field above for recovery, walking, mobility, or readiness cues.</p>
-                  </div>
-                `
-            }
-          </article>
-        `;
-      })
+          ${buildStructuredMetricsMarkup(day, structuredMode)}
+
+          <label>
+            Day notes
+            <textarea data-day-field="notes" placeholder="Session intent, recovery rules, or weekly coaching reminders.">${escapeHtml(day.notes)}</textarea>
+          </label>
+        </article>
+      `)
       .join("");
+  }
 
-    if (trainingExerciseMirrorNode) {
-      trainingExerciseMirrorNode.innerHTML = templateDaysNode.innerHTML;
+  function renderTrainingExerciseSuggestions() {
+    if (!trainingExerciseSuggestionsNode) {
+      return;
+    }
+    trainingExerciseSuggestionsNode.innerHTML = state.exerciseSearchResults
+      .slice(0, 24)
+      .map((exercise) => `<option value="${escapeHtml(exercise.name || "")}"></option>`)
+      .join("");
+  }
+
+  async function searchTrainingExerciseSuggestions(query) {
+    const searchText = compactText(query);
+    state.trainingWizard.suggestionQuery = searchText;
+    if (!searchText || searchText.length < 2) {
+      state.exerciseSearchResults = [];
+      renderTrainingExerciseSuggestions();
+      return;
+    }
+
+    try {
+      const params = new URLSearchParams();
+      params.set("q", searchText);
+      params.set("limit", "12");
+      const response = await plannerRequest(`/.netlify/functions/search-exercise-library?${params.toString()}`);
+      if (state.trainingWizard.suggestionQuery !== searchText) {
+        return;
+      }
+      state.exerciseSearchResults = Array.isArray(response?.exercises) ? response.exercises : [];
+      renderTrainingExerciseSuggestions();
+    } catch (_) {
+      if (state.trainingWizard.suggestionQuery === searchText) {
+        state.exerciseSearchResults = [];
+        renderTrainingExerciseSuggestions();
+      }
     }
   }
 
+  function renderTrainingSessionTemplates() {
+    if (!trainingExerciseMirrorNode) {
+      return;
+    }
+
+    const selectedDay = ensureActiveTrainingDaySelection();
+    if (!selectedDay) {
+      trainingExerciseMirrorNode.innerHTML = buildWorkspaceEmptyCard(
+        "No training days yet.",
+        "Complete the workbook inputs or add a training day in Weekly Structure first.",
+        "info"
+      );
+      if (trainingSessionDayTabsNode) {
+        trainingSessionDayTabsNode.innerHTML = "";
+      }
+      return;
+    }
+
+    if (trainingSessionDayTabsNode) {
+      trainingSessionDayTabsNode.innerHTML = state.builderDays
+        .map(
+          (day, index) => `
+            <button
+              class="coach-training-session-day${day.id === selectedDay.id ? " is-active" : ""}"
+              type="button"
+              data-select-training-day="${escapeHtml(day.id)}"
+            >
+              <span>${escapeHtml(day.title || `Day ${index + 1}`)}</span>
+              <small>${escapeHtml(day.focus || toTitleCase(day.dayType || "workout"))}</small>
+            </button>
+          `
+        )
+        .join("");
+    }
+
+    const exerciseRows = Array.isArray(selectedDay.exerciseRows) && selectedDay.exerciseRows.length
+      ? selectedDay.exerciseRows
+      : [createEmptyExerciseRow(1)];
+    const supportsExercises = selectedDay.dayType !== "rest";
+
+    trainingExerciseMirrorNode.innerHTML = supportsExercises
+      ? `
+        <article class="coach-training-session-card" data-day-id="${escapeHtml(selectedDay.id)}">
+          <div class="coach-training-session-card__head">
+            <div>
+              <span class="kicker kicker--accent">Session Templates</span>
+              <h3>${escapeHtml(selectedDay.title || "Selected day")}</h3>
+              <p>${escapeHtml(selectedDay.focus || "Use coach exercise overrides only when the generated session needs to change.")}</p>
+            </div>
+            <div class="coach-programming-meta-chips">
+              <span>${escapeHtml(toTitleCase(selectedDay.dayType || "workout"))}</span>
+              <span>${escapeHtml(formatMacroValue(selectedDay.estimatedDurationMinutes, " min"))}</span>
+              ${selectedDay.sessionLabel ? `<span>${escapeHtml(selectedDay.sessionLabel)}</span>` : ""}
+            </div>
+          </div>
+          <div class="coach-training-library-note">
+            <strong>Exercise library ready</strong>
+            <p>Start typing in the coach override field and the uploaded exercise library will suggest matching movements. Leave the override blank to keep the workbook default.</p>
+          </div>
+          <div class="coach-training-session-list">
+            ${exerciseRows
+              .map((row, exerciseIndex) => {
+                const defaultName = compactText(row.defaultName || row.name) || "Workbook default";
+                const finalName = getFinalExerciseName(row) || defaultName;
+                return `
+                  <article class="coach-training-session-row" data-exercise-id="${escapeHtml(row.id)}">
+                    <div class="coach-training-session-row__head">
+                      <div>
+                        <span class="kicker kicker--accent">Slot ${exerciseIndex + 1}</span>
+                        <h4>${escapeHtml(finalName)}</h4>
+                      </div>
+                      <button class="btn btn-ghost" type="button" data-remove-exercise="${escapeHtml(row.id)}"${exerciseRows.length === 1 ? " disabled" : ""}>Remove</button>
+                    </div>
+                    <div class="coach-training-session-row__grid">
+                      <label>
+                        Block
+                        <input type="text" data-exercise-field="blockLabel" value="${escapeHtml(row.blockLabel)}" readonly />
+                      </label>
+                      <label>
+                        Default exercise
+                        <input type="text" value="${escapeHtml(defaultName)}" readonly />
+                      </label>
+                      <label>
+                        Coach exercise override
+                        <input
+                          type="text"
+                          list="coach-training-exercise-suggestions"
+                          data-exercise-field="overrideName"
+                          data-exercise-override-search="true"
+                          value="${escapeHtml(row.overrideName)}"
+                          placeholder="Search the uploaded exercise library"
+                        />
+                      </label>
+                      <label>
+                        Final exercise
+                        <input type="text" value="${escapeHtml(finalName)}" readonly />
+                      </label>
+                    </div>
+                    <div class="coach-training-session-row__summary">
+                      <span><strong>Sets</strong>${escapeHtml(String(row.sets || "—"))}</span>
+                      <span><strong>Reps</strong>${escapeHtml(row.repTarget || "—")}</span>
+                      <span><strong>Effort</strong>${escapeHtml(row.intensity || "—")}</span>
+                      <span><strong>Rest</strong>${escapeHtml(row.rest || "—")}</span>
+                      <span><strong>Client log</strong>${escapeHtml(
+                        row.clientEntryMode === "log_reps_rpe"
+                          ? "Reps and RPE"
+                          : row.clientEntryMode === "log_time_distance"
+                            ? "Time or distance"
+                            : row.clientEntryMode === "completion_only"
+                              ? "Completion only"
+                              : "Weight, reps, RPE"
+                      )}</span>
+                    </div>
+                    <details class="coach-training-session-row__advanced">
+                      <summary>Advanced coach overrides</summary>
+                      <div class="coach-training-session-row__advanced-grid">
+                        <label>
+                          Sets
+                          <input type="number" min="0" data-exercise-field="sets" value="${escapeHtml(row.sets)}" placeholder="4" />
+                        </label>
+                        <label>
+                          Reps / target
+                          <input type="text" data-exercise-field="repTarget" value="${escapeHtml(row.repTarget)}" placeholder="8-10" />
+                        </label>
+                        <label>
+                          Effort
+                          <input type="text" data-exercise-field="intensity" value="${escapeHtml(row.intensity)}" placeholder="RPE 7-8" />
+                        </label>
+                        <label>
+                          Rest
+                          <input type="text" data-exercise-field="rest" value="${escapeHtml(row.rest)}" placeholder="90 sec" />
+                        </label>
+                        <label>
+                          Tempo
+                          <input type="text" data-exercise-field="tempo" value="${escapeHtml(row.tempo)}" placeholder="31X1" />
+                        </label>
+                        <label>
+                          Week 1 load (kg)
+                          <input type="number" min="0" step="0.5" data-exercise-field="startingLoad" value="${escapeHtml(row.startingLoad)}" placeholder="60" />
+                        </label>
+                        <label>
+                          Increment (kg)
+                          <input type="number" min="0" step="0.5" data-exercise-field="increment" value="${escapeHtml(row.increment)}" placeholder="2.5" />
+                        </label>
+                        <label>
+                          Client logs
+                          <select data-exercise-field="clientEntryMode">
+                            ${[
+                              ["log_weight_reps_rpe", "Weight, reps, RPE"],
+                              ["log_reps_rpe", "Reps and RPE"],
+                              ["log_time_distance", "Time or distance"],
+                              ["completion_only", "Completion only"],
+                            ]
+                              .map(
+                                ([value, label]) =>
+                                  `<option value="${value}"${value === row.clientEntryMode ? " selected" : ""}>${escapeHtml(label)}</option>`
+                              )
+                              .join("")}
+                          </select>
+                        </label>
+                        <label class="coach-training-session-row__advanced-wide">
+                          Progression rule
+                          <input type="text" data-exercise-field="progressionRule" value="${escapeHtml(row.progressionRule)}" placeholder="Add load only if every set is clean." />
+                        </label>
+                        <label class="coach-training-session-row__advanced-wide">
+                          Coach note
+                          <textarea data-exercise-field="notes" placeholder="Execution cue, substitution, or coaching reminder.">${escapeHtml(row.notes)}</textarea>
+                        </label>
+                      </div>
+                    </details>
+                  </article>
+                `;
+              })
+              .join("")}
+          </div>
+          <div class="section-actions section-actions--compact">
+            <button class="btn btn-ghost" type="button" data-add-exercise="${escapeHtml(selectedDay.id)}">Add Coach Row</button>
+          </div>
+        </article>
+      `
+      : `
+        <article class="coach-training-session-card" data-day-id="${escapeHtml(selectedDay.id)}">
+          <div class="coach-programming-day-card__rest-note">
+            <strong>Rest or recovery day</strong>
+            <p>No session templates are needed here. Keep the coaching intent in the weekly structure notes and move to the next day.</p>
+          </div>
+        </article>
+      `;
+  }
+
+  function renderBuilderDays() {
+    syncTemplateBuilderMode();
+    renderTrainingWorkbookWeekControls();
+    renderTrainingWorkbookPreview();
+    renderTrainingWeekMap();
+    renderTrainingStructureDays();
+    renderTrainingSessionTemplates();
+  }
+
   function resolveTrainingWizardStep(stepKey) {
-    const allowed = new Set(["inputs", "split", "exercises", "generate"]);
+    const allowed = new Set(["inputs", "map", "split", "templates", "generate"]);
     return allowed.has(String(stepKey || "").trim()) ? String(stepKey).trim() : "inputs";
   }
 
@@ -3408,9 +3779,9 @@
     document.body.dataset.trainingBuilderMode =
       resolvedStep === "split"
         ? "split"
-        : resolvedStep === "exercises"
-          ? "exercises"
-          : "all";
+        : resolvedStep === "templates"
+          ? "templates"
+          : resolvedStep;
 
     trainingStepTabNodes.forEach((node) => {
       const isActive = node.dataset.coachTrainingStep === resolvedStep;
@@ -3430,6 +3801,39 @@
         (direction === "back" && resolvedStep === "inputs")
         || (direction === "next" && resolvedStep === "generate");
     });
+  }
+
+  function scrollWizardPanelToTop(panelNode) {
+    if (!panelNode || typeof window === "undefined") {
+      return;
+    }
+
+    const rect = panelNode.getBoundingClientRect();
+    const absoluteTop = window.scrollY + rect.top;
+    const targetTop = Math.max(0, absoluteTop - 24);
+
+    window.requestAnimationFrame(() => {
+      try {
+        window.scrollTo({ top: targetTop, behavior: "smooth" });
+      } catch (_) {
+        window.scrollTo(0, targetTop);
+      }
+    });
+  }
+
+  function scrollTrainingWizardStepToTop(stepKey) {
+    const resolvedStep = resolveTrainingWizardStep(stepKey);
+    const panelNode = trainingStepPanelNodes.find((node) => node.dataset.coachTrainingStepPanel === resolvedStep);
+    scrollWizardPanelToTop(panelNode);
+  }
+
+  function scrollTrainingGeneratedProgramIntoView() {
+    if (!isTrainingWorkspace()) {
+      return;
+    }
+
+    const targetNode = trainingSessionDeskNode || focusNode;
+    scrollWizardPanelToTop(targetNode);
   }
 
   function resolveNutritionWizardStep(stepKey) {
@@ -3477,6 +3881,9 @@
     if (resolvedStep === "inputs") {
       return true;
     }
+    if (!validateTrainingWorkbookInputsForGeneration()) {
+      return false;
+    }
     ensureTrainingWorkbookState({
       preserveWeek: true,
       clearOnMissing: true,
@@ -3485,7 +3892,7 @@
   }
 
   function moveTrainingWizardStep(direction) {
-    const steps = ["inputs", "split", "exercises", "generate"];
+    const steps = ["inputs", "map", "split", "templates", "generate"];
     const currentIndex = steps.indexOf(resolveTrainingWizardStep(state.trainingWizard.activeStep));
     const nextIndex = Math.min(steps.length - 1, Math.max(0, currentIndex + Number(direction || 0)));
     const nextStep = steps[nextIndex];
@@ -3493,6 +3900,7 @@
       return;
     }
     setActiveTrainingWizardStep(nextStep);
+    scrollTrainingWizardStepToTop(nextStep);
   }
 
   function buildNutritionWorkbookInputs() {
@@ -5818,7 +6226,28 @@
       }
       return {
         ...day,
-        exerciseRows: day.exerciseRows.map((row) => (row.id === exerciseId ? { ...row, [field]: value } : row)),
+        exerciseRows: day.exerciseRows.map((row) => {
+          if (row.id !== exerciseId) {
+            return row;
+          }
+          if (field === "overrideName") {
+            const overrideName = compactText(value);
+            return {
+              ...row,
+              overrideName,
+              name: overrideName || compactText(row.defaultName || row.name),
+            };
+          }
+          if (field === "name") {
+            const defaultName = compactText(value);
+            return {
+              ...row,
+              defaultName,
+              name: compactText(row.overrideName) || defaultName,
+            };
+          }
+          return { ...row, [field]: value };
+        }),
       };
     });
   }
@@ -6233,16 +6662,31 @@
   function normalizeExerciseRow(input, index) {
     const row = input && typeof input === "object" ? input : {};
     const metadata = row.metadata && typeof row.metadata === "object" ? row.metadata : {};
+    const fallbackName =
+      row.name
+      || row.nameOverride
+      || row.name_override
+      || row.exerciseName
+      || row.exercise_name
+      || "";
+    const defaultName = compactText(
+      row.defaultName
+      || row.default_name
+      || metadata.default_exercise_name
+      || fallbackName
+    );
+    const overrideName = compactText(
+      row.overrideName
+      || row.override_name
+      || metadata.coach_exercise_override
+      || ""
+    );
     return createEmptyExerciseRow(index + 1, {
       id: compactText(row.id) || buildLocalId(`exercise-${index + 1}`),
       blockLabel: row.blockLabel || row.block_label || "",
-      name:
-        row.name
-        || row.nameOverride
-        || row.name_override
-        || row.exerciseName
-        || row.exercise_name
-        || "",
+      defaultName,
+      overrideName,
+      name: compactText(overrideName || fallbackName || defaultName),
       sets: row.sets ?? "",
       repTarget: row.repTarget || row.rep_target || formatExerciseRepTarget(row),
       intensity: row.intensity || formatExerciseIntensityTarget(row),
@@ -6449,9 +6893,276 @@
         trainingEditNoteNode.innerHTML = `
           <strong>Editing a live client block</strong>
           <p>Review the workbook inputs, update the weeks, then generate to publish a refreshed live version while preserving prior logged history.</p>
-        `;
+      `;
       }
     }
+  }
+
+  function resolveTrainingSessionTone(value) {
+    const normalized = String(value || "").trim().toLowerCase();
+    if (["completed", "approved", "active"].includes(normalized)) {
+      return "success";
+    }
+    if (["partial", "available", "paused"].includes(normalized)) {
+      return "warning";
+    }
+    if (["missed", "late"].includes(normalized)) {
+      return "alert";
+    }
+    return "neutral";
+  }
+
+  function formatTrainingSessionNumber(value, suffix = "") {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) {
+      return "";
+    }
+    return `${numeric.toLocaleString("en-MY", {
+      minimumFractionDigits: numeric % 1 ? 1 : 0,
+      maximumFractionDigits: numeric % 1 ? 1 : 0,
+    })}${suffix}`;
+  }
+
+  function buildCoachSessionExerciseLabel(exercise, index) {
+    return compactText(
+      exercise?.name_override
+      || exercise?.exercise_library?.name
+      || exercise?.metadata?.exercise_name
+      || exercise?.notes
+      || `Exercise ${index + 1}`
+    );
+  }
+
+  function buildCoachSessionTarget(exercise) {
+    const parts = [];
+    if (exercise?.sets) {
+      parts.push(`${exercise.sets} sets`);
+    }
+    if (exercise?.reps) {
+      parts.push(`${exercise.reps} reps`);
+    } else if (exercise?.rep_range_min || exercise?.rep_range_max) {
+      parts.push(`${exercise.rep_range_min || "?"}-${exercise.rep_range_max || "?"} reps`);
+    }
+    if (exercise?.prescribed_weight_kg !== null && exercise?.prescribed_weight_kg !== undefined && exercise?.prescribed_weight_kg !== "") {
+      parts.push(`Target ${formatTrainingSessionNumber(exercise.prescribed_weight_kg, " kg")}`);
+    }
+    if (exercise?.intensity_mode && exercise?.intensity_value !== null && exercise?.intensity_value !== undefined) {
+      parts.push(`${String(exercise.intensity_mode).toUpperCase()} ${exercise.intensity_value}`);
+    }
+    if (exercise?.rest_time_seconds) {
+      parts.push(`${formatCount(Math.round(Number(exercise.rest_time_seconds || 0)))} sec rest`);
+    }
+    return parts.join(" • ") || "Coach target is still being set.";
+  }
+
+  function resolveCoachSessionDefaultValue(exercise, exerciseLog, field) {
+    if (field === "completedSets") {
+      return exerciseLog?.completed_sets ?? exercise?.sets ?? "";
+    }
+    if (field === "completedReps") {
+      return exerciseLog?.completed_reps ?? exercise?.reps ?? exercise?.rep_range_max ?? exercise?.rep_range_min ?? "";
+    }
+    if (field === "loggedWeightKg") {
+      return exerciseLog?.logged_weight_kg ?? exercise?.prescribed_weight_kg ?? "";
+    }
+    if (field === "loggedRpe") {
+      if (exerciseLog?.logged_rpe !== null && exerciseLog?.logged_rpe !== undefined && exerciseLog?.logged_rpe !== "") {
+        return exerciseLog.logged_rpe;
+      }
+      if (String(exercise?.intensity_mode || "").trim().toLowerCase() === "rpe") {
+        return exercise?.intensity_value ?? "";
+      }
+      return "";
+    }
+    if (field === "exerciseNote") {
+      return exerciseLog?.exercise_note || "";
+    }
+    return "";
+  }
+
+  function renderTrainingSessionDesk(derived) {
+    if (!trainingSessionDeskNode || !trainingSessionEmptyStateNode || !trainingSessionBodyNode || !trainingSessionSummaryNode || !trainingSessionDayPickerNode || !trainingSessionForm || !trainingSessionSheetNode) {
+      return;
+    }
+
+    const client = derived.selectedTrainingClient;
+    if (!client) {
+      trainingSessionEmptyStateNode.hidden = false;
+      trainingSessionBodyNode.hidden = true;
+      trainingSessionForm.hidden = true;
+      trainingSessionEmptyStateNode.innerHTML = `
+        <strong>Select a client with a live block</strong>
+        <p>Use the client picker at the top of the training page. The coach session sheet appears here once that client has a live training assignment.</p>
+      `;
+      return;
+    }
+
+    if (!client.activeProgram) {
+      trainingSessionEmptyStateNode.hidden = false;
+      trainingSessionBodyNode.hidden = true;
+      trainingSessionForm.hidden = true;
+      trainingSessionEmptyStateNode.innerHTML = `
+        <strong>${escapeHtml(client.preferredName || client.displayName || "This client")} does not have an active block yet</strong>
+        <p>Generate or assign a training block first. After that, this desk will let you log the coached session in person without sending the client to their own sheet.</p>
+      `;
+      return;
+    }
+
+    const days = derived.selectedTrainingDays || [];
+    if (!days.length) {
+      trainingSessionEmptyStateNode.hidden = false;
+      trainingSessionBodyNode.hidden = true;
+      trainingSessionForm.hidden = true;
+      trainingSessionEmptyStateNode.innerHTML = `
+        <strong>No live training days are attached yet</strong>
+        <p>The client has an active block, but the scheduled day rows are still empty. Generate the block first, then this coach session desk will open automatically.</p>
+      `;
+      return;
+    }
+
+    const day = derived.selectedTrainingDay;
+    const workoutLog = derived.selectedWorkoutLog;
+    const exercises = derived.selectedTrainingExercises || [];
+    const reviewTone = resolveTrainingSessionTone(workoutLog?.review_status || day?.status || "available");
+
+    trainingSessionEmptyStateNode.hidden = true;
+    trainingSessionBodyNode.hidden = false;
+    trainingSessionForm.hidden = !day;
+    trainingSessionSummaryNode.innerHTML = `
+        <div class="coach-training-session-desk__summary-copy">
+          <div>
+            <h3>${escapeHtml(client.preferredName || client.displayName || "Client")}</h3>
+            <p>${escapeHtml(client.activeProgram.title || "Active block")}</p>
+          </div>
+          <div class="coach-training-session-desk__summary-meta">
+          <span class="chip chip--tone-${escapeHtml(compactText(client.riskTone || "neutral") || "neutral")}">${escapeHtml(client.riskLabel || "Stable")}</span>
+          <span class="chip chip--tone-${escapeHtml(resolveTrainingSessionTone(day?.status || "available"))}">${escapeHtml(day ? toTitleCase(day.status || "available") : "Select day")}</span>
+          <span class="chip chip--tone-${escapeHtml(reviewTone)}">${escapeHtml(workoutLog ? `Review ${toTitleCase(workoutLog.review_status || "approved")}` : "No session logged yet")}</span>
+          </div>
+        </div>
+      <div class="coach-training-session-desk__summary-stats">
+        <span>${escapeHtml(`${client.weeklyWorkoutCount} workout log${client.weeklyWorkoutCount === 1 ? "" : "s"} this week`)}</span>
+        <span>${escapeHtml(`${days.length} schedulable day${days.length === 1 ? "" : "s"} in this block`)}</span>
+        <span>${escapeHtml(workoutLog?.completed_at ? `Last saved ${formatDateTime(workoutLog.completed_at)}` : "Use this when the client trains with you in person")}</span>
+      </div>
+    `;
+
+    trainingSessionDayPickerNode.innerHTML = days
+      .map((entry) => {
+        const normalizedStatus = String(entry?.status || "").trim().toLowerCase();
+        return `
+          <button
+            class="coach-training-live-session-day${entry.id === state.trainingSession.activeDayId ? " is-active" : ""}"
+            type="button"
+            data-coach-session-day="${escapeHtml(entry.id)}"
+          >
+            <span>${escapeHtml(formatDate(entry.scheduled_date))}</span>
+            <strong>${escapeHtml(entry.title || `Day ${entry.day_number || ""}`)}</strong>
+            <small>${escapeHtml(entry.focus || toTitleCase(entry.day_type || "workout"))}</small>
+            <em>${escapeHtml(toTitleCase(normalizedStatus || "available"))}</em>
+          </button>
+        `;
+      })
+      .join("");
+
+    if (!day) {
+      trainingSessionSheetNode.innerHTML = `
+        <article class="dashboard-note dashboard-note--placeholder">
+          <strong>Select a training day</strong>
+          <p>Pick the day you just coached and the live session sheet will open here.</p>
+        </article>
+      `;
+      return;
+    }
+
+    const feedbackText = workoutLog
+      ? `Latest save: ${toTitleCase(workoutLog.log_status || "completed")} • Review ${toTitleCase(workoutLog.review_status || "approved")}`
+      : "Coach-entered sessions are saved as approved and update the client planner immediately.";
+    const statusField = trainingSessionForm.elements.namedItem("logStatus");
+    const adherenceField = trainingSessionForm.elements.namedItem("adherenceScore");
+    const coachFeedbackField = trainingSessionForm.elements.namedItem("coachFeedback");
+    const clientFeedbackField = trainingSessionForm.elements.namedItem("clientFeedback");
+    if (statusField) {
+      statusField.value = compactText(workoutLog?.log_status || "completed") || "completed";
+    }
+    if (adherenceField) {
+      adherenceField.value = workoutLog?.adherence_score ?? "";
+    }
+    if (coachFeedbackField) {
+      coachFeedbackField.value = workoutLog?.coach_feedback || "";
+    }
+    if (clientFeedbackField) {
+      clientFeedbackField.value = workoutLog?.client_feedback || "";
+    }
+    if (trainingSessionFeedbackNode) {
+      setInlineFeedback(trainingSessionFeedbackNode, feedbackText, false);
+    }
+    trainingSessionForm.dataset.coachTrainingSessionDay = day.id;
+
+    trainingSessionSheetNode.innerHTML = `
+      <div class="coach-training-session-form__sheet-head">
+        <div>
+          <span class="kicker kicker--accent">Live Session Sheet</span>
+          <h3>${escapeHtml(day.title || `Day ${day.day_number || ""}`)}</h3>
+          <p>${escapeHtml(day.focus || toTitleCase(day.day_type || "workout"))}</p>
+        </div>
+        ${day.notes ? `<p class="coach-training-session-form__day-note">${escapeHtml(day.notes)}</p>` : ""}
+      </div>
+      <div class="coach-training-session-form__table-shell">
+        <table class="coach-training-session-table">
+          <thead>
+            <tr>
+              <th>Block</th>
+              <th>Exercise</th>
+              <th>Coach target</th>
+              <th>Load (kg)</th>
+              <th>Sets</th>
+              <th>Reps</th>
+              <th>RPE</th>
+              <th>Coach note</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${
+              exercises.length
+                ? exercises
+                    .map((exercise, index) => {
+                      const exerciseLog = derived.selectedWorkoutExerciseLogByExerciseId.get(exercise.id) || null;
+                      return `
+                        <tr>
+                          <td data-cell-label="Block">
+                            <input type="hidden" name="exerciseId" value="${escapeHtml(exercise.id)}" />
+                            ${escapeHtml(exercise.block_label || `A${index + 1}`)}
+                          </td>
+                          <td data-cell-label="Exercise">
+                            <strong>${escapeHtml(buildCoachSessionExerciseLabel(exercise, index))}</strong>
+                            ${exercise.notes ? `<small>${escapeHtml(exercise.notes)}</small>` : ""}
+                          </td>
+                          <td data-cell-label="Coach target">${escapeHtml(buildCoachSessionTarget(exercise))}</td>
+                          <td data-cell-label="Load (kg)"><input type="number" name="loggedWeightKg" min="0" step="0.5" value="${escapeHtml(resolveCoachSessionDefaultValue(exercise, exerciseLog, "loggedWeightKg"))}" /></td>
+                          <td data-cell-label="Sets"><input type="number" name="completedSets" min="0" step="1" value="${escapeHtml(resolveCoachSessionDefaultValue(exercise, exerciseLog, "completedSets"))}" /></td>
+                          <td data-cell-label="Reps"><input type="number" name="completedReps" min="0" step="1" value="${escapeHtml(resolveCoachSessionDefaultValue(exercise, exerciseLog, "completedReps"))}" /></td>
+                          <td data-cell-label="RPE"><input type="number" name="loggedRpe" min="0" max="10" step="0.5" value="${escapeHtml(resolveCoachSessionDefaultValue(exercise, exerciseLog, "loggedRpe"))}" /></td>
+                          <td data-cell-label="Coach note"><input type="text" name="exerciseNote" value="${escapeHtml(resolveCoachSessionDefaultValue(exercise, exerciseLog, "exerciseNote"))}" placeholder="Technique, pain, substitutions, load note." /></td>
+                        </tr>
+                      `;
+                    })
+                    .join("")
+                : `
+                  <tr>
+                    <td colspan="8">
+                      <div class="dashboard-note dashboard-note--placeholder">
+                        <strong>No exercise rows are attached to this day yet</strong>
+                        <p>Generate or update the block first. Once the session rows exist, you can log the coached session from here.</p>
+                      </div>
+                    </td>
+                  </tr>
+                `
+            }
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
   function populateAssignmentSportProfileFields(profile = {}) {
@@ -6593,6 +7304,8 @@
       dirty: Boolean(options.dirty),
     };
     renderTrainingWorkbookWeekControls();
+    renderTrainingWorkbookPreview();
+    renderTrainingWeekMap();
   }
 
   function hydrateTrainingWorkbookState(workbook, options = {}) {
@@ -6648,7 +7361,9 @@
     const rows = Array.isArray(day?.exerciseRows) ? day.exerciseRows : [];
     return rows
       .map((row, index) => {
-        const name = compactText(row?.name);
+        const defaultName = compactText(row?.defaultName || row?.name);
+        const overrideName = compactText(row?.overrideName);
+        const name = compactText(overrideName || row?.name || defaultName);
         if (!name) {
           return null;
         }
@@ -6681,6 +7396,8 @@
           progressiveOverloadGoal: progressionRule,
           metadata: {
             exercise_name: name,
+            ...(defaultName ? { default_exercise_name: defaultName } : {}),
+            ...(overrideName ? { coach_exercise_override: overrideName } : {}),
             client_entry_mode: clientEntryMode,
             ...(incrementKg !== null ? { increment_kg: incrementKg } : {}),
             ...(progressionRule ? { progression_rule: progressionRule } : {}),
@@ -7311,8 +8028,10 @@
     if (scheduleCheckinClientNode) {
       scheduleCheckinClientNode.value = clientId || "";
     }
+    state.trainingSession.activeDayId = "";
     const derived = deriveWorkspace();
     renderClientFocus(derived);
+    renderTrainingSessionDesk(derived);
     renderNutritionAssignmentOptions(derived);
   }
 
@@ -7622,8 +8341,9 @@
     setInlineFeedback(trainingGenerateFeedbackNode, "Generating the client program...", false);
 
     try {
+      const shouldRebuildWorkbook = Boolean(state.trainingWorkbook?.dirty || !hasTrainingWorkbookWeeks());
       ensureTrainingWorkbookState({
-        force: true,
+        force: shouldRebuildWorkbook,
         preserveWeek: true,
         clearOnMissing: false,
       });
@@ -7633,7 +8353,12 @@
       const assignmentTitle = String(formData.get("assignmentTitle") || "").trim();
       const assignmentObjective = String(formData.get("assignmentObjective") || "").trim();
       const assignmentNotes = String(formData.get("assignmentNotes") || "").trim();
-      const replaceAssignmentId = String(formData.get("activeAssignmentId") || "").trim();
+      const replaceAssignmentId = compactText(
+        activeAssignmentField?.value
+        || state.editingAssignment?.id
+        || formData.get("activeAssignmentId")
+        || ""
+      );
       const athleteProfile = buildAssignmentSportProfile(formData);
       const athleteEngine = resolveAthleteEngine();
       const workbook = athleteProfile && athleteEngine
@@ -7687,14 +8412,17 @@
       setInlineFeedback(
         trainingGenerateFeedbackNode,
         replaceAssignmentId
-          ? "Live block refreshed, saved, and reassigned without wiping the previous logged history."
-          : "Program generated, saved, and assigned to the selected client.",
+          ? "Live block refreshed and reassigned. The updated client block is ready below."
+          : "Program generated, saved, and assigned. The live client block is ready below.",
         false
       );
       setStatus("Training block generated and assigned successfully.", false);
       await fetchPlannerData(true);
+      const derived = deriveWorkspace();
       renderAssignmentWorkbookPreview();
-      renderClientFocus(deriveWorkspace());
+      renderClientFocus(derived);
+      renderTrainingSessionDesk(derived);
+      scrollTrainingGeneratedProgramIntoView();
     } catch (error) {
       setInlineFeedback(
         trainingGenerateFeedbackNode,
@@ -8274,6 +9002,82 @@
     }
   }
 
+  function collectCoachTrainingSessionExerciseLogs(form) {
+    if (!form) {
+      return [];
+    }
+
+    return Array.from(form.querySelectorAll("tbody tr"))
+      .map((row, index) => {
+        const clientProgramDayExerciseId = compactText(row.querySelector('[name="exerciseId"]')?.value);
+        if (!clientProgramDayExerciseId) {
+          return null;
+        }
+
+        return {
+          clientProgramDayExerciseId,
+          sortOrder: index,
+          loggedWeightKg: row.querySelector('[name="loggedWeightKg"]')?.value || "",
+          completedSets: row.querySelector('[name="completedSets"]')?.value || "",
+          completedReps: row.querySelector('[name="completedReps"]')?.value || "",
+          loggedRpe: row.querySelector('[name="loggedRpe"]')?.value || "",
+          exerciseNote: row.querySelector('[name="exerciseNote"]')?.value || "",
+        };
+      })
+      .filter(Boolean);
+  }
+
+  async function handleCoachTrainingSessionSubmit(event) {
+    event.preventDefault();
+    if (!trainingSessionForm) {
+      return;
+    }
+
+    const clientProgramDayId = compactText(trainingSessionForm.dataset.coachTrainingSessionDay);
+    if (!clientProgramDayId) {
+      setInlineFeedback(trainingSessionFeedbackNode, "Choose a live training day before saving the coach session.", true);
+      return;
+    }
+
+    const formData = new FormData(trainingSessionForm);
+    const submitButton = trainingSessionForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.disabled = true;
+    }
+    setInlineFeedback(trainingSessionFeedbackNode, "Saving the coach session into the live client sheet...", false);
+
+    try {
+      await plannerRequest("/.netlify/functions/log-planner-completion", {
+        method: "POST",
+        body: {
+          type: "workout_log",
+          clientProgramDayId,
+          logStatus: compactText(formData.get("logStatus")) || "completed",
+          adherenceScore: formData.get("adherenceScore") ? Number(formData.get("adherenceScore")) : null,
+          clientFeedback: compactText(formData.get("clientFeedback")),
+          coachFeedback: compactText(formData.get("coachFeedback")),
+          exerciseLogs: collectCoachTrainingSessionExerciseLogs(trainingSessionForm),
+        },
+      });
+      setInlineFeedback(
+        trainingSessionFeedbackNode,
+        "Coach session saved. The live client sheet, reviews, rewards, and planner timeline are now updated.",
+        false
+      );
+      await fetchPlannerData(true);
+    } catch (error) {
+      setInlineFeedback(
+        trainingSessionFeedbackNode,
+        error?.message || "Unable to save the coach session right now.",
+        true
+      );
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+      }
+    }
+  }
+
   function renderAll() {
     const derived = deriveWorkspace();
     const hasRoster = hasAssignedRoster(derived);
@@ -8298,6 +9102,7 @@
       renderCalendarAttention(derived);
       renderExerciseLibraryResults();
       renderAssignmentWorkbookPreview();
+      renderTrainingSessionDesk(derived);
       return;
     }
     renderMetrics(derived);
@@ -8355,7 +9160,9 @@
       { table: "program_templates", filter: `coach_id=eq.${coachId}` },
       { table: "client_program_assignments", filter: `coach_id=eq.${coachId}` },
       { table: "client_program_days" },
+      { table: "client_program_day_exercises" },
       { table: "client_workout_logs", filter: `coach_id=eq.${coachId}` },
+      { table: "client_workout_exercise_logs" },
       { table: "client_nutrition_plans", filter: `coach_id=eq.${coachId}` },
       { table: "client_nutrition_logs", filter: `coach_id=eq.${coachId}` },
       { table: "client_meal_entries", filter: `coach_id=eq.${coachId}` },
@@ -8539,6 +9346,9 @@
             exerciseField,
             target.value
           );
+          if (target.dataset.exerciseOverrideSearch === "true") {
+            searchTrainingExerciseSuggestions(target.value || "").catch(() => null);
+          }
           return;
         }
         if (!dayCard || !field) {
@@ -8560,7 +9370,7 @@
             exerciseField,
             target.value
           );
-          if (exerciseField === "name") {
+          if (exerciseField === "name" || exerciseField === "overrideName") {
             renderBuilderDays();
           }
           return;
@@ -8575,6 +9385,13 @@
       });
 
       builderNode.addEventListener("click", (event) => {
+        const selectDayButton = event.target.closest("[data-select-training-day]");
+        if (selectDayButton) {
+          state.trainingWizard.activeDayId = selectDayButton.dataset.selectTrainingDay || "";
+          renderTrainingSessionTemplates();
+          return;
+        }
+
         const addExerciseButton = event.target.closest("[data-add-exercise]");
         if (addExerciseButton) {
           addBuilderExercise(addExerciseButton.dataset.addExercise || "");
@@ -8607,7 +9424,7 @@
       });
     });
 
-    [trainingWeekTabsSplitNode, trainingWeekTabsExercisesNode].filter(Boolean).forEach((node) => {
+    [trainingWeekTabsSplitNode, trainingWeekTabsExercisesNode, trainingWeekMapNode].filter(Boolean).forEach((node) => {
       node.addEventListener("click", (event) => {
         const weekButton = event.target.closest("[data-training-workbook-week]");
         if (!weekButton) {
@@ -9112,9 +9929,26 @@
       renderAssignmentWorkbookPreview();
     });
 
+    trainingSessionDayPickerNode?.addEventListener("click", (event) => {
+      const dayButton = event.target.closest("[data-coach-session-day]");
+      if (!dayButton) {
+        return;
+      }
+      state.trainingSession.activeDayId = dayButton.dataset.coachSessionDay || "";
+      renderTrainingSessionDesk(deriveWorkspace());
+    });
+
+    trainingSessionForm?.addEventListener("submit", (event) => {
+      handleCoachTrainingSessionSubmit(event).catch(() => null);
+    });
+
     assignAthleteProfileNode?.addEventListener("change", () => {
       toggleAthleteCalculatorGroups();
       renderAssignmentWorkbookPreview();
+      if (compactText(assignAthleteProfileNode?.value)) {
+        setStatus("Athlete profile captured. Move to Step 2 to review the generated block map.", false);
+        syncTemplateBuilderMode();
+      }
     });
 
     assignForm?.addEventListener("input", (event) => {

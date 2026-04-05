@@ -1352,12 +1352,52 @@
     "lucasraj93@gmail.com": "./assets/CRM%20Pictures/v2/western_male/aries-male.png",
   };
 
-  const TUTORIAL_VERSION = "20260329-app-shell-guided2";
+  const TUTORIAL_VERSION = "20260405-app-shell-guided3";
   const MESSAGE_CATEGORY_PATTERN = /message|whatsapp|email|follow|booking|session|calendar|lead/iu;
   const TIME_SLOT_START_HOUR = 6;
   const TIME_SLOT_END_HOUR = 22;
   const TIME_SLOT_INTERVAL_MINUTES = 30;
   const SHELL_REFRESH_DEBOUNCE_MS = 180;
+  const NAV_ICON_MAP = {
+    home:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5"></path><path d="M6.5 9.5V20h11V9.5"></path><path d="M10 20v-5h4v5"></path></svg>',
+    clients:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"></path><path d="M16.5 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path><path d="M3.5 19c.8-2.6 2.9-4 6-4s5.2 1.4 6 4"></path><path d="M14.5 18.5c.6-1.8 2-2.8 4.2-3"></path></svg>',
+    client_xp:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.2 4.6 5.1.7-3.7 3.6.9 5.1-4.5-2.4-4.5 2.4.9-5.1-3.7-3.6 5.1-.7Z"></path></svg>',
+    coach_xp:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.2 4.6 5.1.7-3.7 3.6.9 5.1-4.5-2.4-4.5 2.4.9-5.1-3.7-3.6 5.1-.7Z"></path><path d="M12 14v7"></path></svg>',
+    training:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h3"></path><path d="M17 10h3"></path><path d="M7 8v4"></path><path d="M17 8v4"></path><path d="M10 7v6"></path><path d="M14 7v6"></path><path d="M10 10h4"></path></svg>',
+    nutrition:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20c4.4 0 8-3.1 8-7s-3.6-7-8-7-8 3.1-8 7 3.6 7 8 7Z"></path><path d="M12 20c-1.6-1.7-2.4-4-2.4-6.8S10.4 8 12 6"></path><path d="M12 20c1.6-1.7 2.4-4 2.4-6.8S13.6 8 12 6"></path><path d="M6.5 10.5h11"></path></svg>',
+    programming:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20c4.4 0 8-3.1 8-7s-3.6-7-8-7-8 3.1-8 7 3.6 7 8 7Z"></path><path d="M12 20c-1.6-1.7-2.4-4-2.4-6.8S10.4 8 12 6"></path><path d="M12 20c1.6-1.7 2.4-4 2.4-6.8S13.6 8 12 6"></path><path d="M6.5 10.5h11"></path></svg>',
+    health:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-6.5-4.2-8.3-7.8C2.3 9.5 4 6 7.5 6c1.9 0 3.3 1 4.5 2.6C13.2 7 14.6 6 16.5 6 20 6 21.7 9.5 20.3 12.2 18.5 15.8 12 20 12 20Z"></path><path d="M8 12h2l1.2-2.2L13 14h3"></path></svg>',
+    progress:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5h15"></path><path d="M7.5 16V11"></path><path d="M12 16V7"></path><path d="M16.5 16v-4"></path></svg>',
+    schedule:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3"></path><path d="M17 3v3"></path><path d="M4 8h16"></path><path d="M5.5 5.5h13A1.5 1.5 0 0 1 20 7v11.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5V7A1.5 1.5 0 0 1 5.5 5.5Z"></path><path d="M8 12h3"></path><path d="M8 16h6"></path></svg>',
+    commissions:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18V9"></path><path d="M12 18V5"></path><path d="M19 18v-7"></path><path d="M3.5 20.5h17"></path></svg>',
+    financials:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18V9"></path><path d="M12 18V5"></path><path d="M19 18v-7"></path><path d="M3.5 20.5h17"></path></svg>',
+    planner:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path><path d="M8 17h7"></path></svg>',
+    packages:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5-8 4.5Z"></path><path d="M4 8.5V16l8 4 8-4V8.5"></path><path d="M12 13v7"></path></svg>',
+    rewards:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 14.3 8.6l5 .7-3.6 3.5.9 5-4.6-2.4-4.6 2.4.9-5-3.6-3.5 5-.7Z"></path></svg>',
+    leads:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19h12"></path><path d="M8.5 19v-3.5a3.5 3.5 0 0 1 7 0V19"></path><path d="M12 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"></path></svg>',
+    profile:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a3.8 3.8 0 1 0 0-7.6 3.8 3.8 0 0 0 0 7.6Z"></path><path d="M5 19c1-3 3.4-4.7 7-4.7s6 1.7 7 4.7"></path></svg>',
+    settings:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path><path d="M19.4 15.1 21 12l-1.6-3.1-3.1-.5-2-2.7H9.7l-2 2.7-3.1.5L3 12l1.6 3.1 3.1.5 2 2.7h4.6l2-2.7Z"></path></svg>',
+    default:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>',
+  };
 
   const ROLE_SHELLS = {
     client: {
@@ -1365,7 +1405,10 @@
       copy: "Packages, schedule, rewards, and settings in one private workspace.",
       nav: [
         { key: "home", href: "/client-dashboard.html", label: "Home" },
-        { key: "planner", href: "/client-planner.html", label: "Planner" },
+        { key: "training", href: "/client-planner.html?tab=training", label: "Training" },
+        { key: "nutrition", href: "/client-planner.html?tab=nutrition", label: "Nutrition" },
+        { key: "health", href: "/client-planner.html?tab=health", label: "Health" },
+        { key: "progress", href: "/client-planner.html?tab=progress", label: "Progress" },
         { key: "packages", href: "/client-packages.html", label: "Packages" },
         { key: "schedule", href: "/client-schedule.html", label: "Schedule" },
         { key: "rewards", href: "/client-rewards.html", label: "Rewards" },
@@ -1613,6 +1656,32 @@
   );
 
   const pageKey = body.dataset.accountPage || inferPageKey(role, window.location.pathname);
+  function resolveActiveShellPageKey() {
+    if (role === "client") {
+      const filename = String(window.location.pathname || "").split("/").pop().toLowerCase();
+      if (filename === "client-planner.html") {
+        try {
+          const params = new URLSearchParams(window.location.search || "");
+          const requestedTab = String(params.get("tab") || "").trim().toLowerCase();
+          const allowedTabs = new Set(["training", "nutrition", "health", "progress"]);
+          return allowedTabs.has(requestedTab) ? requestedTab : "training";
+        } catch (_) {
+          return "training";
+        }
+      }
+    }
+
+    return pageKey;
+  }
+
+  function isShellNavItemActive(item) {
+    return String(item?.key || "") === resolveActiveShellPageKey();
+  }
+
+  function resolveCurrentNavItem() {
+    return shellConfig.nav.find((item) => isShellNavItemActive(item)) || shellConfig.nav[0];
+  }
+
   const sidebarNode = document.getElementById("account-sidebar") || document.querySelector(".crm-sidebar");
   const appearanceGridNode = document.getElementById("account-appearance-presets");
   const appearanceFeedbackNode = document.getElementById("account-appearance-feedback");
@@ -1629,6 +1698,7 @@
   const avatarApplyButtonNode = document.getElementById("account-avatar-apply");
   const accountEmailNodes = Array.from(document.querySelectorAll("[data-account-email], #admin-email-display"));
   const securityEmailNodes = Array.from(document.querySelectorAll("[data-security-email]"));
+  const securityUsernameNodes = Array.from(document.querySelectorAll("[data-security-username]"));
   const securityRoleNodes = Array.from(document.querySelectorAll("[data-security-role]"));
   const securityPasswordFormNode = document.getElementById("account-security-password-form");
   const securityResetButtonNode = document.getElementById("account-security-reset");
@@ -1755,6 +1825,12 @@
 
     securityEmailNodes.forEach((node) => {
       node.textContent = email || roleText.toLowerCase();
+    });
+
+    securityUsernameNodes.forEach((node) => {
+      if (node instanceof HTMLInputElement) {
+        node.value = email;
+      }
     });
 
     securityRoleNodes.forEach((node) => {
@@ -2193,6 +2269,38 @@
     );
   }
 
+  const OPEN_SELECT_SURFACE_SELECTOR = [
+    ".contact-form",
+    ".account-form",
+    ".xp-coach-form-grid",
+    ".hitpay-report-filter-bar",
+    ".crm-selector-form",
+    ".lead-filter-bar",
+    ".coach-training-topbar",
+    ".crm-page-head",
+    ".crm-page-tabs",
+    ".xp-coach-page-tabs",
+    ".client-planner-workspace-nav",
+    ".dashboard-table-wrap",
+    ".section.dashboard-section",
+    ".card",
+    "label",
+  ].join(", ");
+
+  function syncOpenSelectSurfaceState(activeWrapper) {
+    document.querySelectorAll(".crm-has-open-select").forEach((node) => {
+      node.classList.remove("crm-has-open-select");
+    });
+
+    let current = activeWrapper instanceof HTMLElement ? activeWrapper : null;
+    while (current instanceof HTMLElement) {
+      if (current.matches(OPEN_SELECT_SURFACE_SELECTOR)) {
+        current.classList.add("crm-has-open-select");
+      }
+      current = current.parentElement;
+    }
+  }
+
   function closeCustomSelect(wrapper) {
     if (!(wrapper instanceof HTMLElement)) {
       return;
@@ -2207,6 +2315,8 @@
     if (menu instanceof HTMLElement) {
       menu.hidden = true;
     }
+    const nextOpenWrapper = document.querySelector(".crm-select.is-open");
+    syncOpenSelectSurfaceState(nextOpenWrapper instanceof HTMLElement ? nextOpenWrapper : null);
   }
 
   function closeCustomSelects(exceptWrapper) {
@@ -2313,6 +2423,7 @@
     if (trigger instanceof HTMLButtonElement) {
       trigger.setAttribute("aria-expanded", "true");
     }
+    syncOpenSelectSurfaceState(wrapper);
     if (menu instanceof HTMLElement) {
       menu.hidden = false;
       const options = Array.from(menu.querySelectorAll(".crm-select__option:not(:disabled)"));
@@ -3005,11 +3116,18 @@
     const requestedWidth = Number(preferredWidth || 420);
     const maxWidth = Math.max(280, window.innerWidth - viewportPadding * 2);
     const panelWidth = Math.min(requestedWidth, maxWidth);
+    const maxHeight = Math.max(320, window.innerHeight - viewportPadding * 2);
     const fallbackAnchor = {
       right: window.innerWidth - viewportPadding,
-      bottom: 70,
+      bottom: viewportPadding + 72,
+      top: viewportPadding + 72,
     };
     const resolvedAnchor = anchorRect || shellState.activeOverlayAnchor || fallbackAnchor;
+
+    panelNode.style.width = `${panelWidth}px`;
+    panelNode.style.maxHeight = `${maxHeight}px`;
+
+    const measuredHeight = Math.min(panelNode.scrollHeight || panelNode.offsetHeight || maxHeight, maxHeight);
     const left = Math.max(
       viewportPadding,
       Math.min(
@@ -3017,17 +3135,54 @@
         window.innerWidth - panelWidth - viewportPadding
       )
     );
-    const top = Math.max(
-      viewportPadding,
-      Math.min(
-        (resolvedAnchor.bottom || fallbackAnchor.bottom) + 10,
-        window.innerHeight - viewportPadding - 180
-      )
-    );
 
-    panelNode.style.width = `${panelWidth}px`;
-    panelNode.style.left = `${left}px`;
-    panelNode.style.top = `${top}px`;
+    const belowTop = (resolvedAnchor.bottom || fallbackAnchor.bottom) + 10;
+    const aboveTop = (resolvedAnchor.top || fallbackAnchor.top) - measuredHeight - 10;
+    const preferredBelowFits = belowTop + measuredHeight <= window.innerHeight - viewportPadding;
+    const preferredAboveFits = aboveTop >= viewportPadding;
+
+    let top;
+    if (preferredBelowFits) {
+      top = belowTop;
+    } else if (preferredAboveFits) {
+      top = aboveTop;
+    } else {
+      top = Math.max(
+        viewportPadding,
+        Math.min(
+          belowTop,
+          window.innerHeight - measuredHeight - viewportPadding
+        )
+      );
+    }
+
+    const applyPosition = (resolvedTop) => {
+      panelNode.style.left = `${left}px`;
+      panelNode.style.top = `${resolvedTop}px`;
+    };
+
+    applyPosition(top);
+
+    if (typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(() => {
+        const actualRect = panelNode.getBoundingClientRect();
+        if (!actualRect || actualRect.height <= 0) {
+          return;
+        }
+
+        const correctedTop = Math.max(
+          viewportPadding,
+          Math.min(
+            actualRect.top,
+            window.innerHeight - actualRect.height - viewportPadding
+          )
+        );
+
+        if (Math.abs(correctedTop - actualRect.top) > 1) {
+          applyPosition(correctedTop);
+        }
+      });
+    }
   }
 
   function repositionActivePopover() {
@@ -3499,7 +3654,10 @@
         ${shellConfig.nav
           .map(
             (item) =>
-              `<a class="crm-nav-link${item.key === pageKey ? " is-active is-current" : ""}" href="${item.href}">${item.label}</a>`
+              `<a class="crm-nav-link${isShellNavItemActive(item) ? " is-active is-current" : ""}" href="${item.href}" data-label="${escapeHtml(item.label)}" aria-label="${escapeHtml(item.label)}" title="${escapeHtml(item.label)}"${isShellNavItemActive(item) ? ' aria-current="page"' : ""}>
+                <span class="crm-nav-link__icon" aria-hidden="true">${NAV_ICON_MAP[item.key] || NAV_ICON_MAP.default}</span>
+                <span class="crm-nav-link__label">${escapeHtml(item.label)}</span>
+              </a>`
           )
           .join("")}
       </nav>
@@ -4810,177 +4968,829 @@
     }
   }
 
+  function tutorialStep({ targetSelector = "", title = "", description = "", interactionType = "next" }) {
+    const cleanTitle = String(title || "").trim();
+    const cleanDescription = String(description || "").trim();
+    return {
+      title: cleanTitle,
+      body: cleanDescription,
+      description: cleanDescription,
+      targetSelector: String(targetSelector || "").trim(),
+      interactionType,
+    };
+  }
+
   function getTutorialSteps() {
-    if (role !== "client") {
-      return Array.isArray(shellConfig.tutorial) ? shellConfig.tutorial : [];
+    const activeClientPlannerTab =
+      pageKey === "planner"
+        ? document.querySelector("[data-client-planner-tab].is-active")?.getAttribute("data-client-planner-tab") ||
+          new URLSearchParams(window.location.search).get("tab") ||
+          "training"
+        : "";
+    const activeClientSettingsTab =
+      pageKey === "settings"
+        ? document.querySelector("[data-client-settings-tab].is-active")?.getAttribute("data-client-settings-tab") || "portrait"
+        : "";
+
+    const helpStep = tutorialStep({
+      title: "Help anytime",
+      description: "Use the help button in the top bar whenever you want to replay this tour from the page you are on.",
+      targetSelector: '[data-shell-open="tutorial"]',
+      interactionType: "click",
+    });
+    const logoutStep = tutorialStep({
+      title: "Log out safely",
+      description: "Use Log out when you are done on a shared device. You can sign out from the sidebar footer or the security panel.",
+      targetSelector: ".crm-sidebar-logout, [data-account-sign-out]",
+      interactionType: "click",
+    });
+
+    if (role === "client") {
+      const navSteps = [
+        tutorialStep({
+          title: "Home tab",
+          description: "Start here after landing. Home is your quick picture of what needs attention now, what is booked next, and what your coach has already set up.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="client-dashboard.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Training tab",
+          description: "Open Training for your assigned block, session log, and the exact numbers you need to enter after each workout.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="client-planner.html?tab=training"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Nutrition tab",
+          description: "Nutrition keeps your targets, daily adherence, meal logging, and food or photo support in one place.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="client-planner.html?tab=nutrition"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Health tab",
+          description: "Health is for recovery forms, check-ins, readiness signals, and coach health notes. Empty states here simply mean nothing is due yet.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="client-planner.html?tab=health"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Progress tab",
+          description: "Use Progress for photo uploads and visual check-ins. If it looks empty, no photo set has been uploaded or reviewed yet.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="client-planner.html?tab=progress"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Packages tab",
+          description: "Packages is where you check active balance, buy another bundle, and review receipts or invoices. If you have no sessions yet, start here.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="client-packages.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Schedule tab",
+          description: "Use Schedule to book, review coach availability, or request a change. If the calendar looks quiet, it just means nothing has been published or booked yet.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="client-schedule.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Rewards tab",
+          description: "Rewards shows approved XP, coins, milestones, and leaderboard progress. New accounts often stay quiet here until coach or admin approvals land.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="client-rewards.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Profile tab",
+          description: "Profile is your clean summary page for character, package balance, verified sessions, and approved reward activity.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="client-profile.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Settings tab",
+          description: "Settings is where you manage portrait choice, wearables, password, and support routes. Data export or deletion requests still go through LEGACY+ support.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="client-settings.html"]',
+          interactionType: "click",
+        }),
+      ];
+
+      const pageSteps = {
+        home: [
+          tutorialStep({
+            title: "Identity banner",
+            description: "This top banner shows who the workspace belongs to, your level path, and your live progress status.",
+            targetSelector: "#crm-identity-banner",
+          }),
+          tutorialStep({
+            title: "Action snapshot",
+            description: "Use this section first. It is the fastest place to see what to do next, especially if you have no bookings, no active package, or no pending coach tasks yet.",
+            targetSelector: "#client-home-focus-panel",
+          }),
+          tutorialStep({
+            title: "Quick stats",
+            description: "These cards summarize sessions, bookings, rewards, and package usage so you do not need to open every tab just to orient yourself.",
+            targetSelector: "#client-home-snapshot",
+          }),
+          tutorialStep({
+            title: "Plan preview",
+            description: "This block previews your current training, nutrition, and health direction before you move into the detailed planner pages.",
+            targetSelector: "#client-home-plan",
+          }),
+        ],
+        training: [
+          tutorialStep({
+            title: "Planner tabs",
+            description: "These tabs switch between training, nutrition, health, and progress. Use them as your coaching workspace hub.",
+            targetSelector: "#client-planner-tabs",
+          }),
+          tutorialStep({
+            title: "Current block",
+            description: "This panel tells you what block is live, what your next assigned day is, and what your coach wants you to focus on right now.",
+            targetSelector: "#client-planner-current-block",
+          }),
+          tutorialStep({
+            title: "Training logging",
+            description: "Log what actually happened here. If a day is empty, it has not been assigned yet. If it is prefilled, use the last-session guidance to move forward instead of starting from zero.",
+            targetSelector: "#client-planner-training-days",
+          }),
+        ],
+        nutrition: [
+          tutorialStep({
+            title: "Planner tabs",
+            description: "Use the planner tabs to move between coaching layers without leaving the page.",
+            targetSelector: "#client-planner-tabs",
+          }),
+          tutorialStep({
+            title: "Nutrition plan",
+            description: "Choose the active plan here, then use the daily log, meal flow, and photo tools below it. If a section is empty, nothing has been assigned or logged yet.",
+            targetSelector: "#client-planner-nutrition-plan",
+          }),
+          tutorialStep({
+            title: "Adherence and food logging",
+            description: "This nutrition workspace is for daily adherence, meals, barcode search, and coach-reviewable intake notes.",
+            targetSelector: "#client-planner-nutrition-form",
+          }),
+        ],
+        health: [
+          tutorialStep({
+            title: "Planner tabs",
+            description: "Use the planner tabs to switch into health whenever a check-in or recovery update is due.",
+            targetSelector: "#client-planner-tabs",
+          }),
+          tutorialStep({
+            title: "Health summary",
+            description: "This summary shows the latest signals your coach cares about. Empty panels usually mean the next health form has not been scheduled yet.",
+            targetSelector: "#client-planner-health-summary",
+          }),
+          tutorialStep({
+            title: "Check-in form",
+            description: "Submit recovery, readiness, or health updates here so the coach can review them with context instead of guesswork.",
+            targetSelector: "#client-planner-checkin-form",
+          }),
+        ],
+        progress: [
+          tutorialStep({
+            title: "Planner tabs",
+            description: "Use the planner tabs to move into progress whenever it is time for a photo check-in or comparison review.",
+            targetSelector: "#client-planner-tabs",
+          }),
+          tutorialStep({
+            title: "Progress upload",
+            description: "Upload your next photo set here. If the feed is empty, no photo batch has been captured yet for this phase.",
+            targetSelector: "#client-planner-progress-form",
+          }),
+          tutorialStep({
+            title: "Latest snapshot",
+            description: "This section shows the latest upload, the review status, and any weight or summary details paired to that capture.",
+            targetSelector: "#client-planner-progress-feed",
+          }),
+        ],
+        packages: [
+          tutorialStep({
+            title: "Active balance",
+            description: "Start here to see what is still bookable, what is reserved, and whether anything is close to expiring.",
+            targetSelector: "#client-packages-balance",
+          }),
+          tutorialStep({
+            title: "Purchase builder",
+            description: "Use this selector to choose your format, tier, and session bundle. If the page feels empty, it usually means you have not selected a package path yet.",
+            targetSelector: "#client-package-store",
+          }),
+          tutorialStep({
+            title: "Documents and history",
+            description: "This history table keeps your orders, payment state, and billing documents together so you can come back for receipts later.",
+            targetSelector: "#client-packages-history",
+          }),
+        ],
+        schedule: [
+          tutorialStep({
+            title: "Booking calendar",
+            description: "Tap any open slot here to start a session request. This is the fastest booking route if your package balance is ready.",
+            targetSelector: "#client-schedule-booking",
+          }),
+          tutorialStep({
+            title: "Availability view",
+            description: "Use this coach availability panel as a visual reference before you request a specific time or reschedule.",
+            targetSelector: "#client-schedule-availability",
+          }),
+          tutorialStep({
+            title: "Change requests",
+            description: "Use this form when a confirmed booking needs to move or be cancelled. If it is empty, there may be no eligible session to change yet.",
+            targetSelector: "#client-session-change-form",
+          }),
+        ],
+        rewards: [
+          tutorialStep({
+            title: "Rewards identity",
+            description: "This top section ties your portrait, level path, and reward track together so you can see whose progress you are looking at.",
+            targetSelector: "#client-rewards-overview",
+          }),
+          tutorialStep({
+            title: "Points tracker",
+            description: "Approved XP and coins are summarized here. If the numbers are still low or empty, the activity has not been approved yet, not lost.",
+            targetSelector: "#client-rewards-points",
+          }),
+          tutorialStep({
+            title: "Leaderboard",
+            description: "This is your relative standing among other clients. It is designed for context and motivation, not to replace your own coaching goals.",
+            targetSelector: "#client-rewards-leaderboard",
+          }),
+        ],
+        profile: [
+          tutorialStep({
+            title: "Profile overview",
+            description: "This is your clean summary card for portrait, coach assignment, coins, next unlock, and package balance.",
+            targetSelector: "#client-profile-overview",
+          }),
+          tutorialStep({
+            title: "Verified activity",
+            description: "Sessions and reward movement only appear here once they have actually been logged and approved. Empty rows are normal for new accounts.",
+            targetSelector: "#client-profile-verified-activity",
+          }),
+          tutorialStep({
+            title: "Package snapshot",
+            description: "This section keeps your current package position and recent commercial activity together for quick reference.",
+            targetSelector: "#client-profile-package-summary",
+          }),
+        ],
+        "settings:portrait": [
+          tutorialStep({
+            title: "Settings tabs",
+            description: "Use these page tabs to switch between portrait, wearables, account, and security without leaving settings.",
+            targetSelector: '[data-client-settings-tab="portrait"]',
+          }),
+          tutorialStep({
+            title: "Portrait library",
+            description: "Choose your unlocked character here and apply it to the live workspace identity shown across the app.",
+            targetSelector: "#client-settings-portrait",
+          }),
+          tutorialStep({
+            title: "Help and support route",
+            description: "If you need something that is not self-serve, use your coach or LEGACY+ support from the account and security tabs.",
+            targetSelector: "#client-settings-account",
+          }),
+        ],
+        "settings:wearables": [
+          tutorialStep({
+            title: "Settings tabs",
+            description: "Use these page tabs to switch between portrait, wearables, account, and security without leaving settings.",
+            targetSelector: '[data-client-settings-tab="wearables"]',
+          }),
+          tutorialStep({
+            title: "Wearable connections",
+            description: "Connect and sync supported wearable providers here. If the metric table is empty, the first sync has not happened yet.",
+            targetSelector: "#client-settings-wearables",
+          }),
+        ],
+        "settings:account": [
+          tutorialStep({
+            title: "Settings tabs",
+            description: "Use these page tabs to switch between portrait, wearables, account, and security without leaving settings.",
+            targetSelector: '[data-client-settings-tab="account"]',
+          }),
+          tutorialStep({
+            title: "Signed-in details",
+            description: "This card keeps your email, role, and support route visible. Export or deletion requests are handled through support, not self-service here.",
+            targetSelector: "#client-settings-account",
+          }),
+        ],
+        "settings:security": [
+          tutorialStep({
+            title: "Settings tabs",
+            description: "Use these page tabs to switch between portrait, wearables, account, and security without leaving settings.",
+            targetSelector: '[data-client-settings-tab="security"]',
+          }),
+          tutorialStep({
+            title: "Security panel",
+            description: "Update your password, send yourself a reset link, or sign out here. This is also the right reference point when support needs to verify your account route.",
+            targetSelector: "#client-settings-security",
+          }),
+        ],
+      };
+
+      const currentPageKey =
+        pageKey === "planner" ? activeClientPlannerTab : pageKey === "settings" ? `settings:${activeClientSettingsTab}` : pageKey;
+
+      return navSteps.concat(pageSteps[currentPageKey] || pageSteps[pageKey] || []).concat([helpStep, logoutStep]);
     }
 
-    const navSteps = [
-      {
-        title: "Home tab",
-        body: "Use Home for your current snapshot, live package balance, and the next coaching actions that need your attention first.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-dashboard.html"]',
-      },
-      {
-        title: "Planner tab",
-        body: "Open Planner for your live training days, nutrition targets, health rhythm, and coach-delivered instructions.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-planner.html"]',
-      },
-      {
-        title: "Packages tab",
-        body: "Packages is where you review your active bundles, expiry dates, and purchase more sessions when you need them.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-packages.html"]',
-      },
-      {
-        title: "Schedule tab",
-        body: "Schedule is your booking workspace. Use it to choose available slots, request a specific time, and manage changes.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-schedule.html"]',
-      },
-      {
-        title: "Rewards tab",
-        body: "Rewards shows approved XP, coins, milestones, and the actions that are already counted on your account.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-rewards.html"]',
-      },
-      {
-        title: "Profile tab",
-        body: "Profile combines your identity, verified sessions, reward history, and current package snapshot in one place.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-profile.html"]',
-      },
-      {
-        title: "Settings tab",
-        body: "Settings controls wearable sync, portrait choices, and the private account preferences tied to your workspace.",
-        targetSelector: '#account-sidebar .crm-nav a[href$="client-settings.html"]',
-      },
-    ];
+    if (role === "coach") {
+      const navSteps = [
+        tutorialStep({
+          title: "Home tab",
+          description: "Start on Home to scan your roster, booking pressure, commission picture, and the items that need action first.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-dashboard.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Clients tab",
+          description: "Clients is your roster operations page for points, packages, consult follow-up, and activation codes.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-clients.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Client XP tab",
+          description: "Client XP is your controlled event logger. If member lists are empty, the client has not been linked into the XP system yet.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="XP%20gamification/staff.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Training tab",
+          description: "Training is where you build or assign structured programs, manage workbook previews, and run the session desk.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-training.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Nutrition tab",
+          description: "Nutrition handles nutrition programming, review queues, plan delivery, and quiet-roster nudges.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-programming.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Health tab",
+          description: "Health is the check-in and readiness workspace for templates, form scheduling, risk views, and health nudges.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-health.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Schedule tab",
+          description: "Schedule is where you publish availability, connect Google Calendar, review booking requests, and complete sessions with notes.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-schedule.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Commissions tab",
+          description: "Commissions shows the payout trail, KPI thresholds, and what is pending, approved, or already paid.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-commissions.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Profile tab",
+          description: "Profile is your clean coach record for roster strength, recent sessions, commission activity, and performance context.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-profile.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Settings tab",
+          description: "Settings controls palette, portrait, payout details, password, and sign-out. Deletion or account exports still run through super admin.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="coach-settings.html"]',
+          interactionType: "click",
+        }),
+      ];
 
-    const pageSteps = {
-      home: [
-        {
-          title: "Home hero",
-          body: "This top panel reflects your live portrait, current level, XP progress, and vault metrics from the rewards system.",
-          targetSelector: "#crm-identity-banner",
-        },
-        {
-          title: "Milestone badges",
-          body: "Your latest milestones and unlocked achievements sit here so you can scan progress at a glance before you dive deeper.",
-          targetSelector: "#client-home-achievements",
-        },
-        {
-          title: "Snapshot cards",
-          body: "These quick cards summarize session access, bookings, rewards, and package progress without making you read the full dashboard.",
-          targetSelector: "#client-home-snapshot",
-        },
-        {
-          title: "Coaching plan preview",
-          body: "This section previews your current training, nutrition, and health focus so you know what your coach is steering right now.",
-          targetSelector: "#client-home-plan",
-        },
-        {
-          title: "Owned packages",
-          body: "Check this panel when you want to see which session packages are still active and how much balance remains.",
-          targetSelector: "#client-home-packages",
-        },
-      ],
-      schedule: [
-        {
-          title: "Booking calendar",
-          body: "This is the primary booking surface. Tap any available slot in the next 4 weeks to prefill your session request.",
-          targetSelector: "#client-schedule-booking",
-        },
-        {
-          title: "Coach availability",
-          body: "Use this secondary calendar as a reference view of your coach's published availability before you book or reschedule.",
-          targetSelector: "#client-schedule-availability",
-        },
-        {
-          title: "Change requests",
-          body: "If a confirmed session needs to move or be cancelled, submit it here so your coach can review it.",
-          targetSelector: "#client-session-change-form",
-        },
-      ],
-      profile: [
-        {
-          title: "Profile overview",
-          body: "This profile block combines your identity, portrait, coach assignment, and current progress in one clean overview.",
-          targetSelector: "#client-profile-overview",
-        },
-        {
-          title: "Verified activity",
-          body: "Recent sessions and reward flow are grouped here so you can review what has actually been verified on your account.",
-          targetSelector: "#client-profile-verified-activity",
-        },
-      ],
-      settings: [
-        {
-          title: "Wearable sync",
-          body: "Connect your wearable sources here. Once linked, sleep, steps, and health signals can feed the LEGACY+ reward flow.",
-          targetSelector: "#client-settings-wearables",
-        },
-        {
-          title: "Portrait library",
-          body: "Choose or upload a portrait here. Your visual character can change, while the XP and progression still stay live.",
-          targetSelector: "#client-settings-portrait",
-        },
-        {
-          title: "Account details",
-          body: "This final card keeps your signed-in identity and support route visible without leaving the workspace.",
-          targetSelector: "#client-settings-account",
-        },
-      ],
-      planner: [
-        {
-          title: "Planner tabs",
-          body: "Use these tabs to move between training, nutrition, health, and progress so you always know which coaching layer you are working in.",
-          targetSelector: "#client-planner-tabs",
-        },
-        {
-          title: "Current block",
-          body: "This section shows the assigned block, the next live day, and the current training direction your coach wants you to follow.",
-          targetSelector: "#client-planner-current-block",
-        },
-        {
-          title: "Training days",
-          body: "Review each live training day here, then log what actually happened so your coach can adjust the plan with real feedback.",
-          targetSelector: "#client-planner-training-days",
-        },
-      ],
-      packages: [
-        {
-          title: "Session balance",
-          body: "Start here to see which packages are active, how much balance is still usable, and which sessions are already reserved.",
-          targetSelector: "#client-packages-balance",
-        },
-        {
-          title: "Purchase path",
-          body: "Use this builder to choose the coaching approach, format, tier, and exact session bundle before checkout.",
-          targetSelector: "#client-package-store",
-        },
-        {
-          title: "Purchase history",
-          body: "This final section keeps your package orders, payment status, and documents in one place for quick reference.",
-          targetSelector: "#client-packages-history",
-        },
-      ],
-      rewards: [
-        {
-          title: "Rewards overview",
-          body: "This top section combines your profile identity with the badge track so you can see who the rewards belong to and what has been unlocked.",
-          targetSelector: "#client-rewards-overview",
-        },
-        {
-          title: "Points tracker",
-          body: "Review your current XP, weekly movement, and milestone progress here after coach and admin approvals have been processed.",
-          targetSelector: "#client-rewards-points",
-        },
-        {
-          title: "Leaderboard",
-          body: "The leaderboard shows where you stand relative to other clients based on approved XP first, then coins if scores are tied.",
-          targetSelector: "#client-rewards-leaderboard",
-        },
-      ],
-    };
+      const pageSteps = {
+        home: [
+          tutorialStep({
+            title: "Identity banner",
+            description: "This banner confirms whose workspace is open and gives you a fast sense of your current coaching identity and level path.",
+            targetSelector: "#crm-identity-banner",
+          }),
+          tutorialStep({
+            title: "KPI snapshot",
+            description: "Use these cards to see clients, upcoming sessions, commission, and coach-issued points in one glance.",
+            targetSelector: "#coach-stat-clients",
+          }),
+          tutorialStep({
+            title: "Action and roster focus",
+            description: "These sections pull forward what needs action now. If they look quiet, nothing urgent has been assigned, booked, or escalated yet.",
+            targetSelector: "#coach-ops-brief-card",
+          }),
+          tutorialStep({
+            title: "Live queues",
+            description: "Booking requests, roster, recent sessions, and KPI review all flow through the home page so you can spot problems before opening another tab.",
+            targetSelector: "#coach-booking-request-rows",
+          }),
+        ],
+        clients: [
+          tutorialStep({
+            title: "Client roster",
+            description: "This roster is your starting point. If it is empty, the super admin has not assigned clients to you yet.",
+            targetSelector: "#coach-client-roster",
+          }),
+          tutorialStep({
+            title: "Points request form",
+            description: "Use this form to submit coach-issued rewards. Bundle actions and manual actions are separated so you do not need to remember every rule.",
+            targetSelector: "#coach-points-form",
+          }),
+          tutorialStep({
+            title: "Package visibility",
+            description: "This table gives you the commercial context for your roster so you can see who still has active package coverage.",
+            targetSelector: "#coach-package-rows",
+          }),
+          tutorialStep({
+            title: "Consult workflow",
+            description: "Use the consult form and follow-up form to move enquiries forward. If the pipeline is empty, no new consult leads have been created yet.",
+            targetSelector: "#coach-consult-form",
+          }),
+          tutorialStep({
+            title: "Client codes",
+            description: "Generate client registration codes here. Existing codes stay visible below so you do not create duplicates by accident.",
+            targetSelector: "#coach-client-code-form",
+          }),
+        ],
+        client_xp: [
+          tutorialStep({
+            title: "XP status",
+            description: "This header tells you whether the XP tools are ready. If the page says no members are linked yet, you are waiting on admin-side profile linking, not a broken page.",
+            targetSelector: "#xp-module-status",
+          }),
+          tutorialStep({
+            title: "Log event",
+            description: "Choose a member, pick an action, and log a verified or pending event here. Search and category chips are built to help you find actions fast.",
+            targetSelector: "#xp-event-form",
+          }),
+          tutorialStep({
+            title: "Ledger and recent events",
+            description: "Use these tables to confirm what has already counted. Empty tables simply mean no member data or no approved entries yet.",
+            targetSelector: "#xp-ledger-table",
+          }),
+        ],
+        training: [
+          tutorialStep({
+            title: "Program builder",
+            description: "This wizard is where you choose the client, shape the block, and move through inputs, map, split, templates, and generation.",
+            targetSelector: "#coach-program-template-form",
+          }),
+          tutorialStep({
+            title: "Workbook preview",
+            description: "This preview shows the current workbook logic before you assign it, so you can sanity-check structure and delivery details first.",
+            targetSelector: "#coach-training-workbook-preview",
+          }),
+          tutorialStep({
+            title: "Training day editor",
+            description: "This is the editable day stack for the live template. Add, reset, or refine days here before you commit the plan.",
+            targetSelector: "#coach-program-template-days",
+          }),
+          tutorialStep({
+            title: "Session desk",
+            description: "This desk is for live session logging and review. If it is empty, no client session has been selected or no session data is ready yet.",
+            targetSelector: "#coach-training-session-desk",
+          }),
+        ],
+        programming: [
+          tutorialStep({
+            title: "Nutrition operations summary",
+            description: "These top cards show roster coverage, templates, review count, risk, and stale activity so you can spot the real bottlenecks first.",
+            targetSelector: "#coach-program-roster-grid",
+          }),
+          tutorialStep({
+            title: "Template and assignment flow",
+            description: "Build the nutrition template here, then assign it to the client with a start date and workbook preview before delivery.",
+            targetSelector: "#coach-program-template-form",
+          }),
+          tutorialStep({
+            title: "Delivery workspace",
+            description: "This is where nutrition targets, habits, weekly rhythm, and workbook-derived guidance are prepared for the client-facing side.",
+            targetSelector: "#coach-program-delivery-plan-card",
+          }),
+          tutorialStep({
+            title: "Ops and nudges",
+            description: "Use the ops workflow when you need to follow up on nutrition gaps, quiet clients, or risk segments without rebuilding the full plan.",
+            targetSelector: "#coach-program-ops-workflow-section",
+          }),
+        ],
+        health: [
+          tutorialStep({
+            title: "Review and filter area",
+            description: "Use these filters to surface the right health review workload. If the review stack is empty, no check-ins are overdue or available yet.",
+            targetSelector: "#coach-program-review-summary-grid",
+          }),
+          tutorialStep({
+            title: "Check-in templates",
+            description: "Build or update the health question set here before you schedule it to a client.",
+            targetSelector: "#coach-program-checkin-template-form",
+          }),
+          tutorialStep({
+            title: "Schedule health check-ins",
+            description: "Assign the template to a client here so the next recovery or readiness form lands with a clear due date.",
+            targetSelector: "#coach-program-schedule-checkin-form",
+          }),
+          tutorialStep({
+            title: "Health operations",
+            description: "This nudge workflow is for overdue health forms, quiet rosters, and risk-based follow-up at scale.",
+            targetSelector: "#coach-program-ops-workflow-section",
+          }),
+        ],
+        schedule: [
+          tutorialStep({
+            title: "Availability calendar",
+            description: "This is your published availability view. It should be the first place you check before investigating booking issues.",
+            targetSelector: "#coach-live-availability-calendar",
+          }),
+          tutorialStep({
+            title: "Google Calendar sync",
+            description: "Connect or disconnect your live calendar here. If it says not connected, booking still works, but external calendar sync will not.",
+            targetSelector: "#coach-calendar-connect",
+          }),
+          tutorialStep({
+            title: "Availability form",
+            description: "Publish recurring slots here so clients have something to book against.",
+            targetSelector: "#coach-availability-form",
+          }),
+          tutorialStep({
+            title: "Requests and session notes",
+            description: "Booking requests, change requests, and completion notes all live in this page. Use the session notes drawer to close the loop after a session is done.",
+            targetSelector: "#coach-booking-request-rows",
+          }),
+        ],
+        commissions: [
+          tutorialStep({
+            title: "Commission overview",
+            description: "This top area shows your weekly, monthly, quarterly, and rate snapshot so you know the payout picture before reviewing the ledger.",
+            targetSelector: "#coach-commission-overview-summary",
+          }),
+          tutorialStep({
+            title: "Comp plan and KPIs",
+            description: "These lists explain how your payout structure is being evaluated right now, including review timing and KPI readiness.",
+            targetSelector: "#coach-comp-plan-list",
+          }),
+          tutorialStep({
+            title: "Commission ledger",
+            description: "Use this table for the detailed payout trail. If it is empty, sessions have not generated payable records yet.",
+            targetSelector: "#coach-commission-rows",
+          }),
+        ],
+        profile: [
+          tutorialStep({
+            title: "Coach profile summary",
+            description: "This top block is your operating profile: active clients, commission rate, current review timing, and performance bars.",
+            targetSelector: "#coach-profile-summary-metrics",
+          }),
+          tutorialStep({
+            title: "Roster and session history",
+            description: "These tables show the clients and recent coaching activity tied to your live role.",
+            targetSelector: "#coach-profile-roster-rows",
+          }),
+          tutorialStep({
+            title: "Commission and operations",
+            description: "This lower section gives you the payment trail and the ops notes that explain how your current coach position is being judged.",
+            targetSelector: "#coach-profile-commission-rows",
+          }),
+        ],
+        settings: [
+          tutorialStep({
+            title: "Coach palette",
+            description: "Use this section if you want a different full-workspace palette. If you do nothing, the standard coach theme stays in place.",
+            targetSelector: "#account-coach-theme-presets",
+          }),
+          tutorialStep({
+            title: "Portrait library",
+            description: "Choose your unlocked portrait here. The selected character updates your live coach identity across the workspace.",
+            targetSelector: "#account-avatar-presets",
+          }),
+          tutorialStep({
+            title: "Payout details",
+            description: "Keep your commission bank details updated here so monthly payout work does not stall.",
+            targetSelector: "#coach-payout-form",
+          }),
+          tutorialStep({
+            title: "Security and account control",
+            description: "Use this section to update your password, send a reset email, or sign out. Account export or deletion still goes through super admin.",
+            targetSelector: "#account-security-password-form",
+          }),
+        ],
+      };
 
-    return navSteps.concat(pageSteps[pageKey] || []);
+      return navSteps.concat(pageSteps[pageKey] || []).concat([helpStep, logoutStep]);
+    }
+
+    if (role === "super_admin") {
+      const navSteps = [
+        tutorialStep({
+          title: "Home tab",
+          description: "Start on Home for the business picture first: revenue, payout risk, watchlist items, review pressure, and newsletter status.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="admin-dashboard.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "TEAM tab",
+          description: "TEAM is where you manage coaches, assignments, reward approvals, activation codes, and account record exports.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="admin-clients.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Client XP tab",
+          description: "Client XP is the admin-only control room for imports, member creation, profile linking, action corrections, redemptions, and ledger audit.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="XP%20gamification/admin.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Coach XP tab",
+          description: "Coach XP is the management-only ledger for coach growth rules, promotion tracking, and XP activity review.",
+          targetSelector: '#account-sidebar .crm-nav a[href*="XP%20coach%20gamification/index.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Leads tab",
+          description: "Leads is the working CRM board for enquiry capture, follow-up, conversion, message logging, and pipeline health.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="admin-leads.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Financials tab",
+          description: "Financials is where you audit sales, exports, commissions, customer revenue, and operating costs in one place.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="admin-financials.html"]',
+          interactionType: "click",
+        }),
+        tutorialStep({
+          title: "Settings tab",
+          description: "Settings covers password control, add-on diagnostics, QA accounts, and integration reference panels.",
+          targetSelector: '#account-sidebar .crm-nav a[href$="admin-settings.html"]',
+          interactionType: "click",
+        }),
+      ];
+
+      const pageSteps = {
+        home: [
+          tutorialStep({
+            title: "Identity banner",
+            description: "This top banner confirms the admin workspace identity and keeps the fastest controls close at hand.",
+            targetSelector: "#crm-identity-banner",
+          }),
+          tutorialStep({
+            title: "Numbers that matter first",
+            description: "These KPI links are the fastest way to jump from summary to the exact area that needs attention.",
+            targetSelector: "#admin-stat-net-revenue",
+          }),
+          tutorialStep({
+            title: "Watchlist",
+            description: "Use the watchlist as your true priority queue. If it is empty, the summary has not found a live issue to escalate right now.",
+            targetSelector: "#admin-watchlist",
+          }),
+          tutorialStep({
+            title: "Review queue and newsletter",
+            description: "Coach reviews and newsletter status both live on Home so operational and communication risks stay visible together.",
+            targetSelector: "#admin-coach-review-rows",
+          }),
+        ],
+        clients: [
+          tutorialStep({
+            title: "Coach management",
+            description: "Use this form to set position, tier, review timing, KPI notes, and payout rules for a coach.",
+            targetSelector: "#admin-coach-management-form",
+          }),
+          tutorialStep({
+            title: "Authentication codes",
+            description: "Generate coach and client registration codes here. The table below helps you avoid duplicate or expired-code confusion.",
+            targetSelector: "#admin-coach-code-form",
+          }),
+          tutorialStep({
+            title: "Assignments",
+            description: "Use this assignment form to decide which coach owns which client relationship across the app.",
+            targetSelector: "#admin-assignment-form",
+          }),
+          tutorialStep({
+            title: "Account records and exports",
+            description: "Load a record here, then copy JSON or download a PDF export. Permanent deletion is intentionally not a one-click action in this workspace.",
+            targetSelector: "#admin-account-records",
+          }),
+          tutorialStep({
+            title: "Reward approval queue",
+            description: "This queue is where coach-submitted rewards become approved XP or get held back for review.",
+            targetSelector: "#admin-reward-rows",
+          }),
+        ],
+        client_xp: [
+          tutorialStep({
+            title: "XP snapshot",
+            description: "These KPI cards tell you whether Client XP is healthy before you touch imports or member data.",
+            targetSelector: "#xp-admin-kpis",
+          }),
+          tutorialStep({
+            title: "Import rules",
+            description: "Use the import form first when you are setting up or correcting the XP engine from the workbook and bundle.",
+            targetSelector: "#xp-import-form",
+          }),
+          tutorialStep({
+            title: "Members and profile linking",
+            description: "Create a member here, then link it to a client profile so coach and client views can resolve the same account.",
+            targetSelector: "#xp-member-form",
+          }),
+          tutorialStep({
+            title: "Action and redemption control",
+            description: "Super admin can correct actions and process redemptions here. If the tables are empty, imports or member activity have not happened yet.",
+            targetSelector: "#xp-action-form",
+          }),
+          tutorialStep({
+            title: "Ledger audit",
+            description: "Use the members, actions, and ledger tables to confirm the rules are producing the balance you expect.",
+            targetSelector: "#xp-ledger-table",
+          }),
+        ],
+        coach_xp: [
+          tutorialStep({
+            title: "Coach XP snapshot",
+            description: "This module snapshot tells you the health of the Coach XP engine before you look at any one coach.",
+            targetSelector: "#xp-coach-dashboard-kpis",
+          }),
+          tutorialStep({
+            title: "Import and leaderboard",
+            description: "Run the import once if needed, then use the leaderboard to compare counted XP and current level across coaches.",
+            targetSelector: "#xp-coach-import-run",
+          }),
+          tutorialStep({
+            title: "Activity trail",
+            description: "This activity table is the audit trail for verified and pending coach XP actions. If it is empty, nothing has been logged yet.",
+            targetSelector: "#xp-coach-dashboard-activity",
+          }),
+        ],
+        leads: [
+          tutorialStep({
+            title: "Lead board",
+            description: "Use the board and filters to understand the live pipeline. If it is empty, create the first lead or wait for capture sources to sync.",
+            targetSelector: "#admin-lead-board",
+          }),
+          tutorialStep({
+            title: "Create a lead",
+            description: "This form is for manual entry when the lead did not come from the website, consult flow, or WhatsApp capture path.",
+            targetSelector: "#admin-lead-form",
+          }),
+          tutorialStep({
+            title: "Follow-up workflow",
+            description: "Use follow-ups to set dates, ownership, and status changes without losing the activity trail.",
+            targetSelector: "#admin-follow-up-form",
+          }),
+          tutorialStep({
+            title: "Convert to client",
+            description: "When a lead is ready, convert it here to create the client account and optionally assign a coach immediately.",
+            targetSelector: "#admin-convert-lead-form",
+          }),
+          tutorialStep({
+            title: "Messages and audit log",
+            description: "Use the message form to log outbound contact, then verify the full history in the lead activity table below.",
+            targetSelector: "#admin-lead-message-form",
+          }),
+        ],
+        financials: [
+          tutorialStep({
+            title: "Finance navigation",
+            description: "Use this workspace nav to move between overview, transactions, reports, commissions, customer revenue, and OPEX without leaving the page.",
+            targetSelector: "#admin-finance-nav",
+          }),
+          tutorialStep({
+            title: "Transaction exports",
+            description: "Use Export here when finance needs a clean transaction pull. If the table is empty, broaden the filters or wait for live payments to sync.",
+            targetSelector: "#admin-export-orders",
+          }),
+          tutorialStep({
+            title: "Reports",
+            description: "Use the report filters to create a date-bounded view of sales, refunds, fees, and collected revenue.",
+            targetSelector: "#admin-report-view-transactions",
+          }),
+          tutorialStep({
+            title: "Commission ledger",
+            description: "This section is the payout audit trail. Export it when finance or coach reviews need a portable record.",
+            targetSelector: "#admin-export-commissions",
+          }),
+          tutorialStep({
+            title: "Operating costs",
+            description: "Use the OPEX form and ledger to track internal spend. Empty charts here usually mean no operating-cost file has been loaded yet.",
+            targetSelector: "#admin-operating-cost-form",
+          }),
+        ],
+        settings: [
+          tutorialStep({
+            title: "Portrait and security",
+            description: "These settings let you update the admin portrait, rotate your password, and sign out without leaving the CRM.",
+            targetSelector: "#account-security-password-form",
+          }),
+          tutorialStep({
+            title: "Automation and integrations",
+            description: "Use the automation and add-on panels here as your reference point for what is live, what is read-only, and what still needs an external API.",
+            targetSelector: "#admin-codex-bundle-status",
+          }),
+          tutorialStep({
+            title: "QA accounts",
+            description: "This form provisions or resets the dedicated QA coach and client accounts used for safe production testing.",
+            targetSelector: "#admin-qa-accounts-form",
+          }),
+          tutorialStep({
+            title: "Newsletter path",
+            description: "The newsletter now has its own workspace. Use the shortcut here when you need audience, preview, or send controls.",
+            targetSelector: "#admin-newsletter-home, a[href=\"./admin-newsletter.html\"]",
+          }),
+        ],
+      };
+
+      return navSteps.concat(pageSteps[pageKey] || []).concat([helpStep, logoutStep]);
+    }
+
+    return Array.isArray(shellConfig.tutorial) ? shellConfig.tutorial : [];
   }
 
   function clearTutorialSpotlight() {
@@ -5233,8 +6043,9 @@
 
     const notificationCount = summary.notificationCount || 0;
     const messageCount = summary.messageCount || 0;
-    const currentNavItem = shellConfig.nav.find((item) => item.key === pageKey) || shellConfig.nav[0];
-    const pageDisplayTitle = resolveShellPageTitle(pageKey, currentNavItem?.label || "");
+    const activePageKey = resolveActiveShellPageKey();
+    const currentNavItem = resolveCurrentNavItem();
+    const pageDisplayTitle = resolveShellPageTitle(activePageKey, currentNavItem?.label || "");
     headerNode.innerHTML = `
       <div class="crm-topbar__copy">
         <div class="crm-page-title-block">
@@ -5297,6 +6108,10 @@
   function resolveShellPageTitle(currentPageKey, fallbackLabel) {
     const titleMap = {
       home: "Dashboard",
+      training: "Training",
+      nutrition: "Nutrition",
+      health: "Health",
+      progress: "Progress",
       packages: "Packages",
       schedule: role === "client" ? "Bookings" : "Schedule",
       rewards: "Rewards",

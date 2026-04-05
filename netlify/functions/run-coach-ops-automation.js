@@ -11,6 +11,14 @@ const {
   segmentMatchesClient,
   shouldRunAutomationSchedule,
 } = require("./_lib/coach-ops");
+const {
+  buildMalaysiaWeekKey,
+  dispatchNewsletterCampaign,
+  readNewsletterState,
+  saveNewsletterDispatchLog,
+  shouldDispatchScheduledNewsletter,
+  writeNewsletterAuditLog,
+} = require("./_lib/newsletter");
 
 const AUTOMATION_COPY = {
   nutrition: {
@@ -287,6 +295,54 @@ exports.handler = async (event) => {
       });
     }
 
+    let newsletterSummary = {
+      dispatched: false,
+      deliveredCount: 0,
+      skippedCount: 0,
+      audienceCount: 0,
+      enabled: false,
+    };
+
+    try {
+      const { campaign, dispatchLog } = await readNewsletterState(supabase);
+      newsletterSummary.enabled = Boolean(campaign?.enabled);
+      if (shouldDispatchScheduledNewsletter(campaign, dispatchLog, now)) {
+        const delivery = await dispatchNewsletterCampaign(supabase, campaign, {
+          eventName: "weekly_newsletter_scheduled",
+          mode: "scheduled",
+        });
+        await saveNewsletterDispatchLog(supabase, null, {
+          ...dispatchLog,
+          lastSentAt: nowIso,
+          lastSentMode: "scheduled",
+          lastWeekKey: buildMalaysiaWeekKey(nowIso),
+          lastDeliveredCount: delivery.deliveredCount,
+          lastSkippedCount: delivery.skippedCount,
+          lastAudienceCount: delivery.audienceCount,
+          lastSubject: campaign.subject,
+          lastDispatchId: delivery.dispatchId,
+        });
+        await writeNewsletterAuditLog(supabase, null, "scheduled_dispatch", {
+          subject: campaign.subject,
+          deliveredCount: delivery.deliveredCount,
+          skippedCount: delivery.skippedCount,
+          audienceCount: delivery.audienceCount,
+        }).catch(() => null);
+        newsletterSummary = {
+          dispatched: true,
+          deliveredCount: delivery.deliveredCount,
+          skippedCount: delivery.skippedCount,
+          audienceCount: delivery.audienceCount,
+          enabled: true,
+        };
+      }
+    } catch (newsletterError) {
+      newsletterSummary = {
+        ...newsletterSummary,
+        error: newsletterError?.message || "Unable to run the weekly newsletter automation.",
+      };
+    }
+
     return json(
       200,
       {
@@ -295,6 +351,7 @@ exports.handler = async (event) => {
         dispatched,
         briefings,
         coachSummaries,
+        newsletterSummary,
       },
       { "Cache-Control": "no-store" }
     );

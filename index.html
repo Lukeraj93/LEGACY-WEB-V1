@@ -16,169 +16,684 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="preload"
+      as="image"
+      href="./assets/website-photos/optimized/legacy-home-hero.jpg"
+      imagesizes="100vw"
+      type="image/jpeg"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&amp;family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@100;300;400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
   </head>
-  <body>
-    <header class="site-header reveal">
+  <body class="home-dota">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="./index.html" aria-label="LEGACY home"></a>
+        <a class="brand" href="/index.html" aria-label="LEGACY home"></a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-          <a href="./index.html">Home</a>
+          <a href="/index.html">Home</a>
           <div class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
-              Coaching
+              Programs
               <span class="nav-caret" aria-hidden="true"></span>
             </button>
-            <div class="nav-submenu" role="menu" aria-label="Coaching submenu">
-              <a href="./coaching/1-1.html" role="menuitem">1:1 Coaching</a>
-              <a href="./coaching/pre-postnatal.html" role="menuitem">Pre &amp; Postnatal</a>
-              <a href="./coaching/longevity-seniors.html" role="menuitem">Older Adults</a>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaching/pre-postnatal.html" role="menuitem">Pre &amp; Postnatal</a>
+              <a href="/coaching/longevity-seniors.html" role="menuitem">Longevity &amp; Older Adults</a>
+              <a href="/coaching/corporate.html" role="menuitem">Corporate Wellness</a>
             </div>
           </div>
-          <a href="./coaching/corporate.html">Corporate</a>
-          <a href="./results.html">Results</a>
+          <a href="/packages.html">Pricing</a>
+          <a href="/coaches.html">Meet the Team</a>
+          <a href="/store.html">Store</a>
           <div class="nav-dropdown">
             <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
               Others
               <span class="nav-caret" aria-hidden="true"></span>
             </button>
             <div class="nav-submenu" role="menu" aria-label="Others submenu">
-              <a href="./about.html" role="menuitem">About Us</a>
-              <a href="./blog.html" role="menuitem">Blog</a>
-              <a href="./contact.html" role="menuitem">Contact</a>
+              <a href="/about.html" role="menuitem">About</a>
+              <a href="/facilities.html" role="menuitem">Facilities</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
+              <a href="/contact.html" role="menuitem">Contact Us</a>
             </div>
           </div>
+          <a class="account-gateway-trigger" href="/account.html">My Account</a>
         </nav>
         <div class="header-cta-group">
-          <a class="btn btn-primary" href="./login/client.html">Client Login</a>
-          <a class="btn btn-primary" href="./login/coach.html">Coach Login</a>
+          <a class="btn btn-primary account-gateway-trigger" href="/account.html">My Account</a>
         </div>
       </div>
     </header>
 
-    <main>
-      <section class="hero reveal">
-        <span class="kicker">TRAIN | LEARN | LEVEL UP</span>
-        <h1>Private Coaching for High-Performing Lives in Kuala Lumpur</h1>
-        <p>
-          LEGACY+ delivers premium 1:1 coaching for professionals, expatriates, pre/postnatal clients, older adults,
-          and corporate teams who want measurable outcomes without guesswork.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="./contact.html">Start Coaching</a>
-          <a class="btn btn-secondary" href="./coaching/1-1.html">Explore 1:1 Coaching</a>
-          <a
-            class="btn btn-ghost"
-            href="https://wa.me/60123456789?text=Hi%20LEGACY%2B%2C%20I%20want%20to%20start%20coaching."
-            target="_blank"
-            rel="noopener"
-            >WhatsApp Consultation</a
-          >
+    <main id="home">
+      <section class="hero-video-shell" id="features" aria-label="Legacy+ training showcase">
+        <div class="hero-video-track" aria-hidden="true">
+          <img
+            class="hero-video-media hero-video-solo"
+            src="./assets/website-photos/optimized/legacy-home-hero.jpg"
+            alt=""
+            decoding="async"
+            fetchpriority="high"
+          />
         </div>
-      </section>
-
-      <section class="section reveal">
-        <span class="kicker">Services</span>
-        <h2>Choose the Coaching Path That Fits Your Goals</h2>
-        <div class="service-grid">
-          <article class="card">
-            <h3>1:1 Coaching</h3>
-            <p>Personalized private coaching built around your schedule, goals, and progression rate.</p>
-            <a class="text-link" href="./coaching/1-1.html">View Program</a>
-          </article>
-          <article class="card">
-            <h3>Pre &amp; Postnatal Coaching</h3>
-            <p>Safe, stage-based support through pregnancy and postpartum with professional oversight.</p>
-            <a class="text-link" href="./coaching/pre-postnatal.html">View Program</a>
-          </article>
-          <article class="card">
-            <h3>Older Adults</h3>
-            <p>Strength, mobility, and confidence coaching focused on healthy aging and independence.</p>
-            <a class="text-link" href="./coaching/longevity-seniors.html">View Program</a>
-          </article>
-          <article class="card">
-            <h3>Corporate Wellness &amp; Workshops</h3>
-            <p>Practical team workshops that improve energy, movement quality, and workplace resilience.</p>
-            <a class="text-link" href="./coaching/corporate.html">View Program</a>
-          </article>
-        </div>
-      </section>
-
-      <section class="section reveal">
-        <span class="kicker">Client Success Stories</span>
-        <h2>Results Across Different Life Stages</h2>
-        <div class="testimonial-grid">
-          <article class="quote">
-            <p>
-              "My schedule is intense, but the structure from LEGACY+ finally made my training consistent and
-              measurable."
-            </p>
-            <strong>Private Equity Professional, KL</strong>
-          </article>
-          <article class="quote">
-            <p>
-              "Postpartum training felt safe and progressive. I rebuilt strength without feeling overwhelmed."
-            </p>
-            <strong>Postnatal Client, Mont Kiara</strong>
-          </article>
-          <article class="quote">
-            <p>
-              "My balance and confidence improved significantly. Daily movement is easier and pain-free now."
-            </p>
-            <strong>Older Adult Client, Bangsar</strong>
-          </article>
-        </div>
-      </section>
-
-      <section class="section reveal split">
-        <div>
-          <span class="kicker">Why Legacy+</span>
-          <h2>Premium Coaching, Not Generic Programming</h2>
-          <p class="section-copy">
-            Every plan is tailored, tracked, and adjusted with clear performance markers. You always know your next
-            step and why it matters.
+        <div class="hero-video-fade" aria-hidden="true"></div>
+        <div class="hero-on-video">
+          <span class="kicker">TRAIN | LEARN | LEVEL UP</span>
+          <h1 class="hero-home-title">
+            <span class="hero-home-title__line">1-on-1</span>
+            <span class="hero-home-title__line"
+              ><span class="hero-gradient-text">Personal Training</span> in
+              <span class="hero-gradient-text">Kuala Lumpur</span></span
+            >
+            <span class="hero-home-title__line">That Delivers Results</span>
+          </h1>
+          <p>
+            Private coaching for busy professionals who want to get stronger, leaner, and more capable without wasting
+            time on random workouts. Every program at LEGACY+ starts with a full movement assessment and is tracked
+            weekly to ensure real progress.
           </p>
-          <div class="chips">
-            <span class="chip">Evidence-Based Coaching</span>
-            <span class="chip">Private, High-Trust Environment</span>
-            <span class="chip">Mobile-First Booking and Support</span>
+          <ul class="hero-proof" aria-label="Hero proof points">
+            <li>Trusted by 100+ busy professionals across KL</li>
+            <li>Used by executives, expats, and parents training on tight schedules</li>
+          </ul>
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              href="https://wa.me/601139772862?text=Hi%20LEGACY%2B%2C%20I%20want%20to%20talk%20to%20a%20coach."
+              target="_blank"
+              rel="noopener"
+              >TALK TO A COACH</a
+            >
+            <a class="btn btn-secondary" href="#why-legacy">Learn More</a>
+          </div>
+          <p class="hero-friction">No commitment consultation.</p>
+        </div>
+      </section>
+
+      <section class="partners-strip reveal" id="partners" aria-label="Our partners">
+        <div class="partners-inner">
+          <span class="kicker">Our Partners</span>
+          <p class="partners-note">Click on a logo to find out more.</p>
+          <div class="partners-marquee">
+            <div class="partners-track">
+              <div class="partners-logos">
+                <article class="partner-logo-card">
+                  <a
+                    href="https://drtritoncoaching.com/drtritonsmc/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Visit Dr Triton Sports Medicine Clinic"
+                  >
+                    <img
+                      src="./assets/434834039_10168811418015184_1839825987443169834_n%20-%20Edited.png"
+                      alt="Dr Triton Sports Medicine Clinic logo"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a
+                    href="https://ruleoneproteins.my/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Visit Rule 1 Proteins"
+                  >
+                    <img
+                      src="./assets/partner-rule1-official.svg"
+                      alt="Rule 1 Proteins logo"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a
+                    href="https://alainnclinic.com/lifestyle-medicine/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Visit Alainn Clinic"
+                  >
+                    <img
+                      src="./assets/89%20-%20Edited.png"
+                      alt="Alainn Clinic logo"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </article>
+              </div>
+              <div class="partners-logos" aria-hidden="true">
+                <article class="partner-logo-card">
+                  <a href="https://drtritoncoaching.com/drtritonsmc/" target="_blank" rel="noreferrer" tabindex="-1">
+                    <img
+                      src="./assets/434834039_10168811418015184_1839825987443169834_n%20-%20Edited.png"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://ruleoneproteins.my/" target="_blank" rel="noreferrer" tabindex="-1">
+                    <img
+                      src="./assets/partner-rule1-official.svg"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://alainnclinic.com/lifestyle-medicine/" target="_blank" rel="noreferrer" tabindex="-1">
+                    <img
+                      src="./assets/89%20-%20Edited.png"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </article>
+              </div>
+            </div>
           </div>
         </div>
-        <article class="info-card">
-          <h3>Who We Coach</h3>
-          <ul class="check-list">
-            <li>Expatriates living in Kuala Lumpur</li>
-            <li>Professionals aged 30 to 50</li>
-            <li>High net worth individuals seeking private coaching</li>
-            <li>Seniors focused on longevity and mobility</li>
-            <li>Pre and postnatal clients</li>
-            <li>Corporate teams and leadership groups</li>
-          </ul>
-        </article>
       </section>
 
-      <section class="cta-band reveal">
-        <span class="kicker">Next Step</span>
-        <h2>Start with a WhatsApp Consultation</h2>
-        <p>Tell us your goals and schedule. We will recommend the right coaching path within 24 hours.</p>
+      <section class="section reveal why-legacy" id="why-legacy">
+        <div class="split why-legacy-split">
+          <div class="why-legacy-copy">
+            <span class="kicker">Why Clients Stay</span>
+            <h2>Progress That Feels Clear, Personal, and Built to Last</h2>
+            <p class="section-copy">
+              Busy adults stay with LEGACY+ because the process feels clear from the start. Every client gets a plan
+              that fits real schedules, coaching that explains the why behind the work, and a system that turns effort
+              into visible progress. Through milestones, badges, and level-ups, training feels more structured,
+              rewarding, and easier to stay consistent with over time.
+            </p>
+          </div>
+          <div class="why-legacy-media">
+            <div class="why-legacy-carousel" aria-label="LEGACY plus cinematic showcase">
+              <figure class="why-legacy-slide">
+                <img
+                  class="gallery-photo why-legacy-photo"
+                  src="./assets/why-gym-floor.jpg"
+                  alt="LEGACY plus gym floor and strength training area"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="why-legacy-slide">
+                <img
+                  class="gallery-photo why-legacy-photo"
+                  src="./assets/why-coach-client.jpg"
+                  alt="Coach supporting a client in a gym session"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="why-legacy-slide">
+                <img
+                  class="gallery-photo why-legacy-photo"
+                  src="./assets/why-app-progress.jpg"
+                  alt="Gym client using a phone for training and progress tracking"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="why-legacy-slide">
+                <img
+                  class="gallery-photo why-legacy-photo"
+                  src="./assets/why-coach-support.jpg"
+                  alt="Coach guiding client support and movement quality"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="why-legacy-slide">
+                <img
+                  class="gallery-photo why-legacy-photo"
+                  src="./assets/why-mascott-corgi.jpg"
+                  alt="Corgi mascot"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="why-legacy-proofband" aria-label="LEGACY plus proof points">
+          <article class="why-legacy-proof">
+            <div class="why-legacy-proof-head">
+              <span class="why-legacy-proof-value">100+</span>
+            </div>
+            <p>Professionals coached across Kuala Lumpur.</p>
+          </article>
+          <article class="why-legacy-proof">
+            <div class="why-legacy-proof-head">
+              <span class="why-legacy-proof-value">3x / Wk</span>
+            </div>
+            <p>Training consistency maintained for 7 months.</p>
+          </article>
+          <article class="why-legacy-proof">
+            <div class="why-legacy-proof-head">
+              <span class="why-legacy-proof-value">4.1 Kg</span>
+            </div>
+            <p>Fat loss achieved in 8 weeks.</p>
+          </article>
+          <article class="why-legacy-proof">
+            <div class="why-legacy-proof-head">
+              <span class="why-legacy-proof-value">+25 Kg</span>
+            </div>
+            <p>Deadlift strength gained in 5 weeks.</p>
+          </article>
+          <article class="why-legacy-proof">
+            <div class="why-legacy-proof-head">
+              <span class="why-legacy-proof-value">500+</span>
+            </div>
+            <p>Private sessions delivered with tracked progress.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="client-stories-strip reveal" id="client-stories">
+        <div class="client-stories-inner">
+          <div class="client-stories-head">
+            <div>
+              <span class="kicker">Client Success Stories</span>
+              <h2>Different Lives. Same Clear Coaching.</h2>
+            </div>
+          </div>
+
+          <div class="client-testimonial-slider" data-testimonial-slider aria-label="Client testimonial slider">
+            <div class="client-testimonial-viewport">
+              <div class="client-testimonial-track" data-testimonial-track>
+                <article class="client-testimonial-slide is-active" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I manage product launches, so my calendar changes every afternoon and late meetings used to wipe out my workouts. LEGACY+ built me a three-day split with two 45-minute fallback sessions for hectic weeks and one heavier day when the sprint calmed down. The weekly check-ins kept me honest without guilt, and that is why I stayed consistent through the busiest quarter of my career."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Aisha Rahman</strong>
+                      <span>Product Manager</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"As a house husband with two young kids, I am constantly interrupted by school runs, groceries, laundry, and somebody needing something. My coach stopped me from trying to train like a single guy with endless time. We used 30-minute blocks, stroller-walk recovery, and simple progressions I could re-enter fast. I feel stronger, calmer, and much less behind every day."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Daniel Ong</strong>
+                      <span>House Husband</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"After my second child, I wanted coaching that respected recovery, sleep deprivation, and the reality of lifting a baby all day. We started with breathing, bracing, carries, and carefully graded strength work instead of rushing. Every adjustment had a reason. I rebuilt confidence first, then strength, and that made the whole process feel safe."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Priya Menon</strong>
+                      <span>Stay-at-Home Mum</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I run a restaurant, so my hours are brutal and unpredictable and I am on my feet before most people wake up. LEGACY+ built sessions around fatigue, not ego, and they changed my program when service weeks got rough. My back pain dropped, my energy improved, and I stopped losing momentum every time business got intense."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Marcus Lee</strong>
+                      <span>Restaurant Owner</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"At 62, I was not chasing aesthetics. I wanted to lift groceries, get down to the floor with my grandchildren, and travel without feeling fragile. The coaching started with balance, hinge mechanics, and confidence under light load, then slowly built real strength. Everyday tasks feel easier now, and that matters more to me than any number on a scale."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Noraini Yusof</strong>
+                      <span>Retired School Principal</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I am a day trader, so most of my work is long hours sitting still, watching screens, and carrying stress in my shoulders. Before coaching I would punish myself with random weekend workouts and feel wrecked by Monday. LEGACY+ gave me structured lifting, walking targets, and recovery work that matched my work rhythm. My body feels steadier and my focus is better."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Jeremy Tan</strong>
+                      <span>Day Trader</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Freelance deadlines and running a home meant I was always squeezing myself into the leftovers of the day. What helped was how practical the coaching felt. I had short sessions for busy weeks, a clear warm-up I could do half-awake, and coach feedback that never made me feel like I was starting over. That is why I kept going."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Sara Aziz</strong>
+                      <span>Freelance Designer &amp; Homemaker</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"As a regional sales director, I am in airports, cars, and hotel meeting rooms most weeks. LEGACY+ built a main gym program plus travel versions using dumbbells, bands, and bodyweight so I always had a next step. The biggest win was not just weight loss. It was staying in rhythm even when work got chaotic."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Vinod Nair</strong>
+                      <span>Regional Sales Director</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I came in after years of inactivity and honestly felt tentative about basic movement. The programme was patient without being soft. We worked on balance, getting up and down from the floor, loaded carries, and simple strength patterns I could trust. Month by month, I felt steadier on stairs and much less hesitant in daily life."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Mei Chen</strong>
+                      <span>Retired Accountant</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I am a medical officer, so the hours are long, the stress is high, and some weeks I barely know when I will get home. The best part of coaching was not having to think so much. My sessions were planned around shift patterns, sleep debt, and recovery, so I could show up and build strength without burning out."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Farah Johari</strong>
+                      <span>Medical Officer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Quarter closes, board prep, and investor calls used to wipe out any chance of consistency. My coach simplified everything: two anchor sessions I never skipped, one optional performance day, and nutrition checkpoints I could actually follow while entertaining clients. For the first time, training fit around the reality of being a CFO instead of fighting it."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Adrian Goh</strong>
+                      <span>CFO</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"As a software engineer, I can disappear into code for ten hours and suddenly realize I have not moved all day. LEGACY+ treated that as part of the problem, not a personal flaw. We used lunchtime sessions, mobility resets between deep-work blocks, and clear progression targets. My neck and hips feel better, and training finally feels sustainable."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Melissa Lim</strong>
+                      <span>Software Engineer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Being a senior software engineer means deadlines, on-call rotations, and a brain that is already overloaded by the time I reach the gym. The coaching process worked because it removed decision fatigue. I got a clear plan, realistic loading, and contingency sessions for bad sleep or pager weeks. I am stronger now without feeling like fitness is another job."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Hafiz Karim</strong>
+                      <span>Senior Software Engineer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"My work as chief of staff is basically constant context switching: meetings, crisis management, travel, then more meetings. LEGACY+ built a program that protected consistency first with short weekday lifts, precise exercise selection, and weekly adjustments based on the actual week I had, not the ideal one. It made training feel like support, not another demand."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Joanne Teh</strong>
+                      <span>Chief of Staff</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"As an airline pilot, my body clock is never completely normal. Some weeks I land at odd hours and feel stiff, dehydrated, and out of sync. The coaches adjusted session intensity around flight schedules, sleep disruption, and joint stiffness. Instead of forcing heavy days at the wrong time, we trained smart and kept momentum. That made the biggest difference."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Samuel Wong</strong>
+                      <span>Airline Pilot</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Court prep and client demands used to push exercise to the bottom of the list until I felt awful enough to start again. What changed at LEGACY+ was the structure. My coach built around trial weeks, not around fantasy free time. We used shorter lifts when I was in court and stronger blocks when life eased up. That kept me in the game."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Kavita Rao</strong>
+                      <span>Litigation Lawyer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I spend long stretches at a desk as an architect, then suddenly I am on site for hours and completely drained. Coaching helped because it respected the weird rhythm of architecture work. We focused on posture, upper-back strength, and lower-body stability, then built from there. I feel far less beat up after site days and much more capable overall."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Nadia Ismail</strong>
+                      <span>Architect</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Pregnancy made me cautious, but I did not want to stop moving and lose trust in my body. The coaching was specific to that stage: breathing, pelvic positioning, sensible loading, and constant check-ins around energy and discomfort. I never felt rushed. I felt supported, informed, and able to keep training in a way that matched my life and this season."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Eleanor Tan</strong>
+                      <span>Finance Manager &amp; Expecting Mum</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I came back postpartum while also trying to run a company, which meant sleep was broken and my schedule changed daily. LEGACY+ did not pretend I had perfect recovery. We used manageable strength blocks, smart progression, and regular coach feedback to keep me moving forward without overreaching. It felt bespoke to my actual life."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Benedicte Ho</strong>
+                      <span>Founder &amp; New Mum</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"My schedule looks flexible on paper as a university lecturer, but the teaching load, marking, and evening prep can make the week disappear. Coaching helped because it gave me clear anchor days and removed the mental debate about what to do. I got stronger, leaned out gradually, and stopped falling into the all-or-nothing pattern every semester."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Roshan Patel</strong>
+                      <span>University Lecturer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"After retirement, I wanted to age with more strength, not less. I did not need spectacle. I needed smart programming, joint respect, and progress I could feel in everyday life. LEGACY+ built that patiently. I move more confidently, feel sturdier when travelling, and have much more trust in what my body can still do."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Patricia Lim</strong>
+                      <span>Retired Surgeon</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Hospitality teaches you to be available all the time. That was exactly why I struggled with consistency before. My coach built around peak occupancy weeks, early starts, and long hours on the floor. We kept a baseline routine no matter how busy work got, and that consistency changed my body far more than extreme effort ever did."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Kelvin Chua</strong>
+                      <span>Boutique Hotel GM</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Teaching young children means I am talking, demonstrating, lifting, and moving all day, but it never translated into feeling strong. LEGACY+ helped me train in a way that supported the job instead of draining me. My sessions were simple, energizing, and realistic. I feel more resilient by the end of the school day now."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Siti Nur</strong>
+                      <span>Kindergarten Teacher</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"As a founder, my brain is always on and my calendar never behaves. Before coaching, I trained emotionally. Good week, I overdid it. Bad week, I vanished. LEGACY+ gave me a system with baseline sessions, recovery rules, and simple progression targets. It turned training from another source of stress into something that steadied the rest of the week."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Omar Hakim</strong>
+                      <span>Startup Founder</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Shift changes, time zones, and irregular meals made it hard to string together any progress as cabin crew. The coaching worked because it was flexible without being vague. I had hotel-room fallbacks, smart lower-body work for swollen legs, and a plan that changed with roster cycles. I finally feel like I can stay consistent even with an unusual job."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Charmaine Lee</strong>
+                      <span>Cabin Crew Supervisor</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"I help care for my husband and my grandchildren, so I needed strength that made daily life easier, not a program built for vanity. We worked on carries, getting up from lower positions, balance, and safe loading. The progress felt deeply practical. I feel more capable at home and much less worried about losing independence."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Anita Fernandes</strong>
+                      <span>Grandmother &amp; Caregiver</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"My work as a compliance director is mentally intense and detail-heavy, which usually means by evening I am wiped out before the session even begins. The coaches recognized that quickly. They kept the plan efficient, tracked fatigue honestly, and pushed when it made sense. I have built strength and discipline without feeling flattened by the process."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Dev Malik</strong>
+                      <span>Compliance Director</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Wedding season is chaos. Long weekends, heavy camera bags, editing marathons, and barely any routine. LEGACY+ gave me mobility work for my shoulders, stronger lower-body work for long shoot days, and simple training blocks I could return to after crazy weekends. I recover better now and I do not dread carrying gear anymore."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Ruth Wong</strong>
+                      <span>Wedding Photographer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"Coming back after birth while juggling legal work made me impatient, but the coaching process slowed me down in the right way. We rebuilt core pressure management, then layered in strength carefully around childcare and office days. I felt supported rather than judged, and that made it much easier to trust the process."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Esther Yap</strong>
+                      <span>Postpartum Lawyer</span>
+                    </div>
+                  </div>
+                </article>
+                <article class="client-testimonial-slide" data-testimonial-slide>
+                  <div class="client-testimonial-caption">
+                    <p class="client-testimonial-quote">"My job in procurement is meetings, vendor calls, spreadsheets, and constant problem solving. I used to treat training like something I would get to when work calmed down, which meant never. LEGACY+ built a routine that survived busy months: two non-negotiable lifts, clear progression, and recovery targets. That structure is what made progress finally stick."</p>
+                    <div class="client-testimonial-meta">
+                      <strong>Aaron Low</strong>
+                      <span>Procurement Manager</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="client-testimonial-controls">
+              <button class="client-testimonial-nav" type="button" data-testimonial-prev aria-label="Show previous testimonial">Previous</button>
+              <div class="client-testimonial-dots" data-testimonial-dots aria-label="Choose testimonial"></div>
+              <button class="client-testimonial-nav" type="button" data-testimonial-next aria-label="Show next testimonial">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal services-snapshot" id="services">
+        <div class="services-intro">
+          <span class="kicker">Find Your Best-Fit Coaching Path</span>
+          <h2>Three Premium Programs. One Clear Next Step.</h2>
+          <p class="section-copy">
+            Choose the coaching path that matches your life stage, training goal, and level of support.
+          </p>
+        </div>
+
+        <div class="service-grid">
+          <article class="card program-card">
+            <div class="program-card-top">
+              <span class="program-card-label">Flagship Private Coaching</span>
+              <span class="program-card-price">From RM 860 / month</span>
+            </div>
+            <h3>1-on-1 Strength Coaching</h3>
+            <p>
+              Private coaching for busy adults who want stronger lifts, better energy, and a clear plan that delivers
+              measurable progress.
+            </p>
+            <div class="chips">
+              <span class="chip">Busy professionals</span>
+              <span class="chip">Private sessions</span>
+              <span class="chip">Built for packed schedules</span>
+            </div>
+            <a class="text-link program-link" href="/coaching/1-1.html">See full program</a>
+          </article>
+          <article class="card program-card">
+            <div class="program-card-top">
+              <span class="program-card-label">Stage-Specific Support</span>
+              <span class="program-card-price">From RM 860 / month</span>
+            </div>
+            <h3>Pre- &amp; Postnatal Strength Coaching</h3>
+            <p>
+              Safe, confidence-building coaching for pregnancy and postpartum, with training adjusted to each stage.
+            </p>
+            <div class="chips">
+              <span class="chip">Pregnancy-safe</span>
+              <span class="chip">Stage-specific support</span>
+              <span class="chip">Guided return to training</span>
+            </div>
+            <a class="text-link program-link" href="/coaching/pre-postnatal.html">See full program</a>
+          </article>
+          <article class="card program-card">
+            <div class="program-card-top">
+              <span class="program-card-label">Strength for Independence</span>
+              <span class="program-card-price">From RM 860 / month</span>
+            </div>
+            <h3>Longevity &amp; Mobility Coaching</h3>
+            <p>
+              Progressive coaching for older adults who want better balance, stronger movement, and more confidence in
+              daily life.
+            </p>
+            <div class="chips">
+              <span class="chip">Adults 50+</span>
+              <span class="chip">Move with confidence</span>
+              <span class="chip">Stay independent longer</span>
+            </div>
+            <a class="text-link program-link" href="/coaching/longevity-seniors.html">See full program</a>
+          </article>
+        </div>
+
         <div class="section-actions">
-          <a
-            class="btn btn-secondary"
-            href="https://wa.me/60123456789?text=Hi%20LEGACY%2B%2C%20I%20want%20a%20consultation."
-            target="_blank"
-            rel="noopener"
-            >WhatsApp Consultation</a
-          >
-          <a class="btn btn-ghost" href="./results.html">View Success Stories</a>
+          <a class="btn btn-secondary" href="/packages.html">Compare Plans</a>
+        </div>
+      </section>
+
+      <section class="section reveal earn-rank-showcase" id="earn-rank-showcase">
+        <div class="earn-rank-banner">
+          <div class="earn-rank-copy">
+            <h2 class="earn-rank-title"><span class="Minor">BEGIN YOUR</span><br /><span class="title-highlight">LEGACY</span></h2>
+            <p class="earn-rank-caption">
+              Start with a free consultation and map the fastest route to your first milestone, your first system,
+              and your first visible result inside LEGACY+.
+            </p>
+            <div class="earn-rank-actions">
+              <a class="btn btn-secondary" href="/contact.html">BOOK YOUR FREE CONSULT</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal home-shortcuts" id="home-shortcuts">
+        <div class="section-actions">
+          <a class="btn btn-secondary" href="/faq.html">VIEW FAQ</a>
+          <a class="btn btn-secondary" href="/contact.html">TAKE THE NEXT STEP</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
+      <div id="contact"></div>
       <p>LEGACY+ Coaching | Premium Private Coaching in Kuala Lumpur</p>
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href="./coaching/1-1.html">1:1 Coaching</a>
@@ -191,14 +706,16 @@
     </footer>
 
     <a
-      class="floating-wa"
-      href="https://wa.me/60123456789?text=Hi%20LEGACY%2B%2C%20I%20want%20to%20start%20coaching."
+      class="floating-wa floating-wa--home"
+      href="https://wa.me/601139772862?text=Hi%20LEGACY%2B%2C%20I%20want%20to%20talk%20to%20a%20coach."
       target="_blank"
       rel="noopener"
-      aria-label="Start coaching on WhatsApp"
-      >Start Coaching on WhatsApp</a
+      aria-label="Talk to a coach on WhatsApp"
     >
+      <span class="floating-wa-label">WHATSAPP</span>
+      <span class="floating-wa-icon" aria-hidden="true"></span>
+    </a>
 
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260402deployready1"></script>
   </body>
 </html>

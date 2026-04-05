@@ -99,6 +99,48 @@
   const qaAccountsSummaryNode = document.getElementById("admin-qa-accounts-summary");
   const qaAccountsDetailsNode = document.getElementById("admin-qa-accounts-details");
   const qaAccountsCredentialsNode = document.getElementById("admin-qa-accounts-credentials");
+  const newsletterFormNode = document.getElementById("admin-newsletter-form");
+  const newsletterEnabledNode = document.getElementById("admin-newsletter-enabled");
+  const newsletterAudienceSegmentNode = document.getElementById("admin-newsletter-audience-segment");
+  const newsletterIssueLabelNode = document.getElementById("admin-newsletter-issue-label");
+  const newsletterTypeNode = document.getElementById("admin-newsletter-type");
+  const newsletterPreviewTextNode = document.getElementById("admin-newsletter-preview-text");
+  const newsletterScheduleDayNode = document.getElementById("admin-newsletter-schedule-day");
+  const newsletterScheduleHourNode = document.getElementById("admin-newsletter-schedule-hour");
+  const newsletterSubjectNode = document.getElementById("admin-newsletter-subject");
+  const newsletterEyebrowNode = document.getElementById("admin-newsletter-eyebrow");
+  const newsletterTitleNode = document.getElementById("admin-newsletter-title");
+  const newsletterIntroNode = document.getElementById("admin-newsletter-intro");
+  const newsletterCtaLabelNode = document.getElementById("admin-newsletter-cta-label");
+  const newsletterCtaUrlNode = document.getElementById("admin-newsletter-cta-url");
+  const newsletterFeaturedDealTitleNode = document.getElementById("admin-newsletter-featured-deal-title");
+  const newsletterFeaturedDealBodyNode = document.getElementById("admin-newsletter-featured-deal-body");
+  const newsletterArticleTitleNode = document.getElementById("admin-newsletter-article-title");
+  const newsletterArticleBodyNode = document.getElementById("admin-newsletter-article-body");
+  const newsletterKeyTakeawayTitleNode = document.getElementById("admin-newsletter-key-takeaway-title");
+  const newsletterKeyTakeawayBodyNode = document.getElementById("admin-newsletter-key-takeaway-body");
+  const newsletterCommunityTitleNode = document.getElementById("admin-newsletter-community-title");
+  const newsletterCommunityBodyNode = document.getElementById("admin-newsletter-community-body");
+  const newsletterClosingNoteNode = document.getElementById("admin-newsletter-closing-note");
+  const newsletterReferenceOneLabelNode = document.getElementById("admin-newsletter-reference-one-label");
+  const newsletterReferenceOneUrlNode = document.getElementById("admin-newsletter-reference-one-url");
+  const newsletterReferenceTwoLabelNode = document.getElementById("admin-newsletter-reference-two-label");
+  const newsletterReferenceTwoUrlNode = document.getElementById("admin-newsletter-reference-two-url");
+  const newsletterTestRecipientNode = document.getElementById("admin-newsletter-test-recipient");
+  const newsletterSaveButtonNode = document.getElementById("admin-newsletter-save");
+  const newsletterPreviewButtonNode = document.getElementById("admin-newsletter-preview");
+  const newsletterSendTestButtonNode = document.getElementById("admin-newsletter-send-test");
+  const newsletterSendNowButtonNode = document.getElementById("admin-newsletter-send-now");
+  const newsletterFeedbackNode = document.getElementById("admin-newsletter-feedback");
+  const newsletterStructureFeedbackNode = document.getElementById("admin-newsletter-structure-feedback");
+  const newsletterPreviewFeedbackNode = document.getElementById("admin-newsletter-preview-feedback");
+  const newsletterPreviewFrameNode = document.getElementById("admin-newsletter-preview-frame");
+  const newsletterSummaryNode = document.getElementById("admin-newsletter-summary");
+  const newsletterHistoryNode = document.getElementById("admin-newsletter-history");
+  const newsletterPresetProfessionalNode = document.getElementById("admin-newsletter-preset-professional");
+  const newsletterPresetMotivationalNode = document.getElementById("admin-newsletter-preset-motivational");
+  const newsletterPresetPromoNode = document.getElementById("admin-newsletter-preset-promo");
+  const newsletterPresetCoachNode = document.getElementById("admin-newsletter-preset-coach");
   const exportOrdersButton = document.getElementById("admin-export-orders");
   const exportCommissionsButton = document.getElementById("admin-export-commissions");
   const leadSearchNode = document.getElementById("admin-lead-search");
@@ -163,6 +205,9 @@
     settings: [
       "notifications",
     ],
+    newsletter: [
+      "notifications",
+    ],
   };
 
   const dashboardState = {
@@ -208,6 +253,14 @@
     qaAccountCredentials: null,
     qaAccountsLoaded: false,
     qaAccountsLoading: false,
+    newsletterCampaign: null,
+    newsletterStatus: null,
+    newsletterPreview: null,
+    newsletterAnalytics: null,
+    newsletterLoaded: false,
+    newsletterLoading: false,
+    newsletterDirty: false,
+    newsletterCustomSections: [],
   };
 
   function buildEmptyDashboardData() {
@@ -679,6 +732,10 @@
     return DASHBOARD_PAGE_KEY === "settings";
   }
 
+  function isNewsletterWorkspacePage() {
+    return DASHBOARD_PAGE_KEY === "newsletter";
+  }
+
   function isLeadWorkspaceDetailsPending(data) {
     return isLeadsWorkspacePage() && data?.leadWorkspaceDetailsLoaded === false;
   }
@@ -903,6 +960,33 @@
     qaAccountsFeedbackNode.style.color = isError ? "#ffb3b3" : "";
   }
 
+  function setNewsletterFeedback(message, isError) {
+    if (!newsletterFeedbackNode) {
+      return;
+    }
+
+    newsletterFeedbackNode.textContent = message || "";
+    newsletterFeedbackNode.style.color = isError ? "#ffb3b3" : "";
+  }
+
+  function setNewsletterPreviewFeedback(message, isError) {
+    if (!newsletterPreviewFeedbackNode) {
+      return;
+    }
+
+    newsletterPreviewFeedbackNode.textContent = message || "";
+    newsletterPreviewFeedbackNode.style.color = isError ? "#ffb3b3" : "";
+  }
+
+  function setNewsletterStructureFeedback(message, isError) {
+    if (!newsletterStructureFeedbackNode) {
+      return;
+    }
+
+    newsletterStructureFeedbackNode.textContent = message || "";
+    newsletterStructureFeedbackNode.style.color = isError ? "#ffb3b3" : "";
+  }
+
   function setQaAccountsBusy(isBusy) {
     if (qaAccountsRefreshButton) {
       qaAccountsRefreshButton.disabled = Boolean(isBusy);
@@ -911,6 +995,257 @@
     if (qaAccountsSubmitButton) {
       qaAccountsSubmitButton.disabled = Boolean(isBusy);
     }
+  }
+
+  function setNewsletterBusy(isBusy) {
+    if (newsletterSaveButtonNode) {
+      newsletterSaveButtonNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterPreviewButtonNode) {
+      newsletterPreviewButtonNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterSendTestButtonNode) {
+      newsletterSendTestButtonNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterSendNowButtonNode) {
+      newsletterSendNowButtonNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterPresetProfessionalNode) {
+      newsletterPresetProfessionalNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterPresetMotivationalNode) {
+      newsletterPresetMotivationalNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterPresetPromoNode) {
+      newsletterPresetPromoNode.disabled = Boolean(isBusy);
+    }
+
+    if (newsletterPresetCoachNode) {
+      newsletterPresetCoachNode.disabled = Boolean(isBusy);
+    }
+  }
+
+  function formatNewsletterIssueLabel(date = new Date()) {
+    return `Week of ${new Intl.DateTimeFormat("en-MY", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }).format(date)}`;
+  }
+
+  function buildCoachNewsletterSections() {
+    return [
+      {
+        title: "Coaching Focus Of The Week",
+        body: "This week’s edge is cleaner cueing. Most clients do better when we coach one clear priority, explain why it matters in plain language, and then let them own the rep instead of drowning them in instructions.",
+        imageUrl: "/assets/why-coach-support.jpg",
+        items: [
+          {
+            label: "What Good Looks Like",
+            text: "One cue, one intention, one success marker. The client knows exactly what to do and what they should feel.",
+          },
+          {
+            label: "Common Miss",
+            text: "Too many corrections at once. The client starts thinking about five things and moves worse, not better.",
+          },
+          {
+            label: "Better Alternative",
+            text: "Prioritize the one adjustment that changes the quality of the set the most, then layer the next one only after it lands.",
+          },
+        ],
+      },
+      {
+        title: "Applied Client Scenario",
+        body: "A busy professional arrives late, stressed, and mentally scattered. The session still needs to feel coached, not rushed.",
+        imageUrl: "/assets/why-coach-client.jpg",
+        items: [
+          {
+            label: "Situation",
+            text: "The client is distracted and short on time, so technical perfection is not the right opening demand.",
+          },
+          {
+            label: "Best Response",
+            text: "Reset the room, narrow the goal, and coach the first 10 minutes around confidence and rhythm before chasing output.",
+          },
+          {
+            label: "Why It Works",
+            text: "Clients re-engage faster when they feel settled, capable, and looked after instead of immediately being made to feel behind.",
+          },
+        ],
+      },
+      {
+        title: "Retention Layer",
+        body: "Better coaching keeps clients longer because it improves trust, clarity, and perceived progress. People stay when sessions feel personal, purposeful, and repeatable.",
+        imageUrl: "/assets/team-optimized/coach-client-960.jpg",
+        items: [
+          {
+            label: "Adherence Signal",
+            text: "Finish the session with one clear next step so the client leaves knowing what success looks like before the next appointment.",
+          },
+          {
+            label: "Rebooking Signal",
+            text: "Tie the next session back to what was built today. Continuity feels more valuable than another isolated workout.",
+          },
+        ],
+      },
+      {
+        title: "This Week’s Standard",
+        body: "Use this quick check before your next session. If these are true, your coaching is likely landing the right way.",
+        imageUrl: "/assets/team-optimized/gym-floor-960.jpg",
+        items: [
+          {
+            label: "Session Goal",
+            text: "Did I make today’s goal obvious within the first few minutes?",
+          },
+          {
+            label: "Client Buy-In",
+            text: "Did I explain why the work mattered in a way the client could repeat back?",
+          },
+          {
+            label: "Cue Quality",
+            text: "Did I coach the fewest cues needed instead of filling silence with instruction?",
+          },
+          {
+            label: "Next Step",
+            text: "Did the client leave knowing what to focus on before we see them again?",
+          },
+        ],
+      },
+    ];
+  }
+
+  function describeNewsletterStructure(campaign) {
+    const customSections = Array.isArray(campaign?.customSections) ? campaign.customSections : [];
+    if (customSections.length) {
+      return `Structured layout loaded: ${customSections.map((section) => section.title).filter(Boolean).join(" • ")}.`;
+    }
+
+    return "Standard member structure loaded: featured update, article or tip, and community section.";
+  }
+
+  function buildNewsletterPresetCampaign(presetKey) {
+    const issueLabel = formatNewsletterIssueLabel();
+    const hydrationReferenceLabel = "Hydration, Hyperthermia, Glycogen, and Recovery (PubMed)";
+    const hydrationReferenceUrl = "https://pubmed.ncbi.nlm.nih.gov/37892517/";
+    const proteinReferenceLabel = "Whey Protein, Exercise, and Muscle Protein Synthesis (PubMed)";
+    const proteinReferenceUrl = "https://pubmed.ncbi.nlm.nih.gov/40871607/";
+    const baseCampaign = {
+      enabled: false,
+      audienceSegment: "active_members",
+      issueLabel,
+      newsletterType: "update_announcement",
+      previewText: "Your weekly coaching updates, important schedule notes, and one useful training reminder.",
+      scheduleDay: "monday",
+      scheduleHour: 10,
+      ctaLabel: "Book Your Training",
+      ctaUrl: "https://app.legacycoaching.com.my/client-schedule.html",
+      referenceOneLabel: hydrationReferenceLabel,
+      referenceOneUrl: hydrationReferenceUrl,
+      referenceTwoLabel: proteinReferenceLabel,
+      referenceTwoUrl: proteinReferenceUrl,
+    };
+
+    if (presetKey === "motivational") {
+      return {
+        ...baseCampaign,
+        newsletterType: "community_member_spotlight",
+        previewText: "A stronger week starts with a clear plan, a booked session, and a little momentum.",
+        subject: "Your Strongest Week Starts Now: LEGACY+ Updates And Momentum",
+        eyebrow: "Momentum For The Week",
+        title: "Let’s Build A Strong Week Together",
+        intro: "A strong week rarely happens by accident. Here is your quick momentum check-in so you know what is changing, what is available, and where to focus your energy next.",
+        featuredDealTitle: "This Week’s Push",
+        featuredDealBody: "Sarah officially joins the coaching floor on Monday, the 6 PM HIIT class is off this week, and members can still enjoy 20% off protein powder while stocks last. Plan early and train with intent.",
+        articleTitle: "Pro Tip: Hydration Helps You Recover Faster",
+        articleBody: "Better recovery often starts with basics. If your water intake slips, strength, concentration, and recovery quality usually follow. Stay ahead of it before training, not after.",
+        keyTakeawayTitle: "Key Takeaway",
+        keyTakeawayBody: "If you want the week to feel easier, book early, train on plan, and get the basics right before you chase anything fancy.",
+        communityTitle: "Member Momentum",
+        communityBody: "This is a good week to lock in your sessions before the schedule tightens. If you need help structuring your training week, speak to the coaching team and we will help you map it out.",
+        closingNote: "Show up, stay consistent, and let one strong week set the tone for the next one.",
+      };
+    }
+
+    if (presetKey === "promo") {
+      return {
+        ...baseCampaign,
+        previewText: "Important class notes, a live member offer, and the easiest next step for this week.",
+        subject: "This Week Only: 20% Off Protein + Important LEGACY+ Updates",
+        eyebrow: "Members Only Offers",
+        title: "New Offers, Key Updates, And Your Next Best Session",
+        intro: "Here is your short weekly update with the offers worth acting on, the schedule notes that matter, and one simple coaching reminder to help you get more from this week.",
+        featuredDealTitle: "Offer And Schedule Highlights",
+        featuredDealBody: "Protein powder is now 20% off for a limited time, Sarah joins the PT team on Monday, and the 6 PM HIIT class is cancelled this week. If you need an alternative training slot, the team can help you lock one in quickly.",
+        articleTitle: "Quick Win: Recover Better Between Sessions",
+        articleBody: "A great training week is not only about intensity. Sleep, hydration, and meal timing all affect how well you recover and perform. Clean up one of those this week and your sessions will feel better fast.",
+        keyTakeawayTitle: "Quick Read",
+        keyTakeawayBody: "Secure the offer if you need it, then book your training before the week gets away from you.",
+        communityTitle: "Need A Better Plan This Week?",
+        communityBody: "If your week is already filling up, book your sessions early and ask your coach for the most efficient training structure. A clear plan makes it easier to stay consistent.",
+        closingNote: "Claim the deal, secure your training times, and let’s make this a productive week in the gym.",
+      };
+    }
+
+    if (presetKey === "coach") {
+      return {
+        ...baseCampaign,
+        audienceSegment: "active_coaches",
+        newsletterType: "coach_development",
+        previewText: "A short internal coach note on cueing, session quality, and the behaviors that improve client retention.",
+        ctaLabel: "Review Before Your Next Session",
+        ctaUrl: "https://app.legacycoaching.com.my/coach-training.html",
+        subject: "This Week’s Coaching Edge: Better Cues, Better Sessions, Better Retention",
+        eyebrow: "Coach Development Edition",
+        title: "One Coaching Standard To Sharpen This Week",
+        intro: "Good coaching is rarely about saying more. It is usually about saying the right thing at the right moment, then helping the client feel capable enough to act on it. This issue is built to make your next sessions cleaner, calmer, and more repeatable.",
+        featuredDealTitle: "Coaching Focus Of The Week",
+        featuredDealBody: "This week’s focus is simple cueing. One clear cue almost always lands better than a running stream of corrections.",
+        articleTitle: "Applied Scenario",
+        articleBody: "Use a calm reset with stressed or time-poor clients before you ask for high output. Better emotional pacing usually leads to better movement quality.",
+        keyTakeawayTitle: "Worth Remembering",
+        keyTakeawayBody: "If the client leaves knowing what they improved, why it mattered, and what comes next, the session was coached properly.",
+        communityTitle: "Retention Layer",
+        communityBody: "Trust is built when clients feel understood and guided, not processed.",
+        closingNote: "Use this as a floor standard for the week. Keep the cues tight, the session intention clear, and the client experience personal.",
+        referenceOneLabel: "",
+        referenceOneUrl: "",
+        referenceTwoLabel: "",
+        referenceTwoUrl: "",
+        customSections: buildCoachNewsletterSections(),
+      };
+    }
+
+    return {
+      ...baseCampaign,
+      subject: "This Week At LEGACY+: Coaching Updates, Schedule Notes, And Member Wins",
+      eyebrow: "Weekly Member Update",
+      title: "Here’s What’s Happening At LEGACY+ This Week",
+      intro: "Here is your concise weekly update with the coaching news, schedule changes, and member highlights that matter most for the week ahead.",
+      featuredDealTitle: "What’s Happening This Week",
+      featuredDealBody: "Sarah joins the PT team on Monday, the 6 PM HIIT class is cancelled this week, and members can enjoy 20% off protein powder for a limited time. If you need an alternative session, speak to the team early.",
+      articleTitle: "Pro Tip: Why Hydration Supports Recovery",
+      articleBody: "Hydration affects more than thirst. It supports training output, concentration, and muscle recovery, so staying consistent with fluids across the day usually beats trying to catch up after your session.",
+      keyTakeawayTitle: "At A Glance",
+      keyTakeawayBody: "Plan your training early, keep the basics tight, and use this update to stay one step ahead of the week.",
+      communityTitle: "Member Spotlight And Support",
+      communityBody: "Momentum tends to build when the week is planned early. If you have not booked your sessions yet, this is a good time to get them in and make sure your training still fits the rest of your schedule.",
+      closingNote: "Book your sessions early, stay consistent, and let the coaching team help you build a strong week.",
+    };
+  }
+
+  function applyNewsletterPreset(presetKey) {
+    const presetCampaign = buildNewsletterPresetCampaign(presetKey);
+    applyNewsletterCampaignToForm(presetCampaign);
+    dashboardState.newsletterDirty = true;
+    setNewsletterFeedback(`${normalizeStatusLabel(presetKey)} preset loaded. Review the copy, refresh the preview, and send a test email when you are ready.`, false);
+    setNewsletterPreviewFeedback("Preset loaded. Refresh the preview to render the latest version.", false);
+    setNewsletterStructureFeedback(describeNewsletterStructure(presetCampaign), false);
   }
 
   function getQaAccountFormValues() {
@@ -1171,6 +1506,427 @@
     } finally {
       dashboardState.qaAccountsLoading = false;
       setQaAccountsBusy(false);
+    }
+  }
+
+  function getNewsletterFormValues() {
+    return {
+      enabled: Boolean(newsletterEnabledNode?.checked),
+      audienceSegment: String(newsletterAudienceSegmentNode?.value || "active_members").trim(),
+      issueLabel: String(newsletterIssueLabelNode?.value || "").trim(),
+      newsletterType: String(newsletterTypeNode?.value || "update_announcement").trim(),
+      previewText: String(newsletterPreviewTextNode?.value || "").trim(),
+      scheduleDay: String(newsletterScheduleDayNode?.value || "monday").trim(),
+      scheduleHour: Number(newsletterScheduleHourNode?.value || 10),
+      subject: String(newsletterSubjectNode?.value || "").trim(),
+      eyebrow: String(newsletterEyebrowNode?.value || "").trim(),
+      title: String(newsletterTitleNode?.value || "").trim(),
+      intro: String(newsletterIntroNode?.value || "").trim(),
+      ctaLabel: String(newsletterCtaLabelNode?.value || "").trim(),
+      ctaUrl: String(newsletterCtaUrlNode?.value || "").trim(),
+      featuredDealTitle: String(newsletterFeaturedDealTitleNode?.value || "").trim(),
+      featuredDealBody: String(newsletterFeaturedDealBodyNode?.value || "").trim(),
+      articleTitle: String(newsletterArticleTitleNode?.value || "").trim(),
+      articleBody: String(newsletterArticleBodyNode?.value || "").trim(),
+      keyTakeawayTitle: String(newsletterKeyTakeawayTitleNode?.value || "").trim(),
+      keyTakeawayBody: String(newsletterKeyTakeawayBodyNode?.value || "").trim(),
+      communityTitle: String(newsletterCommunityTitleNode?.value || "").trim(),
+      communityBody: String(newsletterCommunityBodyNode?.value || "").trim(),
+      closingNote: String(newsletterClosingNoteNode?.value || "").trim(),
+      referenceOneLabel: String(newsletterReferenceOneLabelNode?.value || "").trim(),
+      referenceOneUrl: String(newsletterReferenceOneUrlNode?.value || "").trim(),
+      referenceTwoLabel: String(newsletterReferenceTwoLabelNode?.value || "").trim(),
+      referenceTwoUrl: String(newsletterReferenceTwoUrlNode?.value || "").trim(),
+      customSections: Array.isArray(dashboardState.newsletterCustomSections)
+        ? dashboardState.newsletterCustomSections
+        : [],
+    };
+  }
+
+  function applyNewsletterCampaignToForm(campaign) {
+    const source = campaign || {};
+    dashboardState.newsletterCustomSections = Array.isArray(source.customSections) ? source.customSections : [];
+    if (newsletterEnabledNode) newsletterEnabledNode.checked = Boolean(source.enabled);
+    if (newsletterAudienceSegmentNode) newsletterAudienceSegmentNode.value = source.audienceSegment || "active_members";
+    if (newsletterIssueLabelNode) newsletterIssueLabelNode.value = source.issueLabel || "";
+    if (newsletterTypeNode) newsletterTypeNode.value = source.newsletterType || "update_announcement";
+    if (newsletterPreviewTextNode) newsletterPreviewTextNode.value = source.previewText || "";
+    if (newsletterScheduleDayNode) newsletterScheduleDayNode.value = source.scheduleDay || "monday";
+    if (newsletterScheduleHourNode) newsletterScheduleHourNode.value = Number.isFinite(Number(source.scheduleHour)) ? Number(source.scheduleHour) : 10;
+    if (newsletterSubjectNode) newsletterSubjectNode.value = source.subject || "";
+    if (newsletterEyebrowNode) newsletterEyebrowNode.value = source.eyebrow || "";
+    if (newsletterTitleNode) newsletterTitleNode.value = source.title || "";
+    if (newsletterIntroNode) newsletterIntroNode.value = source.intro || "";
+    if (newsletterCtaLabelNode) newsletterCtaLabelNode.value = source.ctaLabel || "";
+    if (newsletterCtaUrlNode) newsletterCtaUrlNode.value = source.ctaUrl || "";
+    if (newsletterFeaturedDealTitleNode) newsletterFeaturedDealTitleNode.value = source.featuredDealTitle || "";
+    if (newsletterFeaturedDealBodyNode) newsletterFeaturedDealBodyNode.value = source.featuredDealBody || "";
+    if (newsletterArticleTitleNode) newsletterArticleTitleNode.value = source.articleTitle || "";
+    if (newsletterArticleBodyNode) newsletterArticleBodyNode.value = source.articleBody || "";
+    if (newsletterKeyTakeawayTitleNode) newsletterKeyTakeawayTitleNode.value = source.keyTakeawayTitle || "";
+    if (newsletterKeyTakeawayBodyNode) newsletterKeyTakeawayBodyNode.value = source.keyTakeawayBody || "";
+    if (newsletterCommunityTitleNode) newsletterCommunityTitleNode.value = source.communityTitle || "";
+    if (newsletterCommunityBodyNode) newsletterCommunityBodyNode.value = source.communityBody || "";
+    if (newsletterClosingNoteNode) newsletterClosingNoteNode.value = source.closingNote || "";
+    if (newsletterReferenceOneLabelNode) newsletterReferenceOneLabelNode.value = source.referenceOneLabel || "";
+    if (newsletterReferenceOneUrlNode) newsletterReferenceOneUrlNode.value = source.referenceOneUrl || "";
+    if (newsletterReferenceTwoLabelNode) newsletterReferenceTwoLabelNode.value = source.referenceTwoLabel || "";
+    if (newsletterReferenceTwoUrlNode) newsletterReferenceTwoUrlNode.value = source.referenceTwoUrl || "";
+    setNewsletterStructureFeedback(describeNewsletterStructure(source), false);
+  }
+
+  function buildNewsletterSummaryMarkup(status, analytics) {
+    const enabledLabel = status?.enabled ? "Enabled" : "Paused";
+    const nextRunLabel = status?.enabled
+      ? status?.nextScheduledAtLabel || "Waiting for the next schedule window"
+      : "Weekly automation is currently off";
+    const latestDispatch = Array.isArray(analytics?.dispatches) ? analytics.dispatches[0] : null;
+
+    return `
+      <article class="dashboard-badge">
+        <strong>Automation</strong>
+        <p>${escapeHtml(enabledLabel)}</p>
+      </article>
+      <article class="dashboard-badge">
+        <strong>Audience</strong>
+        <p>${escapeHtml(`${Number(status?.audienceCount || 0)} • ${status?.audienceSegmentLabel || "Active Members"}`)}</p>
+      </article>
+      <article class="dashboard-badge">
+        <strong>Next Run</strong>
+        <p>${escapeHtml(nextRunLabel)}</p>
+      </article>
+      <article class="dashboard-badge">
+        <strong>Latest Open Rate</strong>
+        <p>${escapeHtml(latestDispatch ? formatPercent(latestDispatch.openRate * 100, 0) : "0%")}</p>
+      </article>
+      <article class="dashboard-badge">
+        <strong>Latest Click Rate</strong>
+        <p>${escapeHtml(latestDispatch ? formatPercent(latestDispatch.clickRate * 100, 0) : "0%")}</p>
+      </article>
+    `;
+  }
+
+  function buildNewsletterHistoryMarkup(status, campaign, analytics) {
+    const lastSendSummary = status?.lastSentAt
+      ? `${status.lastSentAtLabel || status.lastSentAt} • ${normalizeStatusLabel(status.lastSentMode || "manual")} • Delivered ${Number(status.lastDeliveredCount || 0)}`
+      : "No newsletter has been sent yet from this system.";
+    const scheduleSummary = status?.enabled
+      ? `${status.scheduleDayLabel || status.scheduleDay || "Monday"} at ${String(status.scheduleHour || 0).padStart(2, "0")}:00`
+      : "Automation is paused.";
+    const recentDispatches = Array.isArray(analytics?.dispatches) ? analytics.dispatches.slice(0, 3) : [];
+    const recentDispatchMarkup = recentDispatches.length
+      ? recentDispatches
+          .map((dispatch) => {
+            const destinationSummary = Array.isArray(dispatch.topDestinations) && dispatch.topDestinations.length
+              ? `Top click: ${dispatch.topDestinations[0].destination}`
+              : "No tracked clicks yet.";
+            return `
+              <article class="dashboard-note">
+                <p><strong>${escapeHtml(dispatch.subject || "Weekly Dispatch")}</strong><br />${escapeHtml(`${dispatch.sentAtLabel || dispatch.sentAt} • ${normalizeStatusLabel(dispatch.mode || "manual")}`)}</p>
+                <small>${escapeHtml(`Delivered ${dispatch.deliveredCount} • Opened ${dispatch.uniqueOpenCount} • Clicked ${dispatch.uniqueClickCount}`)}</small>
+                <small>${escapeHtml(destinationSummary)}</small>
+              </article>
+            `;
+          })
+          .join("")
+      : `
+          <article class="dashboard-note dashboard-note--placeholder">
+            <strong>No tracked dispatches yet</strong>
+            <p>Once you send the first issue, recent open and click rates will show here.</p>
+          </article>
+        `;
+
+    return `
+      <article class="dashboard-note">
+        <p><strong>Current subject</strong><br />${escapeHtml(campaign?.subject || "LEGACY+ Weekly Dispatch")}</p>
+        <small>${escapeHtml(campaign?.issueLabel ? `Issue label: ${campaign.issueLabel}` : "No issue label set yet.")}</small>
+      </article>
+      <article class="dashboard-note">
+        <p><strong>Last send</strong><br />${escapeHtml(lastSendSummary)}</p>
+        <small>${escapeHtml(Number(status?.lastSkippedCount || 0) ? `${status.lastSkippedCount} recipients were skipped by status or email preferences.` : "No skipped recipients were reported on the last dispatch.")}</small>
+      </article>
+      <article class="dashboard-note">
+        <p><strong>Schedule</strong><br />${escapeHtml(scheduleSummary)}</p>
+        <small>${escapeHtml(status?.enabled ? "The hourly scheduler checks this campaign and sends it once per week in Malaysia time." : "Save the campaign, then toggle weekly automation on when you are ready.")}</small>
+      </article>
+      ${recentDispatchMarkup}
+    `;
+  }
+
+  function renderNewsletterPreview(preview, status) {
+    if (!newsletterPreviewFrameNode) {
+      return;
+    }
+
+    if (!preview?.html) {
+      newsletterPreviewFrameNode.srcdoc = `
+        <html>
+          <body style="margin:0;padding:32px;background:#080604;color:#f9ecda;font-family:Inter,Segoe UI,Helvetica,Arial,sans-serif;">
+            <p>The live preview will appear here after the newsletter renderer finishes loading.</p>
+          </body>
+        </html>
+      `;
+      setNewsletterPreviewFeedback("Preview will appear here once the campaign loads.", false);
+      return;
+    }
+
+    newsletterPreviewFrameNode.srcdoc = preview.html;
+    const audienceLine = `${Number(preview.audienceCount || status?.audienceCount || 0)} ${preview?.audienceSegmentLabel || status?.audienceSegmentLabel || "contacts"}`;
+    setNewsletterPreviewFeedback(`Preview ready for ${audienceLine}. Refresh it after changing the audience, subject, or CTA.`, false);
+  }
+
+  function renderNewsletterCampaign() {
+    if (!newsletterSummaryNode || !newsletterHistoryNode) {
+      return;
+    }
+
+    const campaign = dashboardState.newsletterCampaign;
+    const status = dashboardState.newsletterStatus;
+    const preview = dashboardState.newsletterPreview;
+    const analytics = dashboardState.newsletterAnalytics;
+    if (!campaign || !status) {
+      newsletterSummaryNode.innerHTML = `
+        <article class="dashboard-badge dashboard-badge--placeholder">
+          <strong>Newsletter status is syncing</strong>
+          <p>The current campaign state will appear here after the settings request completes.</p>
+        </article>
+      `;
+      newsletterHistoryNode.innerHTML = `
+        <article class="dashboard-note dashboard-note--placeholder">
+          <strong>Campaign history is syncing</strong>
+          <p>The latest send summary and next scheduled run will appear here once the newsletter manager finishes loading.</p>
+        </article>
+      `;
+      renderNewsletterPreview(preview, status);
+      return;
+    }
+
+    newsletterSummaryNode.innerHTML = buildNewsletterSummaryMarkup(status, analytics);
+    newsletterHistoryNode.innerHTML = buildNewsletterHistoryMarkup(status, campaign, analytics);
+    if (!dashboardState.newsletterDirty) {
+      applyNewsletterCampaignToForm(campaign);
+    }
+    renderNewsletterPreview(preview, status);
+  }
+
+  async function requestNewsletterCampaign(method, body) {
+    const accessToken = await getAccessToken();
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    const url = new URL("/.netlify/functions/manage-newsletter-campaign", window.location.origin);
+    if (method !== "GET") {
+      headers["Content-Type"] = "application/json";
+    }
+
+    const response = await window.fetch(url.toString(), {
+      method,
+      headers,
+      body: method === "GET" ? undefined : JSON.stringify(body || {}),
+    });
+
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(payload?.error || "Unable to reach the newsletter manager right now.");
+    }
+
+    return payload;
+  }
+
+  async function loadNewsletterCampaign(options) {
+    if (!newsletterSummaryNode || dashboardState.newsletterLoading) {
+      return;
+    }
+
+    const config = options || {};
+    const silent = Boolean(config.silent);
+    if (dashboardState.newsletterLoaded && !config.force) {
+      renderNewsletterCampaign();
+      return;
+    }
+
+    dashboardState.newsletterLoading = true;
+    setNewsletterBusy(true);
+    if (!silent) {
+      setNewsletterFeedback("Loading the weekly newsletter campaign...", false);
+    }
+
+    try {
+      const payload = await requestNewsletterCampaign("GET");
+      dashboardState.newsletterCampaign = payload?.campaign || null;
+      dashboardState.newsletterStatus = payload?.status || null;
+      dashboardState.newsletterPreview = payload?.preview || null;
+      dashboardState.newsletterAnalytics = payload?.analytics || null;
+      dashboardState.newsletterLoaded = Boolean(payload?.campaign);
+      dashboardState.newsletterDirty = false;
+      renderNewsletterCampaign();
+      if (!silent) {
+        setNewsletterFeedback("Weekly newsletter campaign loaded.", false);
+      }
+    } catch (error) {
+      setNewsletterFeedback(error?.message || "Unable to load the weekly newsletter campaign right now.", true);
+    } finally {
+      dashboardState.newsletterLoading = false;
+      setNewsletterBusy(false);
+    }
+  }
+
+  async function handleNewsletterSave(event) {
+    event.preventDefault();
+    if (dashboardState.newsletterLoading) {
+      return;
+    }
+
+    const campaign = getNewsletterFormValues();
+    if (!campaign.subject || !campaign.title || !campaign.intro) {
+      setNewsletterFeedback("Subject, title, and intro are required before saving the weekly newsletter.", true);
+      return;
+    }
+
+    dashboardState.newsletterLoading = true;
+    setNewsletterBusy(true);
+    setNewsletterFeedback("Saving the weekly newsletter campaign...", false);
+
+    try {
+      const payload = await requestNewsletterCampaign("POST", {
+        action: "save_config",
+        campaign,
+      });
+      dashboardState.newsletterCampaign = payload?.campaign || campaign;
+      dashboardState.newsletterStatus = payload?.status || dashboardState.newsletterStatus;
+      dashboardState.newsletterPreview = payload?.preview || dashboardState.newsletterPreview;
+      dashboardState.newsletterAnalytics = payload?.analytics || dashboardState.newsletterAnalytics;
+      dashboardState.newsletterLoaded = true;
+      dashboardState.newsletterDirty = false;
+      renderNewsletterCampaign();
+      setNewsletterFeedback(payload?.message || "Weekly newsletter settings saved.", false);
+    } catch (error) {
+      setNewsletterFeedback(error?.message || "Unable to save the weekly newsletter right now.", true);
+    } finally {
+      dashboardState.newsletterLoading = false;
+      setNewsletterBusy(false);
+    }
+  }
+
+  async function handleNewsletterPreview() {
+    if (dashboardState.newsletterLoading) {
+      return;
+    }
+
+    const campaign = getNewsletterFormValues();
+    if (!campaign.subject || !campaign.title || !campaign.intro) {
+      setNewsletterFeedback("Subject, title, and intro are required before previewing the newsletter.", true);
+      return;
+    }
+
+    dashboardState.newsletterLoading = true;
+    setNewsletterBusy(true);
+    setNewsletterFeedback("Refreshing the newsletter preview...", false);
+    setNewsletterPreviewFeedback("Rendering the latest newsletter preview...", false);
+
+    try {
+      const payload = await requestNewsletterCampaign("POST", {
+        action: "preview",
+        campaign,
+      });
+      dashboardState.newsletterCampaign = payload?.campaign || campaign;
+      dashboardState.newsletterStatus = payload?.status || dashboardState.newsletterStatus;
+      dashboardState.newsletterPreview = payload?.preview || dashboardState.newsletterPreview;
+      dashboardState.newsletterAnalytics = payload?.analytics || dashboardState.newsletterAnalytics;
+      dashboardState.newsletterLoaded = true;
+      dashboardState.newsletterDirty = true;
+      renderNewsletterCampaign();
+      setNewsletterFeedback(payload?.message || "Newsletter preview refreshed.", false);
+    } catch (error) {
+      setNewsletterFeedback(error?.message || "Unable to refresh the newsletter preview right now.", true);
+      setNewsletterPreviewFeedback("Preview failed to refresh. Check the newsletter content and try again.", true);
+    } finally {
+      dashboardState.newsletterLoading = false;
+      setNewsletterBusy(false);
+    }
+  }
+
+  async function handleNewsletterSendNow() {
+    if (dashboardState.newsletterLoading) {
+      return;
+    }
+
+    const campaign = getNewsletterFormValues();
+    if (!campaign.subject || !campaign.title || !campaign.intro) {
+      setNewsletterFeedback("Subject, title, and intro are required before sending the newsletter.", true);
+      return;
+    }
+
+    if (!window.confirm("Send this newsletter now to the selected audience segment, excluding contacts who have opted out of marketing emails?")) {
+      return;
+    }
+
+    dashboardState.newsletterLoading = true;
+    setNewsletterBusy(true);
+    setNewsletterFeedback("Sending the newsletter to the selected audience now...", false);
+
+    try {
+      const payload = await requestNewsletterCampaign("POST", {
+        action: "send_now",
+        campaign,
+      });
+      dashboardState.newsletterCampaign = payload?.campaign || campaign;
+      dashboardState.newsletterStatus = payload?.status || dashboardState.newsletterStatus;
+      dashboardState.newsletterPreview = payload?.preview || dashboardState.newsletterPreview;
+      dashboardState.newsletterAnalytics = payload?.analytics || dashboardState.newsletterAnalytics;
+      dashboardState.newsletterLoaded = true;
+      dashboardState.newsletterDirty = false;
+      renderNewsletterCampaign();
+      setNewsletterFeedback(payload?.message || "Newsletter sent.", false);
+    } catch (error) {
+      setNewsletterFeedback(error?.message || "Unable to send the newsletter right now.", true);
+    } finally {
+      dashboardState.newsletterLoading = false;
+      setNewsletterBusy(false);
+    }
+  }
+
+  async function handleNewsletterSendTest() {
+    if (dashboardState.newsletterLoading) {
+      return;
+    }
+
+    const recipientEmail = String(newsletterTestRecipientNode?.value || "").trim();
+    if (!recipientEmail) {
+      setNewsletterFeedback("Enter a test recipient email before sending a test newsletter.", true);
+      return;
+    }
+
+    const campaign = getNewsletterFormValues();
+    if (!campaign.subject || !campaign.title || !campaign.intro) {
+      setNewsletterFeedback("Subject, title, and intro are required before sending a test newsletter.", true);
+      return;
+    }
+
+    dashboardState.newsletterLoading = true;
+    setNewsletterBusy(true);
+    setNewsletterFeedback(`Sending a test newsletter to ${recipientEmail}...`, false);
+
+    try {
+      const payload = await requestNewsletterCampaign("POST", {
+        action: "send_test",
+        campaign,
+        recipientEmail,
+      });
+      dashboardState.newsletterCampaign = payload?.campaign || dashboardState.newsletterCampaign || campaign;
+      dashboardState.newsletterStatus = payload?.status || dashboardState.newsletterStatus;
+      dashboardState.newsletterPreview = payload?.preview || dashboardState.newsletterPreview;
+      dashboardState.newsletterAnalytics = payload?.analytics || dashboardState.newsletterAnalytics;
+      dashboardState.newsletterLoaded = true;
+      dashboardState.newsletterDirty = true;
+      renderNewsletterCampaign();
+      setNewsletterFeedback(payload?.message || `Test newsletter sent to ${recipientEmail}.`, false);
+    } catch (error) {
+      setNewsletterFeedback(error?.message || "Unable to send the test newsletter right now.", true);
+    } finally {
+      dashboardState.newsletterLoading = false;
+      setNewsletterBusy(false);
     }
   }
 
@@ -2069,6 +2825,9 @@
 
     dashboardState.access = access;
     dashboardState.supabase = supabase;
+    if (newsletterTestRecipientNode && !String(newsletterTestRecipientNode.value || "").trim()) {
+      newsletterTestRecipientNode.value = access?.user?.email || "";
+    }
     return { access, supabase };
   }
 
@@ -2426,6 +3185,13 @@
       return {
         access,
         notifications: notificationsResponse.data || [],
+        currentMonthStart,
+      };
+    }
+
+    if (DASHBOARD_PAGE_KEY === "newsletter") {
+      return {
+        access,
         currentMonthStart,
       };
     }
@@ -5594,6 +6360,12 @@
       renderExecutiveWatchlist(data, resolvedAnalytics);
       renderMetricCoverageSummary(data, resolvedAnalytics);
       renderCoachReviewQueue(data);
+      if (newsletterSummaryNode) {
+        renderNewsletterCampaign();
+        if (!dashboardState.newsletterLoaded && !dashboardState.newsletterLoading) {
+          void loadNewsletterCampaign({ silent: true });
+        }
+      }
       setFinancialFeedback("", false);
       setStatus("");
       return;
@@ -5628,6 +6400,18 @@
       renderOperatingCostLedger(data);
       renderPackagePurchases(data);
       renderCommissions(data);
+      setFinancialFeedback("", false);
+      setStatus("");
+      return;
+    }
+
+    if (isNewsletterWorkspacePage()) {
+      if (newsletterSummaryNode) {
+        renderNewsletterCampaign();
+        if (!dashboardState.newsletterLoaded && !dashboardState.newsletterLoading) {
+          void loadNewsletterCampaign({ silent: true });
+        }
+      }
       setFinancialFeedback("", false);
       setStatus("");
       return;
@@ -6635,6 +7419,60 @@
   if (qaAccountsFormNode) {
     qaAccountsFormNode.addEventListener("submit", (event) => {
       void handleQaAccountProvision(event);
+    });
+  }
+
+  if (newsletterFormNode) {
+    newsletterFormNode.addEventListener("submit", (event) => {
+      void handleNewsletterSave(event);
+    });
+    newsletterFormNode.addEventListener("input", () => {
+      dashboardState.newsletterDirty = true;
+    });
+    newsletterFormNode.addEventListener("change", () => {
+      dashboardState.newsletterDirty = true;
+    });
+  }
+
+  if (newsletterPreviewButtonNode) {
+    newsletterPreviewButtonNode.addEventListener("click", () => {
+      void handleNewsletterPreview();
+    });
+  }
+
+  if (newsletterSendTestButtonNode) {
+    newsletterSendTestButtonNode.addEventListener("click", () => {
+      void handleNewsletterSendTest();
+    });
+  }
+
+  if (newsletterSendNowButtonNode) {
+    newsletterSendNowButtonNode.addEventListener("click", () => {
+      void handleNewsletterSendNow();
+    });
+  }
+
+  if (newsletterPresetProfessionalNode) {
+    newsletterPresetProfessionalNode.addEventListener("click", () => {
+      applyNewsletterPreset("professional");
+    });
+  }
+
+  if (newsletterPresetMotivationalNode) {
+    newsletterPresetMotivationalNode.addEventListener("click", () => {
+      applyNewsletterPreset("motivational");
+    });
+  }
+
+  if (newsletterPresetPromoNode) {
+    newsletterPresetPromoNode.addEventListener("click", () => {
+      applyNewsletterPreset("promo");
+    });
+  }
+
+  if (newsletterPresetCoachNode) {
+    newsletterPresetCoachNode.addEventListener("click", () => {
+      applyNewsletterPreset("coach");
     });
   }
 

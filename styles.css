@@ -7436,6 +7436,54 @@ body.page-1on1-refined .page-hero--1on1.program-hero h1 {
   object-position: center 9%;
 }
 
+.team-card-media--local-preview {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(0, 255, 0, 0.16), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(0, 255, 0, 0.08), transparent 44%),
+    linear-gradient(180deg, rgba(6, 22, 12, 0.96), rgba(1, 8, 4, 1));
+}
+
+.team-card-photo--local-preview {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.58rem;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.08), transparent 20%),
+    linear-gradient(180deg, rgba(6, 22, 12, 0.2), rgba(0, 0, 0, 0));
+}
+
+.team-card-local-preview-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 0, 0.24);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.2), transparent 48%),
+    rgba(0, 0, 0, 0.4);
+  color: #caffda;
+  font-size: 1.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow:
+    0 18px 28px rgba(0, 0, 0, 0.34),
+    0 0 18px rgba(0, 255, 0, 0.12);
+}
+
+.team-card-local-preview-note {
+  color: rgba(234, 255, 239, 0.84);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
 .team-card-media--locked {
   position: relative;
   isolation: isolate;
@@ -8182,9 +8230,14 @@ html.coach-schedule-open {
 
 .coach-schedule-time-label {
   position: absolute;
-  left: 0.7rem;
-  width: calc(100% - 1rem);
-  transform: translateY(-50%);
+  left: 50%;
+  width: calc(100% - 0.5rem);
+  padding-inline: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translate(-50%, -50%);
   font-size: 0.69rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -8192,7 +8245,7 @@ html.coach-schedule-open {
 }
 
 .coach-schedule-time-label.is-terminal {
-  transform: translateY(-100%);
+  transform: translate(-50%, -100%);
 }
 
 .coach-schedule-board {
@@ -9900,8 +9953,7 @@ body.coach-detail-page--personalized .btn-ghost:focus-visible {
   }
 
   .coach-schedule-time-label {
-    left: 0.45rem;
-    width: calc(100% - 0.7rem);
+    width: calc(100% - 0.3rem);
     font-size: 0.62rem;
   }
 
@@ -16333,6 +16385,36 @@ body[data-live-dashboard] .appearance-avatar-preview-ambience__spark--four {
   animation: var(--avatar-spark-four-animation);
 }
 
+@media (max-width: 560px) {
+  body[data-live-dashboard] .appearance-avatar-preview-ambience__grid,
+  body[data-live-dashboard] .appearance-avatar-card__grid {
+    display: none;
+  }
+
+  body[data-live-dashboard] .appearance-avatar-preview-ambience__sigil,
+  body[data-live-dashboard] .appearance-avatar-card__halo {
+    width: min(62vw, 240px);
+    height: min(62vw, 240px);
+    top: 9%;
+    right: 8%;
+  }
+
+  body[data-live-dashboard] .appearance-avatar-card__halo {
+    display: none;
+  }
+
+  body[data-live-dashboard] .appearance-avatar-preview-ambience__beam,
+  body[data-live-dashboard] .appearance-avatar-card__flare {
+    width: 44%;
+    opacity: 0.56;
+  }
+
+  body[data-live-dashboard] .appearance-avatar-preview-ambience__spark,
+  body[data-live-dashboard] .appearance-avatar-card__spark {
+    opacity: 0.68;
+  }
+}
+
 body[data-live-dashboard] .appearance-avatar-card {
   border-color: var(--avatar-shell-border);
   background: var(--avatar-shell-bg);
@@ -17243,6 +17325,23 @@ body[data-live-dashboard] :is(.section.dashboard-section, .crm-stat, .card, .das
   z-index: 3400;
 }
 
+body[data-live-dashboard] :is(.contact-form, .account-form, .xp-coach-form-grid, .hitpay-report-filter-bar, .crm-selector-form, .lead-filter-bar, .coach-training-topbar, .crm-page-head, .crm-page-tabs, .xp-coach-page-tabs, .client-planner-workspace-nav, .dashboard-table-wrap).crm-has-open-select {
+  position: relative;
+  z-index: 3500;
+  overflow: visible;
+}
+
+body[data-live-dashboard] :is(.contact-form label, .account-form label, .xp-coach-form-grid label, .hitpay-report-filter-bar label, .lead-filter-bar label, .coach-training-topbar > label).crm-has-open-select {
+  position: relative;
+  z-index: 3550;
+  overflow: visible;
+}
+
+body[data-live-dashboard] :is(.section.dashboard-section, .crm-stat, .card, .dashboard-badge, .account-quick-card, .package-card, .dashboard-note, .lead-board__column, .lead-chip-card, .funnel-column, .account-meta-item, .appearance-card, .crm-callout, .admin-lock, .metric-coverage-card, .dashboard-table-wrap, .crm-selector-reference).crm-has-open-select {
+  overflow: visible;
+  z-index: 3400;
+}
+
 body[data-live-dashboard] .crm-select__group-label {
   padding: 0.55rem 0.65rem 0.2rem;
   color: rgba(255, 214, 150, 0.72);
@@ -18028,6 +18127,7 @@ body[data-live-dashboard] .crm-tutorial {
   max-height: min(78vh, 620px);
   padding: 0.95rem;
   display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   align-content: start;
   gap: 0.8rem;
   background:
@@ -18552,6 +18652,8 @@ body[data-live-dashboard] .crm-tutorial__body {
   gap: 0.75rem;
   overflow-y: auto;
   max-height: min(52vh, 420px);
+  min-height: 0;
+  padding-right: 0.2rem;
 }
 
 body[data-live-dashboard] .crm-tutorial__body h3 {
@@ -18593,6 +18695,8 @@ body[data-live-dashboard] .crm-tutorial__actions {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 960px) {
@@ -30943,7 +31047,7 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-standard-
 
 body[data-live-dashboard][data-account-page="planner"] .client-planner-workspace-nav {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
   gap: 0.8rem;
   margin-bottom: 1rem;
 }
@@ -31180,6 +31284,10 @@ body[data-live-dashboard][data-account-page="training"] .coach-training-topbar {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.9rem;
   padding: 1rem;
+  position: relative;
+  z-index: 4;
+  overflow: visible;
+  isolation: isolate;
   border-radius: 24px;
   border: 1px solid rgba(255, 214, 156, 0.14);
   background:
@@ -31187,10 +31295,17 @@ body[data-live-dashboard][data-account-page="training"] .coach-training-topbar {
     rgba(21, 14, 11, 0.84);
 }
 
+body[data-live-dashboard][data-account-page="training"] .coach-training-topbar .crm-select__menu {
+  top: auto;
+  bottom: calc(100% + 0.45rem);
+}
+
 body[data-live-dashboard][data-account-page="training"] .coach-training-step-tabs {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.8rem;
+  position: relative;
+  z-index: 1;
 }
 
 body[data-live-dashboard][data-account-page="training"] .coach-training-step-tab {
@@ -31331,8 +31446,96 @@ body[data-live-dashboard][data-account-page="training"] .coach-training-wizard-g
   align-items: start;
 }
 
+body[data-live-dashboard][data-account-page="training"] .coach-training-wizard-grid--inputs {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-input-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-input-column {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-athlete-shell {
+  display: grid;
+  gap: 0.95rem;
+  padding: 1rem 1.05rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    rgba(17, 12, 10, 0.78);
+  box-shadow: inset 0 1px 0 rgba(255, 249, 230, 0.03);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-athlete-shell__head {
+  display: grid;
+  gap: 0.34rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-athlete-shell__head p {
+  margin: 0;
+  max-width: 56ch;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-athlete-shell .coach-programming-calculator-shell {
+  gap: 0.9rem;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-athlete-shell__core {
+  border-color: rgba(255, 214, 156, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+    rgba(21, 15, 12, 0.82);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-athlete-shell__notes {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 214, 156, 0.1);
+}
+
 body[data-live-dashboard][data-account-page="training"] .coach-training-wizard-grid--generate {
   align-items: start;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-generate-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-generate-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-generate-preview {
+  min-height: 100%;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-generate-footnote {
+  margin-top: -0.15rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-generate-footnote p {
+  margin: 0;
+  color: rgba(255, 239, 220, 0.7);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-wizard-grid--map {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
 body[data-live-dashboard][data-account-page="training"] .coach-training-wizard-section {
@@ -31347,8 +31550,70 @@ body[data-live-dashboard][data-account-page="training"] .coach-training-wizard-s
     rgba(22, 15, 12, 0.84);
 }
 
+body[data-live-dashboard][data-account-page="training"] .coach-training-input-column > label {
+  display: grid;
+  gap: 0.45rem;
+}
+
 body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack {
   gap: 0.85rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map {
+  display: grid;
+  gap: 0.9rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0)),
+    rgba(20, 14, 11, 0.78);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card.is-active {
+  border-color: rgba(255, 214, 156, 0.28);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card__head h3 {
+  margin: 0;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card > p {
+  margin: 0;
+  color: rgba(255, 239, 220, 0.74);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card__days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card__days span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0.48rem 0.78rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 156, 0.12);
+  background: rgba(255, 255, 255, 0.028);
+  color: rgba(255, 239, 220, 0.78);
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 body[data-live-dashboard][data-account-page="training"] .coach-programming-day-card,
@@ -31387,34 +31652,170 @@ body[data-live-dashboard][data-account-page="training"] .coach-training-generate
   justify-content: space-between;
 }
 
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only > .coach-training-day-card > .coach-training-day-grid,
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only > .coach-training-day-card > .coach-training-day-advanced,
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only > .coach-training-day-card > label,
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only > .coach-training-day-card > .coach-programming-day-card__rest-note {
-  display: none;
-}
-
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only .coach-training-day-card {
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-shell {
+  display: grid;
   gap: 0.9rem;
-  min-width: 0;
 }
 
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only .coach-training-exercise-sheet {
-  margin-top: 0;
-  min-width: 0;
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
 }
 
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only .coach-training-exercise-row {
-  min-width: 0;
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-day {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 160px;
+  padding: 0.72rem 0.9rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0)),
+    rgba(19, 13, 11, 0.78);
+  color: rgba(255, 239, 220, 0.82);
+  text-align: left;
+  cursor: pointer;
 }
 
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only .coach-training-exercise-row__main,
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only .coach-training-exercise-row__meta {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-day.is-active {
+  border-color: rgba(255, 214, 156, 0.3);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+    rgba(31, 21, 16, 0.92);
+  color: rgba(255, 247, 235, 0.96);
 }
 
-body[data-live-dashboard][data-account-page="training"] .coach-training-day-stack--exercise-only .coach-training-exercise-row__wide {
-  grid-column: auto;
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-day span {
+  font-weight: 700;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-day small {
+  color: rgba(255, 239, 220, 0.64);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0)),
+    rgba(20, 14, 11, 0.78);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-card__head h3,
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__head h4 {
+  margin: 0;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-card__head p {
+  margin: 0.3rem 0 0;
+  color: rgba(255, 239, 220, 0.72);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-library-note {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 214, 156, 0.1);
+  background: rgba(255, 255, 255, 0.024);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-library-note strong,
+body[data-live-dashboard][data-account-page="training"] .coach-training-library-note p {
+  margin: 0;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-library-note p {
+  color: rgba(255, 239, 220, 0.72);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row {
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.9rem;
+  border-radius: 1.05rem;
+  border: 1px solid rgba(255, 214, 156, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__grid,
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  min-height: 36px;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 156, 0.1);
+  background: rgba(255, 255, 255, 0.026);
+  color: rgba(255, 239, 220, 0.78);
+  font-size: 0.82rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__summary strong {
+  color: rgba(255, 239, 220, 0.98);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.024);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: rgba(255, 247, 235, 0.92);
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-grid {
+  margin-top: 0.5rem;
+}
+
+body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-wide {
+  grid-column: span 2;
 }
 
 body[data-live-dashboard][data-account-page="programming"][data-program-workspace="nutrition"] .coach-training-wizard-card {
@@ -31432,6 +31833,10 @@ body[data-live-dashboard][data-account-page="programming"][data-program-workspac
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.9rem;
   padding: 1rem;
+  position: relative;
+  z-index: 4;
+  overflow: visible;
+  isolation: isolate;
   border-radius: 24px;
   border: 1px solid rgba(255, 214, 156, 0.14);
   background:
@@ -31439,10 +31844,17 @@ body[data-live-dashboard][data-account-page="programming"][data-program-workspac
     rgba(21, 14, 11, 0.84);
 }
 
+body[data-live-dashboard][data-account-page="programming"][data-program-workspace="nutrition"] .coach-training-topbar .crm-select__menu {
+  top: auto;
+  bottom: calc(100% + 0.45rem);
+}
+
 body[data-live-dashboard][data-account-page="programming"][data-program-workspace="nutrition"] .coach-training-step-tabs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 0.8rem;
+  position: relative;
+  z-index: 1;
 }
 
 body[data-live-dashboard][data-account-page="programming"][data-program-workspace="nutrition"] .coach-training-step-tab {
@@ -31745,10 +32157,92 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
   gap: 1rem;
 }
 
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-shell--calendar {
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.85fr);
+  align-items: start;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-session-shell {
+  display: grid;
+  gap: 1rem;
+}
+
 body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 0.85rem;
+  align-items: center;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__paging {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__range {
+  margin: 0;
+  text-align: center;
+  color: rgba(255, 239, 220, 0.82);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__icon {
+  display: inline-grid;
+  place-items: center;
+  min-width: 54px;
+  min-height: 54px;
+  padding: 0;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 214, 156, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+    rgba(19, 13, 11, 0.78);
+  color: rgba(255, 247, 235, 0.9);
+  font-family: "Montserrat", "League Spartan", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__icon:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__icon--expand {
+  min-width: 56px;
+  font-size: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week {
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(168px, 1fr);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.3rem;
+  scroll-snap-type: x proximity;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-block {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
 body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card {
@@ -31756,7 +32250,7 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-
   gap: 0.45rem;
   align-content: start;
   min-width: 0;
-  min-height: 136px;
+  min-height: 150px;
   padding: 0.95rem 1rem;
   border-radius: 22px;
   border: 1px solid rgba(255, 214, 156, 0.14);
@@ -31766,6 +32260,7 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-
   color: rgba(255, 248, 236, 0.94);
   text-align: left;
   cursor: pointer;
+  scroll-snap-align: start;
   transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
 }
 
@@ -31779,11 +32274,21 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-
 body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card.is-active {
   border-color: rgba(255, 214, 156, 0.34);
   background:
+    radial-gradient(circle at top right, rgba(255, 183, 56, 0.12), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
     rgba(28, 19, 15, 0.92);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 16px 26px rgba(0, 0, 0, 0.16);
+    0 16px 26px rgba(0, 0, 0, 0.16),
+    0 0 0 1px rgba(255, 183, 56, 0.08);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card.is-today {
+  border-color: rgba(255, 198, 96, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 18px 28px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 183, 56, 0.08);
 }
 
 body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card__date {
@@ -31799,13 +32304,173 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-
   line-height: 1.15;
 }
 
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card.is-active strong {
+  color: rgba(255, 251, 241, 0.99);
+}
+
 body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card small {
   color: rgba(255, 239, 220, 0.72);
   line-height: 1.45;
 }
 
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.7rem;
+  margin-top: auto;
+  color: rgba(255, 227, 191, 0.74);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-card__today {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.24rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 183, 56, 0.16);
+  color: rgba(255, 226, 173, 0.98);
+  box-shadow: inset 0 0 0 1px rgba(255, 198, 96, 0.22);
+}
+
 body[data-live-dashboard][data-account-page="planner"] .client-planner-training-detail {
   display: grid;
+  gap: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-preview {
+  display: grid;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background:
+    radial-gradient(circle at top right, rgba(255, 183, 56, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    rgba(23, 15, 11, 0.82);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__copy {
+  display: grid;
+  gap: 0.55rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__copy h3 {
+  margin: 0;
+  color: rgba(255, 248, 236, 0.98);
+  font-size: clamp(1.55rem, 1.3rem + 0.9vw, 2.2rem);
+  line-height: 0.98;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__copy > p {
+  margin: 0;
+  color: rgba(255, 239, 220, 0.82);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.7rem;
+  align-items: center;
+  color: rgba(255, 227, 191, 0.74);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__today {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0.24rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 183, 56, 0.16);
+  color: rgba(255, 226, 173, 0.98);
+  box-shadow: inset 0 0 0 1px rgba(255, 198, 96, 0.22);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-glance {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.8rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-glance__card {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.88rem 0.95rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 214, 156, 0.1);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-glance__card span {
+  color: rgba(255, 214, 156, 0.72);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-glance__card strong {
+  color: rgba(255, 248, 236, 0.96);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-pill {
+  display: inline-grid;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 214, 156, 0.12);
+  background: rgba(255, 255, 255, 0.028);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-pill strong {
+  color: rgba(255, 214, 156, 0.76);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-day-pill span {
+  color: rgba(255, 248, 236, 0.92);
+  line-height: 1.45;
 }
 
 body[data-live-dashboard][data-account-page="planner"] .client-planner-feed-card--nutrition-assets {
@@ -31850,6 +32515,38 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
   gap: 0.95rem;
 }
 
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__head-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 214, 156, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+    rgba(17, 12, 10, 0.9);
+  color: rgba(255, 239, 220, 0.92);
+  font-size: 1.35rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toggle:hover,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toggle:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(255, 214, 156, 0.38);
+  outline: none;
+}
+
 body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toolbar {
   display: grid;
   grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
@@ -31859,6 +32556,357 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
 
 body[data-live-dashboard][data-account-page="planner"] .client-planner-training-form__wide {
   min-width: 0;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toolbar label,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row label,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__footer-grid label {
+  display: grid;
+  gap: 0.4rem;
+  color: rgba(255, 239, 220, 0.92);
+  font-weight: 600;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toolbar :is(input, select),
+body[data-live-dashboard][data-account-page="planner"] .client-planner-dark-input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.88rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 190, 94, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
+    rgba(15, 10, 8, 0.96);
+  color: rgba(255, 248, 236, 0.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 0 0 1px rgba(255, 190, 94, 0.03);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toolbar textarea,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-dark-input:is(textarea) {
+  min-height: 118px;
+  resize: vertical;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toolbar :is(input, select, textarea)::placeholder,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-dark-input::placeholder {
+  color: rgba(255, 232, 206, 0.42);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet__toolbar :is(input, select, textarea):focus,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-dark-input:focus {
+  border-color: rgba(255, 193, 102, 0.46);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 0 3px rgba(255, 164, 64, 0.14);
+  outline: none;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-exercise-list {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card {
+  display: grid;
+  gap: 0.95rem;
+  padding: 1rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    rgba(17, 12, 10, 0.82);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__block {
+  display: inline-flex;
+  margin-bottom: 0.32rem;
+  color: rgba(255, 214, 156, 0.76);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__head h4 {
+  margin: 0;
+  color: rgba(255, 248, 236, 0.98);
+  font-size: 1.1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__head p,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-execution-note {
+  margin: 0;
+  color: rgba(255, 239, 220, 0.72);
+  line-height: 1.5;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.88rem 0.95rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 214, 156, 0.1);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary--target {
+  grid-column: 1 / -1;
+  border-color: rgba(255, 190, 94, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 187, 104, 0.06), rgba(255, 255, 255, 0)),
+    rgba(26, 18, 12, 0.9);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary--history {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
+    rgba(13, 10, 8, 0.74);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary--accent {
+  border-color: rgba(255, 190, 94, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 187, 104, 0.08), rgba(255, 255, 255, 0)),
+    rgba(31, 19, 12, 0.9);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary span,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__advanced span {
+  color: rgba(255, 214, 156, 0.72);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary strong,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__advanced strong {
+  color: rgba(255, 248, 236, 0.96);
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary p,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__advanced p {
+  margin: 0;
+  color: rgba(255, 239, 220, 0.72);
+  line-height: 1.55;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary small {
+  color: rgba(255, 239, 220, 0.62);
+  line-height: 1.45;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-pill,
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0.34rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 241, 222, 0.82);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-badge {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-badge--on_course {
+  border-color: rgba(84, 220, 125, 0.28);
+  background: rgba(30, 84, 42, 0.54);
+  color: rgba(224, 255, 233, 0.96);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-badge--borderline {
+  border-color: rgba(255, 214, 77, 0.3);
+  background: rgba(109, 87, 14, 0.54);
+  color: rgba(255, 247, 210, 0.96);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-badge--off_course {
+  border-color: rgba(255, 112, 112, 0.32);
+  background: rgba(108, 28, 28, 0.56);
+  color: rgba(255, 226, 226, 0.96);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-summary-badge--neutral {
+  color: rgba(255, 241, 222, 0.82);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__set-shell {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0.92rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 214, 156, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    rgba(11, 8, 6, 0.78);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__set-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__set-head strong {
+  display: block;
+  color: rgba(255, 248, 236, 0.96);
+  font-size: 1rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__set-head p {
+  margin: 0.18rem 0 0;
+  color: rgba(255, 239, 220, 0.7);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week::-webkit-scrollbar {
+  height: 10px;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week::-webkit-scrollbar-thumb {
+  background: rgba(255, 183, 56, 0.28);
+  border-radius: 999px;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-set-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row {
+  display: grid;
+  grid-template-columns: 82px repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  align-items: end;
+  padding: 0.82rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 214, 156, 0.1);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row--simple {
+  grid-template-columns: 82px minmax(0, 1fr);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row__label {
+  align-self: center;
+  color: rgba(255, 214, 156, 0.82);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__footer-grid {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
+  gap: 0.85rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__note {
+  min-width: 0;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__advanced {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  padding-top: 0.2rem;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__advanced > div {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.82rem 0.9rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 214, 156, 0.08);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-track-rail {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-track-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 156, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 239, 220, 0.56);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-track-chip.is-active.is-on_course {
+  border-color: rgba(84, 220, 125, 0.32);
+  background: rgba(30, 84, 42, 0.62);
+  color: rgba(224, 255, 233, 0.96);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-track-chip.is-active.is-borderline {
+  border-color: rgba(255, 214, 77, 0.34);
+  background: rgba(109, 87, 14, 0.6);
+  color: rgba(255, 247, 210, 0.96);
+}
+
+body[data-live-dashboard][data-account-page="planner"] .client-planner-track-chip.is-active.is-off_course {
+  border-color: rgba(255, 112, 112, 0.34);
+  background: rgba(108, 28, 28, 0.6);
+  color: rgba(255, 226, 226, 0.96);
 }
 
 body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table-shell {
@@ -31906,6 +32954,12 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
   min-width: 92px;
 }
 
+@media (max-width: 1320px) {
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week {
+    grid-auto-columns: minmax(160px, 1fr);
+  }
+}
+
 @media (max-width: 1100px) {
   body[data-live-dashboard][data-account-page="training"] .coach-training-topbar,
   body[data-live-dashboard][data-account-page="training"] .coach-training-step-tabs,
@@ -31922,6 +32976,27 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
   body[data-live-dashboard][data-account-page="programming"][data-program-workspace="nutrition"] .coach-nutrition-slot-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__grid,
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-wide {
+    grid-column: span 2;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__controls {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-shell--calendar {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week {
+    grid-auto-columns: minmax(172px, 72vw);
+  }
 }
 
 @media (max-width: 760px) {
@@ -31932,10 +33007,6 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
   body[data-live-dashboard][data-account-page="planner"] .client-planner-training-sheet {
     padding: 0.9rem;
     border-radius: 22px;
-  }
-
-  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar {
-    grid-template-columns: 1fr;
   }
 
   body[data-live-dashboard][data-account-page="programming"][data-program-workspace="nutrition"] .coach-nutrition-preview-grid--day {
@@ -31950,13 +33021,129 @@ body[data-live-dashboard][data-account-page="planner"] .client-planner-training-
     grid-template-columns: 1fr;
   }
 
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__grid,
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-week-map-card__head,
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-card__head,
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-days {
+    flex-direction: column;
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-day {
+    min-width: 0;
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-session-row__advanced-wide {
+    grid-column: auto;
+  }
+
   body[data-live-dashboard][data-account-page="planner"] .client-planner-standard-grid--quick-picks,
   body[data-live-dashboard][data-account-page="planner"] .client-planner-nutrition-calendar {
     grid-template-columns: 1fr;
   }
 
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-workspace-nav {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-calendar-shell__paging {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-block {
+    grid-template-columns: none;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-calendar__grid.is-week {
+    grid-auto-columns: minmax(220px, 84vw);
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__summary-grid,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__footer-grid,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__advanced,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-day-hero__head {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-exercise-card__set-head {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-track-rail {
+    justify-content: flex-start;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row--simple {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-set-row__label {
+    margin-bottom: -0.15rem;
+  }
+
   body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table {
-    min-width: 780px;
+    min-width: 0;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table thead {
+    display: none;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table tbody,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table tr,
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table td {
+    display: block;
+    width: 100%;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table tr {
+    padding: 0.9rem 0.92rem;
+    border-bottom: 1px solid rgba(255, 214, 156, 0.08);
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table td {
+    padding: 0;
+    border: 0;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table td + td {
+    margin-top: 0.72rem;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table td::before {
+    content: attr(data-cell-label);
+    display: block;
+    margin-bottom: 0.28rem;
+    color: rgba(255, 227, 191, 0.72);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table td[colspan]::before {
+    content: none;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  body[data-live-dashboard][data-account-page="planner"] .client-planner-training-table td strong {
+    margin-bottom: 0.18rem;
   }
 }
 
@@ -34171,6 +35358,173 @@ body[data-live-dashboard] :is(.account-input-row, .coach-programming-day-grid) >
 
 body[data-live-dashboard] :is(.account-input-row, .coach-programming-day-grid) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
   width: 100%;
+}
+
+/* Shared dashboard field polish */
+body[data-live-dashboard] {
+  --crm-input-surface:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    rgba(18, 13, 10, 0.96);
+  --crm-input-surface-strong:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0)),
+    rgba(27, 19, 14, 0.98);
+  --crm-input-border: rgba(255, 220, 169, 0.18);
+  --crm-input-border-hover: rgba(255, 220, 169, 0.28);
+  --crm-input-border-focus: rgba(var(--crm-coach-theme-accent-rgb, 254, 161, 42), 0.42);
+  --crm-input-glow-rest: rgba(var(--crm-coach-theme-accent-rgb, 254, 161, 42), 0.06);
+  --crm-input-glow-focus: rgba(var(--crm-coach-theme-accent-rgb, 254, 161, 42), 0.12);
+}
+
+body[data-live-dashboard] :is(
+  .contact-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .contact-form textarea,
+  .xp-coach-form-grid input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .xp-coach-form-grid textarea,
+  .hitpay-finance-panel input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .hitpay-finance-panel textarea,
+  .account-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .account-form textarea,
+  .coach-training-session-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .coach-training-session-form textarea,
+  .dashboard-table-wrap input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .dashboard-table-wrap textarea
+) {
+  background: var(--crm-input-surface);
+  border: 1px solid var(--crm-input-border);
+  color: var(--crm-theme-text-0);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 214, 156, 0.03),
+    0 0 18px var(--crm-input-glow-rest);
+  caret-color: rgba(var(--crm-coach-theme-accent-rgb, 254, 161, 42), 0.92);
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease,
+    transform 140ms ease;
+}
+
+body[data-live-dashboard] :is(
+  .contact-form select,
+  .xp-coach-form-grid select,
+  .hitpay-finance-panel select,
+  .account-form select,
+  .coach-training-session-form select,
+  .dashboard-table-wrap select
+) {
+  border: 1px solid var(--crm-input-border);
+  color: var(--crm-theme-text-0);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    var(--crm-surface-field);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 214, 156, 0.03),
+    0 0 18px var(--crm-input-glow-rest);
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease,
+    transform 140ms ease;
+}
+
+body[data-live-dashboard] :is(
+  .contact-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .contact-form select,
+  .contact-form textarea,
+  .xp-coach-form-grid input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .xp-coach-form-grid select,
+  .xp-coach-form-grid textarea,
+  .hitpay-finance-panel input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .hitpay-finance-panel select,
+  .hitpay-finance-panel textarea,
+  .account-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .account-form select,
+  .account-form textarea,
+  .coach-training-session-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .coach-training-session-form select,
+  .coach-training-session-form textarea,
+  .dashboard-table-wrap input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .dashboard-table-wrap select,
+  .dashboard-table-wrap textarea
+)::placeholder {
+  color: rgba(245, 225, 199, 0.52);
+}
+
+body[data-live-dashboard] :is(
+  .contact-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .contact-form select,
+  .contact-form textarea,
+  .xp-coach-form-grid input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .xp-coach-form-grid select,
+  .xp-coach-form-grid textarea,
+  .hitpay-finance-panel input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .hitpay-finance-panel select,
+  .hitpay-finance-panel textarea,
+  .account-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .account-form select,
+  .account-form textarea,
+  .coach-training-session-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .coach-training-session-form select,
+  .coach-training-session-form textarea,
+  .dashboard-table-wrap input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .dashboard-table-wrap select,
+  .dashboard-table-wrap textarea
+):hover {
+  border-color: var(--crm-input-border-hover);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(255, 214, 156, 0.05),
+    0 0 20px rgba(var(--crm-coach-theme-accent-rgb, 254, 161, 42), 0.08);
+}
+
+body[data-live-dashboard] :is(
+  .contact-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .contact-form select,
+  .contact-form textarea,
+  .xp-coach-form-grid input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .xp-coach-form-grid select,
+  .xp-coach-form-grid textarea,
+  .hitpay-finance-panel input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .hitpay-finance-panel select,
+  .hitpay-finance-panel textarea,
+  .account-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .account-form select,
+  .account-form textarea,
+  .coach-training-session-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .coach-training-session-form select,
+  .coach-training-session-form textarea,
+  .dashboard-table-wrap input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .dashboard-table-wrap select,
+  .dashboard-table-wrap textarea
+):focus,
+body[data-live-dashboard] :is(
+  .contact-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .contact-form select,
+  .contact-form textarea,
+  .xp-coach-form-grid input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .xp-coach-form-grid select,
+  .xp-coach-form-grid textarea,
+  .hitpay-finance-panel input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .hitpay-finance-panel select,
+  .hitpay-finance-panel textarea,
+  .account-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .account-form select,
+  .account-form textarea,
+  .coach-training-session-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .coach-training-session-form select,
+  .coach-training-session-form textarea,
+  .dashboard-table-wrap input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+  .dashboard-table-wrap select,
+  .dashboard-table-wrap textarea
+):focus-visible {
+  border-color: var(--crm-input-border-focus);
+  background: var(--crm-input-surface-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 4px var(--crm-input-glow-focus),
+    0 0 26px rgba(var(--crm-coach-theme-accent-rgb, 254, 161, 42), 0.14);
+  outline: none;
 }
 
 body[data-live-dashboard] .crm-consult-status-grid {
@@ -36449,6 +37803,11 @@ body[data-live-dashboard][data-required-role="coach"][data-account-page="clients
   body[data-live-dashboard] .crm-topbar__utilities {
     justify-content: flex-start;
   }
+
+  body[data-live-dashboard] .crm-tutorial {
+    width: min(calc(100vw - 16px), 460px);
+    max-height: calc(100vh - 16px);
+  }
 }
 
 body.page-store--coming-soon {
@@ -37535,9 +38894,768 @@ body[data-live-dashboard] .crm-avatar--portrait-large .crm-avatar__fallback-note
     height: 48px;
   }
 
-  .floating-wa-icon::before,
-  .floating-wa::before {
-    width: 22px;
-    height: 22px;
+.floating-wa-icon::before,
+.floating-wa::before {
+  width: 22px;
+  height: 22px;
+  }
+}
+
+body[data-account-page="training"] .coach-training-session-desk {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__head {
+  display: grid;
+  gap: 0.55rem;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__head p {
+  margin: 0;
+  max-width: 72ch;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__body {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__summary {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 214, 156, 0.18);
+  background: rgba(21, 14, 11, 0.82);
+}
+
+body[data-account-page="training"] .coach-training-session-desk__summary-copy {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__summary-copy h3,
+body[data-account-page="training"] .coach-training-session-form__sheet-head h3 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+}
+
+body[data-account-page="training"] .coach-training-session-desk__summary-copy p,
+body[data-account-page="training"] .coach-training-session-form__sheet-head p {
+  margin: 0.2rem 0 0;
+  color: rgba(247, 229, 208, 0.8);
+}
+
+body[data-account-page="training"] .coach-training-session-desk__summary-meta,
+body[data-account-page="training"] .coach-training-session-desk__summary-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__summary-stats {
+  color: rgba(247, 229, 208, 0.75);
+  font-size: 0.92rem;
+}
+
+body[data-account-page="training"] .coach-training-session-desk__days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+
+body[data-account-page="training"] .coach-training-live-session-day {
+  appearance: none;
+  border: 1px solid rgba(255, 214, 156, 0.18);
+  border-radius: 20px;
+  background: rgba(19, 13, 10, 0.78);
+  color: #f7e5d0;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.25rem;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+body[data-account-page="training"] .coach-training-live-session-day span,
+body[data-account-page="training"] .coach-training-live-session-day small,
+body[data-account-page="training"] .coach-training-live-session-day em {
+  color: rgba(247, 229, 208, 0.74);
+  font-style: normal;
+}
+
+body[data-account-page="training"] .coach-training-live-session-day strong {
+  font-size: 1rem;
+}
+
+body[data-account-page="training"] .coach-training-live-session-day.is-active,
+body[data-account-page="training"] .coach-training-live-session-day:hover {
+  border-color: rgba(255, 177, 92, 0.48);
+  background: linear-gradient(180deg, rgba(86, 33, 17, 0.58), rgba(26, 16, 12, 0.92));
+  transform: translateY(-1px);
+}
+
+body[data-account-page="training"] .coach-training-session-form {
+  display: grid;
+  gap: 1rem;
+}
+
+body[data-account-page="training"] .coach-training-session-form__meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+  align-items: start;
+}
+
+body[data-account-page="training"] .coach-training-session-form__sheet {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 214, 156, 0.16);
+  background: rgba(18, 12, 10, 0.84);
+}
+
+body[data-account-page="training"] .coach-training-session-form__sheet-head {
+  display: grid;
+  gap: 0.45rem;
+}
+
+body[data-account-page="training"] .coach-training-session-form__day-note {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(247, 229, 208, 0.78);
+}
+
+body[data-account-page="training"] .coach-training-session-form__table-shell {
+  overflow-x: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  background: rgba(15, 10, 8, 0.82);
+}
+
+body[data-account-page="training"] .coach-training-session-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 940px;
+}
+
+body[data-account-page="training"] .coach-training-session-table th,
+body[data-account-page="training"] .coach-training-session-table td {
+  padding: 0.8rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 214, 156, 0.08);
+  vertical-align: top;
+  text-align: left;
+}
+
+body[data-account-page="training"] .coach-training-session-table th {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 177, 92, 0.88);
+}
+
+body[data-account-page="training"] .coach-training-session-table td strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+body[data-account-page="training"] .coach-training-session-table td small {
+  display: block;
+  color: rgba(247, 229, 208, 0.7);
+}
+
+body[data-account-page="training"] .coach-training-session-table input {
+  width: 100%;
+}
+
+body[data-account-page="training"] .coach-training-session-form__actions {
+  justify-content: flex-end;
+}
+
+@media (max-width: 960px) {
+  body[data-account-page="training"] .coach-training-session-form__meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-account-page="training"] .coach-training-session-desk__summary-copy {
+    flex-direction: column;
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-generate-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-live-dashboard][data-account-page="training"] .coach-training-input-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  body[data-account-page="training"] .coach-training-session-form__meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-account-page="training"] .coach-training-session-desk__days {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+body[data-live-dashboard] .dashboard-feedback {
+  display: grid;
+  gap: 0.3rem;
+  width: min(100%, 58rem);
+  padding: 0.82rem 0.96rem;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  border-radius: 18px;
+  background:
+    linear-gradient(160deg, rgba(36, 24, 18, 0.88), rgba(12, 9, 8, 0.94)),
+    rgba(12, 9, 8, 0.9);
+  color: rgba(255, 241, 221, 0.84);
+  box-shadow:
+    0 14px 26px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+body[data-live-dashboard] .dashboard-feedback:empty {
+  display: none;
+}
+
+body[data-live-dashboard] .dashboard-feedback.error {
+  border-color: rgba(255, 145, 110, 0.28);
+  background:
+    linear-gradient(160deg, rgba(63, 27, 20, 0.92), rgba(18, 9, 8, 0.96)),
+    rgba(18, 9, 8, 0.94);
+  color: rgba(255, 213, 198, 0.96);
+}
+
+body[data-live-dashboard] .dashboard-feedback.success {
+  border-color: rgba(145, 223, 184, 0.26);
+  background:
+    linear-gradient(160deg, rgba(31, 48, 34, 0.92), rgba(10, 14, 11, 0.96)),
+    rgba(10, 14, 11, 0.94);
+  color: rgba(220, 251, 232, 0.96);
+}
+
+body[data-account-page="financials"] :is(.dashboard-feedback, .hitpay-feedback) {
+  border-color: rgba(148, 163, 184, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96)),
+    rgba(248, 250, 252, 0.96);
+  color: #475569;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+}
+
+body[data-live-dashboard] :is(.dashboard-card-grid, .dashboard-badge-grid, .dashboard-note-log) {
+  align-items: stretch;
+}
+
+body[data-live-dashboard] :is(.dashboard-card-grid > *, .dashboard-badge-grid > *, .dashboard-note-log > *) {
+  min-height: 100%;
+}
+
+body[data-live-dashboard] .dashboard-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.95rem;
+}
+
+body[data-live-dashboard] .dashboard-badge-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.75rem;
+}
+
+body[data-live-dashboard] .dashboard-note-log {
+  gap: 0.72rem;
+}
+
+body[data-live-dashboard] :is(.dashboard-table__empty, .dashboard-inline-placeholder, .dashboard-list-card--empty, .leaderboard-row--empty) {
+  position: relative;
+  overflow: hidden;
+}
+
+body[data-live-dashboard] :is(.dashboard-table__empty, .dashboard-inline-placeholder, .dashboard-list-card--empty, .leaderboard-row--empty)::after {
+  content: "";
+  position: absolute;
+  top: 0.95rem;
+  left: 1rem;
+  width: 3.8rem;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(254, 161, 42, 0.95), rgba(254, 161, 42, 0));
+}
+
+body[data-live-dashboard] .dashboard-table__empty {
+  min-height: 132px;
+  align-content: center;
+  padding-top: 1.25rem;
+}
+
+body[data-live-dashboard] .dashboard-inline-placeholder {
+  min-height: 132px;
+  align-content: center;
+  padding-top: 1.2rem;
+}
+
+body[data-live-dashboard] .dashboard-list-card--empty {
+  min-height: 148px;
+  align-content: space-between;
+  padding-top: 1.2rem;
+}
+
+body[data-live-dashboard] .leaderboard-row--empty {
+  min-height: 132px;
+  align-content: center;
+  padding-top: 1.2rem;
+}
+
+body[data-account-page="packages"] #client-member-id-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.48rem 0.74rem;
+  border: 1px solid rgba(255, 214, 156, 0.14);
+  border-radius: 999px;
+  background:
+    linear-gradient(160deg, rgba(42, 28, 22, 0.88), rgba(14, 10, 8, 0.94)),
+    rgba(14, 10, 8, 0.92);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+body[data-account-page="packages"] .crm-selector-layout {
+  gap: 1.15rem;
+}
+
+body[data-account-page="packages"] .crm-selector-form,
+body[data-account-page="packages"] .crm-selector-reference {
+  min-height: 100%;
+}
+
+body[data-account-page="packages"] .crm-selector-summary {
+  padding: 1.12rem 1.18rem;
+  border-color: rgba(255, 214, 156, 0.18);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(254, 161, 42, 0.12), transparent 22%),
+    linear-gradient(165deg, rgba(40, 28, 21, 0.96), rgba(11, 9, 8, 0.98));
+  box-shadow:
+    0 18px 32px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body[data-account-page="packages"] .crm-selector-reference .dashboard-table-wrap {
+  height: 100%;
+}
+
+body[data-account-page="packages"] #client-active-package-cards > * {
+  min-height: 100%;
+}
+
+body[data-account-page="commissions"] .stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+body[data-account-page="commissions"] .coach-commission-overview-summary {
+  gap: 0.95rem;
+}
+
+body[data-account-page="commissions"] .coach-commission-month-card {
+  min-height: 168px;
+  align-content: start;
+}
+
+body[data-account-page="commissions"] .coach-commission-month-card--placeholder {
+  justify-content: space-between;
+}
+
+body[data-account-page="commissions"] #coach-kpi-review-note {
+  margin-top: 0.8rem;
+}
+
+body[data-account-page="settings"] .account-settings-grid {
+  gap: 1.15rem;
+}
+
+body[data-account-page="settings"] :is(.card, .dashboard-badge, .dashboard-note) .section-actions {
+  margin-top: 0.1rem;
+}
+
+body[data-account-page="settings"] .dashboard-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+body[data-account-page="financials"] .hitpay-surface,
+body[data-account-page="financials"] .hitpay-kpi-card {
+  min-height: 100%;
+}
+
+body[data-account-page="financials"] .hitpay-table-wrap {
+  padding: 0.85rem;
+}
+
+body[data-account-page="financials"] .hitpay-panel-head {
+  gap: 0.8rem;
+}
+
+body[data-required-role="super_admin"][data-account-page="clients"] .dashboard-main,
+body[data-required-role="super_admin"][data-account-page="leads"] .dashboard-main,
+body[data-required-role="super_admin"][data-account-page="settings"] .dashboard-main {
+  gap: 1.15rem;
+}
+
+body[data-required-role="super_admin"][data-account-page="clients"] .dashboard-table-wrap,
+body[data-required-role="super_admin"][data-account-page="leads"] .dashboard-table-wrap {
+  padding-top: 1rem;
+}
+
+@media (min-width: 1100px) {
+  body[data-account-page="packages"] .crm-selector-layout {
+    grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+  }
+
+  body[data-account-page="packages"] .crm-selector-reference {
+    position: sticky;
+    top: 1.15rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body[data-live-dashboard] .dashboard-feedback {
+    width: 100%;
+    padding: 0.78rem 0.86rem;
+    border-radius: 16px;
+  }
+
+  body[data-live-dashboard] .dashboard-card-grid,
+  body[data-live-dashboard] .dashboard-badge-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-live-dashboard] :is(.dashboard-table__empty, .dashboard-inline-placeholder, .dashboard-list-card--empty, .leaderboard-row--empty) {
+    min-height: 0;
+  }
+}
+
+/* Coach shell compact navigation refinement */
+body[data-live-dashboard] .crm-nav-link {
+  position: relative;
+  justify-content: flex-start;
+}
+
+body[data-live-dashboard] .crm-nav-link__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1.08rem;
+  width: 1.08rem;
+  height: 1.08rem;
+  color: currentColor;
+}
+
+body[data-live-dashboard] .crm-nav-link__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+body[data-live-dashboard] .crm-nav-link__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach {
+  gap: 0.76rem;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__brand {
+  min-height: 0 !important;
+  gap: 0.08rem;
+  margin-bottom: -0.04rem;
+  padding-bottom: 0;
+  justify-items: center;
+  text-align: center;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-brand {
+  justify-content: center;
+  line-height: 0.94;
+  text-align: center;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__nav {
+  gap: 0.5rem;
+  margin-top: -0.06rem;
+  scrollbar-gutter: stable;
+  scrollbar-color: rgba(var(--crm-coach-theme-accent-rgb, 221, 178, 74), 0.38) rgba(255, 255, 255, 0.04);
+  scrollbar-width: thin;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link:hover,
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link:focus-visible {
+  transform: none;
+  box-shadow: inset 0 1px 0 rgba(255, 249, 230, 0.05) !important;
+}
+
+body[data-live-dashboard][data-required-role="coach"] :is(.crm-nav a, .crm-nav-link):is(:hover, :focus-visible, .is-current, .is-active) {
+  transform: none !important;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__nav::-webkit-scrollbar,
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav::-webkit-scrollbar {
+  width: 0.58rem;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__nav::-webkit-scrollbar-track,
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 999px;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__nav::-webkit-scrollbar-thumb,
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid rgba(12, 9, 8, 0.92);
+  background:
+    linear-gradient(180deg, rgba(var(--crm-coach-theme-accent-rgb, 221, 178, 74), 0.78), rgba(var(--crm-coach-theme-accent-rgb, 221, 178, 74), 0.42));
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-footer {
+  justify-items: center;
+  text-align: center;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-account {
+  justify-items: center;
+  text-align: center;
+  padding-inline: 0;
+}
+
+body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-account span {
+  text-align: center;
+}
+
+@media (max-width: 960px) and (min-width: 769px) {
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell {
+    grid-template-columns: 212px minmax(0, 1fr);
+    align-items: start;
+    width: min(100% - 1rem, 100%);
+    padding-top: 0.85rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-sidebar {
+    position: sticky;
+    top: 0.85rem;
+    align-self: start;
+    height: calc(100dvh - 1.7rem);
+    max-height: calc(100dvh - 1.7rem);
+    overflow: hidden;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] :is(.crm-content, .crm-shell__stage) {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 961px) {
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell {
+    --crm-shell-gap: 1.35rem;
+    --crm-sidebar-width: clamp(208px, 17vw, 244px);
+    padding-top: 1rem;
+    padding-bottom: 1.4rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-sidebar {
+    top: 1rem;
+    z-index: 0;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] :is(.crm-content, .crm-shell__stage) {
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] :is(.crm-page-head, .crm-page-tabs, .coach-training-topbar, .coach-training-step-tabs) {
+    position: relative;
+    z-index: 1;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach {
+    gap: 0.82rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__brand {
+    min-height: 0 !important;
+    gap: 0.08rem;
+    margin-bottom: -0.08rem;
+    padding-bottom: 0;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-brand {
+    font-size: clamp(1.18rem, 1.28vw, 1.52rem);
+    line-height: 0.94;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__nav {
+    gap: 0.52rem;
+    margin-top: -0.08rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link {
+    min-height: 3.32rem;
+    padding: 0.82rem 0.94rem;
+    border-radius: 1.42rem;
+    font-size: clamp(0.94rem, 0.9rem + 0.18vw, 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 0.92rem;
+    width: min(100% - 0.75rem, 100%);
+    padding: 0.72rem;
+    align-items: start;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-sidebar {
+    position: relative;
+    top: auto;
+    align-self: start;
+    height: auto;
+    max-height: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] :is(.crm-content, .crm-shell__stage) {
+    position: relative;
+    z-index: 1;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach {
+    gap: 0.52rem;
+    padding: 0.78rem 0.58rem;
+    border-radius: 24px;
+    overflow: visible;
+    max-height: none;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__brand {
+    min-height: auto;
+    gap: 0.02rem;
+    margin-bottom: -0.08rem;
+    padding-bottom: 0;
+    justify-items: center;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-brand {
+    display: grid;
+    width: 100%;
+    justify-items: center;
+    gap: 0.02rem;
+    font-size: clamp(0.74rem, 2.6vw, 0.9rem);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__brand .crm-copy,
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-account,
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-footer .btn:not(.crm-sidebar-logout) {
+    display: none;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] :is(.crm-shell-sidebar.crm-sidebar--coach .crm-sidebar__nav, .crm-shell-sidebar.crm-sidebar--coach .crm-nav) {
+    grid-template-columns: 1fr;
+    gap: 0.42rem;
+    flex: 0 0 auto;
+    overflow: visible;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-top: -0.12rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link {
+    width: 100%;
+    min-height: 2.84rem;
+    padding: 0;
+    gap: 0;
+    justify-content: center;
+    border-radius: 1.2rem;
+    font-size: 0.88rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link__icon {
+    flex-basis: 1.14rem;
+    width: 1.14rem;
+    height: 1.14rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-footer {
+    gap: 0.38rem;
+    padding-top: 0.42rem;
+    border-top: 0;
+    background: none;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-footer .crm-sidebar-logout {
+    min-height: 2.52rem;
+    padding: 0.55rem 0.34rem;
+    border-radius: 1.08rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    line-height: 1.05;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 0.78rem;
+    width: min(100% - 0.58rem, 100%);
+    padding: 0.62rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach {
+    padding: 0.7rem 0.5rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-nav-link {
+    min-height: 2.68rem;
+    border-radius: 1.08rem;
+  }
+
+  body[data-live-dashboard][data-required-role="coach"] .crm-shell-sidebar.crm-sidebar--coach .crm-sidebar-footer .crm-sidebar-logout {
+    min-height: 2.36rem;
+    font-size: 0.68rem;
   }
 }

@@ -38,6 +38,7 @@
   const availabilityFeedbackNode = document.getElementById("coach-availability-feedback");
   const liveAvailabilityCalendarNode = document.getElementById("coach-live-availability-calendar");
   const liveAvailabilityFeedbackNode = document.getElementById("coach-live-availability-feedback");
+  const availabilityAdvancedNode = document.querySelector(".coach-schedule-advanced");
   const sessionChangeRequestRowsNode = document.getElementById("coach-session-change-request-rows");
   const calendarStatusNode = document.getElementById("coach-calendar-sync-status");
   const calendarEmailNode = document.getElementById("coach-calendar-email");
@@ -142,6 +143,7 @@
     realtimeChannel: null,
     realtimeSubscriptionKey: "",
     liveCoachAvailability: null,
+    liveCoachAvailabilityStatus: "idle",
     liveCoachAvailabilityKey: "",
     leads: [],
     leadActivities: [],
@@ -1597,12 +1599,14 @@
 
     if (!availabilityKey) {
       dashboardState.liveCoachAvailability = null;
+      dashboardState.liveCoachAvailabilityStatus = "idle";
       dashboardState.liveCoachAvailabilityKey = "";
       renderAvailability(data);
       return;
     }
 
     dashboardState.liveCoachAvailability = localAvailability;
+    dashboardState.liveCoachAvailabilityStatus = localAvailability ? "ready" : "loading";
     dashboardState.liveCoachAvailabilityKey = availabilityKey;
     renderAvailability(dashboardState.lastData || data);
 
@@ -1632,12 +1636,14 @@
             ...coachEntry,
           }
         : localAvailability;
+      dashboardState.liveCoachAvailabilityStatus = dashboardState.liveCoachAvailability ? "ready" : "empty";
       dashboardState.liveCoachAvailabilityKey = availabilityKey;
     } catch (_) {
       if (dashboardState.liveCoachAvailabilityKey !== availabilityKey || !dashboardState.liveCoachAvailability) {
         dashboardState.liveCoachAvailability = localAvailability;
         dashboardState.liveCoachAvailabilityKey = availabilityKey;
       }
+      dashboardState.liveCoachAvailabilityStatus = dashboardState.liveCoachAvailability ? "ready" : "error";
     } finally {
       if (timeoutId) {
         window.clearTimeout(timeoutId);
@@ -3056,6 +3062,9 @@
         "Add at least one standing weekly window so clients see where to request sessions before they message you."
       );
       setAvailabilityFeedback("Add at least one weekly window so clients know which slots to request first.", false);
+      if (availabilityAdvancedNode instanceof HTMLDetailsElement) {
+        availabilityAdvancedNode.open = true;
+      }
     } else {
       availabilityRowsNode.innerHTML = windows
         .map(
@@ -3099,8 +3108,34 @@
           hasLiveCalendarSnapshot && !availableBlocks
         );
       } else {
-        liveAvailabilityCalendarNode.innerHTML = '<p class="coach-schedule-empty">Syncing your public booking calendar…</p>';
-        setLiveAvailabilityFeedback("Syncing your public booking calendar…", false);
+        if (dashboardState.liveCoachAvailabilityStatus === "empty") {
+          window.LEGACY_COACH_AVAILABILITY.renderCalendar(liveAvailabilityCalendarNode, {
+            coachName: data.profile?.display_name || "Coach",
+            coach: {},
+            interactive: false,
+            useWorkspaceTheme: true,
+            emptyMessage: "No published booking windows yet. Add your weekly availability below to make this calendar live.",
+          });
+          setLiveAvailabilityFeedback(
+            "Google Calendar is connected. Add at least one availability window below to publish your bookable week.",
+            false
+          );
+        } else if (dashboardState.liveCoachAvailabilityStatus === "error") {
+          window.LEGACY_COACH_AVAILABILITY.renderCalendar(liveAvailabilityCalendarNode, {
+            coachName: data.profile?.display_name || "Coach",
+            coach: {},
+            interactive: false,
+            useWorkspaceTheme: true,
+            emptyMessage: "The live public booking preview is temporarily unavailable.",
+          });
+          setLiveAvailabilityFeedback(
+            "We couldn't load the public booking preview right now. Your Google Calendar connection is still active.",
+            true
+          );
+        } else {
+          liveAvailabilityCalendarNode.innerHTML = '<p class="coach-schedule-empty">Syncing your public booking calendar…</p>';
+          setLiveAvailabilityFeedback("Syncing your public booking calendar…", false);
+        }
       }
     }
   }

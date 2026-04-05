@@ -19,28 +19,69 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
   </head>
   <body>
-    <header class="site-header reveal">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
+        <a class="brand" href="/index.html" aria-label="LEGACY home"></a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-          <a href="./index.html">Home</a>
-          <a href="./1-1-coaching.html">1:1 Coaching</a>
-          <a href="./pre-postnatal-coaching.html">Pre &amp; Postnatal Coaching</a>
-          <a href="./longevity-senior-strength.html">Longevity &amp; Senior Strength</a>
-          <a href="./corporate-wellness-workshops.html">Corporate Wellness &amp; Workshops</a>
-          <a href="./about-luke.html">About Luke</a>
-          <a href="./client-success-stories.html">Client Success Stories</a>
-          <a href="./blog.html">Blog</a>
-          <a href="./contact-start-coaching.html">Contact / Start Coaching</a>
+          <a href="/index.html">Home</a>
+          <a href="/index.html">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Programs
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaches.html" role="menuitem">Meet the Team</a>
+              <a href="/corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
+            </div>
+          </div>
+          <a href="/packages.html">Pricing</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Facilities
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="/facilities.html" role="menuitem">Gym Information</a>
+              <a href="/gallery.html" role="menuitem">Gallery</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="/about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="/contact.html" role="menuitem">Contact Us</a>
+              <a href="/locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+          <a class="account-gateway-trigger" href="/account.html">My Account</a>
         </nav>
         <div class="header-cta-group">
-          <a class="btn btn-ghost" href="./client-dashboard.html">Client Login</a>
-          <a class="btn btn-secondary" href="./coach-dashboard.html">Coach Login</a>
-          <a class="btn btn-primary" href="./contact-start-coaching.html">Start Coaching</a>
+          <a class="btn btn-primary account-gateway-trigger" href="/account.html">My Account</a>
         </div>
       </div>
     </header>
@@ -54,8 +95,8 @@
           environment in Kuala Lumpur.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="./contact-start-coaching.html">Work with Luke</a>
-          <a class="btn btn-secondary" href="./client-success-stories.html">Read Client Stories</a>
+          <a class="btn btn-primary" href="./contact.html?service=Coach%20Profile%20Inquiry&amp;coach=Luke%20Lango">Work with Luke</a>
+          <a class="btn btn-secondary" href="./results.html">Read Client Stories</a>
         </div>
       </section>
 
@@ -129,8 +170,8 @@
           Share your current goals and we will recommend the coaching path that fits your lifestyle and timeline.
         </p>
         <div class="section-actions">
-          <a class="btn btn-secondary" href="./contact-start-coaching.html">Start Coaching</a>
-          <a class="btn btn-ghost" href="https://wa.me/60123456789?text=Hi%20Luke%2C%20I%20want%20to%20work%20with%20you." target="_blank" rel="noopener">WhatsApp Luke</a>
+          <a class="btn btn-secondary" href="./contact.html?service=Coach%20Profile%20Inquiry&amp;coach=Luke%20Lango">Start Coaching</a>
+          <a class="btn btn-ghost" href="https://wa.me/601139772862?text=Hi%20Luke%2C%20I%20want%20to%20work%20with%20you." target="_blank" rel="noopener">WhatsApp Luke</a>
         </div>
       </section>
     </main>
@@ -148,13 +189,13 @@
 
     <a
       class="floating-wa"
-      href="https://wa.me/60123456789?text=Hi%20Luke%2C%20I%20want%20to%20start%20coaching."
+      href="https://wa.me/601139772862?text=Hi%20LEGACY%2B%2C%20I%20want%20to%20talk%20to%20a%20coach."
       target="_blank"
       rel="noopener"
-      aria-label="Start coaching with Luke on WhatsApp"
-      >Work with Luke on WhatsApp</a
+      aria-label="Talk to a coach on WhatsApp"
+      >Talk to a Coach</a
     >
 
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260402deployready1"></script>
   </body>
 </html>

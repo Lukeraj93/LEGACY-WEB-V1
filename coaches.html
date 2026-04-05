@@ -2,161 +2,697 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Legacy+ | Coaches</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coaches | LEGACY+ Coaching</title>
     <meta
       name="description"
-      content="Coaches dashboard and management commission tracking for Legacy+."
+      content="Meet the LEGACY+ coaching team in Kuala Lumpur and find the coach whose style, pace, and session structure fit your goals."
+    />
+    <link rel="canonical" href="https://www.legacycoaching.com.my/coaches" />
+    <meta property="og:title" content="Coaches | LEGACY+ Coaching" />
+    <meta
+      property="og:description"
+      content="Review the LEGACY+ coaching team and choose the coach who matches your goals, schedule, and preferred coaching style."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.legacycoaching.com.my/coaches" />
+    <meta
+      property="og:image"
+      content="https://www.legacycoaching.com.my/assets/team-optimized/luke-lango-960.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Coaches | LEGACY+ Coaching" />
+    <meta
+      name="twitter:description"
+      content="Compare the coaching team by style, pacing, and best-fit client profile before you book."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260404scheduleui1" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "LEGACY+ Coaching Team",
+        "url": "https://www.legacycoaching.com.my/coaches",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "url": "https://www.legacycoaching.com.my/team/luke-lango"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "url": "https://www.legacycoaching.com.my/team/amree-ariff"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "url": "https://www.legacycoaching.com.my/team/kylie-dennis"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "url": "https://www.legacycoaching.com.my/team/jenita-jeune"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "url": "https://www.legacycoaching.com.my/team/shobana"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "url": "https://www.legacycoaching.com.my/team/caleb"
+          }
+        ]
+      }
+    </script>
   </head>
-  <body>
-    <div class="grain" aria-hidden="true"></div>
+  <body class="page-amber-balance coaches-page">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
 
-    <header class="site-header reveal">
-      <a href="./index.html" class="brand" aria-label="Legacy+ Home">
-        <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" class="brand-logo-img" />
-      </a>
-      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="./index.html">Home</a>
-        <a href="./about.html">About</a>
-        <a href="./legacy-plus.html">Legacy+</a>
-        <a class="active" href="./coaches.html">Coaches</a>
-        <a href="./facilities.html">Facilities</a>
-        <a href="./contact.html">Contact</a>
-        <a href="./account.html">My Account</a>
-      </nav>
-      <div class="header-actions">
-        <button type="button" class="btn btn-ghost login-trigger" data-role="coach">Coach Login</button>
-        <button type="button" class="btn btn-primary login-trigger" data-role="client">Client Login</button>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/index.html" aria-label="LEGACY home"></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="/index.html">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Programs
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="./coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="./coaches.html" role="menuitem">Meet the Team</a>
+              <a href="./corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="./careers.html" role="menuitem">Careers</a>
+            </div>
+          </div>
+          <a href="./packages.html">Pricing</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Facilities
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="./facilities.html" role="menuitem">Gym Information</a>
+              <a href="./gallery.html" role="menuitem">Gallery</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="./about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="./contact.html" role="menuitem">Contact Us</a>
+              <a href="./locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+          <a class="account-gateway-trigger" href="./account.html">My Account</a>
+        </nav>
+        <div class="header-cta-group">
+          <a class="btn btn-primary account-gateway-trigger" href="./account.html">My Account</a>
+        </div>
       </div>
     </header>
 
     <main>
-      <section class="page-hero reveal">
-        <p class="kicker">Coaches Workspace</p>
-        <h1>Centralized coaching visibility, scheduling, and performance control.</h1>
-        <p>
-          Coaches use Legacy+ as a daily command center to manage clients, packages, schedules, points,
-          notes, and commission outcomes in one structured workflow.
-        </p>
+      <section class="reveal team-page-intro">
+        <h1 class="pt-mode-title">
+          CHOOSE YOUR <span class="pt-title-accent">COACH</span>
+        </h1>
       </section>
 
-      <section class="section panel reveal">
-        <div class="section-head">
-          <p class="kicker">Coaches Dashboard</p>
-          <h2>Everything coaches need to run operations efficiently.</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="card">
-            <h3>Client Profiles & Coach Notes</h3>
-            <p>Detailed profile data, fitness goals, progress history, and private notes.</p>
+      <section class="section reveal team-directory">
+        <h2 class="visually-hidden">Meet the LEGACY plus coaching roster</h2>
+        <div class="team-grid">
+          <article class="team-card team-card--signal team-card--orange team-card--luke">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./team/luke-lango.html">
+              <span class="visually-hidden">View Luke Lango profile</span>
+              <div class="team-card-media">
+                <img
+                  class="team-card-photo"
+                  src="./assets/team-optimized/luke-lango-960.jpg"
+                  srcset="./assets/team-optimized/luke-lango-480.jpg 480w, ./assets/team-optimized/luke-lango-960.jpg 960w"
+                  sizes="(max-width: 719px) calc(100vw - 3rem), 280px"
+                  alt="Luke Lango portrait"
+                  width="960"
+                  height="1200"
+                  decoding="async"
+                />
+                <span class="team-card-tier-badge team-card-tier-badge--orange" aria-hidden="true">T10</span>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <h3><a class="team-card-title-link" href="./team/luke-lango.html">Luke Lango</a></h3>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> He will probably spot the rep you hoped nobody noticed.</p>
+                  <div class="team-card-actions">
+                    <button
+                      class="btn btn-secondary team-card-schedule-link"
+                      type="button"
+                      data-coach-schedule-open
+                      data-coach-name="Luke Lango"
+                      aria-haspopup="dialog"
+                    >
+                      View Availability
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
-          <article class="card">
-            <h3>Client Packages</h3>
-            <p>Active/past packages, session counts, validity period, and usage status.</p>
+          <article class="team-card team-card--signal team-card--indigo team-card--shobana">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./team/shobana.html">
+              <span class="visually-hidden">View Shobana profile</span>
+              <div class="team-card-media">
+                <img
+                  class="team-card-photo"
+                  src="./assets/team-optimized/shobana-960.jpg"
+                  srcset="./assets/team-optimized/shobana-480.jpg 480w, ./assets/team-optimized/shobana-960.jpg 960w"
+                  sizes="(max-width: 719px) calc(100vw - 3rem), 280px"
+                  alt="Shobana portrait"
+                  width="960"
+                  height="1200"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="team-card-tier-badge team-card-tier-badge--indigo" aria-hidden="true">T3</span>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <h3><a class="team-card-title-link" href="./team/shobana.html">Shobana</a></h3>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> There is always just enough banter to get through the hard sets.</p>
+                  <div class="team-card-actions">
+                    <button
+                      class="btn btn-secondary team-card-schedule-link"
+                      type="button"
+                      data-coach-schedule-open
+                      data-coach-name="Shobana"
+                      aria-haspopup="dialog"
+                    >
+                      View Availability
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
-          <article class="card">
-            <h3>Calendar View</h3>
-            <p>Daily and weekly schedule visibility for sessions and class load balancing.</p>
+          <article class="team-card team-card--signal team-card--pink team-card--kylie">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./team/kylie-dennis.html">
+              <span class="visually-hidden">View Kylie Denis profile</span>
+              <div class="team-card-media">
+                <img
+                  class="team-card-photo"
+                  src="./assets/team-optimized/kylie-dennis-960.jpg"
+                  srcset="./assets/team-optimized/kylie-dennis-480.jpg 480w, ./assets/team-optimized/kylie-dennis-960.jpg 960w"
+                  sizes="(max-width: 719px) calc(100vw - 3rem), 280px"
+                  alt="Kylie Denis portrait"
+                  width="960"
+                  height="1200"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="team-card-tier-badge team-card-tier-badge--pink" aria-hidden="true">T1</span>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <h3><a class="team-card-title-link" href="./team/kylie-dennis.html">Kylie Denis</a></h3>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> New exercises stop feeling intimidating very quickly around her.</p>
+                  <div class="team-card-actions">
+                    <button
+                      class="btn btn-secondary team-card-schedule-link"
+                      type="button"
+                      data-coach-schedule-open
+                      data-coach-name="Kylie Denis"
+                      aria-haspopup="dialog"
+                    >
+                      View Availability
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
-          <article class="card">
-            <h3>Client Points Tracking</h3>
-            <p>Track points from sessions, milestones, and rewards workflows.</p>
+          <article class="team-card team-card--signal team-card--jenita">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./team/jenita-jeune.html">
+              <span class="visually-hidden">View Jenita Jeune profile</span>
+              <div class="team-card-media">
+                <img
+                  class="team-card-photo"
+                  src="./assets/team-optimized/jenita-jeune-960.jpg"
+                  srcset="./assets/team-optimized/jenita-jeune-480.jpg 480w, ./assets/team-optimized/jenita-jeune-960.jpg 960w"
+                  sizes="(max-width: 719px) calc(100vw - 3rem), 280px"
+                  alt="Jenita Jeune portrait"
+                  width="960"
+                  height="1200"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="team-card-tier-badge" aria-hidden="true">T1</span>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <h3><a class="team-card-title-link" href="./team/jenita-jeune.html">Jenita Jeune</a></h3>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> Yes, she really does have a Latin motto for the work.</p>
+                  <div class="team-card-actions">
+                    <button
+                      class="btn btn-secondary team-card-schedule-link"
+                      type="button"
+                      data-coach-schedule-open
+                      data-coach-name="Jenita Jeune"
+                      aria-haspopup="dialog"
+                    >
+                      View Availability
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
-          <article class="card">
-            <h3>Commission Overview</h3>
-            <p>See commissions by period, client, and package with transparent breakdowns.</p>
+          <article class="team-card team-card--signal team-card--green team-card--ariff">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./team/amree-ariff.html">
+              <span class="visually-hidden">View Amree Ariff profile</span>
+              <div class="team-card-media">
+                <img
+                  class="team-card-photo"
+                  src="./assets/team-optimized/amree-ariff-960.jpg"
+                  srcset="./assets/team-optimized/amree-ariff-480.jpg 480w, ./assets/team-optimized/amree-ariff-960.jpg 960w"
+                  sizes="(max-width: 719px) calc(100vw - 3rem), 280px"
+                  alt="Amree Ariff portrait"
+                  width="960"
+                  height="1200"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="team-card-tier-badge team-card-tier-badge--green" aria-hidden="true">T1</span>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <h3><a class="team-card-title-link" href="./team/amree-ariff.html">Amree Ariff</a></h3>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> The hard sets usually end up feeling more fun than expected.</p>
+                  <div class="team-card-actions">
+                    <button
+                      class="btn btn-secondary team-card-schedule-link"
+                      type="button"
+                      data-coach-schedule-open
+                      data-coach-name="Amree Ariff"
+                      aria-haspopup="dialog"
+                    >
+                      View Availability
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="team-card team-card--signal team-card--blue team-card--caleb">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./team/caleb.html">
+              <span class="visually-hidden">View Caleb profile</span>
+              <div class="team-card-media">
+                <img
+                  class="team-card-photo"
+                  src="./assets/team-optimized/caleb-public.jpeg"
+                  alt="Caleb portrait"
+                  width="960"
+                  height="1280"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="team-card-tier-badge team-card-tier-badge--blue" aria-hidden="true">T1</span>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <h3><a class="team-card-title-link" href="./team/caleb.html">Caleb</a></h3>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> Calm, clear coaching with a strong basics-first lens.</p>
+                  <div class="team-card-actions">
+                    <button
+                      class="btn btn-secondary team-card-schedule-link"
+                      type="button"
+                      data-coach-schedule-open
+                      data-coach-name="Caleb"
+                      aria-haspopup="dialog"
+                    >
+                      View Availability
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="team-card team-card--signal team-card--red team-card--locked">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./careers.html" aria-label="Unlock future coach profile">
+              <div class="team-card-media team-card-media--locked">
+                <div class="team-card-photo team-card-photo--locked" aria-hidden="true">
+                  <img
+                    class="team-card-photo-lockup"
+                    src="./assets/Meet%20the%20team/silhouette/red%20.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <span class="team-card-lock-pill" aria-hidden="true">LOCKED</span>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> ???</p>
+                  <div class="team-card-actions">
+                    <a class="btn btn-secondary team-card-schedule-link" href="./careers.html">UNLOCK</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="team-card team-card--signal team-card--pink team-card--locked">
+<div class="team-card-shell">
+  <span class="team-card-laser-frame" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <rect class="team-card-laser-track" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+      <rect class="team-card-laser-beam" x="1.4" y="1.4" width="97.2" height="97.2" rx="16" ry="16" pathLength="100"></rect>
+    </svg>
+  </span>
+              <a class="team-card-media-link" href="./careers.html" aria-label="Unlock future coach profile">
+              <div class="team-card-media team-card-media--locked">
+                <div class="team-card-photo team-card-photo--locked" aria-hidden="true">
+                  <img
+                    class="team-card-photo-lockup"
+                    src="./assets/Meet%20the%20team/silhouette/pink.png"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+              </a>
+              <div class="team-card-body">
+                <div class="team-card-meta-box">
+                  <span class="team-card-lock-pill" aria-hidden="true">LOCKED</span>
+                  <p class="team-card-fact"><strong>Session quirk:</strong> ???</p>
+                  <div class="team-card-actions">
+                    <a class="btn btn-secondary team-card-schedule-link" href="./careers.html">UNLOCK</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
         </div>
       </section>
 
-      <section class="section reveal">
-        <div class="section-head">
-          <p class="kicker">Management Dashboard & Commission Tracking</p>
-          <h2>Owner-level oversight of revenue, coaches, clients, and payouts.</h2>
+      <section class="reveal team-selection-banner" id="choose-coach">
+        <div class="team-selection-art" aria-hidden="true">
+          <img
+            src="./assets/team-selection-coach-beams-spectrum.png?v=20260321at"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
         </div>
-        <div class="feature-grid">
-          <article class="card">
-            <h3>Manage Coaches</h3>
-            <p>Create coach accounts, assign permissions, set commission structure, monitor performance.</p>
-          </article>
-          <article class="card">
-            <h3>Manage Clients</h3>
-            <p>Centralized client database with package history, engagement, and assigned coaches.</p>
-          </article>
-          <article class="card">
-            <h3>Lead Funnel</h3>
-            <p>Track leads from inquiry to conversion with source and follow-up visibility.</p>
-          </article>
-          <article class="card">
-            <h3>Commission Tracking & Payout - v1</h3>
-            <p>Semi-automated rules with manual review and manager approval before payout.</p>
-          </article>
-          <article class="card">
-            <h3>Commission Tracking & Payout - v2</h3>
-            <p>Fully automated calculations and scheduled payouts with real-time tracking.</p>
-          </article>
+        <div class="team-selection-copy">
+          <h2><span class="title-highlight">TRAIN | LEARN | LEVEL UP</span></h2>
+          <p class="team-selection-legacy">And leave your legacy behind</p>
+          <div class="section-actions">
+            <a class="btn btn-primary" href="./contact.html?service=Coach%20Profile%20Inquiry">Book a Consult with Our Team</a>
+          </div>
         </div>
       </section>
 
-      <section class="section panel reveal">
-        <div class="section-head">
-          <p class="kicker">Role Portals</p>
-          <h2>Sign in to dedicated coach and client workspaces.</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="card">
-            <h3>Coach Portal</h3>
-            <p>Use the protected coach portal for operations and client management.</p>
-            <a href="./coach-portal.html" class="text-link">Open Coach Portal</a>
-          </article>
-          <article class="card">
-            <h3>Client Portal</h3>
-            <p>Clients can monitor progress, schedules, points, and badges.</p>
-            <a href="./client-portal.html" class="text-link">Open Client Portal</a>
-          </article>
+      <section class="partners-strip reveal" id="team-credentials" aria-label="Team credentials">
+        <div class="partners-inner">
+          <span class="kicker">Team Credentials</span>
+          <p class="partners-note">Click on the logo to find out more.</p>
+          <div class="partners-marquee">
+            <div class="partners-track">
+              <div class="partners-logos">
+                <article class="partner-logo-card">
+                  <a href="https://cleanhealth.edu.au/" target="_blank" rel="noreferrer" aria-label="Visit Clean Health">
+                    <img src="./assets/Certification%20logo/1193e8166310105.Y3JvcCw5NTQsNzQ2LDAsMA.png" alt="Clean Health logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a
+                    href="https://www.sportsnutritionsociety.org/certifications.html"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Visit the CISSN certification page"
+                  >
+                    <img src="./assets/Certification%20logo/CISSN%20logo.jpg" alt="CISSN logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a
+                    href="https://www.sportsnutritionsociety.org/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Visit the International Society of Sports Nutrition"
+                  >
+                    <img src="./assets/Certification%20logo/ISSN%20logo.jpg" alt="ISSN logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.nsca.com/certification/cscs/" target="_blank" rel="noreferrer" aria-label="Visit the CSCS certification page">
+                    <img src="./assets/Certification%20logo/CSCS%202.jpg" alt="CSCS logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.nasm.org/homepage" target="_blank" rel="noreferrer" aria-label="Visit NASM">
+                    <img src="./assets/Certification%20logo/NASM%202.png" alt="NASM logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.nsca.com/" target="_blank" rel="noreferrer" aria-label="Visit NSCA">
+                    <img src="./assets/Certification%20logo/NSCA%202.jpg" alt="NSCA logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.issaonline.com/" target="_blank" rel="noreferrer" aria-label="Visit ISSA">
+                    <img src="./assets/Certification%20logo/ISSA%202.png" alt="ISSA logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.precisionnutrition.com/" target="_blank" rel="noreferrer" aria-label="Visit Precision Nutrition">
+                    <img src="./assets/Certification%20logo/PN%20logo.png" alt="Precision Nutrition logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.acsm.org/certification" target="_blank" rel="noreferrer" aria-label="Visit ACSM certification">
+                    <img src="./assets/Certification%20logo/ACSM%20logo.jpg" alt="ACSM logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://strengthandconditioning.org/" target="_blank" rel="noreferrer" aria-label="Visit ASCA">
+                    <img src="./assets/Certification%20logo/ASCA%20logo.jpg" alt="ASCA logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.ncsf.org/" target="_blank" rel="noreferrer" aria-label="Visit NCSF">
+                    <img src="./assets/Certification%20logo/NCSF%20logo.jpg" alt="NCSF logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+                <article class="partner-logo-card">
+                  <a href="https://www.acefitness.org/" target="_blank" rel="noreferrer" aria-label="Visit ACE Fitness">
+                    <img src="./assets/Certification%20logo/ACE%20logo.jpg" alt="ACE logo" loading="lazy" decoding="async" />
+                  </a>
+                </article>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
     </main>
 
-    <footer class="site-footer reveal">
-      <p>Legacy+ • Coaches</p>
-      <p>Coaching Operations • Management Oversight • Commission Tracking</p>
-    </footer>
-
-    <div class="modal" id="login-modal" aria-hidden="true" role="dialog" aria-labelledby="login-title">
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel" role="document">
-        <button type="button" class="close-modal" aria-label="Close login" data-close-modal>&times;</button>
-        <p class="kicker">Portal Access</p>
-        <h3 id="login-title">Client Login</h3>
-        <div class="role-tabs" role="tablist" aria-label="Choose account type">
-          <button type="button" role="tab" aria-selected="true" class="role-tab active" data-role="client">Client</button>
-          <button type="button" role="tab" aria-selected="false" class="role-tab" data-role="coach">Coach</button>
+    <div class="coach-schedule-modal" id="coach-schedule-modal" aria-hidden="true">
+      <div class="coach-schedule-backdrop" data-coach-schedule-close></div>
+      <div class="coach-schedule-panel" role="dialog" aria-modal="true" aria-labelledby="coach-schedule-title">
+        <button class="coach-schedule-close" type="button" aria-label="Close coach availability" data-coach-schedule-close>
+          ×
+        </button>
+        <p class="coach-schedule-kicker">Availability</p>
+        <h2 id="coach-schedule-title" data-coach-schedule-title>Coach availability</h2>
+        <p class="coach-schedule-copy" data-coach-schedule-copy>
+          Select an available block from the calendar to continue.
+        </p>
+        <div class="coach-schedule-grid" data-coach-schedule-grid></div>
+        <p class="coach-schedule-note" data-coach-schedule-note hidden></p>
+        <div class="section-actions">
+          <a class="btn btn-primary" href="./contact.html?service=Coach%20Profile%20Inquiry" data-coach-schedule-profile>
+            Book a Consult
+          </a>
+          <button class="btn btn-ghost" type="button" data-coach-schedule-close>Close</button>
         </div>
-        <form class="login-form" id="login-form">
-          <label>Email<input type="email" name="loginEmail" placeholder="name@legacycoaching.com" required /></label>
-          <label>Password<input type="password" name="loginPassword" placeholder="Enter password" required /></label>
-          <label id="coach-code-field" class="hidden">Coach Access Code<input type="text" name="coachCode" placeholder="COACH-XXXX" /></label>
-          <p class="form-feedback hidden" id="login-feedback" aria-live="polite"></p>
-          <button type="submit" class="btn btn-primary" id="login-submit">Login as Client</button>
-        </form>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js"></script>
-    <script src="./auth-client.js"></script>
-    <script src="./script.js"></script>
+    <script id="coach-availability-data" type="application/json">
+      {
+        "Luke Lango": {
+          "profilePath": "./team/luke-lango.html",
+          "summary": "Luke is available Monday to Saturday with focused morning and midday booking windows.",
+          "slots": [
+            { "day": "Mon", "time": "6 AM - 7 AM" },
+            { "day": "Mon", "time": "9 AM - 10 AM" },
+            { "day": "Mon", "time": "11 AM - 12 PM" },
+            { "day": "Tue", "time": "11 AM - 12 PM" },
+            { "day": "Tue", "time": "12 PM - 1 PM" },
+            { "day": "Wed", "time": "6 AM - 7 AM" },
+            { "day": "Wed", "time": "7 AM - 8 AM" },
+            { "day": "Wed", "time": "9 AM - 10 AM" },
+            { "day": "Wed", "time": "11 AM - 12 PM" },
+            { "day": "Wed", "time": "12 PM - 1 PM" },
+            { "day": "Thu", "time": "9 AM - 10 AM" },
+            { "day": "Thu", "time": "10 AM - 11 AM" },
+            { "day": "Thu", "time": "11 AM - 12 PM" },
+            { "day": "Thu", "time": "12 PM - 1 PM" },
+            { "day": "Fri", "time": "7 AM - 8 AM" },
+            { "day": "Fri", "time": "9 AM - 10 AM" },
+            { "day": "Fri", "time": "10 AM - 11 AM" },
+            { "day": "Fri", "time": "12 PM - 1 PM" },
+            { "day": "Sat", "time": "6 AM - 7 AM" },
+            { "day": "Sat", "time": "7 AM - 8 AM" },
+            { "day": "Sat", "time": "10 AM - 11 AM" }
+          ]
+        },
+        "Caleb": {
+          "profilePath": "./team/caleb.html",
+          "summary": "Caleb is available Tuesday and Thursday mornings, with focused weekday afternoon blocks and longer Friday-Saturday coaching windows.",
+          "slots": [
+            { "day": "Mon", "time": "1 PM - 3 PM" },
+            { "day": "Tue", "time": "8 AM - 12 PM" },
+            { "day": "Tue", "time": "1 PM - 3 PM" },
+            { "day": "Wed", "time": "1 PM - 3 PM" },
+            { "day": "Thu", "time": "8 AM - 12 PM" },
+            { "day": "Thu", "time": "1 PM - 3 PM" },
+            { "day": "Fri", "time": "1 PM - 5 PM" },
+            { "day": "Sat", "time": "8 AM - 12 PM" },
+            { "day": "Sat", "time": "1 PM - 5 PM" }
+          ]
+        },
+        "Amree Ariff": {
+          "profilePath": "./team/amree-ariff.html",
+          "summary": "Ariff is currently available Tuesday and Wednesday evenings, plus a Saturday morning block.",
+          "slots": [
+            { "day": "Tue", "time": "7 PM - 10 PM" },
+            { "day": "Wed", "time": "7 PM - 10 PM" },
+            { "day": "Sat", "time": "8 AM - 11 AM" }
+          ]
+        },
+        "Kylie Denis": {
+          "profilePath": "./team/kylie-dennis.html",
+          "summary": "Kylie is available Monday to Saturday, with full-day windows early in the week and afternoon-evening blocks later on.",
+          "slots": [
+            { "day": "Mon", "time": "7 AM - 8 PM" },
+            { "day": "Tue", "time": "7 AM - 8 PM" },
+            { "day": "Wed", "time": "2 PM - 8 PM" },
+            { "day": "Thu", "time": "12 PM - 8 PM" },
+            { "day": "Fri", "time": "12 PM - 8 PM" },
+            { "day": "Sat", "time": "7 AM - 5 PM" }
+          ]
+        },
+        "Jenita Jeune": {
+          "profilePath": "./team/jenita-jeune.html",
+          "summary": "Jenita is available Monday and Wednesday evenings, plus Saturday mornings.",
+          "slots": [
+            { "day": "Mon", "time": "Evening" },
+            { "day": "Wed", "time": "Evening" },
+            { "day": "Sat", "time": "Morning" }
+          ]
+        },
+        "Shobana": {
+          "profilePath": "./team/shobana.html",
+          "summary": "Shobana currently has Tuesday afternoon, Thursday morning, and Friday afternoon-evening booking windows.",
+          "slots": [
+            { "day": "Tue", "time": "1 PM - 4 PM" },
+            { "day": "Thu", "time": "8:30 AM - 11:15 AM" },
+            { "day": "Fri", "time": "1 PM - 7 PM" }
+          ]
+        }
+      }
+    </script>
+
+    <footer class="site-footer">
+      <p>LEGACY+ Coaching | Coaches</p>
+      <p>&copy; <span data-year></span> LEGACY+ Coaching. All rights reserved.</p>
+    </footer>
+
+    <script src="./assets/coach-availability-calendar.js?v=20260402coachavailabilitycolors1"></script>
+    <script src="./script.js?v=20260402deployready1"></script>
   </body>
 </html>

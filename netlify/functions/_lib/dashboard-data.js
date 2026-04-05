@@ -1559,6 +1559,13 @@ async function getAdminDashboardPayload(supabase, auth, pageKey, options = {}) {
     };
   }
 
+  if (pageKey === "newsletter") {
+    return {
+      access,
+      currentMonthStart,
+    };
+  }
+
   const [
     coachesResponse,
     coachProfilesResponse,

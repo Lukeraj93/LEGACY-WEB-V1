@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
   </head>
   <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="home">
     <div class="cinematic-bg" aria-hidden="true">
@@ -34,6 +34,7 @@
           <a href="./admin-clients.html">TEAM</a>
           <a href="./admin-leads.html">Leads</a>
           <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-newsletter.html">Newsletter</a>
           <a href="./admin-settings.html">Settings</a>
         </nav>
         <div class="crm-sidebar-footer">
@@ -146,6 +147,40 @@
             </div>
           </section>
 
+          <section class="section dashboard-section reveal" data-crm-tone="info" id="admin-newsletter-home">
+            <span class="kicker kicker--accent">Outbound Marketing</span>
+            <h2>Weekly Member Newsletter</h2>
+            <p class="dashboard-feedback" id="admin-newsletter-feedback">Loading the weekly newsletter status and latest delivery analytics.</p>
+            <div class="dashboard-card-grid">
+              <article class="card">
+                <span class="kicker kicker--accent">At A Glance</span>
+                <h3>Send cadence and audience</h3>
+                <div class="dashboard-badge-grid" id="admin-newsletter-summary">
+                  <article class="dashboard-badge dashboard-badge--placeholder">
+                    <strong>Newsletter status is syncing</strong>
+                    <p>The current campaign state will appear here after the settings request completes.</p>
+                  </article>
+                </div>
+                <div class="crm-callout">
+                  <p>Use the full newsletter studio to change the copy, refresh the preview, or send the next issue manually.</p>
+                </div>
+                <div class="section-actions">
+                  <a class="btn btn-primary" href="./admin-newsletter.html">Open Newsletter Studio</a>
+                </div>
+              </article>
+              <article class="card">
+                <span class="kicker kicker--accent">Recent Delivery</span>
+                <h3>Last sends, opens, and clicks</h3>
+                <div class="dashboard-note-log" id="admin-newsletter-history">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>Campaign history is syncing</strong>
+                    <p>The latest send summary and recent delivery analytics will appear here once the newsletter manager finishes loading.</p>
+                  </article>
+                </div>
+              </article>
+            </div>
+          </section>
+
         </main>
 
         <footer class="site-footer">
@@ -157,11 +192,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./assets/coach-operations-data.js"></script>
-    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
     <script src="./auth-client.js?v=20260402deployready1"></script>
-    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
     <script src="./dashboard-auth.js?v=20260402deployready1"></script>
     <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
-    <script src="./admin-dashboard.js?v=20260401admin3"></script>
+    <script src="./admin-dashboard.js?v=20260405coachnewsletter1"></script>
   </body>
 </html>

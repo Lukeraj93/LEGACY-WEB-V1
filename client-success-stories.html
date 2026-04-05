@@ -19,28 +19,68 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
   </head>
-  <body>
-    <header class="site-header reveal">
+  <body class="page-success-stories">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
+        <a class="brand" href="/index.html" aria-label="LEGACY home"></a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-          <a href="./index.html">Home</a>
-          <a href="./1-1-coaching.html">1:1 Coaching</a>
-          <a href="./pre-postnatal-coaching.html">Pre &amp; Postnatal Coaching</a>
-          <a href="./longevity-senior-strength.html">Longevity &amp; Senior Strength</a>
-          <a href="./corporate-wellness-workshops.html">Corporate Wellness &amp; Workshops</a>
-          <a href="./about-luke.html">About Luke</a>
-          <a href="./client-success-stories.html">Client Success Stories</a>
-          <a href="./blog.html">Blog</a>
-          <a href="./contact-start-coaching.html">Contact / Start Coaching</a>
+          <a href="/index.html">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Programs
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaches.html" role="menuitem">Meet the Team</a>
+              <a href="/corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
+            </div>
+          </div>
+          <a href="/packages.html">Pricing</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Facilities
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="/facilities.html" role="menuitem">Gym Information</a>
+              <a href="/gallery.html" role="menuitem">Gallery</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="/about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="/contact.html" role="menuitem">Contact Us</a>
+              <a href="/locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+          <a class="account-gateway-trigger" href="/account.html">My Account</a>
         </nav>
         <div class="header-cta-group">
-          <a class="btn btn-ghost" href="./client-dashboard.html">Client Login</a>
-          <a class="btn btn-secondary" href="./coach-dashboard.html">Coach Login</a>
-          <a class="btn btn-primary" href="./contact-start-coaching.html">Start Coaching</a>
+          <a class="btn btn-primary account-gateway-trigger" href="/account.html">My Account</a>
         </div>
       </div>
     </header>
@@ -48,14 +88,20 @@
     <main>
       <section class="page-hero reveal">
         <span class="kicker">Client Success Stories</span>
-        <h1>Real Outcomes Across Different Coaching Journeys</h1>
+        <h1>Real Results Across Journeys</h1>
         <p>
           These case snapshots show how individualized programming creates meaningful changes in strength, mobility,
           confidence, and daily performance.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="./contact-start-coaching.html">I Want Similar Results</a>
-          <a class="btn btn-secondary" href="https://wa.me/60123456789?text=Hi%20LEGACY%2B%2C%20I%20want%20results%20like%20your%20clients." target="_blank" rel="noopener">Chat on WhatsApp</a>
+          <a class="btn btn-primary" href="./contact.html?service=1%3A1%20Coaching&amp;goal=I%20want%20results%20like%20the%20client%20stories">I Want Similar Results</a>
+          <a
+            class="btn btn-secondary"
+            href="https://wa.me/601139772862?text=Hi%20LEGACY%2B%2C%20I%20want%20results%20like%20your%20clients."
+            target="_blank"
+            rel="noopener"
+            >Chat on WhatsApp</a
+          >
         </div>
       </section>
 
@@ -63,44 +109,568 @@
         <span class="kicker">Case Study Filters</span>
         <h2>Find Stories Like Yours</h2>
         <div class="filter-row" data-filter-group="stories">
-          <button type="button" class="filter-btn active" data-filter="all">All</button>
-          <button type="button" class="filter-btn" data-filter="professional">Professionals</button>
+          <button type="button" class="filter-btn active" data-filter="busy">Busy Professionals</button>
           <button type="button" class="filter-btn" data-filter="prepost">Pre/Postnatal</button>
           <button type="button" class="filter-btn" data-filter="senior">Seniors</button>
+          <button type="button" class="filter-btn" data-filter="athlete">Athletes</button>
+          <button type="button" class="filter-btn" data-filter="youth">Kids &amp; Teens</button>
           <button type="button" class="filter-btn" data-filter="corporate">Corporate</button>
+          <button type="button" class="filter-btn filter-btn--all" data-filter="all">All</button>
         </div>
 
-        <div class="case-grid" data-filter-target="stories">
-          <article class="case-card" data-category="professional">
-            <h3>Expat Executive, 43</h3>
-            <p>Reduced back pain and increased full-body strength while traveling weekly for work.</p>
-            <span class="metric">+28% key lift progression in 16 weeks</span>
+        <div class="case-grid" data-filter-target="stories" data-story-grid data-collapsed-count="9">
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Aisha Rahman</span><span class="case-card-role">Product Manager</span></h3>
+            <p>Stayed consistent through product launches with 45-minute fallback sessions, one heavier day, and weekly coach checkpoints.</p>
+            <span class="metric">2 to 3 sessions per week for 8 months</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Marcus Lee</span><span class="case-card-role">Restaurant Owner</span></h3>
+            <p>Trained around brutal service hours by adjusting load to fatigue and protecting consistency during peak dinner weeks.</p>
+            <span class="metric">Back pain reduced while business stayed intense</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Farah Johari</span><span class="case-card-role">Medical Officer</span></h3>
+            <p>Built shift-friendly strength around sleep debt, hospital rotations, and mentally heavy weeks without adding more friction.</p>
+            <span class="metric">Consistency held through rotating hospital weeks</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Melissa Lim</span><span class="case-card-role">Software Engineer</span></h3>
+            <p>Lunchtime sessions and mobility resets between coding blocks helped reduce desk stiffness while key lifts kept progressing.</p>
+            <span class="metric">Desk pain down while strength kept climbing</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Hafiz Karim</span><span class="case-card-role">Senior Software Engineer</span></h3>
+            <p>Removed decision fatigue with clear loading, realistic volume, and contingency sessions for on-call weeks and bad sleep.</p>
+            <span class="metric">On-call weeks no longer derail progression</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Kavita Rao</span><span class="case-card-role">Litigation Lawyer</span></h3>
+            <p>Kept progress moving with court-week minimum sessions and stronger training blocks during calmer periods instead of waiting for free time.</p>
+            <span class="metric">Court weeks no longer reset the process</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Samuel Wong</span><span class="case-card-role">Airline Pilot</span></h3>
+            <p>Adjusted training intensity around disrupted sleep, dehydration, and flight schedules to preserve momentum without forced heavy days.</p>
+            <span class="metric">Jet-lag weeks managed without losing rhythm</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Nadia Ismail</span><span class="case-card-role">Architect</span></h3>
+            <p>Focused on posture, upper-back strength, and lower-body stability to handle long desk phases and draining site visits better.</p>
+            <span class="metric">Site-day fatigue reduced with stronger support work</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Ruth Wong</span><span class="case-card-role">Wedding Photographer</span></h3>
+            <p>Improved shoulder endurance, lower-body strength, and recovery so long shoot days and heavy gear felt less punishing.</p>
+            <span class="metric">Wedding season became easier to recover from</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Charmaine Lee</span><span class="case-card-role">Cabin Crew Supervisor</span></h3>
+            <p>Used roster-proof programming, hotel-room fallbacks, and lower-body recovery work to stay consistent across changing time zones.</p>
+            <span class="metric">Roster cycles stopped wiping out progress</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Darren Khoo</span><span class="case-card-role">Management Consultant</span></h3>
+            <p>Kept training moving through airport weeks and client dinners by using hotel-gym templates and simple non-negotiable lifts.</p>
+            <span class="metric">Travel-heavy months no longer reset progress</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Alina Nor</span><span class="case-card-role">Dermatologist</span></h3>
+            <p>Built strength around long clinic days by alternating heavier lower-body work with short upper-body sessions on packed weeks.</p>
+            <span class="metric">Energy stayed better through double-clinic days</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Jason Pereira</span><span class="case-card-role">Startup Founder</span></h3>
+            <p>Used compact sessions and recovery guardrails so growth-season stress stopped turning training into an all-or-nothing task.</p>
+            <span class="metric">Startup pressure no longer erased routine</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Siti Hajar</span><span class="case-card-role">Brand Strategist</span></h3>
+            <p>Trained around campaign crunches with flexible volume and mobility resets that kept her shoulders and hips feeling functional.</p>
+            <span class="metric">Campaign weeks became manageable without skipping</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Wei Jian Tan</span><span class="case-card-role">Data Analyst</span></h3>
+            <p>Turned after-work fatigue into a workable routine with two anchor sessions, one optional pump day, and clearer sleep targets.</p>
+            <span class="metric">Evenings felt more productive instead of depleted</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Amrita Kaur</span><span class="case-card-role">University Lecturer</span></h3>
+            <p>Kept strength progressing through teaching blocks and marking periods by matching session intensity to real mental bandwidth.</p>
+            <span class="metric">Marking season stopped derailing consistency</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Nicholas Ong</span><span class="case-card-role">Property Agent</span></h3>
+            <p>Used in-between viewing slots and shorter sessions to build consistency without waiting for a perfect free evening.</p>
+            <span class="metric">Busy sales weeks still supported steady training</span>
+          </article>
+          <article class="case-card" data-category="busy">
+            <h3><span class="case-card-name">Farah Nabila</span><span class="case-card-role">Event Producer</span></h3>
+            <p>Managed event-season chaos with fallback sessions, lower-back support work, and recovery planning around long on-site days.</p>
+            <span class="metric">Event weekends no longer meant pain on Monday</span>
           </article>
           <article class="case-card" data-category="prepost">
-            <h3>Postpartum Return, 34</h3>
-            <p>Regained confidence and rebuilt core strength with stage-specific progressions.</p>
-            <span class="metric">Pain-free training resumed in 10 weeks</span>
+            <h3><span class="case-card-name">Priya Menon</span><span class="case-card-role">Stay-at-Home Mum</span></h3>
+            <p>Rebuilt postpartum confidence with breathing, bracing, carries, and carefully graded strength instead of rushing the process.</p>
+            <span class="metric">Core confidence rebuilt over 14 weeks</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Eleanor Tan</span><span class="case-card-role">Finance Manager</span></h3>
+            <p>Kept prenatal training safe and specific with breathing work, pelvic positioning, sensible loading, and energy-based adjustments.</p>
+            <span class="metric">Prenatal training maintained through trimester changes</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Benedicte Ho</span><span class="case-card-role">Founder &amp; New Mum</span></h3>
+            <p>Returned postpartum while running a company using manageable strength blocks and feedback that matched broken sleep and shifting days.</p>
+            <span class="metric">Postpartum strength returned without overreaching</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Esther Yap</span><span class="case-card-role">Postpartum Lawyer</span></h3>
+            <p>Rebuilt core pressure management and layered strength back in carefully around childcare, office days, and sleep disruption.</p>
+            <span class="metric">Postpartum rebuilding felt supported, not rushed</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Cheryl Lim</span><span class="case-card-role">HR Business Partner</span></h3>
+            <p>Used trimester-based changes in volume, pacing, and exercise selection so training stayed useful instead of intimidating.</p>
+            <span class="metric">Confidence stayed high through each stage</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Rina Das</span><span class="case-card-role">Lecturer &amp; Expecting Mum</span></h3>
+            <p>Stayed active through pregnancy with low-friction programming that respected fatigue, teaching days, and changing movement tolerance.</p>
+            <span class="metric">Energy and movement confidence stayed steadier</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Jasmine Teo</span><span class="case-card-role">New Mum of Twins</span></h3>
+            <p>Started with realistic micro-sessions, then layered strength back in once sleep and childcare routines became more manageable.</p>
+            <span class="metric">Momentum rebuilt in a very tired season</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Farzana Ali</span><span class="case-card-role">Dentist</span></h3>
+            <p>Returned to lifting after birth with a slower rebuild that prioritized pelvic floor confidence, posture, and steady reloading.</p>
+            <span class="metric">Strength returned without flare-ups or fear</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Michelle Loh</span><span class="case-card-role">First-Time Mum</span></h3>
+            <p>Learned how to train through uncertainty with calm coaching, stage-aware progressions, and clear reassurance around what felt normal.</p>
+            <span class="metric">Training stopped feeling scary very quickly</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Nadia Pereira</span><span class="case-card-role">Marketing Director &amp; New Mum</span></h3>
+            <p>Used short rebuilding blocks and honest fatigue management to regain strength while balancing leadership work and early parenthood.</p>
+            <span class="metric">Progress came back without chasing old numbers</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Alia Hassan</span><span class="case-card-role">New Mum &amp; Graphic Designer</span></h3>
+            <p>Rebuilt strength with calm pacing, breathing drills, and short sessions that respected unpredictable sleep and feeding windows.</p>
+            <span class="metric">She felt stronger without forcing the timeline</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Rebecca Foo</span><span class="case-card-role">Expecting Mum &amp; Auditor</span></h3>
+            <p>Stayed active through pregnancy by adjusting load, breathing, and rest times around changing energy and comfort week to week.</p>
+            <span class="metric">Training stayed safe and reassuring through each month</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Nureen Aziz</span><span class="case-card-role">Pharmacist &amp; New Mum</span></h3>
+            <p>Used gentle rebuilding blocks and clear core cues to return to strength without feeling lost or rushed postpartum.</p>
+            <span class="metric">Confidence returned before heavy loading did</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Shalini Iyer</span><span class="case-card-role">Entrepreneur &amp; Mum of Two</span></h3>
+            <p>Balanced postpartum recovery with business demands by using short repeatable sessions that still felt purposeful and progressive.</p>
+            <span class="metric">Progress felt realistic in a very full season</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Joanne Lim</span><span class="case-card-role">Teacher &amp; First-Time Mum</span></h3>
+            <p>Learned how to train through pregnancy with movements that felt supportive, not intimidating, while symptoms shifted.</p>
+            <span class="metric">Movement quality improved as comfort stayed high</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Huda Rahman</span><span class="case-card-role">Banker &amp; Returning Mum</span></h3>
+            <p>Re-entered structured training with manageable lower-body work, bracing practice, and realistic weekly targets.</p>
+            <span class="metric">She regained routine without second-guessing every session</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Melissa Ong</span><span class="case-card-role">Consultant &amp; Expecting Mum</span></h3>
+            <p>Used trimester-aware coaching to keep lifting useful, calm, and adaptable instead of pushing through fatigue blindly.</p>
+            <span class="metric">She stayed active without feeling overextended</span>
+          </article>
+          <article class="case-card" data-category="prepost">
+            <h3><span class="case-card-name">Tara Singh</span><span class="case-card-role">Architect &amp; New Mum</span></h3>
+            <p>Focused on posture, carries, and gradual loading so daily childcare felt easier while confidence in the gym came back.</p>
+            <span class="metric">Daily lifting tasks felt lighter within weeks</span>
           </article>
           <article class="case-card" data-category="senior">
-            <h3>Senior Strength, 62</h3>
-            <p>Improved mobility, balance, and confidence in daily movement and travel.</p>
-            <span class="metric">Timed mobility test improved by 31%</span>
+            <h3><span class="case-card-name">Noraini Yusof</span><span class="case-card-role">Retired School Principal</span></h3>
+            <p>Focused on balance, hinge mechanics, and practical strength to support travel, groceries, and time with grandchildren.</p>
+            <span class="metric">Daily confidence up within 5 months</span>
           </article>
-          <article class="case-card" data-category="corporate professional">
-            <h3>Leadership Client, 47</h3>
-            <p>Built consistent training habits around a high-load executive schedule.</p>
-            <span class="metric">3 sessions/week maintained for 7 months</span>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Mei Chen</span><span class="case-card-role">Retired Accountant</span></h3>
+            <p>Regained trust in everyday movement through balance work, floor transitions, loaded carries, and basic strength progressions.</p>
+            <span class="metric">Stair confidence and balance improved in 4 months</span>
           </article>
-          <article class="case-card" data-category="professional">
-            <h3>Business Owner, 39</h3>
-            <p>Improved body composition and endurance without aggressive dieting protocols.</p>
-            <span class="metric">-9 kg over 6 months, strength up</span>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Patricia Lim</span><span class="case-card-role">Retired Surgeon</span></h3>
+            <p>Built joint-friendly strength and practical resilience for travel, daily movement, and confident aging after retirement.</p>
+            <span class="metric">Confidence in movement restored progressively</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Anita Fernandes</span><span class="case-card-role">Grandmother &amp; Caregiver</span></h3>
+            <p>Built practical strength for caregiving through carries, floor transitions, balance work, and safe loading progressions.</p>
+            <span class="metric">Home tasks feel easier and safer now</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Raj Kumar</span><span class="case-card-role">Retired Engineer</span></h3>
+            <p>Improved hip strength, step control, and walking tolerance so long outings and travel days felt much less demanding.</p>
+            <span class="metric">Long walking days became realistic again</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Lily Tan</span><span class="case-card-role">Former HR Director</span></h3>
+            <p>Focused on joint-friendly strength and easy recovery practices so she could feel capable without dreading hard sessions.</p>
+            <span class="metric">Strength improved without leaving her wiped out</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Mahmood Ismail</span><span class="case-card-role">Retired Banker</span></h3>
+            <p>Used simple strength and mobility work to feel steadier on stairs, get up from the floor more easily, and move with less hesitation.</p>
+            <span class="metric">Daily movement felt steadier within 12 weeks</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Josephine Chong</span><span class="case-card-role">Retired Pharmacist</span></h3>
+            <p>Worked on grip, carries, and lower-body strength to support confident shopping trips, travel, and household tasks.</p>
+            <span class="metric">Carrying and lifting felt safer and easier</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Margaret Lee</span><span class="case-card-role">Grandmother &amp; Traveller</span></h3>
+            <p>Trained for longer walking days, luggage handling, and uneven surfaces so travel felt exciting again instead of stressful.</p>
+            <span class="metric">Travel confidence returned before her next trip</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Peter Goh</span><span class="case-card-role">Retired Architect</span></h3>
+            <p>Used steady loading, better movement quality, and joint-friendly progressions to feel stronger without chasing pain.</p>
+            <span class="metric">Strength returned with much better movement confidence</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Evelyn Tan</span><span class="case-card-role">Retired Teacher</span></h3>
+            <p>Improved balance and leg strength so stairs, long mall walks, and family trips felt far less tiring.</p>
+            <span class="metric">Walking confidence improved noticeably in 3 months</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Mohan Pillai</span><span class="case-card-role">Grandfather &amp; Golfer</span></h3>
+            <p>Worked on rotation, hip strength, and joint-friendly conditioning so weekend golf and daily movement felt smoother.</p>
+            <span class="metric">He moved more freely on and off the course</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Siew Lan Ho</span><span class="case-card-role">Retired Nurse</span></h3>
+            <p>Rebuilt confidence with floor transfers, step control, and upper-body strength that supported independence at home.</p>
+            <span class="metric">Everyday tasks felt safer and less draining</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Gerald Wong</span><span class="case-card-role">Former Engineer</span></h3>
+            <p>Used progressive strength and mobility work to feel steadier carrying bags, climbing stairs, and getting up from low seats.</p>
+            <span class="metric">Confidence in daily movement kept climbing</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Rosnah Salleh</span><span class="case-card-role">Retired Administrator</span></h3>
+            <p>Focused on posture, grip, and lower-body strength so shopping, travel, and home chores took less effort.</p>
+            <span class="metric">Longer outings felt much easier to manage</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">David Cheah</span><span class="case-card-role">Grandfather &amp; Hiker</span></h3>
+            <p>Built practical endurance and leg strength to handle hills, uneven ground, and longer days outdoors again.</p>
+            <span class="metric">Weekend walks turned back into proper hikes</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Florence Lim</span><span class="case-card-role">Retired Lecturer</span></h3>
+            <p>Trained with calm progression, balance work, and recovery-friendly sessions that built confidence without dread.</p>
+            <span class="metric">She felt stronger without being wiped out</span>
+          </article>
+          <article class="case-card" data-category="senior">
+            <h3><span class="case-card-name">Abdul Karim</span><span class="case-card-role">Former Sales Manager</span></h3>
+            <p>Improved hip control, trunk strength, and step confidence so he felt more stable moving through busy daily routines.</p>
+            <span class="metric">Stability and energy both improved steadily</span>
           </article>
           <article class="case-card" data-category="corporate">
-            <h3>Corporate Workshop Team</h3>
-            <p>Team wellness series improved staff participation and perceived energy levels.</p>
-            <span class="metric">92% internal satisfaction score</span>
+            <h3><span class="case-card-name">Vinod Nair</span><span class="case-card-role">Regional Sales Director</span></h3>
+            <p>Followed a main gym program plus travel-friendly hotel versions so work trips stopped breaking his training rhythm.</p>
+            <span class="metric">Training maintained across frequent regional travel</span>
           </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Adrian Goh</span><span class="case-card-role">CFO</span></h3>
+            <p>Used two anchor sessions, one optional performance day, and practical nutrition checkpoints that fit quarter-close pressure.</p>
+            <span class="metric">Quarter-close consistency maintained for 6 months</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Joanne Teh</span><span class="case-card-role">Chief of Staff</span></h3>
+            <p>Stayed on track with short weekday lifts and weekly plan adjustments built around real executive workload, not ideal routines.</p>
+            <span class="metric">Executive peak weeks no longer stop training</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Kelvin Chua</span><span class="case-card-role">Boutique Hotel GM</span></h3>
+            <p>Kept a baseline routine alive through peak occupancy periods, early starts, and long hospitality shifts.</p>
+            <span class="metric">Peak-season workload no longer stops training</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Dev Malik</span><span class="case-card-role">Compliance Director</span></h3>
+            <p>Used efficient sessions and honest fatigue management to build strength alongside mentally heavy, detail-intensive work.</p>
+            <span class="metric">High-stress work no longer equals skipped training</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Aaron Low</span><span class="case-card-role">Procurement Manager</span></h3>
+            <p>Used two non-negotiable lifts each week and clear recovery targets to keep progress alive through procurement peak months.</p>
+            <span class="metric">Anchor training survived the busiest work cycles</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Alicia Wong</span><span class="case-card-role">People Operations Lead</span></h3>
+            <p>Balanced training with company rollouts and people-heavy weeks by using flexible intensities instead of rigid expectations.</p>
+            <span class="metric">Training stayed steady through rollout season</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Farid Salleh</span><span class="case-card-role">Head of Operations</span></h3>
+            <p>Built strength around long planning days, operational fires, and early starts using efficient sessions that still felt purposeful.</p>
+            <span class="metric">Early-start weeks no longer wipe out training</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Laura Chen</span><span class="case-card-role">VP Marketing</span></h3>
+            <p>Used clear session priorities and short fallback options to stay consistent through launch cycles, events, and travel.</p>
+            <span class="metric">Launch weeks no longer erase momentum</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Imran Shah</span><span class="case-card-role">Commercial Director</span></h3>
+            <p>Stopped treating training like a bonus task and instead used it as a stable anchor during high-pressure revenue quarters.</p>
+            <span class="metric">Performance stayed better when training stayed in</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Sheryl Lim</span><span class="case-card-role">Legal Counsel</span></h3>
+            <p>Used early-morning anchor sessions and realistic recovery targets to stay consistent through negotiations and heavy case weeks.</p>
+            <span class="metric">Long legal weeks stopped breaking momentum</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Marcus Tan</span><span class="case-card-role">Country Manager</span></h3>
+            <p>Built a repeatable training rhythm around flights, partner meetings, and late dinners by simplifying the weekly plan.</p>
+            <span class="metric">Travel and leadership load stayed manageable</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Noreen Yip</span><span class="case-card-role">Strategy Director</span></h3>
+            <p>Kept training aligned with long planning cycles by using two key lifts and one lighter reset session each week.</p>
+            <span class="metric">Strategic crunch periods no longer wiped out rhythm</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Faisal Rahim</span><span class="case-card-role">Tech Lead</span></h3>
+            <p>Protected consistency during release cycles with low-friction sessions that still drove progress in strength and posture.</p>
+            <span class="metric">Release weeks felt less physically draining</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Evelyn Chua</span><span class="case-card-role">Partnership Director</span></h3>
+            <p>Used structured sessions and fallback hotel options so regional travel and client hosting did not erase her routine.</p>
+            <span class="metric">Work travel stopped acting like a reset button</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Daniel Ho</span><span class="case-card-role">Investment Associate</span></h3>
+            <p>Managed training around volatile deal flow by using time-capped sessions and clearer fatigue decisions instead of guilt.</p>
+            <span class="metric">Busy deal weeks still produced steady progress</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Priyanka Nair</span><span class="case-card-role">Head of Finance</span></h3>
+            <p>Balanced long reporting cycles with efficient strength sessions and better recovery habits that supported sharper workdays.</p>
+            <span class="metric">Reporting season became easier to handle physically</span>
+          </article>
+          <article class="case-card" data-category="corporate">
+            <h3><span class="case-card-name">Jason Lim</span><span class="case-card-role">Agency Founder</span></h3>
+            <p>Built a stable training anchor through pitch weeks and creative sprints by removing guesswork from every session.</p>
+            <span class="metric">Agency chaos no longer meant missed weeks</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Azlan Rahim</span><span class="case-card-role">Amateur Marathoner</span></h3>
+            <p>Added strength work that supported mileage, reduced overuse flare-ups, and made long-run fatigue easier to manage.</p>
+            <span class="metric">Running economy improved through the build-up</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Hannah Cho</span><span class="case-card-role">Hyrox Competitor</span></h3>
+            <p>Used clearer pacing, stronger hinge patterns, and smart deloads so training intensity stopped turning into burnout.</p>
+            <span class="metric">Race prep felt more controlled and repeatable</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Mikhail Tan</span><span class="case-card-role">Weekend Football Midfielder</span></h3>
+            <p>Built lower-body strength and change-of-direction tolerance so matches felt sharper and recovery between games improved.</p>
+            <span class="metric">Match-day legs lasted longer with better recovery</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Aina Yusuf</span><span class="case-card-role">Club Netball Shooter</span></h3>
+            <p>Improved landing mechanics, single-leg control, and upper-body resilience to support repeated jumping and shooting work.</p>
+            <span class="metric">Court movement felt quicker and more stable</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Ben Gopal</span><span class="case-card-role">Rugby Forward</span></h3>
+            <p>Used power-focused strength blocks and better fatigue management to stay explosive without feeling wrecked by team training.</p>
+            <span class="metric">Explosiveness stayed higher across the season</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Dev Menon</span><span class="case-card-role">League Tennis Player</span></h3>
+            <p>Focused on rotational strength, deceleration, and shoulder support so long matches felt more controlled and less draining.</p>
+            <span class="metric">Late-match drop-off reduced noticeably</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Sabrina Lim</span><span class="case-card-role">Powerlifting Competitor</span></h3>
+            <p>Structured her off-season around better recovery, technical clean-up, and smarter accessory volume instead of just grinding.</p>
+            <span class="metric">Meet prep felt stronger with fewer flare-ups</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Harith Iskandar</span><span class="case-card-role">Amateur Muay Thai Fighter</span></h3>
+            <p>Balanced strength, conditioning, and skill sessions so he stayed powerful without dragging fatigue into sparring days.</p>
+            <span class="metric">Power went up while sparring quality stayed high</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Elena Pereira</span><span class="case-card-role">Trail Runner</span></h3>
+            <p>Used unilateral strength, trunk work, and controlled volume to handle hills, descents, and longer race blocks better.</p>
+            <span class="metric">Descents felt safer and less punishing</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Justin Ng</span><span class="case-card-role">Basketball Guard</span></h3>
+            <p>Built power and repeat-sprint capacity with a program that matched his weekly games instead of fighting them.</p>
+            <span class="metric">Court speed improved without overloading knees</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Nabil Rahman</span><span class="case-card-role">Sprint Triathlete</span></h3>
+            <p>Added targeted strength and recovery structure so swim-bike-run volume stayed productive without constant fatigue spillover.</p>
+            <span class="metric">Training quality stayed higher across the block</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Iman Teoh</span><span class="case-card-role">University Sprinter</span></h3>
+            <p>Improved force production and mechanics with smarter lower-body strength work that supported, not fought, track sessions.</p>
+            <span class="metric">Speed sessions felt sharper and more repeatable</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Ethan Lee</span><span class="case-card-role">CrossFit Competitor</span></h3>
+            <p>Used clearer loading, better accessory choices, and smarter deload timing to push performance without beating up recovery.</p>
+            <span class="metric">Intensity became more sustainable week to week</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Sofia Karim</span><span class="case-card-role">Volleyball Middle Blocker</span></h3>
+            <p>Built jumping resilience, shoulder support, and landing control so tournament weeks felt stronger and less reactive.</p>
+            <span class="metric">Jump quality held up deeper into matches</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Amirul Hashim</span><span class="case-card-role">Futsal Winger</span></h3>
+            <p>Focused on repeat-sprint capacity, single-leg strength, and deceleration so game speed improved without overload.</p>
+            <span class="metric">He stayed sharper late in the game</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Grace Chan</span><span class="case-card-role">Badminton Player</span></h3>
+            <p>Trained rotation, footwork support, and shoulder durability to stay explosive through longer rallies and denser match weeks.</p>
+            <span class="metric">Court movement stayed quicker under fatigue</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Ryan Koh</span><span class="case-card-role">Amateur Boxer</span></h3>
+            <p>Balanced strength and conditioning with sparring demands so power improved without arriving flat to technical work.</p>
+            <span class="metric">Power rose while sparring quality stayed consistent</span>
+          </article>
+          <article class="case-card" data-category="athlete">
+            <h3><span class="case-card-name">Alyssa Tan</span><span class="case-card-role">Junior Swimmer</span></h3>
+            <p>Built trunk strength, shoulder resilience, and dryland power that supported pool sessions rather than adding junk fatigue.</p>
+            <span class="metric">Pool sessions felt stronger with better body control</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Adam, 13</span></h3>
+            <p>Started with simple movement basics, better balance, and fun strength work so training felt approachable from day one.</p>
+            <span class="metric">Parents noticed more confidence in PE within weeks</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Maya, 12</span></h3>
+            <p>Built coordination, posture, and body control with clear coaching and age-appropriate sessions that never felt too adult.</p>
+            <span class="metric">Movement quality improved without pressure or burnout</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Irfan, 15</span></h3>
+            <p>Used beginner-friendly strength work to support school sport, reduce awkwardness, and build confidence in the gym.</p>
+            <span class="metric">Gym confidence rose quickly with simple structure</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Chloe, 16</span></h3>
+            <p>Learned how to train with better technique, manageable loads, and enough variety to stay interested during exam season.</p>
+            <span class="metric">Consistency held even through school pressure</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Rafi, 11</span></h3>
+            <p>Improved coordination, focus, and movement confidence with sessions that felt playful, structured, and easy to understand.</p>
+            <span class="metric">Parents saw better coordination in daily movement</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Hannah, 14</span></h3>
+            <p>Built stronger landing mechanics, better balance, and more confidence joining school sports instead of sitting out.</p>
+            <span class="metric">She joined more activities and moved more freely</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Arjun, 17</span></h3>
+            <p>Used clear strength basics, posture work, and simple progression so gym training stopped feeling intimidating and random.</p>
+            <span class="metric">Technique improved fast with steady coaching cues</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Sara, 10</span></h3>
+            <p>Focused on fun movement patterns, jumping, coordination, and easy wins so confidence grew without forcing adult-style training.</p>
+            <span class="metric">She looked forward to sessions every week</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Daniel, 15</span></h3>
+            <p>Used structured but simple sessions to improve general fitness, reduce slouching, and build better habits outside screen time.</p>
+            <span class="metric">Energy and posture both improved steadily</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Mia, 13</span></h3>
+            <p>Built body awareness and basic strength in a supportive setting that respected nerves, pace, and confidence level.</p>
+            <span class="metric">Confidence rose before the harder exercises did</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Ethan, 14</span></h3>
+            <p>Learned simple lifting basics and body control in a way that felt clear, safe, and not overly serious.</p>
+            <span class="metric">He grew more confident every week in the gym</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Nurin, 12</span></h3>
+            <p>Improved coordination and confidence with playful, well-structured sessions that matched her attention span and energy.</p>
+            <span class="metric">Parents noticed better movement and posture at home</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Caleb, 16</span></h3>
+            <p>Built strength for school sport with straightforward coaching, manageable progressions, and no pressure to train like an adult.</p>
+            <span class="metric">He felt stronger without getting overwhelmed</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Leah, 11</span></h3>
+            <p>Used fun movement drills, balance work, and simple wins to make exercise feel exciting instead of scary.</p>
+            <span class="metric">She started looking forward to active sessions</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Zayn, 15</span></h3>
+            <p>Improved posture, basic strength, and gym confidence with consistent cues and sessions that were easy to understand.</p>
+            <span class="metric">He moved better and carried himself with more confidence</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Isha, 13</span></h3>
+            <p>Learned better landing, balance, and general strength through age-appropriate sessions that kept things supportive and positive.</p>
+            <span class="metric">She joined PE and school games with more confidence</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Marcus, 17</span></h3>
+            <p>Built training consistency around school, revision, and sport using simple plans that felt doable even on busy weeks.</p>
+            <span class="metric">His routine finally felt structured and repeatable</span>
+          </article>
+          <article class="case-card" data-category="youth">
+            <h3><span class="case-card-name">Alya, 12</span></h3>
+            <p>Developed body awareness and basic strength with sessions that stayed light, clear, and encouraging from start to finish.</p>
+            <span class="metric">She felt comfortable moving and trying new exercises</span>
+          </article>
+        </div>
+        <div class="story-grid-actions">
+          <button
+            type="button"
+            class="faq-more-toggle is-hidden"
+            data-story-grid-toggle
+            data-closed-label="See More.."
+            data-open-label="See Less.."
+            aria-expanded="false"
+          >
+            See More..
+          </button>
         </div>
       </section>
 
@@ -136,8 +706,8 @@
           Tell us your current goal and we will map out a coaching path with clear milestones.
         </p>
         <div class="section-actions">
-          <a class="btn btn-secondary" href="./contact-start-coaching.html">Start My Assessment</a>
-          <a class="btn btn-ghost" href="./1-1-coaching.html">View 1:1 Program</a>
+          <a class="btn btn-secondary" href="./contact.html?service=1%3A1%20Coaching&amp;goal=I%20want%20results%20like%20the%20client%20stories">Start My Assessment</a>
+          <a class="btn btn-ghost" href="./coaching/1-1.html">View 1:1 Program</a>
         </div>
       </section>
     </main>
@@ -155,13 +725,13 @@
 
     <a
       class="floating-wa"
-      href="https://wa.me/60123456789?text=Hi%20LEGACY%2B%2C%20I%20want%20an%20assessment%20for%20my%20goals."
+      href="https://wa.me/601139772862?text=Hi%20LEGACY%2B%2C%20I%20want%20to%20talk%20to%20a%20coach."
       target="_blank"
       rel="noopener"
-      aria-label="Start assessment on WhatsApp"
-      >Start My Assessment</a
+      aria-label="Talk to a coach on WhatsApp"
+      >Talk to a Coach</a
     >
 
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260402deployready1"></script>
   </body>
 </html>

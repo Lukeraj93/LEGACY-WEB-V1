@@ -3,7 +3,6 @@ const crypto = require("node:crypto");
 const { json, methodNotAllowed, noContent } = require("./_lib/http");
 const {
   createHttpError,
-  normalizeText,
   parseBody,
   requireAllowedRole,
   throwOnError,
@@ -12,7 +11,6 @@ const { getAuthenticatedProfile, getServiceSupabase } = require("./_lib/supabase
 
 const DEFAULT_QA_COACH_EMAIL = String(process.env.QA_COACH_EMAIL || "qa.coach@legacycoaching.com.my").trim().toLowerCase();
 const DEFAULT_QA_CLIENT_EMAIL = String(process.env.QA_CLIENT_EMAIL || "qa.client@legacycoaching.com.my").trim().toLowerCase();
-const QA_CLIENT_MEMBER_ID = "LC-QA-0001";
 
 function randomPassword(prefix) {
   return `${prefix}-${crypto.randomBytes(10).toString("base64url")}`;
@@ -29,6 +27,35 @@ function normalizeEmail(value, fallback) {
 function normalizePassword(value, prefix) {
   const raw = String(value || "").trim();
   return raw || randomPassword(prefix);
+}
+
+function buildQaClientMemberId(email, existingMemberId = "") {
+  const current = String(existingMemberId || "").trim();
+  if (current) {
+    return current;
+  }
+  const hash = crypto.createHash("sha1").update(String(email || "").trim().toLowerCase()).digest("hex").slice(0, 8).toUpperCase();
+  return `LC-QA-${hash}`;
+}
+
+function buildCoachMetadata() {
+  return {
+    role: "coach",
+    status: "active",
+    display_name: "LEGACY QA Coach",
+    full_name: "LEGACY QA Coach",
+    phone: "+601100000901",
+  };
+}
+
+function buildClientMetadata() {
+  return {
+    role: "client",
+    status: "active",
+    display_name: "LEGACY QA Client",
+    full_name: "LEGACY QA Client",
+    phone: "+601100000902",
+  };
 }
 
 async function listAuthUsersFresh(supabase) {
@@ -61,23 +88,13 @@ async function findAuthUserByEmail(supabase, email) {
   return users.find((user) => String(user.email || "").trim().toLowerCase() === target) || null;
 }
 
-async function deleteExistingQaRecords(supabase, emails) {
+async function cleanupQaArtifactsForEmails(supabase, emails) {
   const normalizedEmails = Array.from(
     new Set((emails || []).map((value) => String(value || "").trim().toLowerCase()).filter(Boolean))
   );
 
   if (!normalizedEmails.length) {
     return;
-  }
-
-  for (const email of normalizedEmails) {
-    const existingUser = await findAuthUserByEmail(supabase, email);
-    if (existingUser?.id) {
-      const { error } = await supabase.auth.admin.deleteUser(existingUser.id);
-      if (error) {
-        throw error;
-      }
-    }
   }
 
   const waiverCleanup = await supabase
@@ -97,46 +114,47 @@ async function deleteExistingQaRecords(supabase, emails) {
   }
 }
 
-async function createQaCoachAccount(supabase, actorId, coachEmail, coachPassword) {
-  const createdCoach = await supabase.auth.admin.createUser({
+async function ensureQaCoachAccount(supabase, actorId, coachEmail, coachPassword) {
+  const existingCoach = await findAuthUserByEmail(supabase, coachEmail);
+  const metadata = buildCoachMetadata();
+  const authPayload = {
     email: coachEmail,
     password: coachPassword,
     email_confirm: true,
-    user_metadata: {
-      role: "coach",
-      status: "active",
-      display_name: "LEGACY QA Coach",
-      full_name: "LEGACY QA Coach",
-      phone: "+601100000901",
-    },
+    user_metadata: metadata,
     app_metadata: {
       role: "coach",
       status: "active",
       qaAccount: true,
     },
-  });
+  };
 
-  if (createdCoach.error || !createdCoach.data?.user?.id) {
-    throw createdCoach.error || new Error("Unable to create the QA coach account.");
+  const authResponse = existingCoach?.id
+    ? await supabase.auth.admin.updateUserById(existingCoach.id, authPayload)
+    : await supabase.auth.admin.createUser(authPayload);
+
+  if (authResponse.error || !authResponse.data?.user?.id) {
+    throw authResponse.error || new Error("Unable to provision the QA coach account.");
   }
 
-  const coachId = createdCoach.data.user.id;
+  const coachId = authResponse.data.user.id;
   const nowIso = new Date().toISOString();
 
-  const [profileUpdate, coachProfileUpdate, availabilityInsert] = await Promise.all([
-    supabase
-      .from("profiles")
-      .update({
+  const [profileUpsert, coachProfileUpsert, availabilityReset, availabilityInsert] = await Promise.all([
+    supabase.from("profiles").upsert(
+      {
+        id: coachId,
         role: "coach",
-        display_name: "LEGACY QA Coach",
-        phone: "+601100000901",
+        display_name: metadata.display_name,
+        phone: metadata.phone,
         status: "active",
         updated_at: nowIso,
-      })
-      .eq("id", coachId),
-    supabase
-      .from("coach_profiles")
-      .update({
+      },
+      { onConflict: "id" }
+    ),
+    supabase.from("coach_profiles").upsert(
+      {
+        id: coachId,
         gender: "male",
         date_of_birth: "1991-07-12",
         home_address: "LEGACY QA Operations, Kuala Lumpur",
@@ -154,95 +172,111 @@ async function createQaCoachAccount(supabase, actorId, coachEmail, coachPassword
         hours_minimum: 40,
         hours_target: 80,
         updated_at: nowIso,
-      })
-      .eq("id", coachId),
-    supabase.from("coach_availability_windows").upsert(
-      [
-        {
-          coach_id: coachId,
-          day_of_week: 1,
-          start_time: "09:00",
-          end_time: "18:00",
-          timezone: "Asia/Kuala_Lumpur",
-          is_active: true,
-          updated_at: nowIso,
-        },
-        {
-          coach_id: coachId,
-          day_of_week: 3,
-          start_time: "09:00",
-          end_time: "18:00",
-          timezone: "Asia/Kuala_Lumpur",
-          is_active: true,
-          updated_at: nowIso,
-        },
-        {
-          coach_id: coachId,
-          day_of_week: 5,
-          start_time: "09:00",
-          end_time: "18:00",
-          timezone: "Asia/Kuala_Lumpur",
-          is_active: true,
-          updated_at: nowIso,
-        },
-      ],
-      { onConflict: "coach_id,day_of_week,start_time,end_time" }
+      },
+      { onConflict: "id" }
     ),
+    supabase.from("coach_availability_windows").delete().eq("coach_id", coachId),
+    Promise.resolve(null),
   ]);
 
-  throwOnError(profileUpdate, "Unable to update the QA coach profile.");
-  throwOnError(coachProfileUpdate, "Unable to update the QA coach details.");
-  throwOnError(availabilityInsert, "Unable to save QA coach availability.");
+  throwOnError(profileUpsert, "Unable to update the QA coach profile.");
+  throwOnError(coachProfileUpsert, "Unable to update the QA coach details.");
+  throwOnError(availabilityReset, "Unable to clear existing QA coach availability.");
+
+  const availabilityCreate = await supabase.from("coach_availability_windows").upsert(
+    [
+      {
+        coach_id: coachId,
+        day_of_week: 1,
+        start_time: "09:00",
+        end_time: "18:00",
+        timezone: "Asia/Kuala_Lumpur",
+        is_active: true,
+        updated_at: nowIso,
+      },
+      {
+        coach_id: coachId,
+        day_of_week: 3,
+        start_time: "09:00",
+        end_time: "18:00",
+        timezone: "Asia/Kuala_Lumpur",
+        is_active: true,
+        updated_at: nowIso,
+      },
+      {
+        coach_id: coachId,
+        day_of_week: 5,
+        start_time: "09:00",
+        end_time: "18:00",
+        timezone: "Asia/Kuala_Lumpur",
+        is_active: true,
+        updated_at: nowIso,
+      },
+    ],
+    { onConflict: "coach_id,day_of_week,start_time,end_time" }
+  );
+  throwOnError(availabilityCreate, "Unable to save QA coach availability.");
 
   return {
     id: coachId,
     email: coachEmail,
     password: coachPassword,
     createdBy: actorId,
+    existed: Boolean(existingCoach?.id),
   };
 }
 
-async function createQaClientAccount(supabase, actorId, clientEmail, clientPassword, coachId) {
-  const createdClient = await supabase.auth.admin.createUser({
+async function ensureQaClientAccount(supabase, actorId, clientEmail, clientPassword, coachId) {
+  const existingClient = await findAuthUserByEmail(supabase, clientEmail);
+  const metadata = buildClientMetadata();
+  const authPayload = {
     email: clientEmail,
     password: clientPassword,
     email_confirm: true,
-    user_metadata: {
-      role: "client",
-      status: "active",
-      display_name: "LEGACY QA Client",
-      full_name: "LEGACY QA Client",
-      phone: "+601100000902",
-    },
+    user_metadata: metadata,
     app_metadata: {
       role: "client",
       status: "active",
       qaAccount: true,
     },
-  });
+  };
 
-  if (createdClient.error || !createdClient.data?.user?.id) {
-    throw createdClient.error || new Error("Unable to create the QA client account.");
+  const authResponse = existingClient?.id
+    ? await supabase.auth.admin.updateUserById(existingClient.id, authPayload)
+    : await supabase.auth.admin.createUser(authPayload);
+
+  if (authResponse.error || !authResponse.data?.user?.id) {
+    throw authResponse.error || new Error("Unable to provision the QA client account.");
   }
 
-  const clientId = createdClient.data.user.id;
+  const clientId = authResponse.data.user.id;
   const nowIso = new Date().toISOString();
 
-  const [profileUpdate, clientProfileUpdate, assignmentUpsert] = await Promise.all([
-    supabase
-      .from("profiles")
-      .update({
+  const existingClientProfileResponse = await supabase
+    .from("client_profiles")
+    .select("member_id")
+    .eq("id", clientId)
+    .maybeSingle();
+  throwOnError(existingClientProfileResponse, "Unable to inspect the QA client membership record.");
+
+  const memberId = buildQaClientMemberId(clientEmail, existingClientProfileResponse.data?.member_id || "");
+
+  const [profileUpsert, clientProfileUpsert, otherAssignmentsReset] = await Promise.all([
+    supabase.from("profiles").upsert(
+      {
+        id: clientId,
         role: "client",
-        display_name: "LEGACY QA Client",
-        phone: "+601100000902",
+        display_name: metadata.display_name,
+        phone: metadata.phone,
         status: "active",
         updated_at: nowIso,
-      })
-      .eq("id", clientId),
-    supabase
-      .from("client_profiles")
-      .update({
-        member_id: QA_CLIENT_MEMBER_ID,
+      },
+      { onConflict: "id" }
+    ),
+    supabase.from("client_profiles").upsert(
+      {
+        id: clientId,
+        member_id: memberId,
         preferred_name: "QA Client",
         primary_goal: "Validate live client workflows safely without using production member accounts.",
         onboarding_status: "active",
@@ -258,23 +292,58 @@ async function createQaClientAccount(supabase, actorId, clientEmail, clientPassw
         activity_style: "desk",
         ic_passport_no: "LC-QA-CLIENT-001",
         updated_at: nowIso,
+      },
+      { onConflict: "id" }
+    ),
+    supabase
+      .from("coach_client_assignments")
+      .update({
+        status: "inactive",
+        ended_at: nowIso,
+        notes: "Superseded during QA account reprovision.",
       })
-      .eq("id", clientId),
-    supabase.from("coach_client_assignments").insert(
-      {
+      .eq("client_id", clientId)
+      .neq("coach_id", coachId)
+      .eq("status", "active"),
+  ]);
+
+  throwOnError(profileUpsert, "Unable to update the QA client profile.");
+  throwOnError(clientProfileUpsert, "Unable to update the QA client details.");
+  throwOnError(otherAssignmentsReset, "Unable to reset previous QA coach links.");
+
+  const existingActiveAssignmentResponse = await supabase
+    .from("coach_client_assignments")
+    .select("id")
+    .eq("coach_id", coachId)
+    .eq("client_id", clientId)
+    .eq("status", "active")
+    .limit(1);
+  throwOnError(existingActiveAssignmentResponse, "Unable to inspect the QA coach-client assignment.");
+
+  const existingActiveAssignment = Array.isArray(existingActiveAssignmentResponse.data)
+    ? existingActiveAssignmentResponse.data[0] || null
+    : null;
+
+  const assignmentResult = existingActiveAssignment?.id
+    ? await supabase
+        .from("coach_client_assignments")
+        .update({
+          assigned_at: nowIso,
+          ended_at: null,
+          created_by: actorId,
+          notes: "Assigned during QA account provisioning.",
+        })
+        .eq("id", existingActiveAssignment.id)
+    : await supabase.from("coach_client_assignments").insert({
         coach_id: coachId,
         client_id: clientId,
         status: "active",
         assigned_at: nowIso,
         created_by: actorId,
         notes: "Assigned during QA account provisioning.",
-      }
-    ),
-  ]);
+      });
 
-  throwOnError(profileUpdate, "Unable to update the QA client profile.");
-  throwOnError(clientProfileUpdate, "Unable to update the QA client details.");
-  throwOnError(assignmentUpsert, "Unable to link the QA client to the QA coach.");
+  throwOnError(assignmentResult, "Unable to link the QA client to the QA coach.");
 
   return {
     id: clientId,
@@ -282,6 +351,8 @@ async function createQaClientAccount(supabase, actorId, clientEmail, clientPassw
     password: clientPassword,
     coachId,
     createdBy: actorId,
+    existed: Boolean(existingClient?.id),
+    memberId,
   };
 }
 
@@ -417,10 +488,10 @@ exports.handler = async (event) => {
     const coachPassword = normalizePassword(body?.coachPassword, "QaCoach");
     const clientPassword = normalizePassword(body?.clientPassword, "QaClient");
 
-    await deleteExistingQaRecords(supabase, [coachEmail, clientEmail]);
+    await cleanupQaArtifactsForEmails(supabase, [coachEmail, clientEmail]);
 
-    const coachAccount = await createQaCoachAccount(supabase, access.profile.id, coachEmail, coachPassword);
-    const clientAccount = await createQaClientAccount(supabase, access.profile.id, clientEmail, clientPassword, coachAccount.id);
+    const coachAccount = await ensureQaCoachAccount(supabase, access.profile.id, coachEmail, coachPassword);
+    const clientAccount = await ensureQaClientAccount(supabase, access.profile.id, clientEmail, clientPassword, coachAccount.id);
     const status = await getQaAccountStatus(supabase, coachEmail, clientEmail);
 
     return json(

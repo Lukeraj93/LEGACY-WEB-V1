@@ -12,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
   </head>
   <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="settings">
     <div class="cinematic-bg" aria-hidden="true">
@@ -31,6 +31,7 @@
           <a href="./admin-clients.html">TEAM</a>
           <a href="./admin-leads.html">Leads</a>
           <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-newsletter.html">Newsletter</a>
           <a class="is-current" href="./admin-settings.html">Settings</a>
         </nav>
         <div class="crm-sidebar-footer">
@@ -86,6 +87,16 @@
                 </div>
               </div>
               <form class="contact-form account-security-form" id="account-security-password-form">
+                <input
+                  type="email"
+                  name="username"
+                  autocomplete="username email"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  hidden
+                  data-security-username
+                  value=""
+                />
                 <div class="input-row account-input-row">
                   <label>
                     New password
@@ -138,6 +149,28 @@
                 <li>Once that is connected, incoming chat threads can be written into leads and activity logs automatically.</li>
               </ul>
             </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Outbound Marketing</span>
+            <h2>Newsletter Studio Moved</h2>
+            <div class="dashboard-card-grid">
+              <article class="card">
+                <span class="kicker kicker--accent">Dedicated Workspace</span>
+                <h3>Member Newsletter Now Lives In Its Own Tab</h3>
+                <div class="crm-callout">
+                  <p>The weekly newsletter now has a dedicated workspace with audience targeting, preview, send-now controls, and delivery analytics.</p>
+                </div>
+                <ul class="dashboard-list">
+                  <li>Write a cleaner weekly issue with a dedicated marketing workflow.</li>
+                  <li>Preview the exact email before it goes out.</li>
+                  <li>Track recent sends, opens, and clicks in one place.</li>
+                </ul>
+                <div class="section-actions">
+                  <a class="btn btn-primary" href="./admin-newsletter.html">Open Newsletter Tab</a>
+                </div>
+              </article>
+            </div>
           </section>
 
           <section class="section dashboard-section reveal">
@@ -261,7 +294,7 @@
 
             <div class="dashboard-badge-grid" id="admin-gamification-import-summary">
               <article class="dashboard-badge dashboard-badge--placeholder">
-                <strong>No seed batch previewed yet</strong>
+                    <strong>No seed batch previewed yet</strong>
                 <p>Run a preview first so this area can summarize how many rows will be imported, skipped, or blocked before anything is applied.</p>
               </article>
             </div>
@@ -352,7 +385,7 @@
                   </article>
                   <article class="dashboard-badge dashboard-badge--placeholder">
                     <strong>Assignment link is syncing</strong>
-                    <p>The coach-to-client QA assignment check will appear here once the manager finishes loading.</p>
+                    <p>The coach-to-client QA assignment status will appear here once the manager finishes loading.</p>
                   </article>
                 </div>
                 <div class="dashboard-note-log" id="admin-qa-accounts-details">
@@ -403,12 +436,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
     <script src="./auth-client.js?v=20260402deployready1"></script>
-    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
     <script src="./dashboard-auth.js?v=20260402deployready1"></script>
     <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
     <script src="./assets/legacy-codex-bundle.js?v=20260324a"></script>
-    <script src="./admin-dashboard.js?v=20260401security1"></script>
+    <script src="./admin-dashboard.js?v=20260405coachnewsletter1"></script>
   </body>
 </html>

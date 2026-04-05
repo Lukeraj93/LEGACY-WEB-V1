@@ -2,118 +2,248 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Legacy+ | Facilities</title>
-    <meta name="description" content="Legacy+ facilities and gallery overview." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Facilities | LEGACY+ Coaching</title>
+    <meta name="description" content="LEGACY+ physical gym facilities and training environment overview." />
+    <link rel="canonical" href="https://www.legacycoaching.com.my/facilities" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
   </head>
-  <body>
-    <div class="grain" aria-hidden="true"></div>
+  <body class="page-facilities page-amber-balance page-1on1-accent-reset page-1on1-refined">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
 
-    <header class="site-header reveal">
-      <a href="./index.html" class="brand" aria-label="Legacy+ Home">
-        <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" class="brand-logo-img" />
-      </a>
-      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="./index.html">Home</a>
-        <a href="./about.html">About</a>
-        <a href="./legacy-plus.html">Legacy+</a>
-        <a href="./coaches.html">Coaches</a>
-        <a class="active" href="./facilities.html">Facilities</a>
-        <a href="./contact.html">Contact</a>
-        <a href="./account.html">My Account</a>
-      </nav>
-      <div class="header-actions">
-        <button type="button" class="btn btn-ghost login-trigger" data-role="coach">Coach Login</button>
-        <button type="button" class="btn btn-primary login-trigger" data-role="client">Client Login</button>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/index.html" aria-label="LEGACY home"></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="/index.html">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Programs
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaches.html" role="menuitem">Meet the Team</a>
+              <a href="/corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
+            </div>
+          </div>
+          <a href="/packages.html">Pricing</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Facilities
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="/facilities.html" role="menuitem">Gym Information</a>
+              <a href="/gallery.html" role="menuitem">Gallery</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="/about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="/contact.html" role="menuitem">Contact Us</a>
+              <a href="/locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+          <a class="account-gateway-trigger" href="/account.html">My Account</a>
+        </nav>
+        <div class="header-cta-group">
+          <a class="btn btn-primary account-gateway-trigger" href="/account.html">My Account</a>
+        </div>
       </div>
     </header>
 
     <main>
-      <section class="page-hero reveal">
-        <p class="kicker">Facilities</p>
-        <h1>Performance-ready spaces for classes and personal coaching.</h1>
-        <p>
-          Facility pages showcase your environment, class zones, equipment lanes, and visual gallery so visitors
-          understand the training experience before signing up.
-        </p>
-      </section>
-
-      <section class="section panel reveal">
-        <div class="section-head">
-          <p class="kicker">Facility Zones</p>
-          <h2>Purpose-built spaces for structured progression.</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="card">
-            <h3>Strength Zone</h3>
-            <p>Racks, platforms, and free-weight lanes for progressive overload blocks.</p>
-          </article>
-          <article class="card">
-            <h3>Conditioning Lane</h3>
-            <p>Engine work setup for classes, intervals, and metabolic sessions.</p>
-          </article>
-          <article class="card">
-            <h3>PT Studio</h3>
-            <p>Private or small-group coaching space with direct coach supervision.</p>
-          </article>
-          <article class="card">
-            <h3>Mobility Area</h3>
-            <p>Recovery-focused section supporting longevity and movement quality.</p>
-          </article>
+      <section class="page-hero reveal page-hero--1on1 program-hero program-hero--copy-only">
+        <div class="oneonone-hero-copy program-hero-copy">
+          <span class="kicker">Facilities</span>
+          <h1>A Coaching Gym That Feels Clear, Calm, And Ready To Train.</h1>
+          <p>
+            Explore how LEGACY+ is laid out for focused coaching, smooth arrival, and real training flow from the
+            moment you walk in.
+          </p>
         </div>
       </section>
 
-      <section class="section reveal">
-        <div class="section-head">
-          <p class="kicker">Gallery</p>
-          <h2>Visual showcase modules for post-launch content.</h2>
+      <section class="section reveal facilities-gallery-section">
+        <div class="section-head facilities-gallery-head">
+          <div>
+            <span class="kicker">Gallery Walkthrough</span>
+            <h2>See each area before your first session.</h2>
+            <p class="section-copy">
+              Tap any space card to bring it into the main frame on the left. The preview updates instantly so you can
+              get a clearer feel for how the gym is organised.
+            </p>
+          </div>
+          <div class="section-actions facilities-gallery-actions">
+            <a class="btn btn-secondary" href="./gallery.html">Open Full Gallery</a>
+          </div>
         </div>
-        <div class="packages-grid">
-          <article class="card"><h3>Class Gallery</h3><p>Highlight signature class moments and member engagement.</p></article>
-          <article class="card"><h3>Transformation Stories</h3><p>Showcase before/after progress journeys with context.</p></article>
-          <article class="card"><h3>Coach Highlights</h3><p>Introduce your coaching team through visual profile blocks.</p></article>
+
+        <div class="facilities-gallery-shell" data-facility-gallery>
+          <article class="card facilities-gallery-feature">
+            <div class="facilities-gallery-stage">
+              <img
+                class="facilities-gallery-stage-image"
+                data-facility-feature-image
+                src="./assets/website-photos/optimized/Gym.jpg"
+                alt="Open training floor at LEGACY+ with room to coach and move."
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
+            <div class="facilities-gallery-feature-copy">
+              <p class="facilities-gallery-feature-label">Featured Space</p>
+              <h3 data-facility-feature-title>Training Area</h3>
+              <p data-facility-feature-caption>
+                The main floor keeps racks, turf, and movement lanes open so private sessions can run with room to
+                coach, move, and progress cleanly.
+              </p>
+            </div>
+          </article>
+
+          <div class="facilities-gallery-rail">
+            <button
+              class="facilities-gallery-thumb facilities-gallery-thumb--rail is-active"
+              type="button"
+              data-facility-thumb
+              data-facility-src="./assets/website-photos/optimized/Gym.jpg"
+              data-facility-alt="Open training floor at LEGACY+ with room to coach and move."
+              data-facility-title="Training Area"
+              data-facility-caption="The main floor keeps racks, turf, and movement lanes open so private sessions can run with room to coach, move, and progress cleanly."
+            >
+              <img
+                src="./assets/website-photos/optimized/Gym.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Training Area</span>
+            </button>
+            <button
+              class="facilities-gallery-thumb facilities-gallery-thumb--rail"
+              type="button"
+              data-facility-thumb
+              data-facility-src="./assets/website-photos/optimized/Legacy%20platform.jpg"
+              data-facility-alt="Barbell platform and free weight setup inside LEGACY+."
+              data-facility-title="Free Weight Area"
+              data-facility-caption="Benches, plates, and dumbbell lanes sit together for unilateral work, strength accessories, and straightforward progressions."
+            >
+              <img
+                src="./assets/website-photos/optimized/Legacy%20platform.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Free Weight Area</span>
+            </button>
+          </div>
+
+          <div class="facilities-gallery-row">
+            <button
+              class="facilities-gallery-thumb"
+              type="button"
+              data-facility-thumb
+              data-facility-src="./assets/website-photos/optimized/legacy-machine-bay.jpg"
+              data-facility-alt="Machine and cable bay inside LEGACY+."
+              data-facility-title="Machine Cables Area"
+              data-facility-caption="Cable towers and machine stations support guided strength work, rehab-friendly loading, and clean movement pattern coaching."
+            >
+              <img
+                src="./assets/website-photos/optimized/legacy-machine-bay.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Machine Cables</span>
+            </button>
+            <button
+              class="facilities-gallery-thumb"
+              type="button"
+              data-facility-thumb
+              data-facility-src="./assets/Website%20photos/Luke%20Leagacy%20March%20Edited%20/DSC07432.jpg"
+              data-facility-alt="Arrival stairwell leading into LEGACY+."
+              data-facility-title="Arrival Stairwell"
+              data-facility-caption="The approach into LEGACY+ is kept simple and private, so clients can arrive, settle in, and move into the session without the usual gym-floor noise."
+            >
+              <img
+                src="./assets/Website%20photos/Luke%20Leagacy%20March%20Edited%20/DSC07432.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Arrival Stairwell</span>
+            </button>
+            <button
+              class="facilities-gallery-thumb"
+              type="button"
+              data-facility-thumb
+              data-facility-src="./assets/website-photos/optimized/legacy-training-lane.jpg"
+              data-facility-alt="Branded training lane at LEGACY+."
+              data-facility-title="Turf Lane"
+              data-facility-caption="The branded turf lane gives coaches a clear runway for sled work, movement prep, and the kind of structured session flow that makes the room feel organised."
+            >
+              <img
+                src="./assets/website-photos/optimized/legacy-training-lane.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Turf Lane</span>
+            </button>
+            <button
+              class="facilities-gallery-thumb"
+              type="button"
+              data-facility-thumb
+              data-facility-src="./assets/website-photos/optimized/legacy-session-floor.jpg"
+              data-facility-alt="Coaching floor in active use at LEGACY+."
+              data-facility-title="Coaching Floor"
+              data-facility-caption="The space is set up so a coach can teach, cue, and keep a client moving without the floor ever feeling crowded or chaotic."
+            >
+              <img
+                src="./assets/website-photos/optimized/legacy-session-floor.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Coaching Floor</span>
+            </button>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer reveal">
-      <p>Legacy+ • Facilities</p>
-      <p>Facility Overview • Gallery</p>
+    <footer class="site-footer">
+      <p>LEGACY+ Coaching | Facilities</p>
+      <p>&copy; <span data-year></span> LEGACY+ Coaching. All rights reserved.</p>
     </footer>
 
-    <div class="modal" id="login-modal" aria-hidden="true" role="dialog" aria-labelledby="login-title">
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel" role="document">
-        <button type="button" class="close-modal" aria-label="Close login" data-close-modal>&times;</button>
-        <p class="kicker">Portal Access</p>
-        <h3 id="login-title">Client Login</h3>
-        <div class="role-tabs" role="tablist" aria-label="Choose account type">
-          <button type="button" role="tab" aria-selected="true" class="role-tab active" data-role="client">Client</button>
-          <button type="button" role="tab" aria-selected="false" class="role-tab" data-role="coach">Coach</button>
-        </div>
-        <form class="login-form" id="login-form">
-          <label>Email<input type="email" name="loginEmail" placeholder="name@legacycoaching.com" required /></label>
-          <label>Password<input type="password" name="loginPassword" placeholder="Enter password" required /></label>
-          <label id="coach-code-field" class="hidden">Coach Access Code<input type="text" name="coachCode" placeholder="COACH-XXXX" /></label>
-          <p class="form-feedback hidden" id="login-feedback" aria-live="polite"></p>
-          <button type="submit" class="btn btn-primary" id="login-submit">Login as Client</button>
-        </form>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js"></script>
-    <script src="./auth-client.js"></script>
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260402deployready1"></script>
   </body>
 </html>
