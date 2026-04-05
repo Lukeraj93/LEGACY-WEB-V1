@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach XP Ledger | LEGACY+ CRM</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+  </head>
+  <body
+    data-required-role="super_admin"
+    data-live-dashboard="admin"
+    data-account-page="coach_xp"
+    data-disable-page-tabs="true"
+    data-xp-coach-page="dashboard"
+  >
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="/admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Loading your admin workspace navigation...</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="/admin-dashboard.html">Home</a>
+          <a href="/admin-clients.html">TEAM</a>
+          <a class="is-current" href="./index.html">Coach XP</a>
+          <a href="/admin-leads.html">Leads</a>
+          <a href="/admin-financials.html">Financials</a>
+          <a href="/admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Coach XP Ledger</h1>
+            <p class="dashboard-feedback" id="xp-coach-status">Loading Coach XP module…</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Management-only rules engine, ledger, and promotion control.</p>
+            <p>Everything in this module is restricted to super admin access.</p>
+          </div>
+        </header>
+
+        <nav class="xp-coach-page-tabs reveal in-view" id="xp-coach-page-tabs" aria-label="Coach XP module pages"></nav>
+
+        <main class="dashboard-main crm-section-grid xp-coach-layout">
+          <section class="section dashboard-section reveal">
+            <div class="xp-coach-toolbar">
+              <div>
+                <h2>Module Snapshot</h2>
+                <p>Use the import once, then manage the roster and XP engine from the database forever.</p>
+              </div>
+              <button class="btn btn-secondary" id="xp-coach-import-run" type="button">Import Bundle + Workbook</button>
+            </div>
+            <div class="stats-grid crm-metric-grid" id="xp-coach-dashboard-kpis"></div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <div class="xp-coach-grid xp-coach-grid--two">
+              <article class="crm-card">
+                <div class="xp-coach-card-head">
+                  <h3>Coach Leaderboard</h3>
+                  <p>Counted XP only, after caps.</p>
+                </div>
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Coach</th>
+                        <th>Role</th>
+                        <th>Title</th>
+                        <th>Total XP</th>
+                        <th>Level</th>
+                      </tr>
+                    </thead>
+                    <tbody id="xp-coach-dashboard-leaderboard">
+                      <tr>
+                        <td colspan="5">No coach ledger data yet.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+
+              <div class="xp-coach-stack" id="xp-coach-dashboard-caps"></div>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head">
+                <h3>Recent XP Activity</h3>
+                <p>Latest verified and pending entries from the append-only log.</p>
+              </div>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Coach</th>
+                      <th>Action</th>
+                      <th>XP</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="xp-coach-dashboard-activity">
+                    <tr>
+                      <td colspan="5">No XP activity recorded yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Coach XP Ledger</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Management-only module.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="./coach-xp-admin.js?v=20260331xp2"></script>
+  </body>
+</html>

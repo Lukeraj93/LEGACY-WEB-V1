@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client XP Profile | LEGACY+</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./xp-module.css?v=20260325xpclient1" />
+  </head>
+  <body class="xp-module-body" data-required-role="client" data-xp-module-page="client">
+    <main class="xp-module-shell">
+      <section class="xp-module-hero">
+        <div class="xp-module-hero__head">
+          <div>
+            <span class="kicker kicker--accent">Client View</span>
+            <h1>Your XP Profile</h1>
+            <p>Read-only view of your linked XP member record, level progress, coin balance, and counted weekly movement.</p>
+          </div>
+          <div class="xp-module-access">
+            <p>Signed in as <strong data-xp-access-email>Checking session…</strong></p>
+            <p data-xp-role-text>Client access required.</p>
+          </div>
+        </div>
+        <nav class="xp-module-nav">
+          <a href="./index.html">Menu</a>
+          <a href="./admin.html" data-role-visibility="super_admin">Super Admin</a>
+          <a href="./staff.html" data-role-visibility="coach,super_admin">Coach / Staff</a>
+          <a class="is-current" href="./client.html">Client</a>
+        </nav>
+      </section>
+
+      <p class="xp-module-status" id="xp-module-status"></p>
+
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <div class="xp-module-summary">
+            <div class="xp-module-summary__hero">
+              <span class="xp-module-pill">Linked member</span>
+              <strong id="xp-client-member-name">No linked XP member</strong>
+              <p id="xp-client-member-note">Once your client profile is linked to an XP member record, your progress will appear here.</p>
+            </div>
+            <div class="xp-module-kpis" id="xp-client-kpis"></div>
+          </div>
+        </article>
+        <article class="xp-module-card">
+          <h2>Monthly Coin Summary</h2>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Month</th><th>Raw Coins</th><th>Counted</th><th>Worth</th></tr></thead>
+              <tbody id="xp-monthly-table"><tr><td colspan="4" class="xp-module-empty">No monthly summary yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="xp-module-card">
+        <h2>Weekly Summary</h2>
+        <div class="xp-module-table-wrap">
+          <table class="xp-module-table">
+            <thead><tr><th>Week</th><th>Routine Raw</th><th>Routine Counted</th><th>Uncapped XP</th><th>Total XP</th></tr></thead>
+            <tbody id="xp-weekly-table"><tr><td colspan="5" class="xp-module-empty">No weekly summary yet.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="./xp-module.js?v=20260329xpclient3"></script>
+  </body>
+</html>

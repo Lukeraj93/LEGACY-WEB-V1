@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Booking Inquiry | LEGACY+ Coaching</title>
+    <meta
+      name="description"
+      content="Confirm your preferred coach, day, and time, then send your booking inquiry to LEGACY+ Coaching on WhatsApp."
+    />
+    <link rel="canonical" href="https://www.legacycoaching.com.my/coach-booking-inquiry" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
+  </head>
+  <body>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/index.html" aria-label="LEGACY home"></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation"></nav>
+        <div class="header-cta-group">
+          <a class="btn btn-primary" href="/account.html">My Account</a>
+        </div>
+      </div>
+    </header>
+
+    <main data-coach-booking-page>
+      <section class="page-hero reveal coach-booking-hero">
+        <span class="kicker">Coach Booking Inquiry</span>
+        <h1>Complete your coach inquiry</h1>
+        <p>
+          We already filled in the coach, day, and time you selected. Add the last few details below and we will draft
+          the WhatsApp message for you.
+        </p>
+        <div class="chips coach-booking-chips">
+          <span class="chip chip--accent" data-booking-chip-coach>Coach: Not selected</span>
+          <span class="chip" data-booking-chip-day>Day: Not selected</span>
+          <span class="chip" data-booking-chip-time>Time: Not selected</span>
+        </div>
+      </section>
+
+      <section class="section reveal coach-booking-section" data-booking-flow>
+        <div class="coach-booking-layout">
+          <article class="contact-card coach-booking-summary-card">
+            <span class="kicker">Selected Slot</span>
+            <h2>Your booking details</h2>
+            <p class="section-copy">
+              Review the selected coach slot first. If anything looks wrong, go back and choose a different time.
+            </p>
+            <dl class="coach-booking-summary-list">
+              <div>
+                <dt>Coach</dt>
+                <dd data-booking-summary-coach>Not selected</dd>
+              </div>
+              <div>
+                <dt>Day</dt>
+                <dd data-booking-summary-day>Not selected</dd>
+              </div>
+              <div>
+                <dt>Time</dt>
+                <dd data-booking-summary-time>Not selected</dd>
+              </div>
+            </dl>
+            <p class="form-note" data-booking-summary-note>
+              Once you send this, we will draft the message into WhatsApp for quick delivery to our team.
+            </p>
+          </article>
+
+          <article class="contact-card coach-booking-form-card">
+            <span class="kicker">Inquiry Form</span>
+            <h2>Fill in the remaining details</h2>
+            <p class="section-copy">
+              Only your name, phone number, primary goal, and any extra details are left for you to complete. Once you
+              send it, the inquiry is logged in the CRM and drafted into WhatsApp.
+            </p>
+
+            <form class="contact-form" id="coach-booking-form" data-whatsapp="601139772862">
+              <input type="hidden" name="coach" />
+              <input type="hidden" name="day" />
+              <input type="hidden" name="time" />
+
+              <div class="input-row">
+                <label>
+                  Full Name
+                  <input type="text" name="name" autocomplete="name" required />
+                </label>
+                <label>
+                  Phone Number
+                  <input type="tel" name="phone" autocomplete="tel" required />
+                </label>
+              </div>
+
+              <label>
+                Primary Goal
+                <input
+                  type="text"
+                  name="goal"
+                  placeholder="e.g. Build strength, improve performance, or return to training"
+                  required
+                />
+              </label>
+
+              <label>
+                Additional Details
+                <textarea
+                  name="details"
+                  placeholder="Tell us any useful background, injury notes, training context, or what kind of support you want."
+                ></textarea>
+              </label>
+
+              <button class="btn btn-primary" type="submit" data-booking-submit>Send</button>
+              <p class="form-note" data-booking-status aria-live="polite"></p>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal coach-booking-thankyou" id="coach-booking-thankyou" hidden>
+        <span class="kicker">Thank You</span>
+        <h2>Thank you for your message!</h2>
+        <p>
+          We will direct your inquiry to our team and our coach will be in touch with you within 24 hours. Have a good
+          day and take care.
+        </p>
+        <div class="section-actions">
+          <button class="btn btn-secondary" type="button" data-booking-back>Back to Coaches</button>
+          <a class="btn btn-ghost" href="/coaches.html" data-booking-continue target="_blank" rel="noopener">Open WhatsApp</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>LEGACY+ Coaching | Coach Booking Inquiry</p>
+      <p>&copy; <span data-year></span> LEGACY+ Coaching. All rights reserved.</p>
+    </footer>
+
+    <script src="./script.js?v=20260402deployready1"></script>
+  </body>
+</html>

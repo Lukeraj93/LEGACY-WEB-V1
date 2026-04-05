@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://legacy.plus/schemas/coach-xp-rules.v1.json",
+  "title": "LEGACY+ Coach XP Rules Engine",
+  "type": "object",
+  "required": [
+    "metadata",
+    "settings",
+    "capBuckets",
+    "xpBands",
+    "operationalRoles",
+    "actions"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "systemName",
+        "version",
+        "timezone",
+        "region"
+      ],
+      "properties": {
+        "systemName": {
+          "type": "string",
+          "const": "LEGACY+"
+        },
+        "version": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string",
+          "default": "Asia/Kuala_Lumpur"
+        },
+        "region": {
+          "type": "string",
+          "default": "Malaysia"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "required": [
+        "maxXP"
+      ],
+      "properties": {
+        "maxXP": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coachingWeeklyCapXP": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "educationMonthlyCapXP": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "opsMonthlyCapXP": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mentorshipMonthlyCapXP": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "impactQuarterlyCapXP": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "weekStartType": {
+          "type": "string"
+        }
+      }
+    },
+    "capBuckets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "period",
+          "xpCap",
+          "buckets"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "Weekly",
+              "Monthly",
+              "Quarterly",
+              "None"
+            ]
+          },
+          "xpCap": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "buckets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "xpBands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "tier",
+          "minXP",
+          "maxXP",
+          "levelStart",
+          "levelEnd",
+          "levelCount",
+          "stepXP"
+        ],
+        "properties": {
+          "tier": {
+            "type": "string"
+          },
+          "minXP": {
+            "type": "integer"
+          },
+          "maxXP": {
+            "type": "integer"
+          },
+          "levelStart": {
+            "type": "integer"
+          },
+          "levelEnd": {
+            "type": "integer"
+          },
+          "levelCount": {
+            "type": "integer"
+          },
+          "stepXP": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "operationalRoles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "operationalRole",
+          "minXPEligible",
+          "operationalTitle",
+          "greekTitle",
+          "aesirTitle"
+        ],
+        "properties": {
+          "operationalRole": {
+            "type": "string"
+          },
+          "minXPEligible": {
+            "type": "integer"
+          },
+          "operationalTitle": {
+            "type": "string"
+          },
+          "greekTitle": {
+            "type": "string"
+          },
+          "aesirTitle": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "actionId",
+          "displayName",
+          "bucket",
+          "xp",
+          "capPeriod",
+          "verification"
+        ],
+        "properties": {
+          "actionId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "bucket": {
+            "type": "string"
+          },
+          "xp": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "capPeriod": {
+            "type": "string",
+            "enum": [
+              "Weekly",
+              "Monthly",
+              "Quarterly",
+              "One-Time",
+              "Adhoc",
+              "None"
+            ]
+          },
+          "verification": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      }
+    }
+  }
+}

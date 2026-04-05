@@ -1,0 +1,58 @@
+[build]
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = [
+    "assets/store-catalog.js",
+    "XP gamification/Config/**"
+  ]
+
+[functions."xp-coach-import"]
+  included_files = [
+    "XP coach gamification/Data/**",
+    "XP coach gamification/Config/**"
+  ]
+
+[functions."xp-coach-dashboard"]
+  included_files = [
+    "XP coach gamification/Data/**",
+    "XP coach gamification/Config/**"
+  ]
+
+[functions."sweep-overdue-planner-checkins"]
+  schedule = "@hourly"
+
+[functions."run-coach-ops-automation"]
+  schedule = "@hourly"
+
+[functions."send-session-reminders"]
+  schedule = "@hourly"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+[[headers]]
+  for = "/client-planner*"
+  [headers.values]
+    Permissions-Policy = "camera=(self), microphone=(), geolocation=(), interest-cohort=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

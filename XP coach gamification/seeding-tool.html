@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seeding Tool | LEGACY+ Coach XP</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="coach_xp" data-disable-page-tabs="true" data-xp-coach-page="seeding">
+    <div class="cinematic-bg" aria-hidden="true"><div class="bg-layer bg-layer--base"></div><div class="bg-layer bg-layer--smoke"></div><div class="bg-layer bg-layer--embers"></div><div class="bg-vignette"></div></div>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view"></aside>
+      <div class="crm-content">
+        <header class="crm-page-head reveal"><div><h1>Seeding Tool</h1><p class="dashboard-feedback" id="xp-coach-status">Loading seeding controls…</p></div><div class="crm-page-meta"><p>Approved seeding writes one auditable seed event. Unapproved rows do not count.</p></div></header>
+        <nav class="xp-coach-page-tabs reveal in-view" id="xp-coach-page-tabs" aria-label="Coach XP module pages"></nav>
+        <main class="dashboard-main crm-section-grid xp-coach-layout">
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Seed Placement</h2></div>
+              <form class="xp-coach-form-grid" id="xp-coach-seed-form">
+                <label><span>Coach</span><select id="xp-coach-seed-coach-id" name="coach_id" required><option value="">Select coach</option></select></label>
+                <label><span>Seed XP</span><input name="seed_xp" min="0" required type="number" /></label>
+                <label><span>Approval</span><select name="approved"><option value="false">Pending</option><option value="true">Approved</option></select></label>
+                <label class="xp-coach-form-grid__wide"><span>Notes</span><textarea name="notes" rows="3"></textarea></label>
+                <div class="xp-coach-form-actions xp-coach-form-grid__wide"><button class="btn btn-secondary" type="submit">Save Seed</button><button class="btn btn-ghost" id="xp-coach-seed-reset" type="button">Clear Form</button></div>
+              </form>
+            </article>
+          </section>
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Seeding Ledger</h2></div>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead><tr><th>Coach</th><th>Seed XP</th><th>Status</th><th>Notes</th><th></th></tr></thead>
+                  <tbody id="xp-coach-seeding-table"><tr><td colspan="5">No seed entries yet.</td></tr></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </main>
+        <footer class="site-footer"><p>LEGACY+ CRM | Coach XP Seeding</p><p>&copy; <span data-year></span> LEGACY+ Coaching.</p></footer>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="./coach-xp-admin.js?v=20260331xp2"></script>
+  </body>
+</html>

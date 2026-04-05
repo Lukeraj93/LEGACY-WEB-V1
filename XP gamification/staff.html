@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client XP Staff | LEGACY+</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./xp-module.css?v=20260402clean1" />
+  </head>
+  <body class="xp-module-body" data-required-role="coach" data-live-dashboard="coach" data-account-page="client_xp" data-disable-page-tabs="true" data-xp-module-page="staff">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="../coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Loading your coaching workspace navigation...</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="../coach-dashboard.html">Home</a>
+          <a href="../coach-clients.html">Clients</a>
+          <a class="is-current" href="./staff.html">Client XP</a>
+          <a href="../coach-training.html">Training</a>
+          <a href="../coach-programming.html">Nutrition</a>
+          <a href="../coach-schedule.html">Schedule</a>
+          <a href="../coach-commissions.html">Commissions</a>
+          <a href="../coach-profile.html">Profile</a>
+          <a href="../coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <div class="crm-sidebar-account" aria-label="Current workspace account">
+            <strong>Coach Workspace</strong>
+            <span>Loading secure session…</span>
+          </div>
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Client XP Event Log</h1>
+            <p class="dashboard-feedback">Coach-side client XP logging stays inside your normal workspace now.</p>
+          </div>
+          <div class="crm-page-meta xp-module-access">
+            <p>Signed in as <strong data-xp-access-email>Checking session…</strong></p>
+            <p data-xp-role-text>Coach access only. Super admin controls stay outside the coach workspace.</p>
+          </div>
+        </header>
+
+        <p class="xp-module-status" id="xp-module-status">Loading client XP tools…</p>
+
+        <main class="dashboard-main crm-section-grid xp-module-shell">
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <h2>Log Event</h2>
+          <div class="xp-module-empty-state" id="xp-event-empty-state" hidden>
+            <strong>Client XP is not linked yet.</strong>
+            <p>Link a real client into the XP system first, then event logging will unlock here automatically.</p>
+          </div>
+          <form class="xp-module-form xp-module-form--two" id="xp-event-form">
+            <label><span>Member</span><select id="xp-event-member-id" name="member_id"></select></label>
+            <label><span>Find action</span><input id="xp-event-action-search" name="action_search" type="search" placeholder="Search Training, Nutrition, TRN-SESS..." autocomplete="off" /></label>
+            <div class="xp-module-form__wide xp-module-action-chips" id="xp-event-action-chips" aria-label="Quick action categories"></div>
+            <label class="xp-module-form__wide">
+              <span>Action</span>
+              <select id="xp-event-action-id" name="action_id"></select>
+              <small class="xp-module-field-note" id="xp-event-action-help">Actions are grouped by category for easier scanning.</small>
+            </label>
+            <label><span>Date</span><input name="event_date" required type="date" /></label>
+            <label><span>Qty</span><input name="qty" min="1" required type="number" value="1" /></label>
+            <label><span>Verified</span><select name="verified"><option value="true">True</option><option value="false" selected>False</option></select></label>
+            <label><span>Notes</span><input name="notes" type="text" /></label>
+            <div class="xp-module-form-actions xp-module-form__wide"><button class="btn btn-secondary" type="submit">Log Event</button></div>
+          </form>
+        </article>
+
+        <article class="xp-module-card">
+          <h2>Ledger Overview</h2>
+          <div class="xp-module-empty-state" id="xp-ledger-empty-state" hidden>
+            <strong>No client XP data yet.</strong>
+            <p>Once members are linked and events are logged, levels, XP totals, and coin balance will show here.</p>
+          </div>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Member</th><th>Level</th><th>Total XP</th><th>Coin Balance</th></tr></thead>
+              <tbody id="xp-ledger-table"><tr><td colspan="4" class="xp-module-empty">No ledger data yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <h2>Weekly Progress</h2>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Member</th><th>Week</th><th>Routine Counted</th><th>Uncapped XP</th><th>Total</th></tr></thead>
+              <tbody id="xp-weekly-table"><tr><td colspan="5" class="xp-module-empty">No weekly summary yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="xp-module-card">
+          <h2>Recent Events</h2>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Date</th><th>Member</th><th>Action</th><th>Qty</th><th>Verified</th></tr></thead>
+              <tbody id="xp-events-table"><tr><td colspan="5" class="xp-module-empty">No events yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="../dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./xp-module.js?v=20260402clean1"></script>
+  </body>
+</html>

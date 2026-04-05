@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Roster | LEGACY+ Coach XP</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="coach_xp" data-disable-page-tabs="true" data-xp-coach-page="roster">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view"></aside>
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Coach Roster</h1>
+            <p class="dashboard-feedback" id="xp-coach-status">Loading Coach XP roster…</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Create and maintain management-owned coach roster records.</p>
+            <p>Link profile IDs later when the real coach logins exist.</p>
+          </div>
+        </header>
+        <nav class="xp-coach-page-tabs reveal in-view" id="xp-coach-page-tabs" aria-label="Coach XP module pages"></nav>
+        <main class="dashboard-main crm-section-grid xp-coach-layout">
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head">
+                <h2>Create or Update Coach</h2>
+              </div>
+              <form class="xp-coach-form-grid" id="xp-coach-roster-form">
+                <label><span>Coach ID</span><input name="coach_id" placeholder="COA001" required type="text" /></label>
+                <label><span>Coach Name</span><input name="coach_name" placeholder="Coach full name" required type="text" /></label>
+                <label><span>Status</span><select name="status"><option>Active</option><option>Inactive</option></select></label>
+                <label><span>Identity Path</span><select name="identity_path"><option>Neutral</option><option>Greek</option><option>Aesir</option></select></label>
+                <label><span>Operational Role</span><select name="operational_role"><option value="">Derived from XP</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option><option>T9</option></select></label>
+                <label><span>Role Lock</span><select name="role_locked_to"><option value="">None</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option><option>T9</option></select></label>
+                <label class="xp-coach-form-grid__wide"><span>Linked Profile</span><select id="xp-coach-roster-profile-id" name="profile_id"><option value="">Not linked yet</option></select></label>
+                <div class="xp-coach-form-actions xp-coach-form-grid__wide">
+                  <button class="btn btn-secondary" type="submit">Save Coach</button>
+                  <button class="btn btn-ghost" id="xp-coach-roster-reset" type="button">Clear Form</button>
+                </div>
+              </form>
+            </article>
+          </section>
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head">
+                <h2>Roster Table</h2>
+              </div>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead><tr><th>Coach ID</th><th>Name</th><th>Role</th><th>Total XP</th><th>Status</th><th></th></tr></thead>
+                  <tbody id="xp-coach-roster-table"><tr><td colspan="6">No coach roster entries yet.</td></tr></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </main>
+        <footer class="site-footer"><p>LEGACY+ CRM | Coach XP Roster</p><p>&copy; <span data-year></span> LEGACY+ Coaching.</p></footer>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="./coach-xp-admin.js?v=20260331xp2"></script>
+  </body>
+</html>

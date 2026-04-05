@@ -2,116 +2,556 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Legacy+ | My Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Account Login | LEGACY+ Coaching</title>
     <meta
       name="description"
-      content="Legacy+ client account and dashboard page for purchases, schedule, points, and badges."
+      content="Choose client or coach access, sign in with your login details, or register with your activation code."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
   </head>
-  <body>
-    <div class="grain" aria-hidden="true"></div>
+  <body class="account-entry-page">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
 
-    <header class="site-header reveal">
-      <a href="./index.html" class="brand" aria-label="Legacy+ Home">
-        <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" class="brand-logo-img" />
-      </a>
-      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="./index.html">Home</a>
-        <a href="./about.html">About</a>
-        <a href="./legacy-plus.html">Legacy+</a>
-        <a href="./coaches.html">Coaches</a>
-        <a href="./facilities.html">Facilities</a>
-        <a href="./contact.html">Contact</a>
-        <a class="active" href="./account.html">My Account</a>
-      </nav>
-      <div class="header-actions">
-        <button type="button" class="btn btn-ghost login-trigger" data-role="coach">Coach Login</button>
-        <button type="button" class="btn btn-primary login-trigger" data-role="client">Client Login</button>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="https://www.legacycoaching.com.my/" aria-label="LEGACY home"></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="https://www.legacycoaching.com.my/">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Programs
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaches.html" role="menuitem">Meet the Team</a>
+              <a href="/corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
+            </div>
+          </div>
+          <a href="/packages.html">Pricing</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Facilities
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="/facilities.html" role="menuitem">Gym Information</a>
+              <a href="/gallery.html" role="menuitem">Gallery</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="/about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="/contact.html" role="menuitem">Contact Us</a>
+              <a href="/locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+        </nav>
+        <div class="header-cta-group">
+          <a class="btn btn-primary" href="/account.html">My Account</a>
+        </div>
       </div>
     </header>
 
-    <main>
-      <section class="page-hero reveal">
-        <p class="kicker">My Account</p>
-        <h1>Client dashboard for purchases, schedules, points, and badges.</h1>
-        <p>
-          Members use this section to monitor progress and manage bookings. Authentication routes each role to
-          dedicated portals after sign-in.
-        </p>
+    <main class="pt-mode-main account-entry-main">
+      <section class="pt-mode-shell account-entry-shell reveal" data-account-page>
+        <div class="pt-mode-stage account-entry-stage">
+          <div class="account-role-selector" aria-label="Account role choices">
+            <button
+              class="account-role-choice account-role-choice--client"
+              type="button"
+              data-account-role="client"
+              aria-pressed="false"
+            >
+              <span class="account-role-media" aria-hidden="true"></span>
+              <span class="account-role-title">Client</span>
+            </button>
+
+            <button
+              class="account-role-choice account-role-choice--coach"
+              type="button"
+              data-account-role="coach"
+              aria-pressed="false"
+            >
+              <span class="account-role-media" aria-hidden="true"></span>
+              <span class="account-role-title">Coach</span>
+            </button>
+          </div>
+          <div class="account-entry-note">
+            <strong>Important note</strong>
+            <p>
+              New account activation is only available with a one-time code sent to your email by your coach or a
+              LEGACY+ admin.
+            </p>
+          </div>
+        </div>
       </section>
 
-      <section class="section panel reveal">
-        <div class="section-head">
-          <p class="kicker">Dashboard Modules</p>
-          <h2>Everything clients need in one account space.</h2>
-        </div>
-        <div class="account-grid">
-          <article class="card"><h3>Purchases</h3><p>Active packages, billing history, and usage status.</p></article>
-          <article class="card"><h3>Schedule</h3><p>Upcoming classes, PT sessions, and attendance timeline.</p></article>
-          <article class="card"><h3>Points</h3><p>Points earned through sessions, milestones, and engagement.</p></article>
-          <article class="card"><h3>Badges</h3><p>Achievement badges earned and level progression state.</p></article>
-        </div>
-      </section>
+      <section class="section reveal account-login-section" id="account-login-section" hidden>
+        <div class="account-access-layout">
+          <div class="account-login-panel">
+            <div class="account-role-pane" data-role-panel="client" hidden>
+              <span class="kicker">Client Access</span>
+              <h2>Login details</h2>
+              <p>
+                Enter your client login ID and password below. If this is your first time, open the registration
+                window instead.
+              </p>
+              <form class="contact-form account-login-form" id="client-login-form" data-client-path="./client-dashboard.html">
+                <div class="input-row account-input-row">
+                  <label>
+                    Login ID
+                    <input
+                      type="email"
+                      name="clientEmail"
+                      placeholder="admin@legacycoaching.com.my"
+                      autocomplete="email"
+                      required
+                    />
+                  </label>
+                  <label>
+                    Password
+                    <input
+                      type="password"
+                      name="clientPassword"
+                      placeholder="Enter password"
+                      autocomplete="current-password"
+                      required
+                    />
+                  </label>
+                </div>
+                <label class="account-remember-toggle">
+                  <input type="checkbox" name="clientRememberMe" />
+                  <span>Remember my email on this device</span>
+                </label>
+                <div class="account-login-actions">
+                  <button class="btn btn-primary" type="submit">Log In</button>
+                  <button class="btn btn-ghost" type="button" data-registration-open="client">I am a new client</button>
+                </div>
+                <div class="account-secondary-actions">
+                  <button class="account-inline-link" type="button" data-password-reset-open="client">Forgot password?</button>
+                </div>
+                <p class="dashboard-feedback" id="client-login-feedback">
+                  Existing clients can sign in with the login ID assigned to them by their coach.
+                </p>
+              </form>
+            </div>
 
-      <section class="section reveal">
-        <div class="section-head">
-          <p class="kicker">Portal Access</p>
-          <h2>Sign in to open your workspace.</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="card">
-            <h3>Client Portal</h3>
-            <p>Track your schedule, points, and badges in the protected client dashboard.</p>
-            <a href="./client-portal.html" class="text-link">Open Client Portal</a>
-          </article>
-          <article class="card">
-            <h3>Coach Portal</h3>
-            <p>Coaches can switch to their own role-based operational portal.</p>
-            <a href="./coach-portal.html" class="text-link">Open Coach Portal</a>
-          </article>
+            <div class="account-role-pane" data-role-panel="coach" hidden>
+              <span class="kicker">Coach Access</span>
+              <h2>Login details</h2>
+              <p>
+                Enter your coach login ID and password below. New coaches can open the registration window to submit
+                their particulars and activation code.
+              </p>
+              <form
+                class="contact-form account-login-form"
+                id="coach-login-form"
+                data-admin-email="admin@legacycoaching.com.my"
+                data-admin-path="./admin-dashboard.html"
+                data-coach-path="./coach-dashboard.html"
+              >
+                <div class="input-row account-input-row">
+                  <label>
+                    Login ID
+                    <input
+                      id="coach-login-email"
+                      type="email"
+                      name="coachEmail"
+                      placeholder="admin@legacycoaching.com.my"
+                      autocomplete="email"
+                      required
+                    />
+                  </label>
+                  <label>
+                    Password
+                    <input
+                      type="password"
+                      name="coachPassword"
+                      placeholder="Enter password"
+                      autocomplete="current-password"
+                      required
+                    />
+                  </label>
+                </div>
+                <label class="account-remember-toggle">
+                  <input type="checkbox" name="coachRememberMe" />
+                  <span>Remember my email on this device</span>
+                </label>
+                <div class="account-login-actions">
+                  <button class="btn btn-primary" type="submit">Log In</button>
+                  <button class="btn btn-ghost" type="button" data-registration-open="coach">I am a new coach</button>
+                </div>
+                <div class="account-secondary-actions">
+                  <button class="account-inline-link" type="button" data-password-reset-open="coach">Forgot password?</button>
+                </div>
+                <p class="dashboard-feedback" id="coach-login-feedback">
+                  Coaches and admins should use their approved LEGACY+ email address and password here.
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <aside class="account-guide-panel">
+            <span class="kicker">Step by Step</span>
+            <h3>How the process works</h3>
+            <ol class="account-step-list">
+              <li>Select whether you are entering as a client or as a coach.</li>
+              <li>Use your login ID and password if your account is already active.</li>
+              <li>
+                If you are new, open the registration window, complete your particulars, and enter the activation code
+                from your email.
+              </li>
+            </ol>
+          </aside>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer reveal">
-      <p>Legacy+ • My Account</p>
-      <p>Purchases • Schedule • Points • Badges</p>
-    </footer>
+    <div
+      class="account-registration-modal"
+      id="account-registration-modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-labelledby="account-registration-title"
+    >
+      <div class="account-registration-backdrop" data-registration-close></div>
+      <div class="account-registration-panel" role="document">
+        <button
+          type="button"
+          class="account-registration-close"
+          aria-label="Close registration window"
+          data-registration-close
+        >
+          &times;
+        </button>
 
-    <div class="modal" id="login-modal" aria-hidden="true" role="dialog" aria-labelledby="login-title">
-      <div class="modal-backdrop" data-close-modal></div>
-      <div class="modal-panel" role="document">
-        <button type="button" class="close-modal" aria-label="Close login" data-close-modal>&times;</button>
-        <p class="kicker">Portal Access</p>
-        <h3 id="login-title">Client Login</h3>
-        <div class="role-tabs" role="tablist" aria-label="Choose account type">
-          <button type="button" role="tab" aria-selected="true" class="role-tab active" data-role="client">Client</button>
-          <button type="button" role="tab" aria-selected="false" class="role-tab" data-role="coach">Coach</button>
+        <div class="account-registration-head">
+          <p class="kicker" data-registration-kicker>New Registration</p>
+          <h3 id="account-registration-title" data-registration-title>Complete your details</h3>
+          <p class="account-registration-copy" data-registration-copy>
+            Fill in your details and use the activation code from your email to activate access.
+          </p>
         </div>
-        <form class="login-form" id="login-form">
-          <label>Email<input type="email" name="loginEmail" placeholder="name@legacycoaching.com" required /></label>
-          <label>Password<input type="password" name="loginPassword" placeholder="Enter password" required /></label>
-          <label id="coach-code-field" class="hidden">Coach Access Code<input type="text" name="coachCode" placeholder="COACH-XXXX" /></label>
-          <p class="form-feedback hidden" id="login-feedback" aria-live="polite"></p>
-          <button type="submit" class="btn btn-primary" id="login-submit">Login as Client</button>
+
+        <form class="contact-form account-registration-form" data-registration-form="client" hidden>
+          <div class="input-row account-input-row">
+            <label>
+              Full name (as per IC)
+              <input type="text" name="clientFullName" placeholder="Full name" autocomplete="name" required />
+            </label>
+            <label>
+              Preferred name
+              <input type="text" name="clientPreferredName" placeholder="What should your coach call you?" autocomplete="nickname" />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Email address
+              <input type="email" name="clientEmailAddress" placeholder="admin@legacycoaching.com.my" autocomplete="email" required />
+            </label>
+            <label>
+              Phone number
+              <input type="tel" name="clientPhone" placeholder="01X-XXXXXXX" autocomplete="tel" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Password
+              <input type="password" name="clientPassword" placeholder="Create password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <label>
+              Confirm password
+              <input type="password" name="clientPasswordConfirm" placeholder="Confirm password" autocomplete="new-password" minlength="8" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Birthday
+              <input type="date" name="clientBirthday" autocomplete="bday" required />
+            </label>
+            <label>
+              Gender
+              <select name="clientGender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              NRIC / Passport number
+              <input type="text" name="clientIcPassportNo" placeholder="Enter IC or passport number" autocomplete="off" required />
+            </label>
+            <label>
+              Occupation
+              <input type="text" name="clientOccupation" placeholder="Occupation" autocomplete="organization-title" />
+            </label>
+          </div>
+          <label>
+            Home address
+            <textarea name="clientHomeAddress" placeholder="Enter home address" autocomplete="street-address" required></textarea>
+          </label>
+          <div class="input-row account-input-row">
+            <label>
+              Emergency contact name
+              <input type="text" name="clientEmergencyName" placeholder="Emergency contact name" autocomplete="name" required />
+            </label>
+            <label>
+              Emergency contact phone
+              <input type="tel" name="clientEmergencyPhone" placeholder="01X-XXXXXXX" autocomplete="tel" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Emergency relationship
+              <input type="text" name="clientEmergencyRelationship" placeholder="Parent, spouse, sibling" autocomplete="off" required />
+            </label>
+            <label>
+              Who is your coach?
+              <select name="clientPreferredCoachId" id="client-preferred-coach" required>
+                <option value="">Loading active coaches...</option>
+              </select>
+              <p class="form-note" data-coach-select-status hidden></p>
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Fitness goals
+              <input type="text" name="clientGoals" placeholder="Strength, fat loss, mobility, performance" autocomplete="off" required />
+            </label>
+            <label>
+              Typical activity
+              <select name="clientActivityStyle">
+                <option value="">Select activity style</option>
+                <option value="desk">Desk</option>
+                <option value="mixed">Mixed</option>
+                <option value="physical">Physical</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Medical conditions or injuries
+            <textarea
+              name="clientMedicalNotes"
+              placeholder="List anything important your coach should know before training starts"
+            ></textarea>
+          </label>
+          <div class="account-waiver-block">
+            <div class="account-waiver-head">
+              <strong>Complete the <button class="account-inline-link" type="button" data-open-client-waiver>Waiver</button></strong>
+              <p>The client waiver must be completed and signed before your account can be created.</p>
+            </div>
+            <label class="crm-checkbox account-waiver-check">
+              <input type="checkbox" name="clientWaiverAccepted" data-waiver-checkbox />
+              <span>Waiver submitted and digitally signed</span>
+            </label>
+            <input type="hidden" name="clientWaiverSubmissionId" />
+            <p class="dashboard-feedback account-waiver-feedback" data-waiver-feedback>
+              The waiver has not been completed yet.
+            </p>
+          </div>
+          <label class="account-activation-label">
+            <span class="account-label-row">
+              Enter activation code
+              <span class="account-help" tabindex="0" aria-label="Activation code help">
+                ?
+                <span class="account-help-bubble">
+                  A one time activation was sent to your email address by your coach. Please enter that here.
+                </span>
+              </span>
+            </span>
+              <input type="text" name="clientActivationCode" placeholder="Enter activation code" autocomplete="one-time-code" required />
+          </label>
+          <div class="account-registration-actions">
+            <button class="btn btn-primary" type="submit">Submit registration</button>
+            <button class="btn btn-secondary" type="button" data-registration-close>Cancel</button>
+          </div>
+          <p class="dashboard-feedback account-registration-feedback" data-registration-feedback></p>
+        </form>
+
+        <form class="contact-form account-registration-form" data-registration-form="coach" hidden>
+          <div class="input-row account-input-row">
+            <label>
+              Full name (as per IC)
+              <input type="text" name="coachFullName" placeholder="Full name" autocomplete="name" required />
+            </label>
+            <label>
+              Work email address
+              <input type="email" name="coachEmailAddress" placeholder="admin@legacycoaching.com.my" autocomplete="email" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Password
+              <input type="password" name="coachPassword" placeholder="Create password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <label>
+              Confirm password
+              <input type="password" name="coachPasswordConfirm" placeholder="Confirm password" autocomplete="new-password" minlength="8" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Phone number
+              <input type="tel" name="coachPhone" placeholder="01X-XXXXXXX" autocomplete="tel" required />
+            </label>
+            <label>
+              Birthday
+              <input type="date" name="coachBirthday" autocomplete="bday" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Gender
+              <select name="coachGender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+            <label>
+              NRIC / Passport number
+              <input type="text" name="coachIcPassportNo" placeholder="Enter IC or passport number" autocomplete="off" required />
+            </label>
+          </div>
+          <label>
+            Home address
+            <textarea name="coachHomeAddress" placeholder="Enter home address" autocomplete="street-address" required></textarea>
+          </label>
+          <div class="input-row account-input-row">
+            <label>
+              Emergency contact name
+              <input type="text" name="coachEmergencyName" placeholder="Emergency contact name" autocomplete="name" required />
+            </label>
+            <label>
+              Emergency contact phone
+              <input type="tel" name="coachEmergencyPhone" placeholder="01X-XXXXXXX" autocomplete="tel" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Emergency relationship
+              <input type="text" name="coachEmergencyRelationship" placeholder="Parent, spouse, sibling" autocomplete="off" required />
+            </label>
+            <label>
+              Primary coaching specialty
+              <input type="text" name="coachSpecialty" placeholder="Strength, fat loss, rehab, sports performance" autocomplete="off" required />
+            </label>
+          </div>
+          <div class="input-row account-input-row">
+            <label>
+              Certifications
+              <input type="text" name="coachCertifications" placeholder="List your key certifications" autocomplete="off" required />
+            </label>
+            <label>
+              Availability / work notes
+              <input type="text" name="coachAvailabilityNotes" placeholder="Preferred branch, hours, or travel notes" autocomplete="off" />
+            </label>
+          </div>
+          <label>
+            Experience and notes
+            <textarea
+              name="coachNotes"
+              placeholder="Add any important experience, availability, or onboarding notes"
+            ></textarea>
+          </label>
+          <label class="account-activation-label">
+            <span class="account-label-row">
+              Enter activation code
+              <span class="account-help" tabindex="0" aria-label="Activation code help">
+                ?
+                <span class="account-help-bubble">
+                  A one time activation was sent to your email address by LEGACY+ admin. Please enter that here.
+                </span>
+              </span>
+            </span>
+              <input type="text" name="coachActivationCode" placeholder="Enter activation code" autocomplete="one-time-code" required />
+          </label>
+          <div class="account-registration-actions">
+            <button class="btn btn-primary" type="submit">Submit registration</button>
+            <button class="btn btn-secondary" type="button" data-registration-close>Cancel</button>
+          </div>
+          <p class="dashboard-feedback account-registration-feedback" data-registration-feedback></p>
         </form>
       </div>
     </div>
 
+    <div
+      class="account-registration-modal"
+      id="account-password-reset-modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-labelledby="account-password-reset-title"
+    >
+      <div class="account-registration-backdrop" data-password-reset-close></div>
+      <div class="account-registration-panel account-reset-panel" role="document">
+        <button
+          type="button"
+          class="account-registration-close"
+          aria-label="Close password reset window"
+          data-password-reset-close
+        >
+          &times;
+        </button>
+        <div class="account-registration-head">
+          <p class="kicker">Password Reset</p>
+          <h3 id="account-password-reset-title">Reset your password</h3>
+          <p class="account-registration-copy">
+            Enter the email address linked to your LEGACY+ account and we will send you a secure password reset link.
+          </p>
+        </div>
+        <form class="contact-form account-reset-form" id="account-password-reset-form">
+          <label>
+            Account email
+            <input type="email" name="resetEmail" placeholder="admin@legacycoaching.com.my" autocomplete="email" required />
+          </label>
+          <div class="account-registration-actions">
+            <button class="btn btn-primary" type="submit">Send reset email</button>
+            <button class="btn btn-secondary" type="button" data-password-reset-close>Cancel</button>
+          </div>
+          <p class="dashboard-feedback account-registration-feedback" id="account-password-reset-feedback">
+            Password reset emails will be sent through LEGACY+ support.
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>LEGACY+ Coaching | My Account</p>
+      <p>&copy; <span data-year></span> LEGACY+ Coaching. All rights reserved.</p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js"></script>
-    <script src="./auth-client.js"></script>
-    <script src="./script.js"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./script.js?v=20260403rememberme1"></script>
   </body>
 </html>

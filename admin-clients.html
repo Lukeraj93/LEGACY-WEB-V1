@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Team | LEGACY+ CRM</title>
+    <meta name="description" content="LEGACY+ CRM team, coach management, and client assignment for super admin." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="clients">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Private admin navigation for leads, clients, finance, operations, and platform controls.</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="./admin-dashboard.html">Home</a>
+          <a class="is-current" href="./admin-clients.html">TEAM</a>
+          <a href="./admin-leads.html">Leads</a>
+          <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-newsletter.html">Newsletter</a>
+          <a href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Team Operations and Client Assignment</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Syncing your live admin dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Admin focus: coach setup and review first, then client assignment, then reward approvals.</p>
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" data-crm-tone="warning">
+            <h2>Coach Roles, Presets, and KPI Review</h2>
+            <div class="split split--focus-left">
+              <article class="card" data-crm-tone="alert">
+                <h3>Assign Position, Tier, and Review Status</h3>
+                <form class="contact-form" id="admin-coach-management-form">
+                  <label>
+                    Coach
+                    <select id="admin-coach-select" name="coachId" required>
+                      <option value="">Select coach</option>
+                    </select>
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Position preset
+                      <select id="admin-coach-position" name="positionCode">
+                        <option value="">Select position</option>
+                      </select>
+                    </label>
+                    <label>
+                      Tier preset
+                      <select id="admin-coach-tier" name="commissionTier">
+                        <option value="">Select tier</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-ghost" id="admin-coach-apply-presets" type="button">Apply Presets</button>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Base commission rate (%)
+                      <input id="admin-coach-rate" name="commissionRate" type="number" min="0" max="100" step="0.1" />
+                    </label>
+                    <label>
+                      Commission cap (%)
+                      <input id="admin-coach-cap" name="commissionCap" type="number" min="0" max="100" step="0.1" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Hours minimum
+                      <input id="admin-coach-hours-min" name="hoursMinimum" type="number" min="0" step="1" />
+                    </label>
+                    <label>
+                      Hours target
+                      <input id="admin-coach-hours-target" name="hoursTarget" type="number" min="0" step="1" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Hours completed this cycle
+                      <input id="admin-coach-hours-completed" name="hoursCompleted" type="number" min="0" step="1" />
+                    </label>
+                    <label>
+                      Next quarterly review
+                      <input id="admin-coach-review-due" name="reviewDueAt" type="date" />
+                    </label>
+                  </div>
+                  <label>
+                    Bonus / uplift notes
+                    <textarea id="admin-coach-bonus-notes" name="bonusNotes" rows="3" placeholder="Example: 81-100 hrs: +4%; 100+ hrs: +8%"></textarea>
+                  </label>
+                  <div class="crm-checkbox-stack">
+                    <label class="crm-checkbox">
+                      <input id="admin-coach-assessment-complete" name="assessmentComplete" type="checkbox" />
+                      <span>Assessment completed</span>
+                    </label>
+                    <label class="crm-checkbox">
+                      <input id="admin-coach-promotion-ready" name="promotionReady" type="checkbox" />
+                      <span>Mark coach promotion-ready</span>
+                    </label>
+                  </div>
+                  <div class="crm-kpi-grid" id="admin-coach-kpi-list">
+                    <p>Select a coach or apply a tier preset to load KPI checkpoints.</p>
+                  </div>
+                  <label>
+                    Admin notes
+                    <textarea id="admin-coach-notes" name="notes" rows="4" placeholder="Internal notes for compensation, pathway, or review decisions."></textarea>
+                  </label>
+                  <div class="section-actions">
+                    <button class="btn btn-secondary" type="submit">Save Coach Settings</button>
+                    <button class="btn btn-ghost" id="admin-coach-complete-review" type="button">Complete Review + Set Next Quarter</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="admin-coach-management-feedback">
+                  Select a coach to assign presets, review KPI progress, and manually adjust commission structure.
+                </p>
+              </article>
+              <article class="card" data-crm-tone="info">
+                <h3>Current Coach Setup</h3>
+                <div class="crm-selector-summary" id="admin-coach-selection-summary">
+                  <p>Choose a coach to review their current position, KPI progress, and commission setup.</p>
+                </div>
+              </article>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Coach</th>
+                    <th>Position</th>
+                    <th>Tier</th>
+                    <th>Base Rate</th>
+                    <th>KPI Status</th>
+                    <th>Next Review</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-coach-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="7">
+                      <div class="dashboard-table__empty">
+                        <strong>No coach records yet.</strong>
+                        <p>Coach accounts, tier setup, and review timing will appear here once the internal team roster is populated.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="section-actions">
+              <button class="btn btn-ghost" id="admin-toggle-comp-plan-reference" type="button">View Full Preset Data</button>
+            </div>
+            <div class="dashboard-table-wrap" id="admin-comp-plan-reference" hidden>
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Tier</th>
+                    <th>Base Commission</th>
+                    <th>Cap</th>
+                    <th>Hours</th>
+                    <th>Promotion Gate</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-tier-preset-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>Preset compensation data is being prepared.</strong>
+                        <p>The tier reference table will appear here once the full preset sheet is mounted into the admin workspace.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="info">
+            <h2>Authentication Code Control</h2>
+            <div class="split split--focus-left">
+              <article class="card" data-crm-tone="warning">
+                <h3>Generate Coach Authentication Code</h3>
+                <form class="contact-form" id="admin-coach-code-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Coach email
+                      <input type="email" name="recipientEmail" placeholder="coach@legacycoaching.com.my" required />
+                    </label>
+                    <label>
+                      Coach full name
+                      <input type="text" name="recipientName" placeholder="Coach full name" />
+                    </label>
+                  </div>
+                  <label>
+                    Admin note
+                    <input type="text" name="notes" placeholder="Optional note for the coach record" />
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Generate Coach Code</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-coach-code-feedback">
+                  Coach authentication codes can only be generated from the admin team workspace.
+                </p>
+              </article>
+
+              <article class="card" data-crm-tone="info">
+                <h3>Generate Client Authentication Code</h3>
+                <form class="contact-form" id="admin-client-code-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Client email
+                      <input type="email" name="recipientEmail" placeholder="client@example.com" required />
+                    </label>
+                    <label>
+                      Client full name
+                      <input type="text" name="recipientName" placeholder="Client full name" />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Assign coach
+                      <select name="assignedCoachId" id="admin-client-code-coach">
+                        <option value="">No coach assigned yet</option>
+                      </select>
+                    </label>
+                    <label>
+                      Admin note
+                      <input type="text" name="notes" placeholder="Optional note for onboarding or assignment" />
+                    </label>
+                  </div>
+                  <button class="btn btn-secondary" type="submit">Generate Client Code</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-client-code-feedback">
+                  Client codes can be generated here or from the coach client workspace.
+                </p>
+              </article>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Code</th>
+                    <th>Status</th>
+                    <th>Expires</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-auth-code-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No authentication codes generated yet.</strong>
+                        <p>New coach and client onboarding codes will appear here after they are created from the admin team workspace.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="info">
+            <h2>Team Roster and Coach Assignment</h2>
+            <div class="split split--focus-right">
+              <article class="card" data-crm-tone="info">
+                <h3>Assign Coach to Client</h3>
+                <form class="contact-form" id="admin-assignment-form">
+                  <label>
+                    Coach
+                    <select name="coachId" id="admin-assignment-coach" data-crm-native-select="true" required>
+                      <option value="">Select coach</option>
+                    </select>
+                  </label>
+                  <label>
+                    Client
+                    <select name="clientId" id="admin-assignment-client" data-crm-native-select="true" required>
+                      <option value="">Select client</option>
+                    </select>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Create Assignment</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-assignment-feedback">Assignments control coach/client access across the app.</p>
+              </article>
+              <article class="card" data-crm-tone="info">
+                <h3>Current Client Roster</h3>
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Client</th>
+                        <th>Assigned Coach</th>
+                        <th>Package History</th>
+                        <th>Engagement Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-client-rows">
+                      <tr class="dashboard-table__empty-row">
+                        <td colspan="4">
+                          <div class="dashboard-table__empty">
+                            <strong>No client records yet.</strong>
+                            <p>Once onboarding starts, client assignments, package history, and engagement status will appear in this roster table.</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="info" id="admin-account-records">
+            <h2>Registration and Waiver Records</h2>
+            <p class="section-copy">
+              Pull the exact account information captured during onboarding. Client records include the linked waiver summary, signature preview, and a PDF export so the team can review or archive what was submitted without leaving the CRM.
+            </p>
+            <div class="split split--focus-left admin-account-records-layout">
+              <article class="card" data-crm-tone="info">
+                <h3>Find an account record</h3>
+                <form class="contact-form" id="admin-account-record-filter-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      Account type
+                      <select id="admin-account-record-role">
+                        <option value="all">All accounts</option>
+                        <option value="client">Clients only</option>
+                        <option value="coach">Coaches only</option>
+                      </select>
+                    </label>
+                    <label>
+                      Account
+                      <select id="admin-account-record-select">
+                        <option value="">Select account</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="section-actions section-actions--compact">
+                    <button class="btn btn-secondary" id="admin-account-record-load" type="button">Load Record</button>
+                    <button class="btn btn-ghost" id="admin-account-record-copy" type="button">Copy JSON</button>
+                    <button class="btn btn-ghost" id="admin-account-record-download" type="button">Download PDF</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="admin-account-record-feedback">
+                  Loading the account record index so registration details and signed waivers can be reviewed from this workspace.
+                </p>
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Waiver</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-account-record-rows">
+                      <tr class="dashboard-table__empty-row">
+                        <td colspan="6">
+                          <div class="dashboard-table__empty">
+                            <strong>Account records are syncing.</strong>
+                            <p>Client registrations, coach registrations, and linked waivers will appear here once the account records feed is ready.</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+
+              <article class="card" data-crm-tone="warning">
+                <h3>Selected record</h3>
+                <div class="crm-selector-summary" id="admin-account-record-summary">
+                  <p>Select a client or coach to inspect the stored registration fields and any linked waiver submission.</p>
+                </div>
+                <div class="admin-account-record-panel-grid">
+                  <section class="admin-account-record-panel">
+                    <h4>Account</h4>
+                    <div class="admin-account-record-grid" id="admin-account-record-account-grid">
+                      <p class="dashboard-note">Account identity, contact, and status details will appear here.</p>
+                    </div>
+                  </section>
+                  <section class="admin-account-record-panel">
+                    <h4>Registration</h4>
+                    <div class="admin-account-record-grid" id="admin-account-record-registration-grid">
+                      <p class="dashboard-note">Registration fields captured during onboarding will appear here.</p>
+                    </div>
+                  </section>
+                  <section class="admin-account-record-panel">
+                    <h4>Waiver / Audit</h4>
+                    <div class="admin-account-record-grid" id="admin-account-record-waiver-grid">
+                      <p class="dashboard-note">Linked waiver information and account audit details will appear here.</p>
+                    </div>
+                  </section>
+                </div>
+                <div class="admin-account-record-signature" id="admin-account-record-signature" hidden>
+                  <h4>Signature Preview</h4>
+                  <img id="admin-account-record-signature-image" alt="Stored waiver signature preview" />
+                </div>
+                <details class="admin-account-record-json-wrap">
+                  <summary>Raw account export JSON</summary>
+                  <pre class="admin-account-record-json" id="admin-account-record-json">Select a record to view the raw export.</pre>
+                </details>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="warning">
+            <h2>Coach-Issued Rewards Pending Super Admin Review</h2>
+            <p class="section-copy">
+              Approving a reward request updates the client's live XP or gym coin totals. Planner-generated items now show their source module and Codex action so you can review them without guessing where they came from.
+            </p>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Requested By</th>
+                    <th>Source</th>
+                    <th>Reward</th>
+                    <th>Reason</th>
+                    <th>Review Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-reward-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="7">
+                      <div class="dashboard-table__empty">
+                        <strong>No reward approvals pending.</strong>
+                        <p>Coach-issued reward requests will appear here when they need super-admin review before points or coins are posted.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Team</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./assets/legacy-codex-bundle.js?v=20260324a"></script>
+    <script src="./admin-dashboard.js?v=20260405coachnewsletter1"></script>
+    <script src="./admin-account-records.js?v=20260402records1"></script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XP Log | LEGACY+ Coach XP</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="coach_xp" data-disable-page-tabs="true" data-xp-coach-page="events">
+    <div class="cinematic-bg" aria-hidden="true"><div class="bg-layer bg-layer--base"></div><div class="bg-layer bg-layer--smoke"></div><div class="bg-layer bg-layer--embers"></div><div class="bg-vignette"></div></div>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view"></aside>
+      <div class="crm-content">
+        <header class="crm-page-head reveal"><div><h1>XP Log</h1><p class="dashboard-feedback" id="xp-coach-status">Loading XP event log…</p></div><div class="crm-page-meta"><p>Append-only truth. Verified events count, pending audit entries do not.</p></div></header>
+        <nav class="xp-coach-page-tabs reveal in-view" id="xp-coach-page-tabs" aria-label="Coach XP module pages"></nav>
+        <main class="dashboard-main crm-section-grid xp-coach-layout">
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Add XP Event</h2></div>
+              <form class="xp-coach-form-grid" id="xp-coach-event-form">
+                <label><span>Event Date</span><input name="event_date" required type="date" /></label>
+                <label><span>Coach</span><select id="xp-coach-event-coach-id" name="coach_id" required><option value="">Select coach</option></select></label>
+                <label><span>Action</span><select id="xp-coach-event-action-id" name="action_id" required><option value="">Select action</option></select></label>
+                <label><span>Quantity</span><input name="qty" required type="number" min="0.01" step="0.01" value="1" /></label>
+                <label><span>Verified</span><select name="verified"><option value="true">Verified</option><option value="false">Pending Audit</option></select></label>
+                <label><span>XP Override</span><input name="xp_override" type="number" min="0" placeholder="Optional" /></label>
+                <label><span>Evidence</span><input name="evidence" type="text" placeholder="Audit doc or link" /></label>
+                <label class="xp-coach-form-grid__wide"><span>Notes</span><textarea name="notes" rows="3" placeholder="What happened and why this was awarded"></textarea></label>
+                <div class="xp-coach-form-actions xp-coach-form-grid__wide"><button class="btn btn-secondary" type="submit">Log Event</button><button class="btn btn-ghost" id="xp-coach-event-reset" type="button">Clear Form</button></div>
+              </form>
+            </article>
+          </section>
+          <section class="section dashboard-section reveal">
+            <article class="crm-card">
+              <div class="xp-coach-card-head"><h2>Recent Events</h2></div>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead><tr><th>Date</th><th>Coach</th><th>Action</th><th>Bucket</th><th>XP</th><th>Status</th></tr></thead>
+                  <tbody id="xp-coach-events-table"><tr><td colspan="6">No XP events logged yet.</td></tr></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </main>
+        <footer class="site-footer"><p>LEGACY+ CRM | Coach XP Log</p><p>&copy; <span data-year></span> LEGACY+ Coaching.</p></footer>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="./coach-xp-admin.js?v=20260331xp2"></script>
+  </body>
+</html>

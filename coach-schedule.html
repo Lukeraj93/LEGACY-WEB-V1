@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Schedule | LEGACY+ Coach</title>
+    <meta name="description" content="Private coach schedule, pending booking review, and session completion queue." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="schedule">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a class="is-current" href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Schedule</span>
+            <h1>Bookings, Confirmed Sessions, and Completion Queue</h1>
+            <p class="dashboard-feedback" id="coach-dashboard-status">Syncing your live coach dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+            <p>Approving a request creates the session, and completing it triggers package usage and commission generation.</p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <article class="card" data-crm-tone="neutral">
+              <span class="kicker kicker--accent">Availability + Calendar</span>
+              <h2>Publish And Sync Your Bookable Week</h2>
+              <p class="dashboard-feedback">
+                The live calendar comes first. Manual window controls stay tucked underneath so the page feels like a schedule, not a form wall.
+              </p>
+              <div class="coach-schedule-embed" id="coach-live-availability-calendar"></div>
+              <p class="dashboard-feedback" id="coach-live-availability-feedback">
+                This preview mirrors the public website and the client booking view. Only approved sessions block slots.
+              </p>
+              <div class="account-meta-list">
+                <div class="account-meta-item">
+                  <strong>Google Calendar sync</strong>
+                  <span id="coach-calendar-sync-status">Checking Google Calendar sync status...</span>
+                </div>
+                <div class="account-meta-item">
+                  <strong>Google Account</strong>
+                  <span id="coach-calendar-email">Not connected</span>
+                </div>
+              </div>
+              <div class="section-actions">
+                <button class="btn btn-secondary" type="button" id="coach-calendar-connect">Connect Google Calendar</button>
+                <button class="btn btn-ghost" type="button" id="coach-calendar-disconnect">Disconnect</button>
+              </div>
+              <p class="dashboard-feedback" id="coach-calendar-feedback">
+                Once connected, new approved sessions and approved reschedules will update your Google Calendar automatically.
+              </p>
+
+              <details class="coach-schedule-advanced">
+                <summary>Advanced availability controls</summary>
+                <form class="contact-form" id="coach-availability-form">
+                  <div class="input-row">
+                    <label>
+                      Day
+                      <select name="dayOfWeek" id="coach-availability-day" required>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="0">Sunday</option>
+                      </select>
+                    </label>
+                    <label>
+                      Start
+                      <select
+                        name="startTime"
+                        id="coach-availability-start"
+                        data-time-slot-select
+                        data-placeholder="Choose start time"
+                        required
+                      >
+                        <option value="">Choose start time</option>
+                      </select>
+                    </label>
+                    <label>
+                      End
+                      <select
+                        name="endTime"
+                        id="coach-availability-end"
+                        data-time-slot-select
+                        data-placeholder="Choose end time"
+                        required
+                      >
+                        <option value="">Choose end time</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-primary" type="submit">Add Availability Window</button>
+                  </div>
+                </form>
+                <p class="dashboard-feedback" id="coach-availability-feedback">
+                  Clients can see these windows before they request new sessions or reschedules.
+                </p>
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Day</th>
+                        <th>Window</th>
+                        <th>Timezone</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="coach-availability-rows">
+                      <tr class="dashboard-table__empty-row">
+                        <td colspan="4">
+                          <div class="dashboard-table__empty">
+                            <strong>No availability windows published yet.</strong>
+                            <p>Add your first weekly window to make the public calendar and client booking flow usable.</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Booking Requests</span>
+            <h2>Review and Schedule Client Requests</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Client</th>
+                    <th>Request</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="coach-booking-request-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No booking requests yet.</strong>
+                        <p>New session requests will land here first so you can approve, decline, and keep the week moving.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Session Change Requests</span>
+            <h2>Client Reschedule and Cancellation Queue</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Request</th>
+                    <th>Current Session</th>
+                    <th>Requested Change</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="coach-session-change-request-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No session change requests yet.</strong>
+                        <p>Reschedule and cancellation requests will appear here when a client needs to adjust an approved session.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Upcoming Sessions</span>
+            <h2>Your Sessions and Completion Queue</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Client</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="coach-session-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>No confirmed sessions yet.</strong>
+                        <p>Approved bookings and your completion queue will appear here once the live calendar starts filling up.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Schedule</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <div id="coach-session-note-overlay" class="crm-overlay" hidden>
+      <button class="crm-overlay-backdrop" type="button" data-session-note-close aria-label="Close session note panel"></button>
+      <section class="crm-drawer coach-session-note-drawer" role="dialog" aria-modal="true" aria-labelledby="coach-session-note-title">
+        <div class="crm-drawer__head">
+          <div>
+            <p class="crm-drawer__eyebrow" id="coach-session-note-eyebrow">Session Notes</p>
+            <h2 id="coach-session-note-title">Complete session with notes</h2>
+          </div>
+          <button class="crm-icon-close" type="button" data-session-note-close aria-label="Close session note panel">×</button>
+        </div>
+        <div class="crm-drawer__body">
+          <p class="dashboard-feedback coach-session-note-intro" id="coach-session-note-intro">
+            Capture what happened in the session and what the client should do next.
+          </p>
+          <div class="coach-session-note-summary-grid" aria-label="Session summary">
+            <article class="coach-session-note-summary-card">
+              <span>Client</span>
+              <strong id="coach-session-note-client">Client</strong>
+            </article>
+            <article class="coach-session-note-summary-card">
+              <span>Session</span>
+              <strong id="coach-session-note-type">Coaching Session</strong>
+            </article>
+            <article class="coach-session-note-summary-card">
+              <span>Scheduled</span>
+              <strong id="coach-session-note-when">Awaiting confirmation</strong>
+            </article>
+            <article class="coach-session-note-summary-card">
+              <span>Note Status</span>
+              <strong id="coach-session-note-status">Pending</strong>
+            </article>
+          </div>
+          <div class="coach-session-note-callout">
+            <strong>Coach XP note window</strong>
+            <p id="coach-session-note-reward">Save notes within 24 hours of completion to qualify for COA-NOTE.</p>
+          </div>
+          <p class="coach-session-note-meta" id="coach-session-note-existing"></p>
+          <form class="contact-form coach-session-note-form" id="coach-session-note-form">
+            <label>
+              <span>Coaching takeaway</span>
+              <textarea
+                id="coach-session-note-field"
+                name="coachNote"
+                placeholder="What changed, clicked, or needed attention in this session?"
+                required
+              ></textarea>
+            </label>
+            <label>
+              <span>Next step for the client</span>
+              <textarea
+                id="coach-session-next-step-field"
+                name="nextStep"
+                placeholder="What should the client do before the next session?"
+                required
+              ></textarea>
+            </label>
+            <p class="dashboard-feedback" id="coach-session-note-feedback"></p>
+            <div class="section-actions coach-session-note-actions">
+              <button class="btn btn-ghost" type="button" data-session-note-close>Close</button>
+              <button class="btn btn-ghost" type="button" id="coach-session-note-edit" hidden>Edit Notes</button>
+              <button class="btn btn-secondary" type="submit" id="coach-session-note-submit">Save Notes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
+    <script src="./assets/coach-availability-calendar.js?v=20260401schedulefix1"></script>
+    <script src="./coach-dashboard.js?v=20260404scheduleempty1"></script>
+  </body>
+</html>

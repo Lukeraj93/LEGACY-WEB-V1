@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Leads | LEGACY+ CRM</title>
+    <meta name="description" content="LEGACY+ CRM lead capture, follow-up, conversion, messaging, and notifications." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="leads">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Private admin navigation for leads, clients, finance, operations, and platform controls.</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="./admin-dashboard.html">Home</a>
+          <a href="./admin-clients.html">TEAM</a>
+          <a class="is-current" href="./admin-leads.html">Leads</a>
+          <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-newsletter.html">Newsletter</a>
+          <a href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Lead CRM</span>
+            <h1>Capture, Follow Up, Convert, and Message</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Syncing your live admin dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <p>Website inquiry forms now write into the CRM automatically before opening WhatsApp.</p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Lead Funnel</span>
+            <h2>Track Inquiry to Conversion</h2>
+            <div class="funnel-grid funnel-grid--admin-leads">
+              <article class="funnel-column">
+                <h3>New Leads</h3>
+                <ul>
+                  <li id="admin-lead-stat-new">0 leads currently marked as new</li>
+                  <li id="admin-lead-stat-contacted">0 leads currently marked as contacted</li>
+                  <li id="admin-lead-stat-qualified">0 leads currently marked as qualified</li>
+                </ul>
+              </article>
+              <article class="funnel-column">
+                <h3>Follow-Up Stage</h3>
+                <ul>
+                  <li id="admin-lead-stat-converted">0 leads converted to clients</li>
+                  <li id="admin-lead-stat-ghosted">0 leads currently marked ghosted</li>
+                  <li id="admin-lead-stat-lost">0 leads marked lost</li>
+                  <li id="admin-lead-stat-follow-up">0 overdue follow-ups</li>
+                </ul>
+              </article>
+              <article class="funnel-column funnel-column--wide">
+                <h3>Recent Leads</h3>
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                        <th>Owner</th>
+                        <th>Next Follow-Up</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-lead-rows">
+                      <tr class="dashboard-table__empty-row">
+                        <td colspan="6">
+                          <div class="dashboard-table__empty">
+                            <strong>No leads yet.</strong>
+                            <p>New website enquiries, consult captures, and imported prospects will appear here as soon as they enter the funnel.</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Pipeline Board</span>
+            <h2>Filter and Review the Funnel</h2>
+            <div class="lead-filter-bar">
+              <label>
+                Search Lead
+                <input type="text" id="admin-lead-search" placeholder="Name, email, phone, or notes" />
+              </label>
+              <label>
+                Status
+                <select id="admin-lead-filter-status">
+                  <option value="all">All statuses</option>
+                  <option value="new">New</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="qualified">Qualified</option>
+                  <option value="ghosted">Ghosted</option>
+                  <option value="converted">Converted</option>
+                  <option value="lost">Lost</option>
+                </select>
+              </label>
+              <label>
+                Source
+                <select id="admin-lead-filter-source">
+                  <option value="all">All sources</option>
+                </select>
+              </label>
+            </div>
+            <div class="lead-board" id="admin-lead-board"></div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Notifications</span>
+            <h2>Automatic Alerts from Website Leads and Payments</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-notification-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>No notifications yet.</strong>
+                        <p>Automated lead, payment, and pipeline alerts will appear here once the activity stream starts moving.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Follow-Up Queue</span>
+            <h2>Overdue and Upcoming Follow-Ups</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Lead</th>
+                    <th>Status</th>
+                    <th>Owner</th>
+                    <th>Source</th>
+                    <th>Next Follow-Up</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-overdue-follow-up-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>No follow-ups in queue right now.</strong>
+                        <p>Overdue and upcoming follow-ups will stay visible here once your live lead pipeline starts scheduling them.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">CRM Actions</span>
+            <h2>Create Leads, Follow Ups, and Conversions</h2>
+            <div class="split">
+              <article class="card">
+                <h3>Create Lead</h3>
+                <form class="contact-form" id="admin-lead-form">
+                  <div class="input-row">
+                    <label>
+                      Full Name
+                      <input type="text" name="fullName" required />
+                    </label>
+                    <label>
+                      Source
+                      <input type="text" name="source" placeholder="Instagram, referral, walk-in" />
+                    </label>
+                  </div>
+                  <div class="input-row">
+                    <label>
+                      Email
+                      <input type="email" name="email" placeholder="lead@example.com" />
+                    </label>
+                    <label>
+                      Phone
+                      <input type="text" name="phone" placeholder="+60..." />
+                    </label>
+                  </div>
+                  <div class="input-row">
+                    <label>
+                      Owner
+                      <select name="ownerId" id="admin-lead-owner">
+                        <option value="">Unassigned</option>
+                      </select>
+                    </label>
+                    <label>
+                      Next Follow-Up
+                      <input type="datetime-local" name="nextFollowUpAt" />
+                    </label>
+                  </div>
+                  <label>
+                    Notes
+                    <textarea name="notes" placeholder="Context from the inquiry, goals, objections, or preferred contact time"></textarea>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Create Lead</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-lead-feedback">New leads land in the CRM and can be worked forward into follow-ups and conversions.</p>
+              </article>
+
+              <article class="card">
+                <h3>Log Follow-Up</h3>
+                <form class="contact-form" id="admin-follow-up-form">
+                  <label>
+                    Lead
+                    <select name="leadId" id="admin-follow-up-lead" required>
+                      <option value="">Select lead</option>
+                    </select>
+                  </label>
+                  <div class="input-row">
+                    <label>
+                      Activity Type
+                      <select name="activityType" required>
+                        <option value="call">Call</option>
+                        <option value="email">Email</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="note">Note</option>
+                      </select>
+                    </label>
+                    <label>
+                      Lead Status
+                      <select name="status" required>
+                        <option value="new">New</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="qualified">Qualified</option>
+                        <option value="ghosted">Ghosted</option>
+                        <option value="converted">Converted</option>
+                        <option value="lost">Lost</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row">
+                    <label>
+                      Owner
+                      <select name="ownerId" id="admin-follow-up-owner">
+                        <option value="">Unassigned</option>
+                      </select>
+                    </label>
+                    <label>
+                      Next Follow-Up
+                      <input type="datetime-local" name="nextFollowUpAt" />
+                    </label>
+                  </div>
+                  <label>
+                    Follow-Up Notes
+                    <textarea name="notes" placeholder="Outcome of the follow-up, objections, next step, or scheduling detail" required></textarea>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Save Follow-Up</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-follow-up-feedback">Each follow-up writes to the lead activity log and updates the lead record.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <div class="split">
+              <article class="card">
+                <h3>Convert Lead to Client</h3>
+                <form class="contact-form" id="admin-convert-lead-form">
+                  <label>
+                    Lead
+                    <select name="leadId" id="admin-convert-lead" required>
+                      <option value="">Select lead</option>
+                    </select>
+                  </label>
+                  <div class="input-row">
+                    <label>
+                      Assign Coach
+                      <select name="coachId" id="admin-convert-coach">
+                        <option value="">No coach yet</option>
+                      </select>
+                    </label>
+                    <label>
+                      Temporary Password
+                      <input type="text" name="temporaryPassword" value="Legacy123!" required />
+                    </label>
+                  </div>
+                  <button class="btn btn-secondary" type="submit">Convert Lead</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-convert-feedback">Conversion creates the client account, marks the lead converted, and can assign a coach immediately.</p>
+              </article>
+
+              <article class="card">
+                <h3>Lead Messaging</h3>
+                <form class="contact-form" id="admin-lead-message-form">
+                  <label>
+                    Lead
+                    <select name="leadId" id="admin-lead-message-lead" required>
+                      <option value="">Select lead</option>
+                    </select>
+                  </label>
+                  <div class="input-row">
+                    <label>
+                      Channel
+                      <select name="channel" required>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="email">Email</option>
+                        <option value="note">Internal Note</option>
+                      </select>
+                    </label>
+                    <label>
+                      Subject
+                      <input type="text" name="subject" placeholder="Optional subject or message title" />
+                    </label>
+                  </div>
+                  <label>
+                    Message
+                    <textarea name="message" placeholder="Write the follow-up message, outreach note, or conversation summary." required></textarea>
+                  </label>
+                  <button class="btn btn-secondary" type="submit">Log Message</button>
+                </form>
+                <p class="dashboard-feedback" id="admin-lead-message-feedback">WhatsApp and email actions open a draft and log the activity in the CRM at the same time.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Activity Log</span>
+            <h2>Recent Lead Activity</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Lead</th>
+                    <th>Actor</th>
+                    <th>Type</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-lead-activity-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>No lead activity yet.</strong>
+                        <p>Logged notes, follow-up updates, and conversion events will appear here once the selected lead starts moving through the funnel.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Leads</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./admin-dashboard.js?v=20260405coachnewsletter1"></script>
+  </body>
+</html>

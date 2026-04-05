@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client XP Admin | LEGACY+</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./xp-module.css?v=20260325xpclient1" />
+  </head>
+  <body class="xp-module-body" data-required-role="super_admin" data-live-dashboard="admin" data-account-page="client_xp" data-disable-page-tabs="true" data-xp-module-page="admin">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="../admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Loading your admin workspace navigation...</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="../admin-dashboard.html">Home</a>
+          <a href="../admin-clients.html">TEAM</a>
+          <a class="is-current" href="./admin.html">Client XP</a>
+          <a href="../admin-leads.html">Leads</a>
+          <a href="../admin-financials.html">Financials</a>
+          <a href="../admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Client XP Control Room</h1>
+            <p class="dashboard-feedback">Client XP admin tools now sit inside the same CRM shell as the rest of the admin workspace.</p>
+          </div>
+          <div class="crm-page-meta xp-module-access">
+            <p>Signed in as <strong data-xp-access-email>Checking session…</strong></p>
+            <p data-xp-role-text>Super admin access required.</p>
+          </div>
+        </header>
+
+        <p class="xp-module-status" id="xp-module-status">Loading client XP control room…</p>
+
+        <main class="dashboard-main crm-section-grid xp-module-shell">
+      <section class="xp-module-kpis" id="xp-admin-kpis"></section>
+
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <h2>Import Bundle</h2>
+          <p>Import rules from the bundle and optionally seed members and QuickLog rows from the workbook.</p>
+          <form class="xp-module-form" id="xp-import-form">
+            <label><span>Workbook import</span><select name="includeWorkbook"><option value="true">Include workbook rows if present</option><option value="false">Rules only</option></select></label>
+            <div class="xp-module-form-actions"><button class="btn btn-secondary" type="submit">Run Import</button></div>
+          </form>
+        </article>
+
+        <article class="xp-module-card">
+          <h2>Create Member</h2>
+          <p>Create or update a member record before a public profile exists.</p>
+          <form class="xp-module-form xp-module-form--two" id="xp-member-form">
+            <label><span>Member ID</span><input name="member_id" placeholder="LGC001" required type="text" /></label>
+            <label><span>Name</span><input name="name" placeholder="Client full name" required type="text" /></label>
+            <label><span>Mode</span><select name="mode"><option>Quest</option><option>Classic</option></select></label>
+            <label><span>Status</span><select name="status"><option>Active</option><option>Inactive</option></select></label>
+            <div class="xp-module-form-actions xp-module-form__wide"><button class="btn btn-secondary" type="submit">Save Member</button></div>
+          </form>
+        </article>
+      </section>
+
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <h2>Link Member To Profile</h2>
+          <p>Attach a newly registered client profile to an existing XP member record.</p>
+          <form class="xp-module-form" id="xp-link-form">
+            <label><span>Member</span><select id="xp-link-member-id" name="member_id"></select></label>
+            <label><span>Client profile</span><select id="xp-link-profile-id" name="profile_id"></select></label>
+            <div class="xp-module-form-actions"><button class="btn btn-secondary" type="submit">Link Profile</button></div>
+          </form>
+        </article>
+
+        <article class="xp-module-card">
+          <h2>Action Editor</h2>
+          <p>Read-only by default conceptually, but available here for super admin bundle correction if needed.</p>
+          <form class="xp-module-form xp-module-form--two" id="xp-action-form">
+            <label><span>Action ID</span><input name="action_id" required type="text" /></label>
+            <label><span>Display Name</span><input name="display_name" required type="text" /></label>
+            <label><span>Category</span><input name="category" required type="text" /></label>
+            <label><span>Earn Type</span><select name="earn_type"><option>Routine</option><option>Milestone</option><option>Achievement</option><option>Boss</option></select></label>
+            <label><span>XP</span><input name="xp" min="0" required type="number" /></label>
+            <label><span>Coins</span><input name="coins" min="0" required type="number" /></label>
+            <label class="xp-module-form__wide"><span>Status</span><select name="is_active"><option value="true">Active</option><option value="false">Inactive</option></select></label>
+            <div class="xp-module-form-actions xp-module-form__wide"><button class="btn btn-secondary" type="submit">Save Action</button></div>
+          </form>
+        </article>
+      </section>
+
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <h2>Redeem Coins</h2>
+          <p>Only super admin can create redemptions.</p>
+          <form class="xp-module-form" id="xp-redemption-form">
+            <label><span>Member</span><select id="xp-redeem-member-id" name="member_id"></select></label>
+            <label><span>Coins</span><input name="coins" min="1" required type="number" /></label>
+            <label><span>Reward Name</span><input name="reward_name" required type="text" /></label>
+            <label><span>Notes</span><textarea name="notes"></textarea></label>
+            <div class="xp-module-form-actions"><button class="btn btn-secondary" type="submit">Redeem Coins</button></div>
+          </form>
+        </article>
+        <article class="xp-module-card">
+          <h2>Recent Redemptions</h2>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Member</th><th>Coins</th><th>Reward</th><th>Redeemed</th></tr></thead>
+              <tbody id="xp-redemptions-table"><tr><td colspan="4" class="xp-module-empty">No redemptions yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="xp-module-card">
+        <h2>Members</h2>
+        <div class="xp-module-table-wrap">
+          <table class="xp-module-table">
+            <thead><tr><th>Member ID</th><th>Name</th><th>Mode</th><th>Status</th><th>Profile</th></tr></thead>
+            <tbody id="xp-members-table"><tr><td colspan="5" class="xp-module-empty">No members yet.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="xp-module-grid xp-module-grid--two">
+        <article class="xp-module-card">
+          <h2>Actions</h2>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Action</th><th>Earn Type</th><th>XP</th><th>Coins</th></tr></thead>
+              <tbody id="xp-actions-table"><tr><td colspan="4" class="xp-module-empty">No actions imported yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="xp-module-card">
+          <h2>Ledger</h2>
+          <div class="xp-module-table-wrap">
+            <table class="xp-module-table">
+              <thead><tr><th>Member</th><th>Level</th><th>Total XP</th><th>Coins</th><th>Balance</th></tr></thead>
+              <tbody id="xp-ledger-table"><tr><td colspan="5" class="xp-module-empty">No ledger data yet.</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="../account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="../dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./xp-module.js?v=20260329xpclient3"></script>
+  </body>
+</html>

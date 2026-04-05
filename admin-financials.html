@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Financials | LEGACY+ CRM</title>
+    <meta name="description" content="LEGACY+ CRM financials, package purchase history, and commission review." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
+  </head>
+  <body
+    data-required-role="super_admin"
+    data-live-dashboard="admin"
+    data-account-page="financials"
+    data-disable-page-tabs="true"
+  >
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Private admin navigation for leads, clients, finance, operations, and platform controls.</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="./admin-dashboard.html">Home</a>
+          <a href="./admin-clients.html">TEAM</a>
+          <a href="./admin-leads.html">Leads</a>
+          <a class="is-current" href="./admin-financials.html">Financials</a>
+          <a href="./admin-newsletter.html">Newsletter</a>
+          <a href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <h1>Payments Workspace</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Syncing your live admin dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <p>Orders, collections, payouts, customer value, and OPEX are consolidated here.</p>
+          </div>
+        </header>
+
+        <nav class="hitpay-finance-nav reveal in-view" id="admin-finance-nav" aria-label="Payments workspace navigation">
+          <div class="hitpay-finance-nav__group">
+            <p class="hitpay-finance-nav__label">Payments</p>
+            <div class="hitpay-finance-nav__row">
+              <button class="hitpay-finance-nav__button is-active" type="button" data-finance-panel-target="overview">
+                Overview
+              </button>
+              <button class="hitpay-finance-nav__button" type="button" data-finance-panel-target="transactions">
+                Transactions
+              </button>
+              <button class="hitpay-finance-nav__button" type="button" data-finance-panel-target="reports">
+                Reports
+              </button>
+              <button class="hitpay-finance-nav__button" type="button" data-finance-panel-target="payouts">
+                Payouts &amp; Balances
+              </button>
+              <button class="hitpay-finance-nav__button" type="button" data-finance-panel-target="customers">
+                Customers
+              </button>
+            </div>
+          </div>
+
+          <div class="hitpay-finance-nav__group">
+            <p class="hitpay-finance-nav__label">Operations</p>
+            <div class="hitpay-finance-nav__row">
+              <button class="hitpay-finance-nav__button" type="button" data-finance-panel-target="opex">
+                OPEX &amp; Costs
+              </button>
+            </div>
+          </div>
+
+          <div class="hitpay-finance-nav__note">
+            This workspace reads live orders, payments, packages, coach commissions, lead attribution, and the
+            editable cost ledger.
+          </div>
+        </nav>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal hitpay-finance-workspace">
+            <div class="hitpay-finance-shell">
+              <div class="hitpay-finance-content">
+                <section class="hitpay-finance-panel is-active" data-finance-panel="overview">
+                  <div class="hitpay-panel-head">
+                    <div>
+                      <h2>Overview</h2>
+                      <p>Read the business quickly: money in, money owed out, and the most recent movement.</p>
+                    </div>
+                    <div class="hitpay-panel-pill-row" id="admin-financial-overview-range">
+                      <button
+                        class="hitpay-panel-pill hitpay-panel-pill--active"
+                        type="button"
+                        data-finance-overview-range="30d"
+                        aria-pressed="true"
+                      >
+                        30d
+                      </button>
+                      <button
+                        class="hitpay-panel-pill"
+                        type="button"
+                        data-finance-overview-range="live"
+                        aria-pressed="false"
+                      >
+                        Live
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-kpi-grid">
+                    <article class="hitpay-kpi-card">
+                      <span id="admin-financial-overview-sales-label">Sales last 30 days</span>
+                      <strong id="admin-financial-overview-month-sales">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span id="admin-financial-overview-net-label">Net collected last 30 days</span>
+                      <strong id="admin-financial-overview-month-net">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span id="admin-financial-overview-pipeline-label">Pending pipeline</span>
+                      <strong id="admin-financial-overview-pipeline">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span id="admin-financial-overview-payout-label">Coach payout liability</span>
+                      <strong id="admin-financial-overview-payout">RM 0.00</strong>
+                    </article>
+                  </div>
+
+                  <article class="hitpay-surface hitpay-surface--wide">
+                      <div class="hitpay-surface__head">
+                        <h3>Recent Transactions</h3>
+                      </div>
+                      <div class="dashboard-table-wrap hitpay-table-wrap">
+                        <table class="dashboard-table hitpay-table">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Client</th>
+                              <th>Method</th>
+                              <th>Amount</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody id="admin-financial-recent-rows">
+                            <tr class="dashboard-table__empty-row">
+                              <td colspan="5">
+                                <div class="dashboard-table__empty">
+                                  <strong>No transactions yet.</strong>
+                                  <p>Recent orders, package payments, and financial movement will appear here once live revenue starts posting.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  </article>
+
+                  <article class="hitpay-surface">
+                    <div class="hitpay-surface__head">
+                      <h3>Your Sales</h3>
+                      <span class="hitpay-surface__hint" id="admin-financial-sales-hint">Last 30 days</span>
+                    </div>
+                    <div id="admin-financial-chart-sales-overview" class="metric-viz-slot"></div>
+                  </article>
+
+                  <div class="hitpay-grid hitpay-grid--two">
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Sales by Payment Method</h3>
+                      </div>
+                      <div id="admin-financial-chart-payment-method-overview" class="metric-viz-slot"></div>
+                    </article>
+
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Recent Payouts</h3>
+                      </div>
+                      <div class="dashboard-table-wrap hitpay-table-wrap">
+                        <table class="dashboard-table hitpay-table">
+                          <thead>
+                            <tr>
+                              <th>Initiated</th>
+                              <th>Coach</th>
+                              <th>Amount</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody id="admin-financial-recent-payout-rows">
+                            <tr class="dashboard-table__empty-row">
+                              <td colspan="4">
+                                <div class="dashboard-table__empty">
+                                  <strong>No payouts yet.</strong>
+                                  <p>Coach payouts and settlement records will appear here once the first approved payout cycle is processed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </article>
+                  </div>
+
+                  <p class="dashboard-feedback hitpay-feedback" id="admin-financial-feedback"></p>
+                </section>
+
+                <section class="hitpay-finance-panel" data-finance-panel="transactions" hidden>
+                  <div class="hitpay-panel-head">
+                    <div>
+                      <h2>Transactions</h2>
+                      <p>Review every package and store charge with refund control in one clean table.</p>
+                    </div>
+                    <div class="hitpay-panel-actions">
+                      <div class="hitpay-chip-group" id="admin-financial-transaction-filters">
+                        <button class="hitpay-chip-button is-active" type="button" data-finance-transaction-status="all">
+                          All
+                        </button>
+                        <button class="hitpay-chip-button" type="button" data-finance-transaction-status="paid">
+                          Succeeded
+                        </button>
+                        <button class="hitpay-chip-button" type="button" data-finance-transaction-status="refunded">
+                          Refunded
+                        </button>
+                      </div>
+                      <button class="btn btn-secondary" id="admin-export-orders" type="button">Export</button>
+                    </div>
+                  </div>
+
+                  <div class="dashboard-table-wrap hitpay-table-wrap">
+                    <table class="dashboard-table hitpay-table">
+                      <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Charge ID</th>
+                            <th>Amount</th>
+                            <th>Fees</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Documents</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                      <tbody id="admin-financial-rows">
+                        <tr class="dashboard-table__empty-row">
+                          <td colspan="9">
+                            <div class="dashboard-table__empty">
+                              <strong>No orders or payments yet.</strong>
+                              <p>Package orders, payment status, and document links will appear here once transactions start moving through the system.</p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+
+                <section class="hitpay-finance-panel" data-finance-panel="reports" hidden>
+                  <div class="hitpay-panel-head">
+                    <div>
+                      <h2>Reports</h2>
+                      <p>Filter the reporting window and read gross sales, refunds, fees, and net collected clearly.</p>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-report-filter-bar">
+                    <label>
+                      <span>From</span>
+                      <input type="date" id="admin-report-from" />
+                    </label>
+                    <label>
+                      <span>To</span>
+                      <input type="date" id="admin-report-to" />
+                    </label>
+                    <label>
+                      <span>Currency</span>
+                      <select id="admin-report-currency">
+                        <option value="MYR">MYR</option>
+                      </select>
+                    </label>
+                    <label>
+                      <span>Channel</span>
+                      <select id="admin-report-order-type">
+                        <option value="all">All channels</option>
+                        <option value="package">Packages</option>
+                        <option value="merch">Merch</option>
+                      </select>
+                    </label>
+                    <div class="hitpay-report-filter-bar__actions">
+                      <button class="btn btn-ghost" type="button" id="admin-report-view-transactions">
+                        View transactions
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-report-summary">
+                    <div class="hitpay-report-summary__head">
+                      <div>
+                        <h3>Payments Summary</h3>
+                        <p>
+                          General overview of sales within the selected range, including gross sales, refunds, net
+                          sales, fees, and net collected.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="hitpay-report-summary__table">
+                      <div><span>Gross Sales</span><strong id="admin-report-gross-sales">RM 0.00</strong></div>
+                      <div><span>Refunds</span><strong id="admin-report-refunds">RM 0.00</strong></div>
+                      <div><span>Net Sales</span><strong id="admin-report-net-sales">RM 0.00</strong></div>
+                      <div><span>Gateway Fees</span><strong id="admin-report-fees">RM 0.00</strong></div>
+                      <div class="is-highlight"><span>Net Collected</span><strong id="admin-report-net-collected">RM 0.00</strong></div>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-grid hitpay-grid--two">
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Payment Status</h3>
+                      </div>
+                      <div id="admin-financial-chart-payment-status" class="metric-viz-slot"></div>
+                    </article>
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Revenue by Source</h3>
+                      </div>
+                      <div id="admin-financial-chart-source" class="metric-viz-slot"></div>
+                    </article>
+                  </div>
+
+                  <div class="hitpay-grid hitpay-grid--two">
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Coach Delivered Revenue</h3>
+                      </div>
+                      <div id="admin-financial-chart-coach-revenue" class="metric-viz-slot"></div>
+                    </article>
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Deferred Revenue Aging</h3>
+                      </div>
+                      <div id="admin-financial-chart-liability-aging" class="metric-viz-slot"></div>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="hitpay-finance-panel" data-finance-panel="payouts" hidden>
+                  <div class="hitpay-panel-head">
+                    <div>
+                      <h2>Payouts &amp; Balances</h2>
+                      <p>Track coach commission payouts, what is approved, and what is still waiting to be paid.</p>
+                    </div>
+                    <div class="hitpay-panel-actions">
+                      <button class="btn btn-secondary" id="admin-export-commissions" type="button">
+                        Export Payout CSV
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-kpi-grid">
+                    <article class="hitpay-kpi-card">
+                      <span>Pending</span>
+                      <strong id="admin-commission-pending">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Approved</span>
+                      <strong id="admin-commission-approved">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Paid</span>
+                      <strong id="admin-commission-paid">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Open booking requests</span>
+                      <strong id="admin-booking-requests">0</strong>
+                    </article>
+                  </div>
+
+                  <article class="hitpay-surface">
+                    <div class="hitpay-surface__head">
+                      <h3>Payout queue</h3>
+                      <span class="hitpay-surface__hint">Approve, reject, or mark coach payouts paid</span>
+                    </div>
+                    <div class="dashboard-table-wrap hitpay-table-wrap">
+                      <table class="dashboard-table hitpay-table">
+                        <thead>
+                          <tr>
+                            <th>Coach</th>
+                            <th>Payout Month</th>
+                            <th>Reference</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="admin-commission-rows">
+                          <tr class="dashboard-table__empty-row">
+                            <td colspan="6">
+                              <div class="dashboard-table__empty">
+                                <strong>No commission records yet.</strong>
+                                <p>Coach commission rows will appear here once approved sessions and payable revenue start accumulating.</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </article>
+                </section>
+
+                <section class="hitpay-finance-panel" data-finance-panel="customers" hidden>
+                  <div class="hitpay-panel-head">
+                    <div>
+                      <h2>Customers</h2>
+                      <p>See client status, package balance, and purchase history in one cleaner customer view.</p>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-kpi-grid">
+                    <article class="hitpay-kpi-card">
+                      <span>Total clients</span>
+                      <strong id="admin-financial-customers-total">0</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Active assigned clients</span>
+                      <strong id="admin-financial-customers-active">0</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Converted leads</span>
+                      <strong id="admin-financial-customers-converted">0</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Lifetime paid sales</span>
+                      <strong id="admin-financial-customers-revenue">RM 0.00</strong>
+                    </article>
+                  </div>
+
+                  <article class="hitpay-surface">
+                    <div class="hitpay-surface__head">
+                      <h3>Customer directory</h3>
+                    </div>
+                    <div class="dashboard-table-wrap hitpay-table-wrap">
+                      <table class="dashboard-table hitpay-table">
+                        <thead>
+                          <tr>
+                            <th>Client</th>
+                            <th>Goal</th>
+                            <th>Status</th>
+                            <th>Active Package</th>
+                            <th>Sessions Left</th>
+                            <th>Lifetime Paid</th>
+                          </tr>
+                        </thead>
+                        <tbody id="admin-finance-customer-rows">
+                          <tr class="dashboard-table__empty-row">
+                            <td colspan="6">
+                              <div class="dashboard-table__empty">
+                                <strong>No customer data yet.</strong>
+                                <p>Customer rollups, payment totals, and package ownership will appear here once the billing history has live records to summarize.</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </article>
+
+                  <article class="hitpay-surface">
+                    <div class="hitpay-surface__head">
+                      <h3>Package purchase history</h3>
+                    </div>
+                    <div class="dashboard-table-wrap hitpay-table-wrap">
+                      <table class="dashboard-table hitpay-table">
+                        <thead>
+                          <tr>
+                            <th>Purchase Date</th>
+                            <th>Client</th>
+                            <th>Package</th>
+                            <th>Session Balance</th>
+                            <th>Order Total</th>
+                            <th>Payment</th>
+                            <th>Package Status</th>
+                          </tr>
+                        </thead>
+                        <tbody id="admin-package-purchase-rows">
+                          <tr class="dashboard-table__empty-row">
+                            <td colspan="7">
+                              <div class="dashboard-table__empty">
+                                <strong>No package purchases yet.</strong>
+                                <p>Package-by-package sales detail will appear here after the first completed purchase enters the billing ledger.</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </article>
+                </section>
+
+                <section class="hitpay-finance-panel" data-finance-panel="opex" hidden>
+                  <div class="hitpay-panel-head">
+                    <div>
+                      <h2>OPEX &amp; Costs</h2>
+                      <p>Budget planning and the editable operating cost ledger sit together here.</p>
+                    </div>
+                  </div>
+
+                  <div class="hitpay-kpi-grid">
+                    <article class="hitpay-kpi-card">
+                      <span>Annual OPEX budget</span>
+                      <strong id="admin-financial-opex-annual">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Monthly OPEX run-rate</span>
+                      <strong id="admin-financial-opex-monthly">RM 0.00</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Coverage vs budget</span>
+                      <strong id="admin-financial-opex-coverage">0%</strong>
+                    </article>
+                    <article class="hitpay-kpi-card">
+                      <span>Operating result estimate</span>
+                      <strong id="admin-financial-opex-operating">RM 0.00</strong>
+                    </article>
+                  </div>
+
+                  <div class="hitpay-grid hitpay-grid--two">
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Imported OPEX category mix</h3>
+                      </div>
+                      <div id="admin-financial-chart-opex-category" class="metric-viz-slot"></div>
+                    </article>
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Imported monthly OPEX plan</h3>
+                      </div>
+                      <div id="admin-financial-chart-opex-monthly" class="metric-viz-slot"></div>
+                    </article>
+                  </div>
+
+                  <article class="hitpay-surface">
+                    <div class="hitpay-inline-kpi-grid">
+                      <div>
+                        <span>Largest fixed category</span>
+                        <strong id="admin-financial-opex-largest">No OPEX file loaded</strong>
+                      </div>
+                      <div>
+                        <span>Peak budget month</span>
+                        <strong id="admin-financial-opex-peak">No month profile</strong>
+                      </div>
+                    </div>
+                    <p class="dashboard-feedback hitpay-feedback" id="admin-financial-opex-note">
+                      Imported OPEX notes will appear here after the financial summary loads.
+                    </p>
+                  </article>
+
+                  <div class="hitpay-grid hitpay-grid--two hitpay-grid--align-start">
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Operating Cost Inputs</h3>
+                        <span class="hitpay-surface__hint">Edit payroll, consumables, and variable costs</span>
+                      </div>
+                      <form class="contact-form hitpay-form" id="admin-operating-cost-form">
+                        <input type="hidden" id="admin-operating-cost-id" name="entry_id" />
+                        <label>
+                          Month
+                          <input type="month" id="admin-operating-cost-month" name="period_month" required />
+                        </label>
+                        <label>
+                          Cost Group
+                          <select id="admin-operating-cost-group" name="cost_group" required>
+                            <option value="">Select cost group</option>
+                            <option value="payroll">Payroll</option>
+                            <option value="variable_cost">Variable Cost</option>
+                            <option value="consumables">Consumables</option>
+                            <option value="facility">Facility</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="software">Software</option>
+                            <option value="admin">Admin</option>
+                            <option value="tax_legal">Tax / Legal</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </label>
+                        <label>
+                          Category / Label
+                          <input
+                            type="text"
+                            id="admin-operating-cost-category"
+                            name="category"
+                            placeholder="eg. Coach payroll, Meta ads, protein shakes"
+                            required
+                          />
+                        </label>
+                        <label>
+                          Amount (RM)
+                          <input type="number" id="admin-operating-cost-amount" name="amount_rm" min="0" step="0.01" required />
+                        </label>
+                        <label>
+                          Notes
+                          <textarea
+                            id="admin-operating-cost-notes"
+                            name="notes"
+                            rows="3"
+                            placeholder="Optional context for this line item"
+                          ></textarea>
+                        </label>
+                        <div class="section-actions">
+                          <button class="btn btn-secondary" type="submit">Save Cost Entry</button>
+                          <button class="btn btn-ghost" type="button" id="admin-operating-cost-reset">Clear Form</button>
+                        </div>
+                        <p class="dashboard-feedback hitpay-feedback" id="admin-operating-cost-feedback">
+                          Add month-by-month actual cost entries here. These drive the operating cost ledger on this page.
+                        </p>
+                      </form>
+                    </article>
+
+                    <article class="hitpay-surface">
+                      <div class="hitpay-surface__head">
+                        <h3>Actual Ledger Summary</h3>
+                      </div>
+                      <div class="hitpay-kpi-grid hitpay-kpi-grid--compact">
+                        <article class="hitpay-kpi-card">
+                          <span>Current month actual</span>
+                          <strong id="admin-operating-cost-current">RM 0.00</strong>
+                        </article>
+                        <article class="hitpay-kpi-card">
+                          <span>Year-to-date actual</span>
+                          <strong id="admin-operating-cost-ytd">RM 0.00</strong>
+                        </article>
+                        <article class="hitpay-kpi-card">
+                          <span>Current month result</span>
+                          <strong id="admin-operating-cost-result">RM 0.00</strong>
+                        </article>
+                        <article class="hitpay-kpi-card">
+                          <span>Actual vs budget</span>
+                          <strong id="admin-operating-cost-budget-variance">RM 0.00</strong>
+                        </article>
+                      </div>
+                      <div class="hitpay-grid hitpay-grid--two">
+                        <div id="admin-operating-cost-chart-group" class="metric-viz-slot"></div>
+                        <div id="admin-operating-cost-chart-monthly" class="metric-viz-slot"></div>
+                      </div>
+                    </article>
+                  </div>
+
+                  <article class="hitpay-surface">
+                    <div class="hitpay-surface__head">
+                      <h3>Operating Cost Ledger</h3>
+                    </div>
+                    <div class="hitpay-ledger-toolbar">
+                      <label>
+                        <span>Month</span>
+                        <select id="admin-operating-cost-filter-month">
+                          <option value="all">All months</option>
+                        </select>
+                      </label>
+                      <label>
+                        <span>Group</span>
+                        <select id="admin-operating-cost-filter-group">
+                          <option value="all">All groups</option>
+                        </select>
+                      </label>
+                      <label>
+                        <span>Search</span>
+                        <input type="search" id="admin-operating-cost-filter-query" placeholder="Category or notes" />
+                      </label>
+                      <div class="hitpay-ledger-toolbar__meta" id="admin-operating-cost-ledger-meta">
+                        Showing 0 of 0 entries
+                      </div>
+                    </div>
+                    <div class="dashboard-table-wrap hitpay-table-wrap">
+                      <table class="dashboard-table hitpay-table">
+                        <thead>
+                          <tr>
+                            <th>Month</th>
+                            <th>Group</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="admin-operating-cost-rows">
+                          <tr class="dashboard-table__empty-row">
+                            <td colspan="6">
+                              <div class="dashboard-table__empty">
+                                <strong>No operating cost entries yet.</strong>
+                                <p>Tracked operating expenses will appear here once the finance team starts logging overhead into the dashboard.</p>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="hitpay-ledger-pagination">
+                      <button class="btn btn-ghost" type="button" id="admin-operating-cost-prev">Previous</button>
+                      <p id="admin-operating-cost-page-info">Page 1 of 1</p>
+                      <button class="btn btn-ghost" type="button" id="admin-operating-cost-next">Next</button>
+                    </div>
+                  </article>
+                </section>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Financials</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./admin-dashboard.js?v=20260405coachnewsletter1"></script>
+  </body>
+</html>

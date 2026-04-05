@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client XP Module | LEGACY+</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css?v=20260402deployready1" />
+    <link rel="stylesheet" href="./xp-module.css?v=20260325xpclient1" />
+  </head>
+  <body class="xp-module-body" data-xp-module-page="menu">
+    <main class="xp-module-shell">
+      <section class="xp-module-hero">
+        <div class="xp-module-hero__head">
+          <div>
+            <span class="kicker kicker--accent">Client XP Module</span>
+            <h1>LEGACY+ XP Operations</h1>
+            <p>Safe additive module for member XP, actions, append-only events, ledger summaries, and coin redemption.</p>
+          </div>
+          <div class="xp-module-access">
+            <p>Signed in as <strong data-xp-access-email>Checking session…</strong></p>
+            <p id="xp-module-role-note">Detecting role access…</p>
+          </div>
+        </div>
+        <nav class="xp-module-nav">
+          <a class="is-current" href="./index.html">Menu</a>
+          <a href="./admin.html" data-role-visibility="super_admin">Super Admin</a>
+          <a href="./staff.html" data-role-visibility="coach,super_admin">Coach / Staff</a>
+          <a href="./client.html" data-role-visibility="client,coach,super_admin">Client</a>
+        </nav>
+      </section>
+
+      <section class="xp-module-grid xp-module-grid--three">
+        <article class="xp-module-card" data-role-visibility="super_admin">
+          <span class="xp-module-pill">Super Admin</span>
+          <h2>Import + Control</h2>
+          <p>Import the bundle once, create members, link profiles, inspect the ledger, and redeem coins.</p>
+          <div class="xp-module-form-actions" style="margin-top:18px;">
+            <a class="btn btn-secondary" href="./admin.html">Open Admin Module</a>
+          </div>
+        </article>
+        <article class="xp-module-card" data-role-visibility="coach,super_admin">
+          <span class="xp-module-pill">Coach / Staff</span>
+          <h2>Log Events</h2>
+          <p>Pick a member, log a verified or pending event, and review weekly or ledger movement.</p>
+          <div class="xp-module-form-actions" style="margin-top:18px;">
+            <a class="btn btn-secondary" href="./staff.html">Open Staff Module</a>
+          </div>
+        </article>
+        <article class="xp-module-card" data-role-visibility="client,coach,super_admin">
+          <span class="xp-module-pill">Client</span>
+          <h2>Personal View</h2>
+          <p>Read-only view of your own linked XP record, level progress, and coin movement.</p>
+          <div class="xp-module-form-actions" style="margin-top:18px;">
+            <a class="btn btn-secondary" href="./client.html">Open Client View</a>
+          </div>
+        </article>
+      </section>
+
+      <p class="xp-module-status" id="xp-module-status"></p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../auth-config.js"></script>
+    <script src="../auth-client.js?v=20260402deployready1"></script>
+    <script src="./xp-module.js?v=20260329xpclient3"></script>
+  </body>
+</html>

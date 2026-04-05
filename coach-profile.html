@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coach Profile | LEGACY+ Coach</title>
+    <meta name="description" content="Private LEGACY+ coach profile with live roster, schedule, KPI, and commission performance." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260405navrailfix1" />
+  </head>
+  <body data-required-role="coach" data-live-dashboard="coach" data-account-page="profile">
+    <script>
+      (() => {
+        try {
+          const cachedTheme = window.localStorage.getItem("legacy-coach-theme:v1");
+          if (cachedTheme) {
+            document.body.dataset.coachTheme = cachedTheme;
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./coach-dashboard.html">LEGACY<span>+</span> Coach</a>
+        <p class="crm-sidebar-copy">Private coach navigation for roster, training, nutrition, health, and schedule control.</p>
+        <nav class="crm-nav" aria-label="Coach navigation">
+          <a href="./coach-dashboard.html">Home</a>
+          <a href="./coach-clients.html">Clients</a>
+          <a href="./coach-training.html">Training</a>
+          <a href="./coach-programming.html">Nutrition</a>
+          <a href="./coach-health.html">Health</a>
+          <a href="./coach-schedule.html">Schedule</a>
+          <a href="./coach-commissions.html">Commissions</a>
+          <a class="is-current" href="./coach-profile.html">Profile</a>
+          <a href="./coach-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Coach Profile</span>
+            <h1>Live Coach Profile</h1>
+            <p class="dashboard-feedback" id="coach-dashboard-status">Syncing your live coach profile data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Your coach profile ties together roster load, session execution, KPI readiness, and payout movement.</p>
+            <p>Signed in as <strong data-account-email>coach</strong></p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid profile-page-main">
+          <section class="section dashboard-section reveal" data-crm-tone="warning" data-section-label="Profile Overview">
+            <span class="kicker kicker--accent">Coach Profile</span>
+            <h2>Identity, delivery strength, and operating readiness</h2>
+            <div class="profile-hero profile-hero--coach">
+              <article class="profile-summary-card" data-crm-tone="warning">
+                <h3 class="profile-summary-card__name" id="coach-profile-name-main">Coach</h3>
+                <p class="profile-summary-card__role" id="coach-profile-role">LEGACY+ Coach</p>
+                <p class="profile-summary-card__goal" id="coach-profile-note-main">Positioning, roster strength, and payout readiness will settle into this profile as live coaching activity builds.</p>
+                <div class="profile-metric-grid" id="coach-profile-summary-metrics">
+                  <article class="profile-metric-card">
+                    <span>Position</span>
+                    <strong>Pending</strong>
+                    <p>Assigned role appears once coach ops data syncs.</p>
+                  </article>
+                  <article class="profile-metric-card">
+                    <span>Delivery</span>
+                    <strong>Tracking</strong>
+                    <p>Completed sessions and active delivery load will settle here.</p>
+                  </article>
+                  <article class="profile-metric-card">
+                    <span>Commission Flow</span>
+                    <strong>Standby</strong>
+                    <p>Approved payout movement will populate as records are created.</p>
+                  </article>
+                  <article class="profile-metric-card">
+                    <span>Roster Coverage</span>
+                    <strong>Building</strong>
+                    <p>Linked clients and active package coverage will appear here.</p>
+                  </article>
+                </div>
+              </article>
+
+              <aside class="profile-insight-card" data-crm-tone="success">
+                <div class="profile-mini-stack">
+                  <article class="profile-mini-stat">
+                    <span>Active Clients</span>
+                    <strong id="coach-profile-active-clients">0</strong>
+                  </article>
+                  <article class="profile-mini-stat">
+                    <span>Base Rate</span>
+                    <strong id="coach-profile-rate">0%</strong>
+                  </article>
+                  <article class="profile-mini-stat">
+                    <span>This Month</span>
+                    <strong id="coach-profile-monthly-commission">RM 0.00</strong>
+                  </article>
+                  <article class="profile-mini-stat">
+                    <span>Review Due</span>
+                    <strong id="coach-profile-review-due">Not set</strong>
+                  </article>
+                </div>
+                <div class="profile-progress-card">
+                  <span class="kicker kicker--accent">Performance Board</span>
+                  <h3>How your coach profile is trending</h3>
+                  <div class="profile-bar-list profile-bar-list--tight" id="coach-profile-progress-bars"></div>
+                </div>
+              </aside>
+            </div>
+            <div class="profile-performance-strip" id="coach-profile-performance-strip">
+              <article class="profile-performance-card">
+                <span>Client Load</span>
+                <strong>Standby</strong>
+                <p>Roster coverage and package activity will surface here once the coach book is live.</p>
+              </article>
+              <article class="profile-performance-card">
+                <span>Delivery Rate</span>
+                <strong>Tracking</strong>
+                <p>Verified sessions, completion rhythm, and cadence health will update here automatically.</p>
+              </article>
+              <article class="profile-performance-card">
+                <span>Review Readiness</span>
+                <strong>Preparing</strong>
+                <p>KPI completion, hours target progress, and review timing will roll into this board.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="info" data-section-label="Roster + Sessions">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Assigned Roster</span>
+              <h2>Live client book</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Client</th>
+                      <th>Goal</th>
+                      <th>XP / Coins</th>
+                      <th>Package</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-profile-roster-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No assigned roster yet.</strong>
+                          <p>Once clients are linked to this coach, their goals, package coverage, and XP balance will surface here.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+            <article class="card" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Recent Delivery</span>
+              <h2>Session activity</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Client</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-profile-session-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No recent sessions yet.</strong>
+                          <p>Upcoming and completed delivery will appear here once the coach calendar begins moving live.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="success" data-section-label="Commission + Operations">
+            <article class="card" data-crm-tone="success">
+              <span class="kicker kicker--accent">Commission Flow</span>
+              <h2>Recent payout rows</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Client</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coach-profile-commission-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No commission rows yet.</strong>
+                          <p>Approved payout records will appear here automatically as the commission pipeline opens up.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+            <article class="card" data-crm-tone="alert">
+              <span class="kicker kicker--accent">Operational Notes</span>
+              <h2>Live KPI and calendar status</h2>
+              <ul class="dashboard-list" id="coach-profile-ops-list">
+                <li>Calendar connection status, quarterly review timing, and promotion-readiness notes will appear here.</li>
+              </ul>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">Coach Leaderboard</span>
+            <h2>Quarter-to-date coach standings</h2>
+            <div class="leaderboard-panel">
+              <p class="leaderboard-panel__intro">
+                Ranked by completed sessions first, then active clients, with quarter commissions used as the final separator.
+              </p>
+              <div class="leaderboard-list" id="coach-leaderboard-rows">
+                <article class="leaderboard-row leaderboard-row--empty">
+                  <strong>Loading the live coach leaderboard</strong>
+                  <p>Quarter-to-date standings will appear here as soon as the live coaching activity and commission signals finish syncing.</p>
+                </article>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Coach | Profile</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private coach profile.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405tutorialguide1"></script>
+    <script src="./coach-dashboard.js?v=20260404scheduleempty1"></script>
+  </body>
+</html>

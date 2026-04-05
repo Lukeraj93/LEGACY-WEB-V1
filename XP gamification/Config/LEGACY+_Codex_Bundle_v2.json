@@ -1,0 +1,1604 @@
+{
+  "bundleType": "LEGACY+_Codex_Bundle",
+  "bundleVersion": "v2.0",
+  "generatedAt": "2026-03-23T09:50:17.185025+00:00",
+  "contents": {
+    "rulesEngine": {
+      "metadata": {
+        "systemName": "LEGACY+",
+        "version": "clients.v2.workbook-aligned",
+        "region": "Malaysia",
+        "timezone": "Asia/Kuala_Lumpur",
+        "effectiveDate": "2026-03-23",
+        "sourceWorkbook": "LEGACY+_XP_System_v2_FIXED.xlsx"
+      },
+      "settings": {
+        "routineWeeklyCapXP": 300,
+        "monthlyCoinCap": 70,
+        "coinValueRM": 0.5,
+        "weekStart": "MON",
+        "countOnlyVerified": true
+      },
+      "xpCurve": {
+        "type": "quadratic_n_squared",
+        "maxLevel": 100,
+        "xpAtMaxLevel": 10000,
+        "formula": "cumulative_xp(level)=level^2",
+        "levelFromXP": "level=min(100, floor(sqrt(total_xp)))"
+      },
+      "actions": [
+        {
+          "actionId": "ACH-100SESS",
+          "displayName": "100 Sessions Attended (Annual)",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 300,
+          "coins": 30,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-150SESS",
+          "displayName": "150 Sessions Attended (Annual)",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 450,
+          "coins": 45,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-200SESS",
+          "displayName": "200 Sessions Attended (Annual)",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 600,
+          "coins": 60,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-FBP-10",
+          "displayName": "Female Bench 1.0× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 120,
+          "coins": 12,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-FBP-75",
+          "displayName": "Female Bench 0.75× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 70,
+          "coins": 7,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-FDL-175",
+          "displayName": "Female Deadlift 1.75× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 100,
+          "coins": 10,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-FDL-225",
+          "displayName": "Female Deadlift 2.25× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 170,
+          "coins": 17,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-FSQ-125",
+          "displayName": "Female Squat 1.25× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 80,
+          "coins": 8,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-FSQ-175",
+          "displayName": "Female Squat 1.75× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 140,
+          "coins": 14,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-MBP-125",
+          "displayName": "Male Bench 1.25× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 70,
+          "coins": 7,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-MBP-15",
+          "displayName": "Male Bench 1.5× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 120,
+          "coins": 12,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-MDL-20",
+          "displayName": "Male Deadlift 2.0× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 100,
+          "coins": 10,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-MDL-25",
+          "displayName": "Male Deadlift 2.5× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 170,
+          "coins": 17,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-MSQ-15",
+          "displayName": "Male Squat 1.5× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 80,
+          "coins": 8,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ACH-MSQ-20",
+          "displayName": "Male Squat 2.0× BW Achieved",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 140,
+          "coins": 14,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "SOC-30SELF",
+          "displayName": "“30 Gym-Mirror Selfies” Achievement",
+          "category": "Achievement",
+          "earnType": "Achievement",
+          "xp": 40,
+          "coins": 4,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BOSS-CLR-10",
+          "displayName": "Boss Gate Cleared – Level 10",
+          "category": "Boss",
+          "earnType": "Boss",
+          "xp": 50,
+          "coins": 5,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BOSS-CLR-100",
+          "displayName": "Boss Gate Cleared – Level 100",
+          "category": "Boss",
+          "earnType": "Boss",
+          "xp": 500,
+          "coins": 50,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BOSS-CLR-25",
+          "displayName": "Boss Gate Cleared – Level 25",
+          "category": "Boss",
+          "earnType": "Boss",
+          "xp": 100,
+          "coins": 10,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BOSS-CLR-40",
+          "displayName": "Boss Gate Cleared – Level 40",
+          "category": "Boss",
+          "earnType": "Boss",
+          "xp": 150,
+          "coins": 15,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BOSS-CLR-60",
+          "displayName": "Boss Gate Cleared – Level 60",
+          "category": "Boss",
+          "earnType": "Boss",
+          "xp": 250,
+          "coins": 25,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BOSS-CLR-80",
+          "displayName": "Boss Gate Cleared – Level 80",
+          "category": "Boss",
+          "earnType": "Boss",
+          "xp": 350,
+          "coins": 35,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "SOC-CI",
+          "displayName": "Gym Check-In",
+          "category": "Community",
+          "earnType": "Routine",
+          "xp": 5,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "SOC-REC",
+          "displayName": "Weekly Social Post",
+          "category": "Community",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "SOC-REFC",
+          "displayName": "Friend Attended Consult",
+          "category": "Community",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "SOC-REFJ",
+          "displayName": "Referral Joined",
+          "category": "Community",
+          "earnType": "Milestone",
+          "xp": 80,
+          "coins": 8,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "SOC-SUPP",
+          "displayName": "Community Support Shown (Coach Nominated)",
+          "category": "Community",
+          "earnType": "Milestone",
+          "xp": 30,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "BNG-AUTODEB-3M",
+          "displayName": "On-time Auto-Debit Success – 3 Months",
+          "category": "Compliance",
+          "earnType": "Routine",
+          "xp": 15,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CMP-ATT-100W",
+          "displayName": "100% Attendance for Booked Sessions (Weekly)",
+          "category": "Compliance",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CMP-FBK-M",
+          "displayName": "Submit Monthly Feedback (NPS + Comments)",
+          "category": "Compliance",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CMP-NOSHOW-0M",
+          "displayName": "0 Late Cancels/No-Shows (Monthly)",
+          "category": "Compliance",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-WKCI",
+          "displayName": "Weekly Check-In Submitted",
+          "category": "Compliance",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ENG-HIIT",
+          "displayName": "HIIT / Intervals",
+          "category": "Conditioning",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ENG-OUT",
+          "displayName": "Outdoor Cardio (No GPS)",
+          "category": "Conditioning",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ENG-THR",
+          "displayName": "Threshold Run/Ride/Row (20–40 min)",
+          "category": "Conditioning",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ENG-Z2",
+          "displayName": "Zone 2 Cardio (40–60 min)",
+          "category": "Conditioning",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-CONSQUIZ",
+          "displayName": "Consult Quiz (Theory Half) – Passed/Completed",
+          "category": "Education",
+          "earnType": "Routine",
+          "xp": 50,
+          "coins": 5,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-COURSE",
+          "displayName": "Completed Course (60–90 min)",
+          "category": "Education",
+          "earnType": "Routine",
+          "xp": 60,
+          "coins": 6,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-MICRO",
+          "displayName": "Education Video Watched",
+          "category": "Education",
+          "earnType": "Routine",
+          "xp": 3,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-NUTMOD",
+          "displayName": "Completed Nutrition Module",
+          "category": "Education",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-QUIZ",
+          "displayName": "Quiz Passed",
+          "category": "Education",
+          "earnType": "Routine",
+          "xp": 5,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-SAFE",
+          "displayName": "Safety briefing (video + quiz)",
+          "category": "Education",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "EDU-TRNMOD",
+          "displayName": "Completed Training Basics Module",
+          "category": "Education",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-ANNU",
+          "displayName": "Annual Medical Check",
+          "category": "Health",
+          "earnType": "Achievement",
+          "xp": 50,
+          "coins": 5,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-BP",
+          "displayName": "BP Improved",
+          "category": "Health",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-DENT",
+          "displayName": "Dental Check",
+          "category": "Health",
+          "earnType": "Milestone",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-PHYS",
+          "displayName": "Physio Screen for Pain Management",
+          "category": "Health",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-PLANK",
+          "displayName": "NSCA Plank Test – Pass",
+          "category": "Health",
+          "earnType": "Milestone",
+          "xp": 30,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-PUSH",
+          "displayName": "NSCA Push-Up Test – Pass",
+          "category": "Health",
+          "earnType": "Milestone",
+          "xp": 30,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-RHR",
+          "displayName": "Resting HR Improved",
+          "category": "Health",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "HLT-VO2",
+          "displayName": "NSCA VO2 / Submax Test – Pass",
+          "category": "Health",
+          "earnType": "Milestone",
+          "xp": 100,
+          "coins": 10,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "MIL-CH100",
+          "displayName": "100 Coached Hours (Milestone)",
+          "category": "Milestone",
+          "earnType": "Achievement",
+          "xp": 75,
+          "coins": 8,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "MIL-CH1000",
+          "displayName": "1,000 Coached Hours (Milestone)",
+          "category": "Milestone",
+          "earnType": "Achievement",
+          "xp": 800,
+          "coins": 80,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "MIL-CH300",
+          "displayName": "300 Coached Hours (Milestone)",
+          "category": "Milestone",
+          "earnType": "Achievement",
+          "xp": 200,
+          "coins": 20,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "MIL-CH500",
+          "displayName": "500 Coached Hours (Milestone)",
+          "category": "Milestone",
+          "earnType": "Achievement",
+          "xp": 350,
+          "coins": 35,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "MIL-MEM-2Y",
+          "displayName": "2-Year Membership (Tenure)",
+          "category": "Milestone",
+          "earnType": "Achievement",
+          "xp": 150,
+          "coins": 15,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "MIL-MEM-3Y",
+          "displayName": "3-Year Membership (Tenure)",
+          "category": "Milestone",
+          "earnType": "Achievement",
+          "xp": 250,
+          "coins": 25,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CLS-CHK",
+          "displayName": "Classic Checkpoint Achieved",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 30,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CLS-COMB",
+          "displayName": "Classic Comeback (Returned After Lapse)",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 40,
+          "coins": 4,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CLS-GOAL",
+          "displayName": "Classic Goal Achieved",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 150,
+          "coins": 15,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "CLS-START",
+          "displayName": "Classic Goal Defined",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "QST-CH1",
+          "displayName": "Quest Chapter I Completed",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 30,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "QST-CH2",
+          "displayName": "Quest Chapter II Completed",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 60,
+          "coins": 6,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "QST-CH3",
+          "displayName": "Quest Chapter III Completed",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 100,
+          "coins": 10,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "QST-COMP",
+          "displayName": "Questline Completed",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 200,
+          "coins": 20,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "QST-START",
+          "displayName": "Quest Mode Selected",
+          "category": "Mode",
+          "earnType": "Milestone",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NEAT-12K",
+          "displayName": "12,000 Steps",
+          "category": "NEAT",
+          "earnType": "Routine",
+          "xp": 12,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NEAT-8K",
+          "displayName": "8,000 Steps",
+          "category": "NEAT",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NEAT-COMM",
+          "displayName": "Active Commute (Walk/Cycle ≥15 min)",
+          "category": "NEAT",
+          "earnType": "Routine",
+          "xp": 5,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NEAT-STAIR7",
+          "displayName": "“Stairs Not Lift” Streak – 7 Days",
+          "category": "NEAT",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-BAL3",
+          "displayName": "3+ Balanced Meals Logged (Daily)",
+          "category": "Nutrition",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-H2O",
+          "displayName": "2L Water Intake",
+          "category": "Nutrition",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-MEAL",
+          "displayName": "Meal Prep Completed",
+          "category": "Nutrition",
+          "earnType": "Routine",
+          "xp": 15,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-NLC7",
+          "displayName": "No Liquid Calories – 7 Days",
+          "category": "Nutrition",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-PROT",
+          "displayName": "Protein Target Hit",
+          "category": "Nutrition",
+          "earnType": "Routine",
+          "xp": 25,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-PROT-30",
+          "displayName": "Consistent Protein – 30 Days",
+          "category": "Nutrition",
+          "earnType": "Achievement",
+          "xp": 300,
+          "coins": 30,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-PROT-7",
+          "displayName": "Consistent Protein – 7 Days",
+          "category": "Nutrition",
+          "earnType": "Milestone",
+          "xp": 70,
+          "coins": 7,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NUT-SF7",
+          "displayName": "Reduce Sugar Intake – 7 Days",
+          "category": "Nutrition",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ONB-ACCT",
+          "displayName": "Onboarding – Account Created",
+          "category": "Onboarding",
+          "earnType": "Milestone",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ONB-CONS",
+          "displayName": "Onboarding – Consultation Complete",
+          "category": "Onboarding",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ONB-PROF",
+          "displayName": "Profile Completed (Availability, Injuries, Preferences)",
+          "category": "Onboarding",
+          "earnType": "Milestone",
+          "xp": 15,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ONB-SAFE",
+          "displayName": "Client ParQ/Waiver - Completed",
+          "category": "Onboarding",
+          "earnType": "Milestone",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "ONB-WEAR",
+          "displayName": "Wearable Declared / Connected",
+          "category": "Onboarding",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-BRE",
+          "displayName": "Breathwork / Meditation",
+          "category": "Recovery",
+          "earnType": "Routine",
+          "xp": 5,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-DELD",
+          "displayName": "Deload Week Completed",
+          "category": "Recovery",
+          "earnType": "Milestone",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-INJ-24",
+          "displayName": "Injury-Free Training – 24 Weeks",
+          "category": "Recovery",
+          "earnType": "Milestone",
+          "xp": 60,
+          "coins": 6,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-INJ-8",
+          "displayName": "Injury-Free Training – 8 Weeks",
+          "category": "Recovery",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-MID",
+          "displayName": "Sleep Before Midnight",
+          "category": "Recovery",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-SLEEP",
+          "displayName": "7–9h Sleep",
+          "category": "Recovery",
+          "earnType": "Routine",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "REC-SUN",
+          "displayName": "Morning Sunlight (5–10 min)",
+          "category": "Recovery",
+          "earnType": "Routine",
+          "xp": 2,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NEAT-AVG-12",
+          "displayName": "Average 10k Steps – 12 Weeks",
+          "category": "Streaks",
+          "earnType": "Achievement",
+          "xp": 120,
+          "coins": 12,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "NEAT-AVG-4",
+          "displayName": "Average 10k Steps – 4 Weeks",
+          "category": "Streaks",
+          "earnType": "Milestone",
+          "xp": 40,
+          "coins": 4,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-NOMISS-12",
+          "displayName": "No Missed Sessions – 12 Weeks",
+          "category": "Streaks",
+          "earnType": "Achievement",
+          "xp": 120,
+          "coins": 12,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-NOMISS-24",
+          "displayName": "No Missed Sessions – 24 Weeks",
+          "category": "Streaks",
+          "earnType": "Achievement",
+          "xp": 240,
+          "coins": 24,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-NOMISS-4",
+          "displayName": "No Missed Sessions – 4 Weeks",
+          "category": "Streaks",
+          "earnType": "Achievement",
+          "xp": 40,
+          "coins": 4,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-NOMISS-52",
+          "displayName": "No Missed Sessions – 52 Weeks",
+          "category": "Streaks",
+          "earnType": "Achievement",
+          "xp": 520,
+          "coins": 52,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-NOMISS-8",
+          "displayName": "No Missed Sessions – 8 Weeks",
+          "category": "Streaks",
+          "earnType": "Achievement",
+          "xp": 80,
+          "coins": 8,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-ATT",
+          "displayName": "Session Attended (Showed Up On Time)",
+          "category": "Training",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-BADG",
+          "displayName": "Movement Badge Earned",
+          "category": "Training",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-FIRST",
+          "displayName": "First Coached Session Completed",
+          "category": "Training",
+          "earnType": "Milestone",
+          "xp": 20,
+          "coins": 2,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-FORM",
+          "displayName": "Perfect Form Top Set (Coach Approved)",
+          "category": "Training",
+          "earnType": "Milestone",
+          "xp": 25,
+          "coins": 3,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-MOVSCR",
+          "displayName": "Movement Screen (Practical Half) – Passed/Completed",
+          "category": "Training",
+          "earnType": "Routine",
+          "xp": 50,
+          "coins": 5,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-PR",
+          "displayName": "Personal Record Achieved",
+          "category": "Training",
+          "earnType": "Routine",
+          "xp": 8,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-RPEV",
+          "displayName": "Technique Video Reviewed",
+          "category": "Training",
+          "earnType": "Routine",
+          "xp": 5,
+          "coins": 0,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-SESS",
+          "displayName": "Coached Strength Session",
+          "category": "Training",
+          "earnType": "Routine",
+          "xp": 10,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        },
+        {
+          "actionId": "TRN-TEMP",
+          "displayName": "Tempo-Controlled Session Completed",
+          "category": "Training",
+          "earnType": "Routine",
+          "xp": 6,
+          "coins": 1,
+          "cap": null,
+          "cooldownDays": 0,
+          "verificationRequired": true
+        }
+      ]
+    },
+    "rulesSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://legacy.plus/schemas/legacyplus-client-xp-rules.v1.json",
+      "title": "LEGACY+ Client XP Rules Engine Schema v1",
+      "type": "object",
+      "required": [
+        "metadata",
+        "settings",
+        "xpCurve",
+        "actions"
+      ],
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "required": [
+            "systemName",
+            "version",
+            "timezone",
+            "region",
+            "effectiveDate"
+          ],
+          "properties": {
+            "systemName": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "timezone": {
+              "type": "string"
+            },
+            "region": {
+              "type": "string"
+            },
+            "effectiveDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "sourceWorkbook": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "settings": {
+          "type": "object",
+          "required": [
+            "routineWeeklyCapXP",
+            "monthlyCoinCap",
+            "coinValueRM",
+            "weekStart",
+            "countOnlyVerified"
+          ],
+          "properties": {
+            "routineWeeklyCapXP": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "monthlyCoinCap": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "coinValueRM": {
+              "type": "number",
+              "minimum": 0
+            },
+            "weekStart": {
+              "type": "string",
+              "enum": [
+                "MON",
+                "SUN"
+              ]
+            },
+            "countOnlyVerified": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "xpCurve": {
+          "type": "object",
+          "required": [
+            "type",
+            "maxLevel",
+            "xpAtMaxLevel",
+            "formula",
+            "levelFromXP"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "quadratic_n_squared"
+              ]
+            },
+            "maxLevel": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "xpAtMaxLevel": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "formula": {
+              "type": "string"
+            },
+            "levelFromXP": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "actionId",
+              "displayName",
+              "category",
+              "earnType",
+              "xp",
+              "coins",
+              "verificationRequired"
+            ],
+            "properties": {
+              "actionId": {
+                "type": "string",
+                "pattern": "^[A-Z0-9\\-]{3,30}$"
+              },
+              "displayName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "category": {
+                "type": "string",
+                "minLength": 1
+              },
+              "earnType": {
+                "type": "string",
+                "enum": [
+                  "Routine",
+                  "Milestone",
+                  "Achievement",
+                  "Boss"
+                ]
+              },
+              "xp": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "coins": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cap": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "period",
+                      "maxCount"
+                    ],
+                    "properties": {
+                      "period": {
+                        "type": "string",
+                        "enum": [
+                          "None",
+                          "Daily",
+                          "Weekly",
+                          "Monthly",
+                          "Quarterly",
+                          "Yearly",
+                          "OneTime"
+                        ]
+                      },
+                      "maxCount": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "cooldownDays": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "verificationRequired": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "importContract": {
+      "contractVersion": "legacyplus.clients.workbook.v2",
+      "workbook": {
+        "filename": "LEGACY+_XP_System_v2_FIXED.xlsx",
+        "timezone": "Asia/Kuala_Lumpur",
+        "weekStart": "MON"
+      },
+      "normalization": {
+        "trimHeaders": true,
+        "trimStrings": true,
+        "emptyToNull": true,
+        "yesNoToBoolean": {
+          "Yes": true,
+          "No": false,
+          "": null
+        }
+      },
+      "entities": {
+        "settings": {
+          "sourceSheet": "Settings",
+          "kvColumns": {
+            "key": "Name",
+            "value": "Value"
+          },
+          "requiredKeys": [
+            "RoutineWeeklyCapXP",
+            "MonthlyCoinCap",
+            "CoinValueRM"
+          ]
+        },
+        "members": {
+          "sourceSheet": "Members",
+          "primaryKey": "member_id",
+          "columns": {
+            "member_id": "MemberID",
+            "member_name": "Member Name",
+            "mode": "Mode",
+            "status": "Status"
+          },
+          "requiredColumns": [
+            "MemberID",
+            "Member Name",
+            "Mode",
+            "Status"
+          ],
+          "notes": "Ignore helper column ActiveMemberIDs; compute active list where status == 'Active'."
+        },
+        "actions": {
+          "sourceSheets": {
+            "rules": "ActionsCatalog",
+            "display": "ActionMap"
+          },
+          "primaryKey": "action_id",
+          "rulesColumns": {
+            "action_id": "ActionID",
+            "earn_type": "Type",
+            "xp": "XP",
+            "coins_per": "CoinsPer",
+            "display_name": "Display Name",
+            "category": "Category"
+          },
+          "displayColumns": {
+            "display_name_coach_sees": "Display Name (Coach sees)",
+            "action_id": "ActionID",
+            "xp": "XP",
+            "coins": "Coins",
+            "category": "Type"
+          },
+          "requiredRulesColumns": [
+            "ActionID",
+            "Type",
+            "XP",
+            "CoinsPer",
+            "Display Name",
+            "Category"
+          ],
+          "requiredDisplayColumns": [
+            "Display Name (Coach sees)",
+            "ActionID",
+            "XP",
+            "Coins",
+            "Type"
+          ],
+          "validation": {
+            "mustMatchOnActionId": [
+              "xp",
+              "coins"
+            ],
+            "mustHaveUnique": [
+              "ActionID"
+            ],
+            "earnTypeEnum": [
+              "Routine",
+              "Milestone",
+              "Achievement",
+              "Boss"
+            ]
+          }
+        },
+        "events": {
+          "sourceSheet": "QuickLog",
+          "primaryKey": "event_id",
+          "appendOnly": true,
+          "inputColumns": {
+            "date": "Date",
+            "member_id": "MemberID",
+            "action_id": "Action ID",
+            "qty": "Qty",
+            "verified": "Verified",
+            "coach": "Coach",
+            "notes": "Notes"
+          },
+          "optionalColumns": {
+            "action_name": "Action Name",
+            "mode": "Mode",
+            "member_name": "Member Name"
+          },
+          "computedDoNotImportAsTruth": [
+            "Type",
+            "XP Per",
+            "Coins Per",
+            "XP Raw",
+            "Coins Raw",
+            "Week Key",
+            "MonthKey"
+          ],
+          "rowInclusionRule": "Include row if Date OR MemberID OR Action ID is non-empty; ignore completely blank rows."
+        },
+        "seedPlacement": {
+          "sourceSheet": "SeedPlacement",
+          "primaryKey": "member_id",
+          "columns": {
+            "member_id": "MemberID",
+            "months_coached": "MonthsCoached",
+            "avg_sessions_per_week": "AvgSessionsPerWeek",
+            "adherence_score": "AdherenceScore (1–5)",
+            "movement_competency": "MovementCompetency (1–5)",
+            "strength_level": "StrengthLevel (1–5)",
+            "lifestyle_habits": "LifestyleHabits (1–5)",
+            "tracking_consistency": "TrackingConsistency (1–5)",
+            "self_mastery": "SelfMastery (1–5)",
+            "knowledge_level": "KnowledgeLevel (1–5)",
+            "seed_xp_calc": "SeedXP_Calc",
+            "seed_level_calc": "SeedLevel (calculated)",
+            "approved": "Approved (Yes/No)",
+            "seed_xp_locked": "SeedXP_Locked",
+            "notes": "Notes"
+          },
+          "recommendedAppBehavior": "If approved==Yes and seed_xp_locked is present, inject one seed event (ActionID='SEED-INIT') with xp_override=seed_xp_locked for auditability; do not directly edit ledger totals."
+        }
+      },
+      "derivedViews": {
+        "weeklySummary": {
+          "sourceSheet": "WeeklySummary",
+          "doNotImportAsTruth": true,
+          "computeFrom": [
+            "events",
+            "actions",
+            "settings"
+          ],
+          "logic": {
+            "routineXP_raw": "sum events where earn_type=='Routine' per member/week",
+            "routineXP_counted": "min(routineXP_raw, RoutineWeeklyCapXP)",
+            "milestoneXP_raw": "sum events where earn_type in ('Milestone','Achievement','Boss') per member/week",
+            "totalXP_week": "routineXP_counted + milestoneXP_raw",
+            "coins_raw_week": "sum coins from verified events per member/week",
+            "coins_counted_week": "optional (no weekly coin cap in workbook)"
+          }
+        },
+        "monthlySummary": {
+          "sourceSheet": "MonthlySummary",
+          "doNotImportAsTruth": true,
+          "computeFrom": [
+            "events",
+            "actions",
+            "settings"
+          ],
+          "logic": {
+            "coins_raw_month": "sum coins from verified events per member/month",
+            "coins_counted_month": "min(coins_raw_month, MonthlyCoinCap)",
+            "worth_rm": "coins_counted_month * CoinValueRM"
+          }
+        },
+        "ledger": {
+          "sourceSheet": "Ledger",
+          "doNotImportAsTruth": true,
+          "computeFrom": [
+            "weeklySummary",
+            "monthlySummary",
+            "seedPlacement"
+          ],
+          "logic": {
+            "total_xp": "seed_xp + sum weekly totalXP_week",
+            "level": "min(100, floor(sqrt(total_xp)))",
+            "next_level_xp": "(level+1)^2",
+            "xp_to_next": "next_level_xp - total_xp",
+            "coins_earned_counted": "sum monthly coins_counted_month",
+            "coin_balance": "coins_earned_counted - coins_redeemed"
+          }
+        }
+      }
+    }
+  }
+}

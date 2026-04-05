@@ -1,0 +1,391 @@
+{
+  "bundleVersion": "v1.0",
+  "module": "LEGACY+ Coach XP",
+  "sourceWorkbook": "LEGACY+_CoachXP_System_v2_FIXED.xlsx",
+  "tabs": {
+    "Settings": {
+      "purpose": "Global caps and constants",
+      "headers": [
+        "Name",
+        "Value"
+      ],
+      "map": [
+        {
+          "sheetHeader": "Name",
+          "appField": "settings.key"
+        },
+        {
+          "sheetHeader": "Value",
+          "appField": "settings.value"
+        }
+      ]
+    },
+    "CoachRoster": {
+      "purpose": "Coach roster / source of truth for identity path and current operational role",
+      "headers": [
+        "CoachID",
+        "CoachName",
+        "IdentityPath",
+        "OperationalRole",
+        "Active"
+      ],
+      "map": [
+        {
+          "sheetHeader": "CoachID",
+          "appField": "coaches.coach_id",
+          "type": "string",
+          "key": "pk"
+        },
+        {
+          "sheetHeader": "CoachName",
+          "appField": "coaches.name",
+          "type": "string"
+        },
+        {
+          "sheetHeader": "IdentityPath",
+          "appField": "coaches.identity_path",
+          "type": "enum",
+          "values": [
+            "Greek",
+            "Aesir",
+            "Neutral"
+          ]
+        },
+        {
+          "sheetHeader": "OperationalRole",
+          "appField": "coaches.operational_role",
+          "type": "enum",
+          "values": [
+            "T1",
+            "T2",
+            "T3",
+            "T4",
+            "T5",
+            "T6",
+            "T7",
+            "T8",
+            "T9"
+          ]
+        },
+        {
+          "sheetHeader": "Active",
+          "appField": "coaches.active",
+          "type": "enum",
+          "values": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    "XPMenu": {
+      "purpose": "Authoritative coach action rules",
+      "headers": [
+        "ActionID",
+        "ActionName",
+        "Bucket",
+        "XPper",
+        "CapPeriod",
+        "Verification"
+      ],
+      "map": [
+        {
+          "sheetHeader": "ActionID",
+          "appField": "coach_actions.action_id",
+          "type": "string",
+          "key": "pk"
+        },
+        {
+          "sheetHeader": "ActionName",
+          "appField": "coach_actions.display_name",
+          "type": "string"
+        },
+        {
+          "sheetHeader": "Bucket",
+          "appField": "coach_actions.bucket",
+          "type": "string"
+        },
+        {
+          "sheetHeader": "XPper",
+          "appField": "coach_actions.xp",
+          "type": "int"
+        },
+        {
+          "sheetHeader": "CapPeriod",
+          "appField": "coach_actions.cap_period",
+          "type": "string"
+        },
+        {
+          "sheetHeader": "Verification",
+          "appField": "coach_actions.verification",
+          "type": "string"
+        }
+      ]
+    },
+    "RoleTitles": {
+      "purpose": "Operational role titles + Greek/Aesir skins",
+      "headers": [
+        "OperationalRole",
+        "MinXPEligible",
+        "OperationalTitle",
+        "GreekTitle",
+        "AesirTitle"
+      ],
+      "map": [
+        {
+          "sheetHeader": "OperationalRole",
+          "appField": "role_titles.operational_role",
+          "key": "pk"
+        },
+        {
+          "sheetHeader": "MinXPEligible",
+          "appField": "role_titles.min_xp_eligible"
+        },
+        {
+          "sheetHeader": "OperationalTitle",
+          "appField": "role_titles.operational_title"
+        },
+        {
+          "sheetHeader": "GreekTitle",
+          "appField": "role_titles.greek_title"
+        },
+        {
+          "sheetHeader": "AesirTitle",
+          "appField": "role_titles.aesir_title"
+        }
+      ]
+    },
+    "XPBands": {
+      "purpose": "Tier and level mapping",
+      "headers": [
+        "Tier",
+        "MinXP",
+        "MaxXP",
+        "LevelStart",
+        "LevelEnd",
+        "LevelCount",
+        "StepXP"
+      ],
+      "map": [
+        {
+          "sheetHeader": "Tier",
+          "appField": "xp_bands.tier",
+          "key": "pk"
+        },
+        {
+          "sheetHeader": "MinXP",
+          "appField": "xp_bands.min_xp"
+        },
+        {
+          "sheetHeader": "MaxXP",
+          "appField": "xp_bands.max_xp"
+        },
+        {
+          "sheetHeader": "LevelStart",
+          "appField": "xp_bands.level_start"
+        },
+        {
+          "sheetHeader": "LevelEnd",
+          "appField": "xp_bands.level_end"
+        },
+        {
+          "sheetHeader": "LevelCount",
+          "appField": "xp_bands.level_count"
+        },
+        {
+          "sheetHeader": "StepXP",
+          "appField": "xp_bands.step_xp"
+        }
+      ]
+    },
+    "XPLog": {
+      "purpose": "Append-only coach XP event log; source of truth after import",
+      "headers": [
+        "Date",
+        "CoachID",
+        "ActionSelect",
+        "ActionID",
+        "Qty",
+        "Verified",
+        "Evidence",
+        "Notes",
+        "ActionName",
+        "Bucket",
+        "XPper",
+        "XPOverride",
+        "XPRaw",
+        "WeekKey",
+        "MonthKey",
+        "QuarterKey"
+      ],
+      "map": [
+        {
+          "sheetHeader": "Date",
+          "appField": "coach_events.event_date",
+          "type": "date"
+        },
+        {
+          "sheetHeader": "CoachID",
+          "appField": "coach_events.coach_id",
+          "type": "string",
+          "fk": "CoachRoster.CoachID"
+        },
+        {
+          "sheetHeader": "ActionID",
+          "appField": "coach_events.action_id",
+          "type": "string",
+          "fk": "XPMenu.ActionID"
+        },
+        {
+          "sheetHeader": "Qty",
+          "appField": "coach_events.qty",
+          "type": "number"
+        },
+        {
+          "sheetHeader": "Verified",
+          "appField": "coach_events.verified",
+          "type": "enum",
+          "values": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "sheetHeader": "Evidence",
+          "appField": "coach_events.evidence",
+          "type": "string"
+        },
+        {
+          "sheetHeader": "Notes",
+          "appField": "coach_events.notes",
+          "type": "string"
+        },
+        {
+          "sheetHeader": "XPOverride",
+          "appField": "coach_events.xp_override",
+          "type": "number",
+          "optional": true
+        }
+      ],
+      "computedNotImported": [
+        "ActionSelect",
+        "ActionName",
+        "Bucket",
+        "XPper",
+        "XPRaw",
+        "WeekKey",
+        "MonthKey",
+        "QuarterKey"
+      ]
+    },
+    "Trials": {
+      "purpose": "Promotion gate log; do not compute as truth, import rows if used",
+      "headers": [
+        "CoachID",
+        "CurrentRole",
+        "TargetRole",
+        "TrialDate",
+        "SkillTrial",
+        "KnowledgeTrial",
+        "Portfolio",
+        "Result",
+        "Notes",
+        "XPEligible?",
+        "PromoteAllowed?"
+      ],
+      "map": [
+        {
+          "sheetHeader": "CoachID",
+          "appField": "coach_trials.coach_id"
+        },
+        {
+          "sheetHeader": "CurrentRole",
+          "appField": "coach_trials.current_role"
+        },
+        {
+          "sheetHeader": "TargetRole",
+          "appField": "coach_trials.target_role"
+        },
+        {
+          "sheetHeader": "TrialDate",
+          "appField": "coach_trials.trial_date"
+        },
+        {
+          "sheetHeader": "SkillTrial",
+          "appField": "coach_trials.skill_trial"
+        },
+        {
+          "sheetHeader": "KnowledgeTrial",
+          "appField": "coach_trials.knowledge_trial"
+        },
+        {
+          "sheetHeader": "Portfolio",
+          "appField": "coach_trials.portfolio"
+        },
+        {
+          "sheetHeader": "Result",
+          "appField": "coach_trials.result"
+        },
+        {
+          "sheetHeader": "Notes",
+          "appField": "coach_trials.notes"
+        }
+      ],
+      "computedNotImported": [
+        "XPEligible?",
+        "PromoteAllowed?"
+      ]
+    },
+    "SeedPlacement": {
+      "purpose": "Management-only seeding rubric; import only approved rows if needed as seed events",
+      "headers": [
+        "CoachID",
+        "CoachingQuality",
+        "MovementLiteracy",
+        "ProgrammingThinking",
+        "Professionalism",
+        "SystemsDiscipline",
+        "ClientCommunication",
+        "EthicalJudgment",
+        "TrackingConsistency",
+        "SelfMastery",
+        "KnowledgeLevel",
+        "SeedXP",
+        "SeedLevel",
+        "Approved",
+        "Notes"
+      ],
+      "map": [
+        {
+          "sheetHeader": "CoachID",
+          "appField": "coach_seeding.coach_id"
+        },
+        {
+          "sheetHeader": "SeedXP",
+          "appField": "coach_seeding.seed_xp"
+        },
+        {
+          "sheetHeader": "Approved",
+          "appField": "coach_seeding.approved"
+        },
+        {
+          "sheetHeader": "Notes",
+          "appField": "coach_seeding.notes"
+        }
+      ]
+    }
+  },
+  "computedViews": {
+    "Weekly_Coaching": "Derived in app using capBuckets Coaching",
+    "Monthly_Edu": "Derived in app using capBuckets Education",
+    "Monthly_Ops": "Derived in app using capBuckets Ops",
+    "Monthly_Mentor": "Derived in app using capBuckets Mentorship",
+    "Quarterly_Impact": "Derived in app using capBuckets Impact",
+    "Ledger": "Derived in app from coach_events + role_titles + xp_bands"
+  },
+  "notes": [
+    "Do not import computed summary tabs as truth.",
+    "Only verified events count toward XP.",
+    "App should compute level within XP band and next operational eligibility."
+  ]
+}

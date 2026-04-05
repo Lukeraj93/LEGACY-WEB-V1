@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Settings | LEGACY+ CRM</title>
+    <meta name="description" content="LEGACY+ CRM settings, portrait controls, and integration status." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="settings">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Private admin navigation for leads, clients, finance, operations, and platform controls.</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="./admin-dashboard.html">Home</a>
+          <a href="./admin-clients.html">TEAM</a>
+          <a href="./admin-leads.html">Leads</a>
+          <a href="./admin-financials.html">Financials</a>
+          <a href="./admin-newsletter.html">Newsletter</a>
+          <a class="is-current" href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Settings</span>
+            <h1>Integration Status and CRM Operating Rules</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Syncing your live admin dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <p>Use this page to preview your portrait, apply it to save, and review what is already live in the CRM.</p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid">
+          <section class="section dashboard-section reveal split">
+            <article class="card">
+              <span class="kicker kicker--accent">Portrait</span>
+              <h2>Profile Portrait Library</h2>
+              <div class="appearance-avatar-preview-card" id="account-avatar-card-preview" aria-live="polite"></div>
+              <div class="appearance-avatar-library" id="account-avatar-presets"></div>
+              <div class="section-actions">
+                <button class="btn btn-primary" id="account-avatar-apply" type="button" disabled>Character Applied</button>
+              </div>
+              <p class="dashboard-feedback" id="account-avatar-feedback">
+                Choose any unlocked character, preview it, then click Apply Character to save it to your admin profile.
+              </p>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal split">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Security</span>
+              <h2>Password and Account Access</h2>
+              <div class="account-meta-list">
+                <div class="account-meta-item">
+                  <strong>Account Email</strong>
+                  <span data-security-email>admin</span>
+                </div>
+                <div class="account-meta-item">
+                  <strong>Role</strong>
+                  <span data-security-role>Super Admin</span>
+                </div>
+                <div class="account-meta-item">
+                  <strong>Access Route</strong>
+                  <span>Use this section to replace your password without leaving the admin workspace.</span>
+                </div>
+              </div>
+              <form class="contact-form account-security-form" id="account-security-password-form">
+                <input
+                  type="email"
+                  name="username"
+                  autocomplete="username email"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  hidden
+                  data-security-username
+                  value=""
+                />
+                <div class="input-row account-input-row">
+                  <label>
+                    New password
+                    <input type="password" name="newPassword" placeholder="Create a new password" autocomplete="new-password" minlength="6" required />
+                  </label>
+                  <label>
+                    Confirm new password
+                    <input type="password" name="confirmPassword" placeholder="Confirm your new password" autocomplete="new-password" minlength="6" required />
+                  </label>
+                </div>
+                <div class="section-actions">
+                  <button class="btn btn-primary" id="account-security-submit" type="submit">Update Password</button>
+                  <button class="btn btn-ghost" id="account-security-reset" type="button">Send Reset Email</button>
+                  <button class="btn btn-ghost" type="button" data-account-sign-out>Sign Out</button>
+                </div>
+              </form>
+              <div class="crm-callout">
+                <p>Email changes still go through LEGACY+ support while the wider account-security rollout is being finished.</p>
+              </div>
+              <p class="dashboard-feedback" id="account-security-feedback">
+                Replace your current password here, or send yourself a reset link for later.
+              </p>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal split">
+            <article class="card">
+              <span class="kicker kicker--accent">Live Now</span>
+              <h2>Current CRM Automation</h2>
+              <ul class="dashboard-list">
+                <li>Website inquiry forms create CRM leads automatically before opening WhatsApp.</li>
+                <li>Lead follow-ups, conversions, and outbound message logs are live inside the admin CRM.</li>
+                <li>HitPay package purchases flow into orders, payments, client packages, and admin financial visibility.</li>
+                <li>Payment notifications and lead notifications are visible on the admin side.</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <span class="kicker kicker--accent">Needs External API</span>
+              <h2>WhatsApp Inbound Sync</h2>
+              <div class="crm-callout">
+                <p>
+                  Direct WhatsApp messages only become automatic CRM records if you connect a real WhatsApp Business inbox or API.
+                  Plain `wa.me` links cannot send the incoming chat history back into your database by themselves.
+                </p>
+              </div>
+              <ul class="dashboard-list">
+                <li>Form-based WhatsApp inquiries are already captured because the visitor submits a structured website form first.</li>
+                <li>True inbound WhatsApp sync would need Meta WhatsApp Business Cloud API or another approved inbox provider.</li>
+                <li>Once that is connected, incoming chat threads can be written into leads and activity logs automatically.</li>
+              </ul>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Outbound Marketing</span>
+            <h2>Newsletter Studio Moved</h2>
+            <div class="dashboard-card-grid">
+              <article class="card">
+                <span class="kicker kicker--accent">Dedicated Workspace</span>
+                <h3>Member Newsletter Now Lives In Its Own Tab</h3>
+                <div class="crm-callout">
+                  <p>The weekly newsletter now has a dedicated workspace with audience targeting, preview, send-now controls, and delivery analytics.</p>
+                </div>
+                <ul class="dashboard-list">
+                  <li>Write a cleaner weekly issue with a dedicated marketing workflow.</li>
+                  <li>Preview the exact email before it goes out.</li>
+                  <li>Track recent sends, opens, and clicks in one place.</li>
+                </ul>
+                <div class="section-actions">
+                  <a class="btn btn-primary" href="./admin-newsletter.html">Open Newsletter Tab</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Read-Only Add-on</span>
+            <h2>LEGACY+ Codex Rules Engine Bundle</h2>
+            <p class="dashboard-feedback" id="admin-codex-bundle-status">
+              Checking the injected bundle and compatibility with the live CRM...
+            </p>
+
+            <div class="dashboard-card-grid">
+              <article class="card">
+                <span class="kicker kicker--accent">Bundle Summary</span>
+                <h3>Metadata and Core Rules</h3>
+                <div class="dashboard-badge-grid" id="admin-codex-bundle-metrics">
+                  <div class="dashboard-badge">
+                    <strong>Status</strong>
+                    <p>Waiting for bundle load...</p>
+                  </div>
+                </div>
+                <div class="dashboard-note-log" id="admin-codex-bundle-meta">
+                  <article class="dashboard-note">
+                    <p>Bundle metadata will appear here once the asset is mounted.</p>
+                  </article>
+                </div>
+              </article>
+
+              <article class="card">
+                <span class="kicker kicker--accent">CRM Compatibility</span>
+                <h3>Safe Injection Status</h3>
+                <div class="crm-callout">
+                  <p>
+                    This addon is mounted in reference mode only. It does not write, overwrite, import, or mutate the
+                    current CRM data by itself.
+                  </p>
+                </div>
+                <ul class="dashboard-list" id="admin-codex-bundle-compatibility">
+                  <li>Compatibility checks will appear here once the bundle is loaded.</li>
+                </ul>
+                <div class="dashboard-note-log" id="admin-codex-bundle-imports">
+                  <article class="dashboard-note">
+                    <p>Import contract details will appear here once the asset is mounted.</p>
+                  </article>
+                </div>
+              </article>
+            </div>
+
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Action</th>
+                    <th>Category</th>
+                    <th>Earn Type</th>
+                    <th>XP</th>
+                    <th>Coins</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-codex-bundle-action-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>Top reward actions will appear here.</strong>
+                        <p>The highest-impact rules-engine actions will populate once the Codex bundle finishes mounting into the admin workspace.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Gated Importer</span>
+            <h2>Seed Placement Import</h2>
+            <p class="dashboard-feedback" id="admin-gamification-import-feedback">
+              Paste SeedPlacement rows as JSON or CSV, preview the match results, then apply the import only when the batch looks correct.
+            </p>
+
+            <div class="dashboard-card-grid">
+              <article class="card">
+                <span class="kicker kicker--accent">Paste Batch</span>
+                <h3>Preview Before Any Write</h3>
+                <form class="contact-form" id="admin-gamification-import-form">
+                  <label>
+                    Batch Label
+                    <input
+                      id="admin-gamification-import-batch"
+                      name="batch_label"
+                      type="text"
+                      placeholder="seed-placement-2026-03-24"
+                    />
+                  </label>
+                  <label>
+                    Seed Placement Rows
+                    <textarea
+                      id="admin-gamification-import-rows-input"
+                      name="rows_text"
+                      rows="11"
+                      placeholder='Paste JSON array rows or CSV with headers like MemberID, Approved (Yes/No), SeedXP_Locked, Notes'
+                    ></textarea>
+                  </label>
+                  <div class="section-actions">
+                    <button class="btn btn-secondary" id="admin-gamification-import-preview" type="button">Preview Seed Import</button>
+                    <button class="btn btn-ghost" id="admin-gamification-import-apply" type="button" disabled>Apply Seed Import</button>
+                  </div>
+                </form>
+              </article>
+
+              <article class="card">
+                <span class="kicker kicker--accent">What It Does</span>
+                <h3>Safe Import Rules</h3>
+                <ul class="dashboard-list">
+                  <li>Matches rows by existing `client_profiles.member_id` only.</li>
+                  <li>Imports only rows where `Approved` is yes and `SeedXP_Locked` is present.</li>
+                  <li>Creates one audit-safe seed ledger entry per client using `SEED-INIT`.</li>
+                  <li>Skips clients that already have a seed import entry so totals cannot be doubled accidentally.</li>
+                  <li>Does not directly edit profile XP totals; the existing ledger trigger handles the update.</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="dashboard-badge-grid" id="admin-gamification-import-summary">
+              <article class="dashboard-badge dashboard-badge--placeholder">
+                    <strong>No seed batch previewed yet</strong>
+                <p>Run a preview first so this area can summarize how many rows will be imported, skipped, or blocked before anything is applied.</p>
+              </article>
+            </div>
+
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Row</th>
+                    <th>Member ID</th>
+                    <th>Client</th>
+                    <th>Seed XP</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-gamification-import-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="6">
+                      <div class="dashboard-table__empty">
+                        <strong>Preview rows will appear here.</strong>
+                        <p>Run a seed import preview to inspect matched members, locked XP values, and anything that would be skipped before you apply the batch.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Admin Only</span>
+            <h2>QA Account Manager</h2>
+            <p class="dashboard-feedback" id="admin-qa-accounts-feedback">
+              Load the current QA coach and client state, then provision or reset both accounts without touching the live super admin.
+            </p>
+
+            <div class="dashboard-card-grid">
+              <article class="card">
+                <span class="kicker kicker--accent">Provision</span>
+                <h3>Coach and Client Access</h3>
+                <form class="contact-form" id="admin-qa-accounts-form">
+                  <div class="input-row">
+                    <label>
+                      QA coach email
+                      <input id="admin-qa-coach-email" name="coach_email" type="email" value="qa.coach@legacycoaching.com.my" />
+                    </label>
+                    <label>
+                      QA client email
+                      <input id="admin-qa-client-email" name="client_email" type="email" value="qa.client@legacycoaching.com.my" />
+                    </label>
+                  </div>
+                  <div class="input-row">
+                    <label>
+                      QA coach password
+                      <input id="admin-qa-coach-password" name="coach_password" type="text" placeholder="Leave blank to generate a strong password" />
+                    </label>
+                    <label>
+                      QA client password
+                      <input id="admin-qa-client-password" name="client_password" type="text" placeholder="Leave blank to generate a strong password" />
+                    </label>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-secondary" id="admin-qa-accounts-refresh" type="button">Load QA Status</button>
+                    <button class="btn btn-primary" id="admin-qa-accounts-submit" type="submit">Provision / Reset QA Accounts</button>
+                  </div>
+                </form>
+
+                <div class="crm-callout">
+                  <p>
+                    Provisioning recreates the QA coach and QA client, re-links the client to the QA coach, and returns the current
+                    credentials so the team can test safely without using production member accounts.
+                  </p>
+                </div>
+              </article>
+
+              <article class="card">
+                <span class="kicker kicker--accent">Live Status</span>
+                <h3>Current QA Access</h3>
+                <div class="dashboard-badge-grid" id="admin-qa-accounts-summary">
+                  <article class="dashboard-badge dashboard-badge--placeholder">
+                    <strong>QA coach status is syncing</strong>
+                    <p>The current QA coach account state will appear here after the status request completes.</p>
+                  </article>
+                  <article class="dashboard-badge dashboard-badge--placeholder">
+                    <strong>QA client status is syncing</strong>
+                    <p>The linked QA client state will appear here after the status request completes.</p>
+                  </article>
+                  <article class="dashboard-badge dashboard-badge--placeholder">
+                    <strong>Assignment link is syncing</strong>
+                    <p>The coach-to-client QA assignment status will appear here once the manager finishes loading.</p>
+                  </article>
+                </div>
+                <div class="dashboard-note-log" id="admin-qa-accounts-details">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>QA account details are syncing</strong>
+                    <p>The current QA coach and QA client details will appear here once the status request completes.</p>
+                  </article>
+                </div>
+                <div class="dashboard-note-log" id="admin-qa-accounts-credentials" hidden></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal">
+            <span class="kicker kicker--accent">Recent Notifications</span>
+            <h2>Operational Alert Feed</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-notification-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>No notifications yet.</strong>
+                        <p>Operational alerts, review reminders, and admin workflow notifications will appear here as soon as live events are generated.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Settings</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./assets/legacy-codex-bundle.js?v=20260324a"></script>
+    <script src="./admin-dashboard.js?v=20260405coachnewsletter1"></script>
+  </body>
+</html>
