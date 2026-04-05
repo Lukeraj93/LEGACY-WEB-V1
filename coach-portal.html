@@ -10,16 +10,80 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./styles.css?v=20260402deployready1" />
     <link rel="stylesheet" href="./portal.css" />
   </head>
   <body data-portal-role="coach">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="https://www.legacycoaching.com.my/" aria-label="LEGACY home"></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="https://www.legacycoaching.com.my/">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Programs
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Programs submenu">
+              <a href="/coaching/1-1.html" role="menuitem">1-on-1 Coaching</a>
+              <a href="/coaches.html" role="menuitem">Meet the Team</a>
+              <a href="/corporate-wellness-workshops.html" role="menuitem">Corporate</a>
+              <a href="/careers.html" role="menuitem">Careers</a>
+            </div>
+          </div>
+          <a href="/packages.html">Pricing</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Facilities
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Facilities submenu">
+              <a href="/facilities.html" role="menuitem">Gym Information</a>
+              <a href="/gallery.html" role="menuitem">Gallery</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              About
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="About submenu">
+              <a href="/about.html" role="menuitem">About LEGACY+</a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+              Contact Us
+              <span class="nav-caret" aria-hidden="true"></span>
+            </button>
+            <div class="nav-submenu" role="menu" aria-label="Contact Us submenu">
+              <a href="/contact.html" role="menuitem">Contact Us</a>
+              <a href="/locations.html" role="menuitem">Locations</a>
+            </div>
+          </div>
+          <a class="account-gateway-trigger" href="/account.html">My Account</a>
+        </nav>
+        <div class="header-cta-group">
+          <a class="btn btn-primary account-gateway-trigger" href="/account.html">My Account</a>
+        </div>
+      </div>
+    </header>
+
     <div class="portal-wrap" id="portal-shell">
       <header class="portal-header">
-        <a class="portal-brand" href="./index.html" aria-label="Legacy Coaching home">
-          <img src="./assets/legacy-plus-logo.svg" alt="Legacy+ logo" />
+        <a class="portal-brand" href="https://www.legacycoaching.com.my/" aria-label="Legacy Coaching home">
+          <img src="./assets/Logo%20-%20Legacy_Symbol%20(Orange%20flame,%20white%20plus).png" alt="Legacy+ logo" />
         </a>
         <div class="portal-actions">
-          <a href="./index.html" class="btn btn-outline">Home</a>
+          <a href="https://www.legacycoaching.com.my/" class="btn btn-outline">Home</a>
           <button id="sign-out" class="btn btn-solid" type="button">Sign Out</button>
         </div>
       </header>
@@ -50,8 +114,8 @@
         <aside class="panel side-panel">
           <h2>Authenticated Session</h2>
           <div class="chip-row">
-            <span class="chip">Role: <strong id="user-role">Coach</strong></span>
-            <span class="chip" id="user-email">Loading...</span>
+            <span class="chip chip--accent">Role: <strong id="user-role">Coach</strong></span>
+            <span class="chip chip--accent" id="user-email">Loading...</span>
           </div>
           <ul class="info-list">
             <li>Review at-risk clients by attendance streak drop.</li>
@@ -69,8 +133,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js"></script>
-    <script src="./auth-client.js"></script>
-    <script src="./portal.js"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260402deployready1"></script>
+    <script src="./script.js?v=20260402deployready1"></script>
+    <script src="./portal.js?v=20260325ui7"></script>
   </body>
 </html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Kylie Denis emblem</title>
+  <desc id="desc">A calm teal emblem with a shield, wave, and centered star.</desc>
+  <defs>
+    <linearGradient id="kylieStroke" x1="96" y1="96" x2="416" y2="416" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9ee9df"/>
+      <stop offset="1" stop-color="#06a899"/>
+    </linearGradient>
+    <radialGradient id="kylieGlow" cx="50%" cy="46%" r="46%">
+      <stop offset="0" stop-color="rgba(6,168,153,0.42)"/>
+      <stop offset="1" stop-color="rgba(6,168,153,0)"/>
+    </radialGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" fill="none"/>
+  <circle cx="256" cy="248" r="142" fill="url(#kylieGlow)"/>
+  <g filter="url(#softGlow)" fill="none" stroke="url(#kylieStroke)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 82c46 35 96 50 132 56v94c0 90-53 152-132 198-79-46-132-108-132-198v-94c36-6 86-21 132-56Z" stroke-width="12"/>
+    <path d="M144 280c20 18 44 28 70 28 34 0 60-16 84-41 18-19 37-32 70-34" stroke-width="16"/>
+    <path d="M222 212l18 28 34-2-22 25 8 34-30-16-30 16 8-34-22-25 34 2 18-28Z" stroke-width="10"/>
+  </g>
+</svg>

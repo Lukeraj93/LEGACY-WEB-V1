@@ -26,6 +26,9 @@
 [functions."run-coach-ops-automation"]
   schedule = "@hourly"
 
+[functions."send-session-reminders"]
+  schedule = "@hourly"
+
 [[headers]]
   for = "/*"
   [headers.values]

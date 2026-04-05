@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260403workbookux1" />
+    <link rel="stylesheet" href="./styles.css?v=20260405dropdownfix3" />
   </head>
   <body data-required-role="client" data-live-dashboard="client" data-account-page="planner" data-disable-page-tabs="true">
     <div class="cinematic-bg" aria-hidden="true">
@@ -47,7 +47,7 @@
         <header class="crm-page-head reveal">
           <div>
             <span class="kicker kicker--accent">Planner</span>
-            <h1>Your Planner, Split Into Training, Nutrition, Health, and Progress</h1>
+            <h1>Your Planner, Organized Around What You Need To Do Right Now</h1>
             <p class="dashboard-feedback" id="client-planner-status">
               Syncing your live planner workspace.
             </p>
@@ -61,18 +61,26 @@
           </div>
         </header>
 
-        <nav class="crm-page-tabs reveal" id="client-planner-tabs" aria-label="Client planner tabs">
-          <button class="crm-page-tab is-active" type="button" data-client-planner-tab="training">Training</button>
-          <button class="crm-page-tab" type="button" data-client-planner-tab="nutrition">Nutrition</button>
-          <button class="crm-page-tab" type="button" data-client-planner-tab="health">Health</button>
-          <button class="crm-page-tab" type="button" data-client-planner-tab="progress">Progress</button>
-        </nav>
-
         <main class="dashboard-main crm-section-grid">
           <div class="crm-page-panel is-active" data-client-planner-panel="training">
-            <section class="section dashboard-section reveal" data-crm-tone="warning">
+            <nav class="client-planner-workspace-nav" role="tablist" aria-label="Training workspace tabs">
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="training" data-client-workspace-tab="snapshot">
+                Overview
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="training" data-client-workspace-tab="assigned">
+                Current Block
+              </button>
+              <button class="client-planner-workspace-tab is-active" type="button" role="tab" aria-selected="true" data-client-workspace="training" data-client-workspace-tab="day">
+                Session
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="training" data-client-workspace-tab="calendar">
+                Week View
+              </button>
+            </nav>
+
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="training" data-client-workspace-panel-key="snapshot" data-crm-tone="warning" hidden>
               <span class="kicker kicker--accent">Training Snapshot</span>
-              <h2>What Is Live In Your Coaching Block Right Now</h2>
+              <h2>Live Block At A Glance</h2>
               <div class="stats-grid crm-metric-grid">
                 <article class="stat crm-stat" data-crm-tone="warning">
                   <p class="crm-stat__label">Active Block</p>
@@ -90,14 +98,14 @@
                   <p class="crm-stat__detail" id="client-planner-stat-completed-note">Coach-reviewable completions from the last 7 days.</p>
                 </article>
                 <article class="stat crm-stat" data-crm-tone="neutral">
-                  <p class="crm-stat__label">Pending Review</p>
+                  <p class="crm-stat__label">Coach Review</p>
                   <p class="crm-stat__value" id="client-planner-stat-review">0</p>
                   <p class="crm-stat__detail" id="client-planner-stat-review-note">Items still waiting on coach review.</p>
                 </article>
               </div>
             </section>
 
-            <section class="section dashboard-section reveal split split--focus-left" id="client-planner-current-block" data-crm-tone="neutral">
+            <section class="section dashboard-section reveal client-planner-workspace-panel" id="client-planner-current-block" data-client-workspace-panel="training" data-client-workspace-panel-key="assigned" data-crm-tone="neutral" hidden>
               <article class="card" data-crm-tone="info">
                 <span class="kicker kicker--accent">Assigned Program</span>
                 <h2>Your Current Block</h2>
@@ -108,33 +116,41 @@
                   </article>
                 </div>
               </article>
+            </section>
 
-              <article class="card" data-crm-tone="warning">
-                <span class="kicker kicker--accent">Selected Day</span>
-                <h2>Open One Day And See The Full Training Sheet</h2>
+            <section class="section dashboard-section reveal client-planner-workspace-panel is-active" data-client-workspace-panel="training" data-client-workspace-panel-key="day" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Session</span>
+              <h2>See Today First, Then Log Only What You Actually Did</h2>
+              <div class="client-planner-session-shell">
                 <div id="client-planner-day-focus">
                   <article class="dashboard-note dashboard-note--placeholder">
                     <strong>No training day loaded yet</strong>
-                    <p>When your coach assigns a block, the selected training day will show here with the session focus, timing, and workbook summary.</p>
-                  </article>
-                </div>
-              </article>
-            </section>
-
-            <section class="section dashboard-section reveal" id="client-planner-training-days" data-crm-tone="neutral">
-              <span class="kicker kicker--accent">Training Calendar</span>
-              <h2>Pick A Day, Open The Sheet, Then Log Only Your Execution</h2>
-              <div class="client-planner-training-shell">
-                <div class="client-planner-training-calendar" id="client-planner-training-calendar">
-                  <article class="dashboard-note dashboard-note--placeholder">
-                    <strong>No training days available yet</strong>
-                    <p>Your coach-assigned days will appear here in a calendar-style picker once the live block is ready.</p>
+                    <p>When your coach assigns a block, your current session will show here with the focus, timing, and the simplest next step.</p>
                   </article>
                 </div>
                 <div class="client-planner-training-detail" id="client-planner-training-detail">
                   <article class="dashboard-note dashboard-note--placeholder">
                     <strong>Select a day to open the sheet</strong>
-                    <p>Your program sheet will appear here with coach targets on the left and only your editable columns on the right.</p>
+                    <p>Your session log will appear here with coach targets on the left and only your editable columns on the right.</p>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="section dashboard-section reveal client-planner-workspace-panel" id="client-planner-training-days" data-client-workspace-panel="training" data-client-workspace-panel-key="calendar" data-crm-tone="neutral" hidden>
+              <span class="kicker kicker--accent">Week View</span>
+              <h2>See This Week At A Glance, Then Open One Session</h2>
+              <div class="client-planner-training-shell client-planner-training-shell--calendar">
+                <div class="client-planner-training-calendar" id="client-planner-training-calendar">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>No training days available yet</strong>
+                    <p>Your coach-assigned days will appear here in a weekly picker once the live block is ready.</p>
+                  </article>
+                </div>
+                <div class="client-planner-training-preview" id="client-planner-training-calendar-preview">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>Select a day to preview it</strong>
+                    <p>You can review the selected day here, then open the full session in the Session tab when you are ready to log it.</p>
                   </article>
                 </div>
               </div>
@@ -142,7 +158,25 @@
           </div>
 
           <div class="crm-page-panel" data-client-planner-panel="nutrition" hidden>
-            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <nav class="client-planner-workspace-nav" role="tablist" aria-label="Nutrition workspace tabs">
+              <button class="client-planner-workspace-tab is-active" type="button" role="tab" aria-selected="true" data-client-workspace="nutrition" data-client-workspace-tab="overview">
+                Overview
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="nutrition" data-client-workspace-tab="calendar">
+                Day Guide
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="nutrition" data-client-workspace-tab="adherence">
+                Daily Log
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="nutrition" data-client-workspace-tab="meals">
+                Meal Diary
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="nutrition" data-client-workspace-tab="photo">
+                Photo Assist
+              </button>
+            </nav>
+
+            <section class="section dashboard-section reveal client-planner-workspace-panel is-active" data-client-workspace-panel="nutrition" data-client-workspace-panel-key="overview" data-crm-tone="neutral">
               <article class="card" data-crm-tone="success">
                 <span class="kicker kicker--accent">Current Nutrition Plan</span>
                 <div class="client-planner-nutrition-hero">
@@ -168,7 +202,7 @@
               </article>
             </section>
 
-            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="nutrition" data-client-workspace-panel-key="calendar" data-crm-tone="neutral" hidden>
               <span class="kicker kicker--accent">Nutrition Calendar</span>
               <h2>Pick A Day, Then Log Against That Day Only</h2>
               <div class="client-planner-training-shell client-planner-nutrition-shell">
@@ -187,21 +221,8 @@
               </div>
             </section>
 
-            <section class="section dashboard-section reveal" data-crm-tone="neutral">
-              <div class="client-planner-workspace-nav" role="tablist" aria-label="Nutrition workspace">
-                <button class="client-planner-workspace-tab is-active" type="button" role="tab" aria-selected="true" data-client-nutrition-workspace="adherence">
-                  Daily Log
-                </button>
-                <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-nutrition-workspace="meals">
-                  Meal Diary
-                </button>
-                <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-nutrition-workspace="photo">
-                  Photo Assist
-                </button>
-              </div>
-
-              <div class="client-planner-workspace-stack">
-                <article class="card client-planner-workspace-panel is-active" data-crm-tone="warning" data-client-nutrition-workspace-panel="adherence">
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="nutrition" data-client-workspace-panel-key="adherence" data-crm-tone="neutral" hidden>
+                <article class="card" data-crm-tone="warning">
                   <span class="kicker kicker--accent">Daily Log</span>
                   <h2>Submit Today&apos;s Nutrition Adherence</h2>
                   <p class="dashboard-note client-planner-workspace-note">Use this when you want to tell your coach how the day actually went.</p>
@@ -261,8 +282,10 @@
                     <p class="dashboard-note">Nutrition entries will appear here after your first submission.</p>
                   </div>
                 </article>
+            </section>
 
-                <article class="card client-planner-workspace-panel" data-crm-tone="info" data-client-nutrition-workspace-panel="meals" hidden>
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="nutrition" data-client-workspace-panel-key="meals" data-crm-tone="neutral" hidden>
+                <article class="card" data-crm-tone="info">
                   <span class="kicker kicker--accent">Meal Diary</span>
                   <h2>Log One Meal At A Time</h2>
                   <p class="dashboard-note client-planner-workspace-note">Pick the day, add foods, edit your portions, and keep the meal entry simple and clear.</p>
@@ -416,8 +439,10 @@
                     <p class="dashboard-note">Meals built from the food library will appear here after your first save.</p>
                   </div>
                 </article>
+            </section>
 
-                <article class="card client-planner-workspace-panel" data-crm-tone="warning" data-client-nutrition-workspace-panel="photo" hidden>
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="nutrition" data-client-workspace-panel-key="photo" data-crm-tone="neutral" hidden>
+                <article class="card" data-crm-tone="warning">
                   <span class="kicker kicker--accent">Photo Meal Assist</span>
                   <h2>Snap The Meal, Then Refine The Suggestions</h2>
                   <p class="dashboard-note client-planner-workspace-note">Use this when speed matters and you want the planner to suggest likely foods first.</p>
@@ -543,12 +568,23 @@
                     <p class="dashboard-note">Meal-photo submissions and suggested foods will appear here after your first upload.</p>
                   </div>
                 </article>
-              </div>
             </section>
           </div>
 
           <div class="crm-page-panel" data-client-planner-panel="health" hidden>
-            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="info">
+            <nav class="client-planner-workspace-nav" role="tablist" aria-label="Health workspace tabs">
+              <button class="client-planner-workspace-tab is-active" type="button" role="tab" aria-selected="true" data-client-workspace="health" data-client-workspace-tab="summary">
+                Summary
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="health" data-client-workspace-tab="form">
+                Health Form
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="health" data-client-workspace-tab="history">
+                History
+              </button>
+            </nav>
+
+            <section class="section dashboard-section reveal client-planner-workspace-panel is-active" data-client-workspace-panel="health" data-client-workspace-panel-key="summary" data-crm-tone="info">
               <article class="card" data-crm-tone="info">
                 <span class="kicker kicker--accent">Health Summary</span>
                 <h2>Recovery, Readiness, And Coaching Health Signals</h2>
@@ -556,7 +592,9 @@
                   <p class="dashboard-note">Your current health rhythm will appear here once your coach sets it up.</p>
                 </div>
               </article>
+            </section>
 
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="health" data-client-workspace-panel-key="form" data-crm-tone="warning" hidden>
               <article class="card" data-crm-tone="warning">
                 <span class="kicker kicker--accent">Health Form</span>
                 <h2>Submit Your Current Recovery And Health Update</h2>
@@ -594,7 +632,7 @@
               </article>
             </section>
 
-            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="health" data-client-workspace-panel-key="history" data-crm-tone="neutral" hidden>
               <span class="kicker kicker--accent">Recent Health Updates</span>
               <h2>Your Latest Submitted Recovery And Health Notes</h2>
               <div class="client-planner-feed" id="client-planner-checkin-feed">
@@ -604,7 +642,19 @@
           </div>
 
           <div class="crm-page-panel" data-client-planner-panel="progress" hidden>
-            <section class="section dashboard-section reveal split split--focus-left" data-crm-tone="warning">
+            <nav class="client-planner-workspace-nav" role="tablist" aria-label="Progress workspace tabs">
+              <button class="client-planner-workspace-tab is-active" type="button" role="tab" aria-selected="true" data-client-workspace="progress" data-client-workspace-tab="upload">
+                Upload
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="progress" data-client-workspace-tab="latest">
+                Latest Snapshot
+              </button>
+              <button class="client-planner-workspace-tab" type="button" role="tab" aria-selected="false" data-client-workspace="progress" data-client-workspace-tab="history">
+                History
+              </button>
+            </nav>
+
+            <section class="section dashboard-section reveal client-planner-workspace-panel is-active" data-client-workspace-panel="progress" data-client-workspace-panel-key="upload" data-crm-tone="warning">
               <article class="card" data-crm-tone="warning">
                 <span class="kicker kicker--accent">Progress Upload</span>
                 <h2>Capture Your Latest Checkpoint</h2>
@@ -762,7 +812,9 @@
                   Progress batches are uploaded privately and sent to your coach for review.
                 </p>
               </article>
+            </section>
 
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="progress" data-client-workspace-panel-key="latest" data-crm-tone="neutral" hidden>
               <article class="card" data-crm-tone="neutral">
                 <span class="kicker kicker--accent">Latest Review</span>
                 <h2>Current Progress Snapshot</h2>
@@ -780,7 +832,7 @@
               </article>
             </section>
 
-            <section class="section dashboard-section reveal" data-crm-tone="neutral">
+            <section class="section dashboard-section reveal client-planner-workspace-panel" data-client-workspace-panel="progress" data-client-workspace-panel-key="history" data-crm-tone="neutral" hidden>
               <span class="kicker kicker--accent">Progress History</span>
               <h2>Uploaded Photo Batches And Reviews</h2>
               <div class="client-planner-feed" id="client-planner-progress-feed">
@@ -798,12 +850,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="./auth-config.js?v=20260402deployready1"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
     <script src="./auth-client.js?v=20260402deployready1"></script>
-    <script src="./account-shell.js?v=20260402deployready1"></script>
+    <script src="./account-shell.js?v=20260405dropdownfix1"></script>
     <script src="./dashboard-auth.js?v=20260402deployready1"></script>
     <script src="./planner-athlete-engine.js?v=20260328demo3"></script>
     <script src="./lib/progress-photo-upload.js?v=20260330progress1"></script>
-    <script src="./client-planner.js?v=20260403workbookux1"></script>
+    <script src="./client-planner.js?v=20260405plannerweek1"></script>
   </body>
 </html>

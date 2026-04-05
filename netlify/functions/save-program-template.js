@@ -87,6 +87,17 @@ function sanitizeExercise(input, index) {
   };
 }
 
+async function insertRowsInChunks(supabaseQueryBuilderFactory, rows, chunkSize = 200) {
+  if (!Array.isArray(rows) || !rows.length) {
+    return;
+  }
+  for (let start = 0; start < rows.length; start += chunkSize) {
+    const chunk = rows.slice(start, start + chunkSize);
+    const response = await supabaseQueryBuilderFactory(chunk);
+    throwOnError(response);
+  }
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") {
     return noContent({ "Cache-Control": "no-store" });
@@ -154,66 +165,106 @@ exports.handler = async (event) => {
       savedTemplate = insertResponse.data;
     }
 
-    let weekCount = 0;
-    let dayCount = 0;
-    let exerciseCount = 0;
+    const normalizedWeeks = weeks.map((week, weekIndex) => {
+      const sourceWeek = week && typeof week === "object" ? week : {};
+      return {
+        source: sourceWeek,
+        weekNumber: normalizeInteger(sourceWeek.weekNumber || sourceWeek.week_number) || weekIndex + 1,
+        title: normalizeNullableText(sourceWeek.title),
+        summary: normalizeNullableText(sourceWeek.summary),
+        notes: normalizeNullableText(sourceWeek.notes),
+        days: Array.isArray(sourceWeek.days) ? sourceWeek.days : [],
+      };
+    });
 
-    for (let weekIndex = 0; weekIndex < weeks.length; weekIndex += 1) {
-      const week = weeks[weekIndex] && typeof weeks[weekIndex] === "object" ? weeks[weekIndex] : {};
-      const weekNumber = normalizeInteger(week.weekNumber || week.week_number) || weekIndex + 1;
+    const weekRows = normalizedWeeks.map((week) => ({
+      template_id: savedTemplate.id,
+      week_number: week.weekNumber,
+      title: week.title,
+      summary: week.summary,
+      notes: week.notes,
+    }));
+
+    let savedWeeks = [];
+    if (weekRows.length) {
       const weekInsertResponse = await supabase
         .from("program_template_weeks")
-        .insert({
-          template_id: savedTemplate.id,
-          week_number: weekNumber,
-          title: normalizeNullableText(week.title),
-          summary: normalizeNullableText(week.summary),
-          notes: normalizeNullableText(week.notes),
-        })
-        .select("*")
-        .single();
+        .insert(weekRows)
+        .select("id, week_number");
       throwOnError(weekInsertResponse);
-      const savedWeek = weekInsertResponse.data;
-      weekCount += 1;
-
-      const days = Array.isArray(week.days) ? week.days : [];
-      for (let dayIndex = 0; dayIndex < days.length; dayIndex += 1) {
-        const day = days[dayIndex] && typeof days[dayIndex] === "object" ? days[dayIndex] : {};
-        const dayNumber = normalizeInteger(day.dayNumber || day.day_number) || dayIndex + 1;
-        const dayInsertResponse = await supabase
-          .from("program_template_days")
-          .insert({
-            template_week_id: savedWeek.id,
-            day_number: dayNumber,
-            title: normalizeText(day.title || `Day ${dayNumber}`),
-            focus: normalizeNullableText(day.focus),
-            day_type: normalizeText(day.dayType || day.day_type || "workout"),
-            estimated_duration_minutes: normalizeInteger(day.estimatedDurationMinutes || day.estimated_duration_minutes),
-            notes: normalizeNullableText(day.notes),
-          })
-          .select("*")
-          .single();
-        throwOnError(dayInsertResponse);
-        const savedDay = dayInsertResponse.data;
-        dayCount += 1;
-
-        const exercises = Array.isArray(day.exercises) ? day.exercises : [];
-        if (!exercises.length) {
-          continue;
-        }
-
-        const exerciseRows = exercises.map((exercise, exerciseIndex) => ({
-          template_day_id: savedDay.id,
-          ...sanitizeExercise(exercise, exerciseIndex),
-        }));
-        const exerciseInsertResponse = await supabase
-          .from("program_template_exercises")
-          .insert(exerciseRows)
-          .select("id");
-        throwOnError(exerciseInsertResponse);
-        exerciseCount += (exerciseInsertResponse.data || []).length;
-      }
+      savedWeeks = Array.isArray(weekInsertResponse.data) ? weekInsertResponse.data : [];
     }
+
+    const weekIdByNumber = new Map(
+      savedWeeks.map((weekRow) => [Number(weekRow.week_number || 0), weekRow.id]).filter(([weekNumber, id]) => weekNumber && id)
+    );
+
+    const dayRows = [];
+    normalizedWeeks.forEach((week) => {
+      const savedWeekId = weekIdByNumber.get(week.weekNumber);
+      if (!savedWeekId) {
+        return;
+      }
+      week.days.forEach((day, dayIndex) => {
+        const sourceDay = day && typeof day === "object" ? day : {};
+        const dayNumber = normalizeInteger(sourceDay.dayNumber || sourceDay.day_number) || dayIndex + 1;
+        dayRows.push({
+          template_week_id: savedWeekId,
+          day_number: dayNumber,
+          title: normalizeText(sourceDay.title || `Day ${dayNumber}`),
+          focus: normalizeNullableText(sourceDay.focus),
+          day_type: normalizeText(sourceDay.dayType || sourceDay.day_type || "workout"),
+          estimated_duration_minutes: normalizeInteger(sourceDay.estimatedDurationMinutes || sourceDay.estimated_duration_minutes),
+          notes: normalizeNullableText(sourceDay.notes),
+        });
+      });
+    });
+
+    let savedDays = [];
+    if (dayRows.length) {
+      const dayInsertResponse = await supabase
+        .from("program_template_days")
+        .insert(dayRows)
+        .select("id, template_week_id, day_number");
+      throwOnError(dayInsertResponse);
+      savedDays = Array.isArray(dayInsertResponse.data) ? dayInsertResponse.data : [];
+    }
+
+    const dayIdByKey = new Map(
+      savedDays.map((dayRow) => [`${dayRow.template_week_id}:${dayRow.day_number}`, dayRow.id]).filter(([, id]) => id)
+    );
+
+    const exerciseRows = [];
+    normalizedWeeks.forEach((week) => {
+      const savedWeekId = weekIdByNumber.get(week.weekNumber);
+      if (!savedWeekId) {
+        return;
+      }
+      week.days.forEach((day, dayIndex) => {
+        const sourceDay = day && typeof day === "object" ? day : {};
+        const dayNumber = normalizeInteger(sourceDay.dayNumber || sourceDay.day_number) || dayIndex + 1;
+        const savedDayId = dayIdByKey.get(`${savedWeekId}:${dayNumber}`);
+        if (!savedDayId) {
+          return;
+        }
+        const exercises = Array.isArray(sourceDay.exercises) ? sourceDay.exercises : [];
+        exercises.forEach((exercise, exerciseIndex) => {
+          exerciseRows.push({
+            template_day_id: savedDayId,
+            ...sanitizeExercise(exercise, exerciseIndex),
+          });
+        });
+      });
+    });
+
+    await insertRowsInChunks(
+      (chunk) => supabase.from("program_template_exercises").insert(chunk),
+      exerciseRows
+    );
+
+    const weekCount = weekRows.length;
+    const dayCount = dayRows.length;
+    const exerciseCount = exerciseRows.length;
 
     return json(200, {
       ok: true,

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="980" viewBox="0 0 1400 980" role="img" aria-labelledby="title desc">
+  <title id="title">Kylie Denis</title>
+  <desc id="desc">Gallery placeholder 09</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c4abff" stop-opacity="0.28"/>
+      <stop offset="42%" stop-color="#6e58d8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#171228" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="22%" r="48%">
+      <stop offset="0%" stop-color="#c4abff" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#c4abff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1400" height="980" fill="#090706"/>
+  <rect x="0" y="0" width="1400" height="980" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1400" height="980" fill="url(#glow)"/>
+  <g opacity="0.16" stroke="#c4abff">
+    <path d="M0 176 H1400"/>
+    <path d="M0 804 H1400"/>
+    <path d="M196 0 V980"/>
+    <path d="M1204 0 V980"/>
+  </g>
+  <rect x="70" y="78" rx="39" ry="39" width="1260" height="823" fill="rgba(9,7,6,0.26)" stroke="rgba(255,255,255,0.12)"/>
+  <circle cx="252" cy="235" r="83" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)"/>
+  <text x="252" y="253" text-anchor="middle" fill="#fff8ef" font-size="69" font-family="Arial, Helvetica, sans-serif" font-weight="700">KD</text>
+  <text x="112" y="137" fill="#f6d8b5" font-size="31" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">COACH GALLERY</text>
+  <text x="112" y="568" fill="#fff8ef" font-size="74" font-family="Arial, Helvetica, sans-serif" font-weight="700">Kylie Denis</text>
+  <text x="112" y="666" fill="#f2ddca" font-size="35" font-family="Arial, Helvetica, sans-serif">Gallery placeholder 09</text>
+  <text x="112" y="862" fill="#eeb97d" font-size="25" font-family="Arial, Helvetica, sans-serif" letter-spacing="1.6">TEMPORARY DEPLOY MEDIA</text>
+</svg>

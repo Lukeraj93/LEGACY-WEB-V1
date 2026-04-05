@@ -201,6 +201,448 @@ function buildTextBody({ intro, metaRows, ctaUrl, footerNote, noteLabel, noteBod
   return lines.join("\n");
 }
 
+function buildCampaignTextBody({
+  salutation,
+  intro,
+  sections,
+  keyTakeawayTitle,
+  keyTakeawayBody,
+  references,
+  ctaUrl,
+  footerNote,
+  preferencesUrl,
+}) {
+  const lines = [];
+
+  if (salutation) {
+    lines.push(cleanText(salutation), "");
+  }
+
+  if (intro) {
+    lines.push(cleanText(intro), "");
+  }
+
+  (sections || [])
+    .filter((section) => section?.title && (section?.body || (Array.isArray(section?.items) && section.items.length)))
+    .forEach((section) => {
+      lines.push(cleanText(section.title));
+      if (section.body) {
+        lines.push(cleanText(section.body));
+      }
+      (Array.isArray(section.items) ? section.items : []).forEach((item) => {
+        if (item?.label && item?.text) {
+          lines.push(`${cleanText(item.label)}: ${cleanText(item.text)}`);
+        }
+      });
+      lines.push("");
+    });
+
+  if (keyTakeawayTitle && keyTakeawayBody) {
+    lines.push(cleanText(keyTakeawayTitle));
+    lines.push(cleanText(keyTakeawayBody));
+    lines.push("");
+  }
+
+  const normalizedReferences = Array.isArray(references) ? references : [];
+  if (normalizedReferences.length) {
+    lines.push("Scientific Verification");
+    normalizedReferences.forEach((reference) => {
+      if (reference?.label && reference?.url) {
+        lines.push(`${cleanText(reference.label)}: ${cleanText(reference.url)}`);
+      }
+    });
+    lines.push("");
+  }
+
+  if (ctaUrl) {
+    lines.push(`Open: ${ctaUrl}`, "");
+  }
+
+  if (footerNote) {
+    lines.push(cleanText(footerNote), "");
+  }
+
+  lines.push("LEGACY+ Support");
+  buildSupportTextLines().forEach((line) => lines.push(line));
+  lines.push(`WhatsApp Link: ${LEGACY_SUPPORT_WHATSAPP_URL}`);
+  if (preferencesUrl) {
+    lines.push(`Manage Email Preferences: ${preferencesUrl}`);
+  }
+  lines.push("", "LEGACY+");
+  return lines.join("\n");
+}
+
+function normalizeCampaignSections(sections) {
+  return (Array.isArray(sections) ? sections : [])
+    .map((section) => ({
+      title: cleanText(section?.title),
+      body: cleanText(section?.body),
+      imageUrl: cleanText(section?.imageUrl),
+      items: (Array.isArray(section?.items) ? section.items : [])
+        .map((item) => ({
+          label: cleanText(item?.label),
+          text: cleanText(item?.text),
+        }))
+        .filter((item) => item.label && item.text),
+    }))
+    .filter((section) => section.title && (section.body || section.items.length));
+}
+
+function normalizeCampaignReferences(references) {
+  return (Array.isArray(references) ? references : [])
+    .map((reference) => ({
+      label: cleanText(reference?.label),
+      url: cleanText(reference?.url),
+    }))
+    .filter((reference) => reference.label && reference.url);
+}
+
+function buildSectionItemsMarkup(items) {
+  const normalizedItems = Array.isArray(items) ? items : [];
+  if (!normalizedItems.length) {
+    return "";
+  }
+
+  const rows = [];
+  for (let index = 0; index < normalizedItems.length; index += 2) {
+    rows.push(normalizedItems.slice(index, index + 2));
+  }
+
+  return `
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:14px;border-collapse:separate;border-spacing:0 10px;">
+      ${rows
+        .map((row) => `
+          <tr>
+            ${row
+              .map((item) => `
+                <td width="50%" valign="top" style="padding:${row.length === 1 ? "0" : "0 6px 0 0"};">
+                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                    <tr>
+                      <td style="padding:14px 16px;border-radius:14px;background:rgba(255,255,255,0.03);">
+                        <div style="color:#ffb15d;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;">${escapeHtml(item.label)}</div>
+                        <p style="margin:10px 0 0;color:#f5e6d3;font-size:14px;line-height:1.65;">${escapeHtml(item.text)}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              `)
+              .join("")}
+            ${row.length === 1 ? '<td width="50%"></td>' : ""}
+          </tr>
+        `)
+        .join("")}
+    </table>
+  `;
+}
+
+function buildCampaignSectionMarkup(sections) {
+  return normalizeCampaignSections(sections)
+    .map(
+      (section) => `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:18px;border-collapse:collapse;">
+          <tr>
+            <td style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.035);box-shadow:inset 0 1px 0 rgba(255,177,93,0.08);">
+              <div style="color:#ffb15d;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;">${escapeHtml(section.title)}</div>
+              ${section.body ? `<p style="margin:12px 0 0;color:#f7dfc7;font-size:16px;line-height:1.7;">${escapeHtml(section.body)}</p>` : ""}
+              ${buildSectionItemsMarkup(section.items)}
+            </td>
+          </tr>
+        </table>
+      `
+    )
+    .join("");
+}
+
+function deriveRecipientFirstName(name, email) {
+  const directName = cleanText(name);
+  if (directName) {
+    return directName.split(/\s+/u)[0].replace(/[^A-Za-z0-9'-]/gu, "");
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail) {
+    return "";
+  }
+
+  const local = normalizedEmail.split("@")[0].replace(/[._-]+/gu, " ").trim();
+  if (!local) {
+    return "";
+  }
+
+  const firstToken = local.split(/\s+/u)[0];
+  return firstToken ? firstToken.charAt(0).toUpperCase() + firstToken.slice(1) : "";
+}
+
+function buildCampaignGreeting(name, email) {
+  const firstName = deriveRecipientFirstName(name, email);
+  return firstName ? `Hey ${firstName}!` : "Hey there!";
+}
+
+function buildCampaignReferenceMarkup(references) {
+  const normalizedReferences = normalizeCampaignReferences(references);
+  if (!normalizedReferences.length) {
+    return "";
+  }
+
+  return `
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:22px;border-collapse:collapse;">
+      <tr>
+        <td style="padding:8px 0 0;color:#ab9380;font-size:12px;line-height:1.6;">
+          <div style="color:#ab9380;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">Scientific Verification</div>
+          <div style="margin-top:8px;display:grid;gap:6px;">
+            ${normalizedReferences
+              .map(
+                (reference) => `
+                  <div style="font-size:12px;line-height:1.55;">
+                    <a href="${escapeHtml(toAbsoluteUrl(reference.url) || reference.url)}" style="color:#cdb8a2;text-decoration:underline;">${escapeHtml(reference.label)}</a>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        </td>
+      </tr>
+    </table>
+  `;
+}
+
+function buildCampaignKeyTakeawayMarkup(title, body, options = {}) {
+  const safeTitle = cleanText(title);
+  const safeBody = cleanText(body);
+  if (!safeTitle || !safeBody) {
+    return "";
+  }
+
+  const centered = Boolean(options.centered);
+  return `
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:26px;border-collapse:collapse;">
+      <tr>
+        <td style="padding:20px;border-radius:14px;background:linear-gradient(180deg, rgba(255,177,93,0.07) 0%, rgba(255,255,255,0.025) 100%);text-align:${centered ? "center" : "left"};">
+          <div style="color:#ffb15d;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;">${escapeHtml(safeTitle)}</div>
+          <p style="margin:12px 0 0;color:#fff6e8;font-size:16px;line-height:1.75;">${escapeHtml(safeBody)}</p>
+        </td>
+      </tr>
+    </table>
+  `;
+}
+
+function buildUpdateAnnouncementLayout({ greeting, intro, sections, keyTakeawayMarkup, ctaMarkup, footerMarkup, referencesMarkup }) {
+  const sectionMarkup = buildCampaignSectionMarkup(sections);
+  return `
+    ${greeting ? `<p style="margin:0 0 18px;color:#fff7ea;font-size:24px;line-height:1.2;font-weight:800;">${escapeHtml(greeting)}</p>` : ""}
+    ${intro ? `<p style="margin:0 0 22px;color:#f7dfc7;font-size:16px;line-height:1.75;">${escapeHtml(intro)}</p>` : ""}
+    ${keyTakeawayMarkup}
+    ${sectionMarkup ? `<div style="margin-top:8px;color:#ffb15d;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;">At A Glance</div>` : ""}
+    ${sectionMarkup}
+    ${ctaMarkup}
+    ${referencesMarkup}
+    ${footerMarkup}
+  `;
+}
+
+function buildEducationalLayout({ greeting, intro, sections, keyTakeawayMarkup, ctaMarkup, footerMarkup, referencesMarkup }) {
+  const editorialSections = normalizeCampaignSections(sections)
+    .map(
+      (section) => `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:24px;border-collapse:collapse;">
+          <tr>
+            <td style="padding:0 2px;">
+              <div style="color:#ffb15d;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;">${escapeHtml(section.title)}</div>
+              ${section.body ? `<p style="margin:14px 0 0;color:#f7dfc7;font-size:16px;line-height:1.9;text-align:justify;">${escapeHtml(section.body)}</p>` : ""}
+              ${buildSectionItemsMarkup(section.items)}
+            </td>
+          </tr>
+        </table>
+      `
+    )
+    .join("");
+
+  return `
+    ${greeting ? `<p style="margin:0 0 18px;color:#fff7ea;font-size:24px;line-height:1.2;font-weight:800;">${escapeHtml(greeting)}</p>` : ""}
+    ${intro ? `<p style="margin:0 0 12px;color:#f7dfc7;font-size:16px;line-height:1.9;text-align:justify;">${escapeHtml(intro)}</p>` : ""}
+    ${editorialSections}
+    ${keyTakeawayMarkup}
+    ${ctaMarkup}
+    ${referencesMarkup}
+    ${footerMarkup}
+  `;
+}
+
+function buildCommunityLayout({ greeting, intro, sections, keyTakeawayMarkup, ctaMarkup, footerMarkup, referencesMarkup }) {
+  const sectionMarkup = normalizeCampaignSections(sections)
+    .map(
+      (section) => `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:20px;border-collapse:collapse;">
+          <tr>
+            <td style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.035);box-shadow:inset 0 1px 0 rgba(255,177,93,0.08);">
+              <div style="color:#ffb15d;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;">${escapeHtml(section.title)}</div>
+              ${section.body ? `<p style="margin:12px 0 0;color:#f7dfc7;font-size:16px;line-height:1.75;">${escapeHtml(section.body)}</p>` : ""}
+              ${buildSectionItemsMarkup(section.items)}
+            </td>
+          </tr>
+        </table>
+      `
+    )
+    .join("");
+
+  return `
+    ${greeting ? `<p style="margin:0 0 18px;color:#fff7ea;font-size:24px;line-height:1.2;font-weight:800;">${escapeHtml(greeting)}</p>` : ""}
+    ${intro ? `<p style="margin:0 0 20px;color:#f7dfc7;font-size:16px;line-height:1.75;">${escapeHtml(intro)}</p>` : ""}
+    ${sectionMarkup}
+    ${keyTakeawayMarkup}
+    ${ctaMarkup}
+    ${referencesMarkup}
+    ${footerMarkup}
+  `;
+}
+
+function buildCoachDevelopmentLayout({ greeting, intro, sections, keyTakeawayMarkup, ctaMarkup, footerMarkup, referencesMarkup }) {
+  const sectionMarkup = buildCampaignSectionMarkup(sections);
+  return `
+    ${greeting ? `<p style="margin:0 0 18px;color:#fff7ea;font-size:24px;line-height:1.2;font-weight:800;">${escapeHtml(greeting)}</p>` : ""}
+    ${intro ? `<p style="margin:0 0 20px;color:#f7dfc7;font-size:16px;line-height:1.82;">${escapeHtml(intro)}</p>` : ""}
+    ${sectionMarkup ? `<div style="margin-top:8px;color:#ffb15d;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;">Coach Notes</div>` : ""}
+    ${sectionMarkup}
+    ${keyTakeawayMarkup}
+    ${ctaMarkup}
+    ${referencesMarkup}
+    ${footerMarkup}
+  `;
+}
+
+function renderCampaignEmailPreview({
+  subject,
+  previewText,
+  eyebrow,
+  title,
+  intro,
+  sections,
+  ctaLabel,
+  ctaUrl,
+  footerNote,
+  newsletterType,
+  keyTakeawayTitle,
+  keyTakeawayBody,
+  references,
+  previewRecipientEmail,
+  previewRecipientName,
+  openPixelUrl,
+} = {}) {
+  const safeSubject = cleanText(subject) || "LEGACY+ Weekly Dispatch";
+  const safePreviewText = cleanText(previewText);
+  const safeTitle = cleanText(title) || "LEGACY+ Weekly Dispatch";
+  const safeEyebrow = cleanText(eyebrow) || "Weekly Dispatch";
+  const safeIntro = cleanText(intro);
+  const safeFooter = cleanText(footerNote);
+  const safeSections = normalizeCampaignSections(sections);
+  const safeReferences = normalizeCampaignReferences(references);
+  const resolvedCtaUrl = toAbsoluteUrl(ctaUrl);
+  const resolvedOpenPixelUrl = toAbsoluteUrl(openPixelUrl);
+  const preferencesUrl = previewRecipientEmail ? buildEmailPreferencesUrl(previewRecipientEmail) : "";
+  const greeting = buildCampaignGreeting(previewRecipientName, previewRecipientEmail);
+  const keyTakeawayMarkup = buildCampaignKeyTakeawayMarkup(keyTakeawayTitle, keyTakeawayBody, {
+    centered: cleanText(newsletterType).toLowerCase() === "educational_deep_dive",
+  });
+  const referencesMarkup = buildCampaignReferenceMarkup(safeReferences);
+  const ctaMarkup = resolvedCtaUrl && ctaLabel
+    ? `<table role="presentation" cellspacing="0" cellpadding="0" style="margin-top:28px;border-collapse:collapse;">
+         <tr>
+           <td>
+             <a href="${escapeHtml(resolvedCtaUrl)}" style="display:inline-block;min-width:44px;min-height:44px;padding:14px 22px;border-radius:14px;background:linear-gradient(135deg,#ff9a49 0%,#ff6c1f 100%);color:#1d1108;font-size:14px;font-weight:800;letter-spacing:0.04em;line-height:1.2;text-decoration:none;box-sizing:border-box;">${escapeHtml(cleanText(ctaLabel))}</a>
+           </td>
+         </tr>
+       </table>`
+    : "";
+  const footerMarkup = safeFooter
+    ? `<p style="margin:28px 0 0;font-size:14px;line-height:1.65;color:#b79c84;">${escapeHtml(safeFooter)}</p>`
+    : "";
+  const normalizedType = cleanText(newsletterType).toLowerCase();
+  const bodyMarkup = normalizedType === "educational_deep_dive"
+    ? buildEducationalLayout({
+        greeting,
+        intro: safeIntro,
+        sections: safeSections,
+        keyTakeawayMarkup,
+        ctaMarkup,
+        footerMarkup,
+        referencesMarkup,
+      })
+    : normalizedType === "coach_development"
+      ? buildCoachDevelopmentLayout({
+          greeting,
+          intro: safeIntro,
+          sections: safeSections,
+          keyTakeawayMarkup,
+          ctaMarkup,
+          footerMarkup,
+          referencesMarkup,
+        })
+    : normalizedType === "community_member_spotlight"
+      ? buildCommunityLayout({
+          greeting,
+          intro: safeIntro,
+          sections: safeSections,
+          keyTakeawayMarkup,
+          ctaMarkup,
+          footerMarkup,
+          referencesMarkup,
+        })
+      : buildUpdateAnnouncementLayout({
+          greeting,
+          intro: safeIntro,
+          sections: safeSections,
+          keyTakeawayMarkup,
+          ctaMarkup,
+          footerMarkup,
+          referencesMarkup,
+        });
+
+  const html = buildEmailDocument({
+    preheader: safePreviewText || `${safeEyebrow} | ${safeTitle}`,
+    maxWidth: 680,
+    bodyHtml: `
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+        <tr>
+          <td style="padding:32px 28px 24px;border-bottom:1px solid rgba(218,133,55,0.18);">
+            <div style="color:#ffb15d;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;font-weight:700;">${escapeHtml(safeEyebrow)}</div>
+            <h1 style="margin:14px 0 0;font-size:32px;line-height:1.12;color:#fff7ea;">${escapeHtml(safeTitle)}</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 28px 28px;">
+            ${bodyMarkup}
+            ${previewRecipientEmail ? buildComplianceFooterHtml(previewRecipientEmail) : ""}
+            ${
+              resolvedOpenPixelUrl
+                ? `<img src="${escapeHtml(resolvedOpenPixelUrl)}" alt="" width="1" height="1" style="display:block;width:1px;height:1px;opacity:0;overflow:hidden;border:0;" />`
+                : ""
+            }
+          </td>
+        </tr>
+      </table>
+    `,
+  });
+
+  const text = buildCampaignTextBody({
+    salutation: greeting,
+    intro: safeIntro,
+    sections: safeSections,
+    keyTakeawayTitle,
+    keyTakeawayBody,
+    references: safeReferences,
+    ctaUrl: resolvedCtaUrl,
+    footerNote: safeFooter,
+    preferencesUrl,
+  });
+
+  return {
+    subject: safeSubject,
+    html,
+    text,
+    sections: safeSections,
+  };
+}
+
 function buildBillingTextBody({
   intro,
   documentLabel,
@@ -821,9 +1263,108 @@ async function sendBillingDocumentEmail({
   };
 }
 
+async function sendCampaignEmail({
+  to,
+  subject,
+  previewText,
+  eyebrow,
+  title,
+  intro,
+  sections,
+  ctaLabel,
+  ctaUrl,
+  footerNote,
+  newsletterType,
+  keyTakeawayTitle,
+  keyTakeawayBody,
+  references,
+  replyTo,
+  tags,
+  recipientResolver,
+  trackingResolver,
+} = {}) {
+  const requestedRecipients = normalizeRecipients(to);
+  const preferredRecipients = await filterRecipientsByPreferences(requestedRecipients, tags);
+  const preferredRecipientSet = new Set(preferredRecipients);
+  const recipients = await filterInactiveClientRecipients(preferredRecipients);
+  const recipientSet = new Set(recipients);
+  if (!recipients.length) {
+    return {
+      ok: false,
+      skipped: true,
+      reason: "recipient_preferences_or_status",
+      recipients: [],
+      ids: [],
+      deliveries: [],
+      skippedRecipients: requestedRecipients.map((recipient) => ({
+        recipient,
+        reason: preferredRecipientSet.has(recipient) ? "inactive_client_status" : "preferences",
+      })),
+    };
+  }
+
+  const deliveries = await Promise.all(
+    recipients.map(async (recipient) => {
+      const recipientContext = typeof recipientResolver === "function" ? recipientResolver(recipient) || {} : {};
+      const trackingConfig = typeof trackingResolver === "function" ? trackingResolver(recipient) || {} : {};
+      const preview = renderCampaignEmailPreview({
+        subject,
+        previewText,
+        eyebrow,
+        title,
+        intro,
+        sections,
+        ctaLabel,
+        ctaUrl: trackingConfig.ctaUrl || ctaUrl,
+        footerNote,
+        newsletterType,
+        keyTakeawayTitle,
+        keyTakeawayBody,
+        references,
+        previewRecipientEmail: recipient,
+        previewRecipientName: recipientContext.recipientName || recipientContext.label || "",
+        openPixelUrl: trackingConfig.openPixelUrl,
+      });
+
+      const delivery = await sendEmail({
+        to: recipient,
+        subject,
+        html: preview.html,
+        text: preview.text,
+        replyTo,
+        tags,
+      });
+
+      return {
+        recipient,
+        id: delivery?.id || "",
+        ok: Boolean(delivery?.ok),
+      };
+    })
+  );
+
+  const skippedRecipients = requestedRecipients
+    .filter((recipient) => !recipientSet.has(recipient))
+    .map((recipient) => ({
+      recipient,
+      reason: preferredRecipientSet.has(recipient) ? "inactive_client_status" : "preferences",
+    }));
+
+  return {
+    ok: deliveries.every((delivery) => delivery?.ok),
+    recipients,
+    ids: deliveries.map((delivery) => delivery?.id || "").filter(Boolean),
+    id: deliveries.find((delivery) => delivery?.id)?.id || "",
+    deliveries,
+    skippedRecipients,
+  };
+}
+
 module.exports = {
   formatCurrency,
   isEmailConfigured,
+  renderCampaignEmailPreview,
+  sendCampaignEmail,
   sendBillingDocumentEmail,
   sendEmail,
   sendNoticeEmail,

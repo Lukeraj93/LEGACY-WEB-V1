@@ -4621,12 +4621,27 @@
     };
   }
 
+  function getClientCalendarDaysPerView() {
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+    if (viewportWidth <= 400) {
+      return 3;
+    }
+    if (viewportWidth <= 560) {
+      return 4;
+    }
+    if (viewportWidth <= 760) {
+      return 5;
+    }
+    return 7;
+  }
+
   function renderCoachAvailability(data) {
     const hasBookablePackages = getBookablePackages(data).length > 0;
+    const daysPerView = getClientCalendarDaysPerView();
     const bookingCalendar = renderLiveCoachCalendar(bookingCalendarNode, data, {
       interactive: true,
       lookaheadDays: 28,
-      daysPerView: 7,
+      daysPerView,
       emptyMessage: "Your coach has not published any bookable slots yet.",
       onSelect: ({ block }) => {
         applyLiveCoachAvailabilitySelection(block);
@@ -4635,7 +4650,7 @@
     const availabilityCalendar = renderLiveCoachCalendar(coachAvailabilityCalendarNode, data, {
       interactive: false,
       lookaheadDays: 28,
-      daysPerView: 7,
+      daysPerView,
       emptyMessage: "Your coach has not published any availability windows yet.",
     });
 
@@ -5532,7 +5547,7 @@
     const releaseSubmit = setBusyButtonState(submitButton, "Submitting...");
 
     try {
-      const { access, supabase } = await loadAccessAndClient();
+      await loadAccessAndClient();
       const data = dashboardState.data;
       if (!data) {
         throw new Error("Your dashboard data is still loading.");
@@ -5583,30 +5598,24 @@
 
       setBookingFeedback("Submitting your booking request...", false);
 
-      const noteParts = [`Session type: ${sessionType}`, `Package: ${formatPackageDisplayName(selectedPackage)}`];
-      if (sessionNote) {
-        noteParts.push(sessionNote);
-      }
-
-      const { error } = await supabase.from("booking_requests").insert({
-        client_id: access.user.id,
-        preferred_coach_id: dashboardState.assignment?.coach_id || null,
-        client_package_id: selectedPackage.id,
-        requested_date: requestedDate,
-        requested_time: requestedTime,
-        notes: noteParts.join(" | "),
+      const payload = await fetchAuthenticatedJson("/.netlify/functions/submit-booking-request", {
+        method: "POST",
+        body: {
+          clientPackageId,
+          sessionType,
+          requestedDate,
+          requestedTime,
+          sessionNote,
+        },
       });
-
-      if (error) {
-        throw error;
-      }
 
       bookingForm.reset();
       await loadDashboard({
         fresh: true,
       });
       setBookingFeedback(
-        `Booking request submitted against ${formatPackageDisplayName(selectedPackage)}. It is now waiting for coach/admin confirmation.`,
+        payload?.message
+          || `Booking request submitted against ${formatPackageDisplayName(selectedPackage)}. It is now waiting for coach/admin confirmation.`,
         false
       );
     } catch (error) {
@@ -5632,7 +5641,7 @@
     const releaseSubmit = setBusyButtonState(submitButton, "Submitting...");
 
     try {
-      const { access, supabase } = await loadAccessAndClient();
+      await loadAccessAndClient();
       const data = dashboardState.data;
       if (!data) {
         throw new Error("Your dashboard data is still loading.");
@@ -5664,16 +5673,6 @@
         return;
       }
 
-      const insertPayload = {
-        session_id: sessionRecord.id,
-        client_id: access.user.id,
-        coach_id: sessionRecord.coach_id,
-        request_type: requestType === "cancel" ? "cancel" : "reschedule",
-        original_start: sessionRecord.scheduled_start,
-        original_end: sessionRecord.scheduled_end,
-        reason,
-      };
-
       if (requestType !== "cancel") {
         if (!requestedDate || !requestedTime) {
           setSessionChangeFeedback("Choose the new preferred date and time for a reschedule request.", true);
@@ -5693,10 +5692,6 @@
           setSessionChangeFeedback("Choose a future date and time for the reschedule request.", true);
           return;
         }
-
-        const durationMs = sessionDurationMs(sessionRecord);
-        insertPayload.requested_start = requestedStart.toISOString();
-        insertPayload.requested_end = new Date(requestedStart.getTime() + durationMs).toISOString();
       }
 
       setSessionChangeFeedback(
@@ -5704,10 +5699,16 @@
         false
       );
 
-      const { error } = await supabase.from("session_change_requests").insert(insertPayload);
-      if (error) {
-        throw error;
-      }
+      const payload = await fetchAuthenticatedJson("/.netlify/functions/submit-session-change-request", {
+        method: "POST",
+        body: {
+          sessionId: sessionRecord.id,
+          requestType,
+          requestedDate: requestType === "cancel" ? "" : requestedDate,
+          requestedTime: requestType === "cancel" ? "" : requestedTime,
+          reason,
+        },
+      });
 
       sessionChangeForm.reset();
       syncSessionChangeFormVisibility();
@@ -5715,9 +5716,10 @@
         fresh: true,
       });
       setSessionChangeFeedback(
-        requestType === "cancel"
-          ? "Cancellation request submitted. It will stay pending until your coach reviews it."
-          : "Reschedule request submitted. It will stay pending until your coach reviews it.",
+        payload?.message
+          || (requestType === "cancel"
+            ? "Cancellation request submitted. It will stay pending until your coach reviews it."
+            : "Reschedule request submitted. It will stay pending until your coach reviews it."),
         false
       );
     } catch (error) {

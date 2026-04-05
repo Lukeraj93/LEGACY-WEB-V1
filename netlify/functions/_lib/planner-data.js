@@ -680,6 +680,29 @@ async function getCoachPlannerPayload(supabase, auth) {
         .order("scheduled_date", { ascending: true })
     : { data: [], error: null };
   throwOnError(programDaysResponse);
+  const programDays = programDaysResponse.data || [];
+  const programDayIds = programDays.map((item) => item.id).filter(Boolean);
+  const workoutLogs = workoutLogsResponse.data || [];
+
+  const [programExercisesResponse, workoutExerciseLogsResponse] = await Promise.all([
+    programDayIds.length
+      ? supabase
+          .from("client_program_day_exercises")
+          .select("*, exercise_library(name, video_url, autoplay_video, custom_fields)")
+          .in("client_program_day_id", programDayIds)
+      : Promise.resolve({ data: [], error: null }),
+    workoutLogs.length
+      ? supabase
+          .from("client_workout_exercise_logs")
+          .select("*")
+          .in(
+            "workout_log_id",
+            workoutLogs.map((item) => item.id)
+          )
+          .order("sort_order", { ascending: true })
+      : Promise.resolve({ data: [], error: null }),
+  ]);
+  [programExercisesResponse, workoutExerciseLogsResponse].forEach(throwOnError);
 
   const mealEntries = mealEntriesResponse.data || [];
   const mealItemsResponse = mealEntries.length
@@ -774,9 +797,11 @@ async function getCoachPlannerPayload(supabase, auth) {
     rosterDetails: clientDetailsResponse.data || [],
     rosterAssignments: assignmentLinksResponse.data || [],
     programAssignments,
-    programDays: programDaysResponse.data || [],
+    programDays,
+    programExercises: enrichProgramExerciseMedia(programExercisesResponse.data || []),
     nutritionPlans: nutritionPlansResponse.data || [],
-    workoutLogs: workoutLogsResponse.data || [],
+    workoutLogs,
+    workoutExerciseLogs: workoutExerciseLogsResponse.data || [],
     nutritionLogs: nutritionLogsResponse.data || [],
     catalogFoods,
     coachFoodCount: Number(coachFoodCountResponse.count || 0),
