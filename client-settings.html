@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Settings | LEGACY+ Client</title>
+    <meta name="description" content="Private client settings for wearable sync, profile portrait controls, and account preferences." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260407crmfix14" />
+  </head>
+  <body data-required-role="client" data-live-dashboard="client" data-account-page="settings">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./client-dashboard.html">LEGACY<span>+</span> Client</a>
+        <p class="crm-sidebar-copy">Private client navigation for planning, nutrition, health, scheduling, and account progress.</p>
+        <nav class="crm-nav" aria-label="Client navigation">
+          <a href="./client-dashboard.html">Home</a>
+          <a href="./client-planner.html">Planner</a>
+          <a href="./client-packages.html">Packages</a>
+          <a href="./client-schedule.html">Schedule</a>
+          <a href="./client-rewards.html">Rewards</a>
+          <a href="./client-profile.html">Profile</a>
+          <a class="is-current" href="./client-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Settings</span>
+            <h1>Profile &amp; Sync Settings</h1>
+            <p class="dashboard-feedback">Switch between portrait, wearables, and account details without one long settings wall.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong data-account-email>client</strong></p>
+            <p>Your portrait choices, wearable connections, and account details all live here, but each now has its own clean section.</p>
+          </div>
+        </header>
+
+        <nav class="crm-page-tabs reveal" aria-label="Client settings sections">
+          <button class="crm-page-tab is-active" type="button" data-client-settings-tab="portrait" aria-pressed="true">Portrait</button>
+          <button class="crm-page-tab" type="button" data-client-settings-tab="wearables" aria-pressed="false">Wearables</button>
+          <button class="crm-page-tab" type="button" data-client-settings-tab="account" aria-pressed="false">Account</button>
+          <button class="crm-page-tab" type="button" data-client-settings-tab="security" aria-pressed="false">Security</button>
+        </nav>
+
+        <main class="dashboard-main crm-section-grid">
+          <div class="crm-page-panel is-active" data-client-settings-panel="portrait">
+            <section class="section dashboard-section reveal account-settings-grid">
+              <article class="card account-settings-grid__wide" id="client-settings-portrait">
+                <span class="kicker kicker--accent">Portrait</span>
+                <h2>Profile Portrait Library</h2>
+                <div class="appearance-avatar-preview-card" id="account-avatar-card-preview" aria-live="polite"></div>
+                <div class="section-actions">
+                  <button class="btn btn-primary" id="account-avatar-apply" type="button" disabled>Character Applied</button>
+                </div>
+                <div class="appearance-avatar-library" id="account-avatar-presets"></div>
+                <p class="dashboard-feedback" id="account-avatar-feedback">
+                  Choose any unlocked character, preview it, then click Apply Character to save it to your client profile.
+                </p>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-client-settings-panel="wearables" hidden>
+            <section class="section dashboard-section reveal account-settings-grid" id="client-settings-wearables">
+              <article class="card account-settings-grid__wide wearable-sync-shell" data-crm-tone="success">
+                <span class="kicker kicker--accent">Wearables</span>
+                <h2>Connect Your Wearable Data</h2>
+                <p class="dashboard-feedback" id="client-wearables-feedback">
+                  Link a wearable source to sync sleep, steps, and readiness-supporting health signals into your LEGACY+ progress system.
+                </p>
+
+                <div class="wearable-sync-grid">
+                  <article class="wearable-provider-card wearable-provider-card--featured" data-provider="fitbit" data-crm-tone="success">
+                    <div class="wearable-provider-card__head">
+                      <div>
+                        <span class="kicker kicker--accent">Live Now</span>
+                        <h3>Fitbit Cloud Sync</h3>
+                      </div>
+                      <div class="chips wearable-chip-row" id="client-fitbit-status-chips">
+                        <span class="chip">Checking status...</span>
+                      </div>
+                    </div>
+                    <p id="client-fitbit-status-copy">
+                      Connect your Fitbit account to pull sleep, step count, and recovery-supporting health signals straight into your member profile.
+                    </p>
+                    <dl class="wearable-provider-card__stats" id="client-fitbit-stat-grid">
+                      <div>
+                        <dt>Account</dt>
+                        <dd id="client-fitbit-account">Not connected</dd>
+                      </div>
+                      <div>
+                        <dt>Last Sync</dt>
+                        <dd id="client-fitbit-last-sync">Not yet</dd>
+                      </div>
+                      <div>
+                        <dt>Latest Sleep</dt>
+                        <dd id="client-fitbit-latest-sleep">--</dd>
+                      </div>
+                      <div>
+                        <dt>Latest Steps</dt>
+                        <dd id="client-fitbit-latest-steps">--</dd>
+                      </div>
+                    </dl>
+                    <div class="section-actions">
+                      <button class="btn btn-primary" id="client-fitbit-connect" type="button">Connect Fitbit</button>
+                      <button class="btn btn-ghost" id="client-fitbit-sync" type="button" disabled>Sync Now</button>
+                      <button class="btn btn-ghost" id="client-fitbit-disconnect" type="button" disabled>Disconnect</button>
+                    </div>
+                  </article>
+
+                  <div class="wearable-provider-list">
+                    <article class="wearable-provider-card" data-provider="strava" data-crm-tone="success" hidden>
+                      <div class="wearable-provider-card__head">
+                        <div>
+                          <span class="kicker kicker--accent">Live Now</span>
+                          <h3>Strava Runner Sync</h3>
+                        </div>
+                        <div class="chips wearable-chip-row" id="client-strava-status-chips">
+                          <span class="chip">Checking status...</span>
+                        </div>
+                      </div>
+                      <p id="client-strava-status-copy">
+                        Connect Strava to pull running and endurance activity data into your LEGACY+ profile.
+                      </p>
+                      <dl class="wearable-provider-card__stats">
+                        <div>
+                          <dt>Athlete</dt>
+                          <dd id="client-strava-account">Not connected</dd>
+                        </div>
+                        <div>
+                          <dt>Last Sync</dt>
+                          <dd id="client-strava-last-sync">Not yet</dd>
+                        </div>
+                        <div>
+                          <dt>Latest Distance</dt>
+                          <dd id="client-strava-latest-distance">--</dd>
+                        </div>
+                        <div>
+                          <dt>Active Minutes</dt>
+                          <dd id="client-strava-latest-active">--</dd>
+                        </div>
+                      </dl>
+                      <div class="section-actions">
+                        <button class="btn btn-primary" id="client-strava-connect" type="button">Connect Strava</button>
+                        <button class="btn btn-ghost" id="client-strava-sync" type="button" disabled>Sync Now</button>
+                        <button class="btn btn-ghost" id="client-strava-disconnect" type="button" disabled>Disconnect</button>
+                      </div>
+                    </article>
+
+                    <div class="wearable-provider-list" id="client-wearable-provider-cards">
+                      <article class="wearable-provider-card">
+                        <span class="kicker kicker--accent">Loading</span>
+                        <h3>Checking provider readiness</h3>
+                        <p>Supported device paths are loading.</p>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wearable-summary-grid" id="client-wearable-summary-grid">
+                  <article class="wearable-summary-item">
+                    <span>Reward Source</span>
+                    <strong>None selected</strong>
+                    <p>One synced provider can drive XP at a time.</p>
+                  </article>
+                  <article class="wearable-summary-item">
+                    <span>Latest Daily Sync</span>
+                    <strong>Not yet</strong>
+                    <p>Sleep, recovery, and movement will appear after the first sync.</p>
+                  </article>
+                  <article class="wearable-summary-item">
+                    <span>Wearable Reward Events</span>
+                    <strong>0 created</strong>
+                    <p>New wearable-linked XP and coin events will land here automatically.</p>
+                  </article>
+                </div>
+
+                <div class="dashboard-table-wrap">
+                  <table class="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Provider</th>
+                        <th>Sleep</th>
+                        <th>Steps / Score</th>
+                        <th>RHR / HRV</th>
+                      </tr>
+                    </thead>
+                    <tbody id="client-wearable-metric-rows">
+                      <tr class="dashboard-table__empty-row">
+                        <td colspan="5">
+                          <div class="dashboard-table__empty">
+                            <strong>No wearable metrics synced yet.</strong>
+                            <p>Sleep, recovery, step, and readiness metrics will appear here once you connect a supported provider and the first sync completes.</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-client-settings-panel="account" hidden>
+            <section class="section dashboard-section reveal account-settings-grid">
+              <article class="card account-settings-grid__wide" id="client-settings-account">
+                <span class="kicker kicker--accent">Account</span>
+                <h2>Signed-In Details</h2>
+                <div class="account-meta-list">
+                  <div class="account-meta-item">
+                    <strong>Email</strong>
+                    <span data-account-email>client</span>
+                  </div>
+                  <div class="account-meta-item">
+                    <strong>Role</strong>
+                    <span>Client</span>
+                  </div>
+                  <div class="account-meta-item">
+                    <strong>Support Route</strong>
+                    <span>Use your coach or super admin for account-specific help.</span>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-client-settings-panel="security" hidden>
+            <section class="section dashboard-section reveal account-settings-grid">
+              <article class="card account-settings-grid__wide" id="client-settings-security">
+                <span class="kicker kicker--accent">Security</span>
+                <h2>Password and Access</h2>
+                <div class="account-meta-list">
+                  <div class="account-meta-item">
+                    <strong>Account Email</strong>
+                    <span data-security-email>client</span>
+                  </div>
+                  <div class="account-meta-item">
+                    <strong>Role</strong>
+                    <span data-security-role>Client</span>
+                  </div>
+                  <div class="account-meta-item">
+                    <strong>Access Route</strong>
+                    <span>Update your password here or send yourself a reset email if you want to rotate credentials later.</span>
+                  </div>
+                </div>
+                <form class="contact-form account-security-form" id="account-security-password-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      New password
+                      <input type="password" name="newPassword" placeholder="Create a new password" autocomplete="new-password" minlength="6" required />
+                    </label>
+                    <label>
+                      Confirm new password
+                      <input type="password" name="confirmPassword" placeholder="Confirm your new password" autocomplete="new-password" minlength="6" required />
+                    </label>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-primary" id="account-security-submit" type="submit">Update Password</button>
+                    <button class="btn btn-ghost" id="account-security-reset" type="button">Send Reset Email</button>
+                    <button class="btn btn-ghost" type="button" data-account-sign-out>Sign Out</button>
+                  </div>
+                </form>
+                <div class="crm-callout">
+                  <p>Email changes still go through LEGACY+ support while the wider account-security rollout is being finished.</p>
+                </div>
+                <p class="dashboard-feedback" id="account-security-feedback">
+                  Replace your temporary password here, or send yourself a reset link for later.
+                </p>
+              </article>
+            </section>
+          </div>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Client | Settings</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private client view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260407authfix2"></script>
+    <script src="./account-shell.js?v=20260407homecleanup1"></script>
+    <script src="./client-dashboard.js?v=20260407providergate1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+  </body>
+</html>

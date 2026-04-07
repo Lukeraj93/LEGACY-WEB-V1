@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Client Dashboard | LEGACY+ Coaching</title>
+    <title>Client Home | LEGACY+ Client</title>
     <meta
       name="description"
-      content="Client dashboard for LEGACY+ with profile avatar, milestones, session booking, session calendar, purchase history, and coach notes."
+      content="Private LEGACY+ client home for package balance, progress, and next-step coaching actions."
     />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,219 +15,140 @@
       href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260407crmfix14" />
   </head>
-  <body>
-    <div class="dashboard-shell">
-      <header class="dashboard-topbar reveal">
-        <a class="dashboard-brand" href="./index.html">LEGACY<span>+</span> Coaching</a>
-        <div class="dashboard-topbar-actions">
-          <a class="btn btn-ghost" href="./index.html">Back to Website</a>
-          <a class="btn btn-secondary" href="./coach-dashboard.html">Coach Login</a>
-        </div>
-      </header>
-
-      <main class="dashboard-main">
-        <section class="page-hero reveal">
-          <span class="kicker">Client Dashboard</span>
-          <h1>Your Coaching Progress Hub</h1>
-          <p>
-            Track your milestones, book upcoming sessions, view your schedule, and review coach feedback in one place.
-          </p>
-          <div class="stats-grid">
-            <article class="stat">
-              <h3>18 Sessions Completed</h3>
-              <p>Consistent training streak over the last 7 weeks.</p>
-            </article>
-            <article class="stat">
-              <h3>3 Milestone Badges</h3>
-              <p>Strength, consistency, and movement milestones unlocked.</p>
-            </article>
-            <article class="stat">
-              <h3>2 Upcoming Bookings</h3>
-              <p>Next scheduled sessions are ready in your calendar.</p>
-            </article>
-            <article class="stat">
-              <h3>RM 5,760 Total Purchases</h3>
-              <p>Package purchases and add-ons to date.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal split">
-          <article class="card dashboard-avatar-card">
-            <span class="kicker">Avatar Profile</span>
-            <div class="dashboard-avatar" aria-label="Client avatar">SL</div>
-            <h2>Sarah Lim</h2>
-            <p>Primary Goal: Build strength, improve mobility, and sustain fat loss progression.</p>
-            <div class="chips">
-              <span class="chip">Plan: Performance 12</span>
-              <span class="chip">Coach: Luke</span>
-              <span class="chip">Status: Active</span>
-            </div>
-          </article>
-          <article class="card">
-            <span class="kicker">Milestone Badges</span>
-            <h2>Achievements</h2>
-            <div class="dashboard-badge-grid">
-              <article class="dashboard-badge">
-                <strong>Consistency 4-Week</strong>
-                <p>Completed all planned sessions for four consecutive weeks.</p>
-              </article>
-              <article class="dashboard-badge">
-                <strong>Strength Level-Up</strong>
-                <p>Increased key lower body lift by 20%.</p>
-              </article>
-              <article class="dashboard-badge">
-                <strong>Mobility Milestone</strong>
-                <p>Improved movement quality score in reassessment.</p>
-              </article>
-            </div>
-          </article>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Book Sessions</span>
-          <h2>Request Your Next Training Slot</h2>
-          <form class="contact-form" id="client-booking-form">
-            <div class="input-row">
-              <label>
-                Session Type
-                <select name="service" required>
-                  <option value="">Select one</option>
-                  <option value="1:1 Strength Session">1:1 Strength Session</option>
-                  <option value="Mobility Session">Mobility Session</option>
-                  <option value="Progress Review">Progress Review</option>
-                </select>
-              </label>
-              <label>
-                Preferred Date
-                <input type="date" name="sessionDate" required />
-              </label>
-            </div>
-            <div class="input-row">
-              <label>
-                Preferred Time
-                <input type="time" name="sessionTime" required />
-              </label>
-              <label>
-                Notes
-                <input type="text" name="sessionNote" placeholder="Any training focus for this session" />
-              </label>
-            </div>
-            <button class="btn btn-primary" type="submit">Request Session</button>
-          </form>
-          <p class="dashboard-feedback" id="client-booking-feedback">Your coach will confirm bookings and update your calendar.</p>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Session Calendar</span>
-          <h2>Upcoming Sessions</h2>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Session</th>
-                  <th>Coach</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>March 6, 2026</td>
-                  <td>8:00 AM</td>
-                  <td>1:1 Strength Session</td>
-                  <td>Luke</td>
-                  <td>Confirmed</td>
-                </tr>
-                <tr>
-                  <td>March 9, 2026</td>
-                  <td>7:30 AM</td>
-                  <td>Mobility Session</td>
-                  <td>Luke</td>
-                  <td>Confirmed</td>
-                </tr>
-                <tr>
-                  <td>March 13, 2026</td>
-                  <td>8:00 AM</td>
-                  <td>Progress Review</td>
-                  <td>Luke</td>
-                  <td>Pending</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Purchase History</span>
-          <h2>Packages and Transactions</h2>
-          <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Package</th>
-                  <th>Amount</th>
-                  <th>Sessions</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>February 2, 2026</td>
-                  <td>Performance Plan - 12 Sessions</td>
-                  <td>RM 2,380</td>
-                  <td>8/12 used</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>December 14, 2025</td>
-                  <td>Starter Precision - 8 Sessions</td>
-                  <td>RM 1,780</td>
-                  <td>8/8 used</td>
-                  <td>Completed</td>
-                </tr>
-                <tr>
-                  <td>October 18, 2025</td>
-                  <td>Assessment + Programming</td>
-                  <td>RM 1,600</td>
-                  <td>One-time</td>
-                  <td>Completed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="section dashboard-section reveal">
-          <span class="kicker">Coach Notes</span>
-          <h2>Latest Guidance from Your Coach</h2>
-          <div class="dashboard-note-log">
-            <article class="dashboard-note">
-              <p><strong>March 3, 2026:</strong> Great progression on tempo squat. Keep rest intervals strict this week.</p>
-              <small>Coach Luke</small>
-            </article>
-            <article class="dashboard-note">
-              <p><strong>February 27, 2026:</strong> Mobility quality improved. Add thoracic opener before upper-body sessions.</p>
-              <small>Coach Luke</small>
-            </article>
-            <article class="dashboard-note">
-              <p><strong>February 20, 2026:</strong> Nutrition adherence strong. Continue protein target and hydration routine.</p>
-              <small>Coach Luke</small>
-            </article>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <p>LEGACY+ Coaching | Client Dashboard</p>
-        <p>&copy; <span data-year></span> LEGACY+ Coaching. Personalized member view.</p>
-      </footer>
+  <body data-required-role="client" data-live-dashboard="client" data-account-page="home">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
     </div>
 
-    <script src="./script.js"></script>
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./client-dashboard.html">LEGACY<span>+</span> Client</a>
+        <p class="crm-sidebar-copy">Private client navigation for planning, nutrition, health, scheduling, and account progress.</p>
+        <nav class="crm-nav" aria-label="Client navigation">
+          <a class="is-current" href="./client-dashboard.html">Home</a>
+          <a href="./client-planner.html">Planner</a>
+          <a href="./client-packages.html">Packages</a>
+          <a href="./client-schedule.html">Schedule</a>
+          <a href="./client-rewards.html">Rewards</a>
+          <a href="./client-profile.html">Profile</a>
+          <a href="./client-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Client Home</span>
+            <h1>Your Coaching Progress Hub</h1>
+            <p class="dashboard-feedback" id="client-dashboard-status">Syncing your live dashboard data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Client focus: package balance first, schedule next, then rewards and profile details.</p>
+            <p>Signed in as <strong data-account-email>client</strong></p>
+            <div class="crm-priority-legend" aria-label="Priority legend">
+              <span class="crm-priority-legend__title">Color Index</span>
+              <span class="chip chip--tone-alert">Ember: act now</span>
+              <span class="chip chip--tone-warning">Gold: watch next</span>
+              <span class="chip chip--tone-info">Bronze: supporting info</span>
+              <span class="chip chip--tone-success">Sage: healthy progress</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid client-home-grid">
+          <section class="section dashboard-section reveal client-home-focus-section" id="client-home-focus" data-crm-tone="alert">
+            <span class="kicker kicker--accent">Next Move</span>
+            <h2>Keep Your Momentum Moving</h2>
+            <div class="client-home-focus-panel" id="client-home-focus-panel">
+              <article class="dashboard-note" data-crm-tone="alert">
+                <p>Your next coaching action and live progress ring will appear here once your dashboard sync completes.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal dashboard-achievement-section" id="client-home-achievements" data-crm-tone="success">
+            <span class="kicker kicker--accent">Achievements</span>
+            <h2>Milestone Badges</h2>
+            <div class="dashboard-achievement-strip" id="client-reward-badge-grid">
+              <article class="dashboard-badge dashboard-badge--placeholder">
+                <strong>Achievement shelf is syncing</strong>
+                <p>Your latest milestones, active level path, and unlocked badges will appear here as soon as the rewards summary finishes loading.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" id="client-home-schedule" data-crm-tone="warning">
+            <span class="kicker kicker--accent">Upcoming Schedule</span>
+            <h2>Your Sessions and Booking Requests</h2>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Coach</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="client-schedule-rows">
+                  <tr class="dashboard-table__empty-row">
+                    <td colspan="5">
+                      <div class="dashboard-table__empty">
+                        <strong>No sessions or booking requests yet.</strong>
+                        <p>Your confirmed sessions, pending booking requests, and approved reschedules will appear here once the schedule is active.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="dashboard-table-pagination" id="client-schedule-pagination" aria-label="Schedule timeline pagination"></div>
+          </section>
+
+          <section class="section dashboard-section reveal" id="client-home-leaderboard" data-crm-tone="neutral">
+            <span class="kicker kicker--accent">Leaderboard</span>
+            <h2>Client Progress Leaderboard</h2>
+            <div class="leaderboard-panel">
+              <p class="leaderboard-panel__intro">
+                Live standings blend strength PRs, logged sessions, total tonnage, 5K performance, XP, and coins into one weighted score.
+              </p>
+              <p class="leaderboard-panel__intro leaderboard-panel__intro--formula">
+                Formula: Strength PRs 35% • Session volume 25% • XP and coins 25% • 5K conditioning 15%
+              </p>
+              <div class="leaderboard-list" id="client-leaderboard-rows">
+                <article class="leaderboard-row leaderboard-row--empty">
+                  <strong>Loading the live client leaderboard</strong>
+                  <p>Your ranking, movement, and leaderboard context will appear here as soon as the approved rewards feed is ready.</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Client | Home</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private client view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260407authfix2"></script>
+    <script src="./account-shell.js?v=20260407homecleanup1"></script>
+    <script src="./client-dashboard.js?v=20260407providergate1"></script>
+    <script src="./assets/legacy-codex-bundle.js?v=20260324a"></script>
+    <script src="./planner-athlete-engine.js?v=20260328demo3"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
   </body>
 </html>

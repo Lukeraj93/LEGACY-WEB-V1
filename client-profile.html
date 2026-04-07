@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Profile | LEGACY+ Client</title>
+    <meta name="description" content="Private LEGACY+ client profile with live CRM progress, package, and reward metrics." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260407crmfix14" />
+  </head>
+  <body data-required-role="client" data-live-dashboard="client" data-account-page="profile">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./client-dashboard.html">LEGACY<span>+</span> Client</a>
+        <p class="crm-sidebar-copy">Private client navigation for planning, nutrition, health, scheduling, and account progress.</p>
+        <nav class="crm-nav" aria-label="Client navigation">
+          <a href="./client-dashboard.html">Home</a>
+          <a href="./client-planner.html">Planner</a>
+          <a href="./client-packages.html">Packages</a>
+          <a href="./client-schedule.html">Schedule</a>
+          <a href="./client-rewards.html">Rewards</a>
+          <a class="is-current" href="./client-profile.html">Profile</a>
+          <a href="./client-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Client Profile</span>
+            <h1>Live Member Profile</h1>
+            <p class="dashboard-feedback" id="client-dashboard-status">Syncing your live profile data.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Your private member profile combines package, reward, and schedule performance from the CRM.</p>
+            <p>Signed in as <strong data-account-email>client</strong></p>
+          </div>
+        </header>
+
+        <main class="dashboard-main crm-section-grid profile-page-main">
+          <section class="section dashboard-section reveal" id="client-profile-overview" data-crm-tone="warning" data-section-label="Profile Overview">
+            <span class="kicker kicker--accent">Member Profile</span>
+            <h2>Identity, progress, and live account standing</h2>
+            <div class="profile-hero profile-hero--client profile-hero--client-compact">
+              <article class="profile-portrait-panel" data-crm-tone="info">
+                <div class="profile-portrait-panel__frame" id="client-profile-portrait">
+                  <div class="crm-avatar__fallback crm-avatar__fallback--portrait" aria-hidden="true">
+                    <span class="crm-avatar__fallback-mark">LG</span>
+                    <span class="crm-avatar__fallback-note">Portrait pending</span>
+                  </div>
+                </div>
+                <div class="profile-portrait-panel__copy">
+                  <strong id="client-profile-portrait-name">Character</strong>
+                  <span id="client-profile-portrait-tagline">Built from live coaching data</span>
+                  <p id="client-profile-portrait-note">Your selected character, package state, and reward totals stay synchronized here.</p>
+                </div>
+              </article>
+
+              <aside class="profile-insight-card" data-crm-tone="success">
+                <div class="profile-mini-stack">
+                  <article class="profile-mini-stat">
+                    <span>Legacy Coins</span>
+                    <strong id="client-profile-coins">0</strong>
+                  </article>
+                  <article class="profile-mini-stat">
+                    <span>Next Unlock</span>
+                    <strong id="client-profile-next-unlock">Level 1</strong>
+                  </article>
+                  <article class="profile-mini-stat">
+                    <span>Package Balance</span>
+                    <strong id="client-profile-package-balance">0 sessions</strong>
+                  </article>
+                  <article class="profile-mini-stat">
+                    <span>Assigned Coach</span>
+                    <strong id="client-profile-coach">Assignment pending</strong>
+                  </article>
+                </div>
+                <div class="profile-progress-card">
+                  <span class="kicker kicker--accent">Progress Board</span>
+                  <h3>Where your profile stands now</h3>
+                  <div class="profile-bar-list profile-bar-list--tight" id="client-profile-progress-bars"></div>
+                </div>
+              </aside>
+            </div>
+          </section>
+
+          <section class="section dashboard-section reveal" id="client-profile-verified-activity" data-crm-tone="info" data-section-label="Verified Activity">
+            <article class="card" data-crm-tone="info">
+              <span class="kicker kicker--accent">Recent Sessions</span>
+              <h2>Verified session activity</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Coach</th>
+                      <th>Package</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="client-profile-session-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No verified sessions yet.</strong>
+                          <p>Completed coaching sessions will appear here after your first live block is logged into the CRM.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+            <article class="card" data-crm-tone="success">
+              <span class="kicker kicker--accent">Reward Flow</span>
+              <h2>Approved XP and coin movement</h2>
+              <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>Delta</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="client-profile-reward-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No reward history yet.</strong>
+                          <p>Approved XP and gym coin activity will show here once your first reward actions clear review.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="section dashboard-section reveal split split--focus-left client-profile-package-split" data-crm-tone="warning" data-section-label="Package Snapshot">
+            <article class="card client-profile-package-card" data-crm-tone="warning">
+              <span class="kicker kicker--accent">Package Coverage</span>
+              <h2>Current package and booking position</h2>
+              <div class="profile-package-summary" id="client-profile-package-summary">
+                <article class="dashboard-inline-placeholder">
+                  <strong>No active package summary yet.</strong>
+                  <p>Your live package balance, booking pressure, and expiry timing will appear here once the first active package is attached.</p>
+                </article>
+              </div>
+            </article>
+            <article class="card client-profile-purchase-card" data-crm-tone="alert">
+              <span class="kicker kicker--accent">Purchase History</span>
+              <h2>Recent commercial activity</h2>
+              <div class="dashboard-table-wrap client-profile-purchase-history">
+                <table class="dashboard-table client-profile-purchase-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Item</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="client-profile-purchase-rows">
+                    <tr class="dashboard-table__empty-row">
+                      <td colspan="4">
+                        <div class="dashboard-table__empty">
+                          <strong>No purchase history yet.</strong>
+                          <p>Paid packages and future store orders will appear here once a successful purchase is recorded on the account.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ Client | Profile</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Private client profile.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260407authfix2"></script>
+    <script src="./account-shell.js?v=20260407homecleanup1"></script>
+    <script src="./client-dashboard.js?v=20260407providergate1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+  </body>
+</html>

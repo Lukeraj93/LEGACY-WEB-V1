@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Newsletter | LEGACY+ CRM</title>
+    <meta
+      name="description"
+      content="LEGACY+ CRM newsletter studio for weekly member updates, audience targeting, previews, and send performance."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&amp;family=Montserrat:wght@500;600;700;800&amp;family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260407newsletterux2" />
+  </head>
+  <body data-required-role="super_admin" data-live-dashboard="admin" data-account-page="newsletter">
+    <div class="cinematic-bg" aria-hidden="true">
+      <div class="bg-layer bg-layer--base"></div>
+      <div class="bg-layer bg-layer--smoke"></div>
+      <div class="bg-layer bg-layer--embers"></div>
+      <div class="bg-vignette"></div>
+    </div>
+
+    <div class="crm-shell">
+      <aside id="account-sidebar" class="crm-sidebar reveal in-view">
+        <a class="crm-brand" href="./admin-dashboard.html">LEGACY<span>+</span> CRM</a>
+        <p class="crm-sidebar-copy">Private admin navigation for leads, clients, finance, operations, and platform controls.</p>
+        <nav class="crm-nav" aria-label="Admin navigation">
+          <a href="./admin-dashboard.html">Home</a>
+          <a href="./admin-clients.html">TEAM</a>
+          <a href="./admin-leads.html">Leads</a>
+          <a href="./admin-financials.html">Financials</a>
+          <a class="is-current" href="./admin-newsletter.html">Newsletter</a>
+          <a href="./admin-settings.html">Settings</a>
+        </nav>
+        <div class="crm-sidebar-footer">
+          <a class="btn btn-ghost" href="https://www.legacycoaching.com.my/">Back to Website</a>
+        </div>
+      </aside>
+
+      <div class="crm-content">
+        <header class="crm-page-head reveal">
+          <div>
+            <span class="kicker kicker--accent">Outbound Marketing</span>
+            <h1>Member Newsletter Studio</h1>
+            <p class="dashboard-feedback" id="admin-dashboard-status">Loading the weekly newsletter workspace.</p>
+          </div>
+          <div class="crm-page-meta">
+            <p>Signed in as <strong id="admin-email-display">admin</strong></p>
+            <p>Use this workspace to write one clear weekly issue, preview it exactly as members will see it, and track how the last sends performed.</p>
+          </div>
+        </header>
+
+        <nav class="crm-page-tabs reveal" aria-label="Newsletter workspace sections" id="admin-newsletter-tabs">
+          <button class="crm-page-tab is-active" type="button" data-newsletter-panel-target="playbook" aria-pressed="true">Overview</button>
+          <button class="crm-page-tab" type="button" data-newsletter-panel-target="compose" aria-pressed="false">Compose</button>
+          <button class="crm-page-tab" type="button" data-newsletter-panel-target="preview" aria-pressed="false">Preview</button>
+          <button class="crm-page-tab" type="button" data-newsletter-panel-target="delivery" aria-pressed="false">Delivery</button>
+        </nav>
+        <p class="dashboard-feedback reveal" id="admin-newsletter-feedback">
+          Syncing the current weekly newsletter campaign and audience.
+        </p>
+        <section class="newsletter-workspace-guide reveal" aria-label="Newsletter workflow guide">
+          <div class="newsletter-workflow-rail">
+            <button class="newsletter-workflow-step is-active" type="button" data-newsletter-panel-target="playbook" aria-pressed="true">
+              <span class="newsletter-workflow-step__index">01</span>
+              <span class="newsletter-workflow-step__title">Overview</span>
+              <span class="newsletter-workflow-step__copy">Start here to align the tone, structure, and weekly goal.</span>
+            </button>
+            <button class="newsletter-workflow-step" type="button" data-newsletter-panel-target="compose" aria-pressed="false">
+              <span class="newsletter-workflow-step__index">02</span>
+              <span class="newsletter-workflow-step__title">Compose</span>
+              <span class="newsletter-workflow-step__copy">Build the issue the way members will actually read it.</span>
+            </button>
+            <button class="newsletter-workflow-step" type="button" data-newsletter-panel-target="preview" aria-pressed="false">
+              <span class="newsletter-workflow-step__index">03</span>
+              <span class="newsletter-workflow-step__title">Preview</span>
+              <span class="newsletter-workflow-step__copy">Check the exact email before anyone receives it.</span>
+            </button>
+            <button class="newsletter-workflow-step" type="button" data-newsletter-panel-target="delivery" aria-pressed="false">
+              <span class="newsletter-workflow-step__index">04</span>
+              <span class="newsletter-workflow-step__title">Delivery</span>
+              <span class="newsletter-workflow-step__copy">Test the send, confirm the audience, then release it.</span>
+            </button>
+          </div>
+
+          <article class="card newsletter-workspace-intro" data-crm-tone="purple">
+            <div class="newsletter-workspace-intro__copy">
+              <span class="kicker kicker--accent" id="admin-newsletter-panel-kicker">Start here</span>
+              <h2 id="admin-newsletter-panel-title">Overview first</h2>
+              <p id="admin-newsletter-panel-description">Use this page like your weekly send playbook. Check the tone, the structure, and what this issue needs to achieve before you touch the copy.</p>
+            </div>
+            <div class="newsletter-workspace-intro__tip">
+              <strong>Best next move</strong>
+              <p id="admin-newsletter-panel-tip">Once the theme is clear, move into Compose and build the issue while the message is still tight.</p>
+            </div>
+          </article>
+        </section>
+
+        <main class="dashboard-main crm-section-grid">
+          <div class="crm-page-panel is-active" data-newsletter-panel="playbook" id="admin-newsletter-playbook">
+            <section class="section dashboard-section reveal split" data-crm-tone="purple">
+              <article class="card" data-crm-tone="purple">
+                <span class="kicker kicker--accent">Writing Standard</span>
+                <h2>How The Weekly Issue Should Read</h2>
+                <div class="crm-callout">
+                  <p>Keep the tone community-first, energetic, and concise. Each issue should sound like it came from a real coach-led business, not a generic promo engine.</p>
+                </div>
+                <ul class="dashboard-list">
+                  <li>Choose one tone per issue: motivational or professional.</li>
+                  <li>Open with the member’s registered first name so the email feels written to a person, not a list.</li>
+                  <li>Lead with a strong subject line that feels fitness-focused and worth opening.</li>
+                  <li>Open with a warm greeting, then move straight into the week’s important updates.</li>
+                  <li>Use clear bullets for schedule changes, new coaches, offers, or announcements.</li>
+                  <li>Include one short member spotlight or practical coaching tip.</li>
+                  <li>Back technical training or nutrition claims with 1 to 2 credible references.</li>
+                  <li>Close with a simple call to action that gets members back into the gym.</li>
+                </ul>
+              </article>
+
+              <article class="card" data-crm-tone="info">
+                <span class="kicker kicker--accent">Weekly Framework</span>
+                <h2>Use This Structure Every Time</h2>
+                <div class="dashboard-note-log">
+                  <article class="dashboard-note">
+                    <p><strong>Subject Line</strong><br />Catchy, fitness-focused, and built for a strong open rate.</p>
+                  </article>
+                  <article class="dashboard-note">
+                    <p><strong>Header</strong><br />Warm greeting that feels personal and inviting.</p>
+                  </article>
+                  <article class="dashboard-note">
+                    <p><strong>What’s Happening</strong><br />Bullet points for the updates that matter this week.</p>
+                  </article>
+                  <article class="dashboard-note">
+                    <p><strong>Member Spotlight / Pro Tip</strong><br />One short, useful coaching note that adds value.</p>
+                  </article>
+                  <article class="dashboard-note">
+                    <p><strong>Closing</strong><br />Encouraging CTA to book, train, reply, or show up this week.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-newsletter-panel="compose" id="admin-newsletter-compose" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="purple" id="newsletter-studio">
+              <span class="kicker kicker--accent">Campaign Control</span>
+              <h2>Build This Week’s Issue</h2>
+              <div class="newsletter-compose-guide">
+                <article class="dashboard-note">
+                  <strong>1. Choose the audience</strong>
+                  <p>Pick who this is for first, because a coach update should never sound like a member re-engagement email.</p>
+                </article>
+                <article class="dashboard-note">
+                  <strong>2. Generate the first draft</strong>
+                  <p>Use the AI brief to draft the issue fast, then only touch the manual editor if you need extra control.</p>
+                </article>
+                <article class="dashboard-note">
+                  <strong>3. Preview before delivery</strong>
+                  <p>Check the exact email, send one test, then publish once the copy and audience feel right.</p>
+                </article>
+              </div>
+
+              <article class="card newsletter-ai-builder" data-crm-tone="success">
+                <span class="kicker kicker--accent">AI Draft Studio</span>
+                <h3>Generate The Weekly Issue</h3>
+                <div class="crm-callout">
+                  <p>Fast path for admin: choose who the email is for, what it should cover, and how it should sound. We will generate the draft, fill the composer, and open the preview for review.</p>
+                </div>
+                <div class="newsletter-generator-presets" id="admin-newsletter-generator-presets" aria-label="Newsletter AI presets">
+                  <button class="newsletter-generator-preset is-active" type="button" data-newsletter-generator-preset="member_education" aria-pressed="true">
+                    <strong>Member education</strong>
+                    <span>Coach-led learning for active clients</span>
+                  </button>
+                  <button class="newsletter-generator-preset" type="button" data-newsletter-generator-preset="coach_education" aria-pressed="false">
+                    <strong>Coach education</strong>
+                    <span>Internal development for the coaching team</span>
+                  </button>
+                  <button class="newsletter-generator-preset" type="button" data-newsletter-generator-preset="re_engagement" aria-pressed="false">
+                    <strong>Re-engagement</strong>
+                    <span>Bring inactive or lapsed people back in</span>
+                  </button>
+                  <button class="newsletter-generator-preset" type="button" data-newsletter-generator-preset="promo_campaign" aria-pressed="false">
+                    <strong>Promo / campaign</strong>
+                    <span>Move an offer, launch, or limited-time push</span>
+                  </button>
+                  <button class="newsletter-generator-preset" type="button" data-newsletter-generator-preset="operational_update" aria-pressed="false">
+                    <strong>Operational update</strong>
+                    <span>Schedule changes, team news, or service updates</span>
+                  </button>
+                </div>
+                <form class="newsletter-generator-form" id="admin-newsletter-generator-form">
+                  <div class="input-row account-input-row">
+                    <label>
+                      For whom
+                      <select id="admin-newsletter-generator-audience" name="generator_audience">
+                        <option value="active_members">Active clients</option>
+                        <option value="active_package_holders">Active package holders</option>
+                        <option value="lapsed_members">Lapsed members</option>
+                        <option value="inactive_members">Inactive members</option>
+                        <option value="open_leads">Leads</option>
+                        <option value="active_coaches">Coaches</option>
+                      </select>
+                    </label>
+                    <label>
+                      What type
+                      <select id="admin-newsletter-generator-type" name="generator_type">
+                        <option value="update_announcement">Update / announcement</option>
+                        <option value="educational_deep_dive">Educational</option>
+                        <option value="community_member_spotlight">Community / spotlight</option>
+                        <option value="coach_development">Coach development</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Topic
+                      <select id="admin-newsletter-generator-topic" name="generator_topic">
+                        <option value="strength_training">Strength training</option>
+                        <option value="muscle_gain">Muscle gain</option>
+                        <option value="fat_loss">Fat loss</option>
+                        <option value="nutrition_basics">Nutrition basics</option>
+                        <option value="recovery">Recovery</option>
+                        <option value="habit_systems">Habit systems</option>
+                        <option value="community_updates">Community updates</option>
+                        <option value="coach_spotlight">Coach spotlight</option>
+                        <option value="offer_or_campaign">Offer / campaign</option>
+                        <option value="schedule_changes">Schedule changes</option>
+                      </select>
+                    </label>
+                    <label>
+                      Tone
+                      <select id="admin-newsletter-generator-tone" name="generator_tone">
+                        <option value="professional">Professional</option>
+                        <option value="motivational">Motivational</option>
+                        <option value="direct">Direct</option>
+                        <option value="premium">Premium</option>
+                        <option value="community">Community-first</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Primary goal
+                      <select id="admin-newsletter-generator-goal" name="generator_goal">
+                        <option value="educate">Educate</option>
+                        <option value="announce">Announce</option>
+                        <option value="re_engage">Re-engage</option>
+                        <option value="promote">Promote</option>
+                        <option value="celebrate">Celebrate wins</option>
+                      </select>
+                    </label>
+                    <label>
+                      Evidence style
+                      <select id="admin-newsletter-generator-evidence-style" name="generator_evidence_style">
+                        <option value="light">Light</option>
+                        <option value="education_heavy">Education-heavy</option>
+                        <option value="none">No references needed</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label>
+                    Extra prompt or notes
+                    <textarea id="admin-newsletter-generator-prompt" name="generator_prompt" rows="4" placeholder="Example: Focus on why recovery matters for busy clients this week, keep it practical, mention short sleep, and push people to book sessions before the holiday period."></textarea>
+                  </label>
+                  <p class="dashboard-feedback" id="admin-newsletter-generator-feedback">
+                    Choose the audience, topic, and tone, then generate a draft. We will prefill the issue and take you straight into preview.
+                  </p>
+                  <div class="section-actions">
+                    <button class="btn btn-primary" id="admin-newsletter-generate" type="submit">Generate Draft</button>
+                    <button class="btn btn-ghost" id="admin-newsletter-open-manual" type="button" aria-expanded="false" aria-controls="admin-newsletter-manual-shell">Open Manual Editor</button>
+                  </div>
+                </form>
+              </article>
+
+              <div class="newsletter-manual-shell" id="admin-newsletter-manual-shell" hidden>
+              <article class="card" data-crm-tone="purple">
+                <span class="kicker kicker--accent">Composer</span>
+                <div class="newsletter-manual-head">
+                  <div>
+                    <h3>Manual Editor</h3>
+                    <p>Only use this when you want to fine-tune or fully override the AI-generated draft.</p>
+                  </div>
+                  <button class="btn btn-ghost" id="admin-newsletter-close-manual" type="button">Hide Manual Editor</button>
+                </div>
+                <form class="contact-form" id="admin-newsletter-form">
+                  <div class="crm-callout">
+                    <p>Use one clear weekly issue covering your main update, one useful read or insight, and one member or community message. Weekly sends respect member email preferences automatically.</p>
+                  </div>
+                  <div class="dashboard-note-log">
+                    <article class="dashboard-note">
+                      <strong>Quick-start presets</strong>
+                      <p>Load a complete starting draft in one click, then tailor the copy before saving or previewing.</p>
+                    </article>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-ghost" id="admin-newsletter-preset-professional" type="button">Apply Professional</button>
+                    <button class="btn btn-ghost" id="admin-newsletter-preset-motivational" type="button">Apply Motivational</button>
+                    <button class="btn btn-ghost" id="admin-newsletter-preset-promo" type="button">Apply Promo-Heavy</button>
+                    <button class="btn btn-ghost" id="admin-newsletter-preset-coach" type="button">Apply Coach Development</button>
+                  </div>
+                  <p class="dashboard-feedback" id="admin-newsletter-structure-feedback">
+                    Standard member structure loaded.
+                  </p>
+                  <section class="newsletter-manual-section">
+                    <div class="newsletter-manual-section__head">
+                      <span class="kicker kicker--accent">Campaign setup</span>
+                      <h4>Audience, type, and send timing</h4>
+                    </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      <input id="admin-newsletter-enabled" name="enabled" type="checkbox" />
+                      Enable weekly automation
+                    </label>
+                    <label>
+                      Audience segment
+                      <select id="admin-newsletter-audience-segment" name="audience_segment">
+                        <option value="active_members">Active Members</option>
+                        <option value="active_package_holders">Active Package Holders</option>
+                        <option value="lapsed_members">Lapsed Members</option>
+                        <option value="inactive_members">Inactive Members</option>
+                        <option value="open_leads">Open Leads</option>
+                        <option value="active_coaches">Active Coaches</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label>
+                    Issue label
+                    <input id="admin-newsletter-issue-label" name="issue_label" type="text" placeholder="Week of 6 Apr 2026" />
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Newsletter type
+                      <select id="admin-newsletter-type" name="newsletter_type">
+                        <option value="update_announcement">Update / Announcement</option>
+                        <option value="educational_deep_dive">Educational / Deep-Dive</option>
+                        <option value="community_member_spotlight">Community / Member Spotlight</option>
+                        <option value="coach_development">Coach Development</option>
+                      </select>
+                    </label>
+                    <label>
+                      Preview text
+                      <input id="admin-newsletter-preview-text" name="preview_text" type="text" placeholder="This week’s quick coaching updates, schedule changes, and member wins." />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Send day
+                      <select id="admin-newsletter-schedule-day" name="schedule_day">
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                        <option value="saturday">Saturday</option>
+                        <option value="sunday">Sunday</option>
+                      </select>
+                    </label>
+                    <label>
+                      Send hour (24h)
+                      <input id="admin-newsletter-schedule-hour" name="schedule_hour" type="number" min="0" max="23" step="1" placeholder="10" />
+                    </label>
+                  </div>
+                  </section>
+                  <section class="newsletter-manual-section">
+                    <div class="newsletter-manual-section__head">
+                      <span class="kicker kicker--accent">Header</span>
+                      <h4>Subject line, headline, and opening</h4>
+                    </div>
+                  <label>
+                    Email subject
+                    <input id="admin-newsletter-subject" name="subject" type="text" placeholder="This Week At LEGACY+: Coaching Updates, Schedule Notes, And Member Wins" required />
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Eyebrow
+                      <input id="admin-newsletter-eyebrow" name="eyebrow" type="text" placeholder="Weekly Member Update" />
+                    </label>
+                    <label>
+                      Main title
+                      <input id="admin-newsletter-title" name="title" type="text" placeholder="Here’s What’s Happening At LEGACY+ This Week" required />
+                    </label>
+                  </div>
+                  <label>
+                    Intro
+                    <textarea id="admin-newsletter-intro" name="intro" rows="4" placeholder="Open with a warm greeting, tell members what matters this week, and keep the momentum upbeat." required></textarea>
+                  </label>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Primary CTA label
+                      <input id="admin-newsletter-cta-label" name="cta_label" type="text" placeholder="Book Your Sessions" />
+                    </label>
+                    <label>
+                      Primary CTA URL
+                      <input id="admin-newsletter-cta-url" name="cta_url" type="url" placeholder="https://app.legacycoaching.com.my/client-schedule.html" />
+                    </label>
+                  </div>
+                  </section>
+                  <section class="newsletter-manual-section">
+                    <div class="newsletter-manual-section__head">
+                      <span class="kicker kicker--accent">Story blocks</span>
+                      <h4>Main update, support story, and community</h4>
+                    </div>
+                  <label>
+                    Featured deal or update title
+                    <input id="admin-newsletter-featured-deal-title" name="featured_deal_title" type="text" placeholder="Main announcement or member offer" />
+                  </label>
+                  <label>
+                    Featured deal or update body
+                    <textarea id="admin-newsletter-featured-deal-body" name="featured_deal_body" rows="4" placeholder="Summarize the main update first, such as a new coach, class change, promotion, or booking reminder."></textarea>
+                  </label>
+                  <label>
+                    Article / pro tip title
+                    <input id="admin-newsletter-article-title" name="article_title" type="text" placeholder="Coach tip or article worth reading" />
+                  </label>
+                  <label>
+                    Article / pro tip body
+                    <textarea id="admin-newsletter-article-body" name="article_body" rows="4" placeholder="Share one short coaching lesson or article takeaway that helps members train better this week."></textarea>
+                  </label>
+                  <label>
+                    Key takeaway title
+                    <input id="admin-newsletter-key-takeaway-title" name="key_takeaway_title" type="text" placeholder="Key takeaway" />
+                  </label>
+                  <label>
+                    Key takeaway body
+                    <textarea id="admin-newsletter-key-takeaway-body" name="key_takeaway_body" rows="3" placeholder="Use this for the centered takeaway card on educational newsletters or a quick summary on update emails."></textarea>
+                  </label>
+                  <label>
+                    Member update title
+                    <input id="admin-newsletter-community-title" name="community_title" type="text" placeholder="Community update or member spotlight" />
+                  </label>
+                  <label>
+                    Member update body
+                    <textarea id="admin-newsletter-community-body" name="community_body" rows="4" placeholder="Highlight a member win, community event, or useful operational reminder in a warm human tone."></textarea>
+                  </label>
+                  <label>
+                    Closing note
+                    <textarea id="admin-newsletter-closing-note" name="closing_note" rows="3" placeholder="End with a motivating line that gets members back into the gym this week."></textarea>
+                  </label>
+                  </section>
+                  <section class="newsletter-manual-section">
+                    <div class="newsletter-manual-section__head">
+                      <span class="kicker kicker--accent">References</span>
+                      <h4>Only fill these when the issue needs real source links</h4>
+                    </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Reference 1 label
+                      <input id="admin-newsletter-reference-one-label" name="reference_one_label" type="text" placeholder="Hydration, Hyperthermia, Glycogen, and Recovery (PubMed)" />
+                    </label>
+                    <label>
+                      Reference 1 URL
+                      <input id="admin-newsletter-reference-one-url" name="reference_one_url" type="url" placeholder="https://pubmed.ncbi.nlm.nih.gov/..." />
+                    </label>
+                  </div>
+                  <div class="input-row account-input-row">
+                    <label>
+                      Reference 2 label
+                      <input id="admin-newsletter-reference-two-label" name="reference_two_label" type="text" placeholder="Effects of Timing and Types of Protein Supplementation (PubMed)" />
+                    </label>
+                    <label>
+                      Reference 2 URL
+                      <input id="admin-newsletter-reference-two-url" name="reference_two_url" type="url" placeholder="https://pubmed.ncbi.nlm.nih.gov/..." />
+                    </label>
+                  </div>
+                  <div class="section-actions">
+                    <button class="btn btn-primary" id="admin-newsletter-save" type="submit">Save Weekly Newsletter</button>
+                    <button class="btn btn-ghost" id="admin-newsletter-preview" type="button">Refresh Preview</button>
+                  </div>
+                  </section>
+                </form>
+              </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-newsletter-panel="preview" id="admin-newsletter-preview-panel" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="info">
+              <article class="card">
+                <span class="kicker kicker--accent">Live Preview</span>
+                <h3>See The Exact Email Before It Goes Out</h3>
+                <p class="dashboard-feedback" id="admin-newsletter-preview-feedback">
+                  Rendering the current weekly issue preview.
+                </p>
+                <div class="crm-callout">
+                  <p>The preview uses the same newsletter email renderer as production. Refresh it after changing the subject, audience, or CTA.</p>
+                </div>
+                <iframe
+                  id="admin-newsletter-preview-frame"
+                  title="Weekly newsletter preview"
+                  style="width:100%;min-height:720px;border:1px solid rgba(255,255,255,0.12);border-radius:24px;background:#080604;"
+                ></iframe>
+              </article>
+            </section>
+          </div>
+
+          <div class="crm-page-panel" data-newsletter-panel="delivery" id="admin-newsletter-delivery" hidden>
+            <section class="section dashboard-section reveal" data-crm-tone="purple">
+              <span class="kicker kicker--accent">Delivery Control</span>
+              <h2>Audience, Send Status, and Recent Results</h2>
+              <div class="dashboard-card-grid">
+                <article class="card" data-crm-tone="info">
+                  <span class="kicker kicker--accent">Campaign Status</span>
+                  <h3>Live Newsletter Summary</h3>
+                  <div class="dashboard-badge-grid" id="admin-newsletter-summary">
+                    <article class="dashboard-badge dashboard-badge--placeholder">
+                      <strong>Newsletter status is being prepared</strong>
+                      <p>The current campaign state will appear here after the newsletter workspace finishes loading.</p>
+                    </article>
+                  </div>
+                </article>
+
+                <article class="card" data-crm-tone="purple">
+                  <span class="kicker kicker--accent">Send Controls</span>
+                  <h3>Test Or Send The Issue</h3>
+                  <div class="crm-callout">
+                    <p>Use a test send first, then send to the selected audience when the preview and copy are locked in.</p>
+                  </div>
+                  <div class="newsletter-delivery-checklist">
+                    <article class="dashboard-note">
+                      <strong>Test first</strong>
+                      <p>Send one proof email to yourself or the team lead before the real dispatch.</p>
+                    </article>
+                    <article class="dashboard-note">
+                      <strong>Confirm the audience</strong>
+                      <p>Double-check the segment so you are not sending coach content to members or old promos to live clients.</p>
+                    </article>
+                    <article class="dashboard-note">
+                      <strong>Then send live</strong>
+                      <p>Once the preview and test are clean, send the issue to the selected group.</p>
+                    </article>
+                  </div>
+                  <label>
+                    Test recipient
+                    <input id="admin-newsletter-test-recipient" name="test_recipient" type="email" placeholder="lukelango@legacycoaching.com.my" />
+                  </label>
+                  <div class="section-actions">
+                    <button class="btn btn-ghost" id="admin-newsletter-send-test" type="button">Send Test Email</button>
+                    <button class="btn btn-primary" id="admin-newsletter-send-now" type="button">Send Now To Members</button>
+                  </div>
+                </article>
+              </div>
+
+              <article class="card" data-crm-tone="neutral">
+                <span class="kicker kicker--accent">Recent Delivery</span>
+                <h3>Last Sends, Opens, and Clicks</h3>
+                <div class="dashboard-note-log" id="admin-newsletter-history">
+                  <article class="dashboard-note dashboard-note--placeholder">
+                    <strong>Campaign history is being prepared</strong>
+                    <p>The latest send summary, recent opens, and click activity will appear here once the newsletter manager finishes loading.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+          </div>
+        </main>
+
+        <footer class="site-footer">
+          <p>LEGACY+ CRM | Newsletter</p>
+          <p>&copy; <span data-year></span> LEGACY+ Coaching. Internal admin view.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/coach-operations-data.js"></script>
+    <script src="./auth-config.js?v=20260405localapp1"></script>
+    <script src="./auth-client.js?v=20260407authfix2"></script>
+    <script src="./account-shell.js?v=20260407newsletternav1"></script>
+    <script src="./dashboard-auth.js?v=20260402deployready1"></script>
+    <script src="./assets/imported-opex-budget.js?v=20260323d"></script>
+    <script src="./admin-dashboard.js?v=20260407newsletterux2"></script>
+  </body>
+</html>
